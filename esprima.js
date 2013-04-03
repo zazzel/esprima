@@ -5225,6 +5225,7 @@ parseYieldExpression: true
         var name, origInXJSTag;
         origInXJSTag = state.inXJSTag;
         state.inXJSTag = true;
+        state.inXJSChild = false;
         expect('<');
         expect('/');
         name = parseXJSIdentifier();
@@ -5256,6 +5257,7 @@ parseYieldExpression: true
             expect('>');
             selfClosing = true;
         } else {
+            state.inXJSChild = true;
             expect('>');
         }
         return delegate.createXJSOpeningElement(name, attributes, selfClosing);
