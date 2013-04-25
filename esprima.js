@@ -92,9 +92,9 @@ parseYieldExpression: true
         Punctuator: 7,
         StringLiteral: 8,
         RegularExpression: 9,
-        Template: 10
+        Template: 10,
         XJSIdentifier: 11,
-        XJSText: 11
+        XJSText: 12
     };
 
     TokenName = {};
