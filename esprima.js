@@ -203,8 +203,8 @@ parseYieldExpression: true
     };
 
     ClassPropertyType = {
-        static: 1,
-        prototype: 2
+        static: 'static',
+        prototype: 'prototype'
     };
 
     // Error messages should be identical to V8.
@@ -4373,7 +4373,7 @@ parseYieldExpression: true
     function parseMethodDefinition(existingPropNames) {
         var token, key, param, propType, isValidDuplicateProp = false;
 
-        if (strict ? matchKeyword('static') : matchContextualKeyword('static')) {
+        if (lookahead.value === 'static') {
             propType = ClassPropertyType.static;
             lex();
         } else {
@@ -5505,6 +5505,11 @@ parseYieldExpression: true
         };
 
         marker.apply = function (node) {
+            var nodeType = typeof node;
+            assert(nodeType === "object",
+                "Applying location marker to an unexpected node type: " +
+                    nodeType);
+
             if (extra.range) {
                 node.range = [this.range[0], this.range[1]];
             }
