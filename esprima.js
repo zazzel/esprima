@@ -43,7 +43,7 @@ parseSpreadOrAssignmentExpression: true,
 parseStatement: true, parseSourceElement: true, parseModuleBlock: true, parseConciseBody: true,
 advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
-parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpression: true,
+parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
 parseYieldExpression: true
 */
 
@@ -187,7 +187,8 @@ parseYieldExpression: true
         WhileStatement: 'WhileStatement',
         WithStatement: 'WithStatement',
         XJSIdentifier: 'XJSIdentifier',
-        XJSExpression: 'XJSExpression',
+        XJSEmptyExpression: 'XJSEmptyExpression',
+        XJSExpressionContainer: 'XJSExpressionContainer',
         XJSElement: 'XJSElement',
         XJSClosingElement: 'XJSClosingElement',
         XJSOpeningElement: 'XJSOpeningElement',
@@ -1740,10 +1741,16 @@ parseYieldExpression: true
             };
         },
 
-        createXJSExpression: function (expression) {
+        createXJSEmptyExpression: function () {
             return {
-                type: Syntax.XJSExpression,
-                value: expression
+                type: Syntax.XJSEmptyExpression
+            };
+        },
+
+        createXJSExpressionContainer: function (expression) {
+            return {
+                type: Syntax.XJSExpressionContainer,
+                expression: expression
             };
         },
 
@@ -5244,8 +5251,15 @@ parseYieldExpression: true
 
     function parseXJSAttributeValue() {
         var value;
-        if (lookahead.value === '{') {
-            value = parseXJSExpression();
+        if (match('{')) {
+            value = parseXJSExpressionContainer();
+            if (value.expression.type === Syntax.XJSEmptyExpression) {
+                throwError(
+                    value,
+                    'XJS attributes must only be assigned a non-empty ' +
+                        'expression'
+                );
+            }
         } else if (lookahead.type === Token.XJSText) {
             value = delegate.createLiteral(lex());
         } else {
@@ -5254,8 +5268,15 @@ parseYieldExpression: true
         return value;
     }
 
-    function parseXJSExpression() {
-        var value, origInXJSChild, origInXJSTag;
+    function parseXJSEmptyExpression() {
+        while (source.charAt(index) !== '}') {
+            index++;
+        }
+        return delegate.createXJSEmptyExpression();
+    }
+
+    function parseXJSExpressionContainer() {
+        var expression, origInXJSChild, origInXJSTag;
 
         origInXJSChild = state.inXJSChild;
         origInXJSTag = state.inXJSTag;
@@ -5264,14 +5285,18 @@ parseYieldExpression: true
 
         expect('{');
 
-        value = parseExpression();
+        if (match('}')) {
+            expression = parseXJSEmptyExpression();
+        } else {
+            expression = parseExpression();
+        }
 
         state.inXJSChild = origInXJSChild;
         state.inXJSTag = origInXJSTag;
 
         expect('}');
 
-        return delegate.createXJSExpression(value);
+        return delegate.createXJSExpressionContainer(expression);
     }
 
     function parseXJSAttribute() {
@@ -5290,8 +5315,8 @@ parseYieldExpression: true
 
     function parseXJSChild() {
         var token;
-        if (lookahead.value === '{') {
-            token = parseXJSExpression();
+        if (match('{')) {
+            token = parseXJSExpressionContainer();
         } else if (lookahead.type === Token.XJSText) {
             token = delegate.createLiteral(lex());
         } else {
@@ -5777,7 +5802,8 @@ parseYieldExpression: true
             extra.parseXJSChild = parseXJSChild;
             extra.parseXJSAttribute = parseXJSAttribute;
             extra.parseXJSAttributeValue = parseXJSAttributeValue;
-            extra.parseXJSExpression = parseXJSExpression;
+            extra.parseXJSExpressionContainer = parseXJSExpressionContainer;
+            extra.parseXJSEmptyExpression = parseXJSEmptyExpression;
             extra.parseXJSElement = parseXJSElement;
             extra.parseXJSClosingElement = parseXJSClosingElement;
             extra.parseXJSOpeningElement = parseXJSOpeningElement;
@@ -5829,7 +5855,8 @@ parseYieldExpression: true
             parseXJSChild = wrapTrackingPreserveWhitespace(extra.parseXJSChild);
             parseXJSAttribute = wrapTracking(extra.parseXJSAttribute);
             parseXJSAttributeValue = wrapTracking(extra.parseXJSAttributeValue);
-            parseXJSExpression = wrapTracking(extra.parseXJSExpression);
+            parseXJSExpressionContainer = wrapTracking(extra.parseXJSExpressionContainer);
+            parseXJSEmptyExpression = wrapTrackingPreserveWhitespace(extra.parseXJSEmptyExpression);
             parseXJSElement = wrapTracking(extra.parseXJSElement);
             parseXJSClosingElement = wrapTracking(extra.parseXJSClosingElement);
             parseXJSOpeningElement = wrapTracking(extra.parseXJSOpeningElement);
@@ -5898,7 +5925,8 @@ parseYieldExpression: true
             parseXJSChild = extra.parseXJSChild;
             parseXJSAttribute = extra.parseXJSAttribute;
             parseXJSAttributeValue = extra.parseXJSAttributeValue;
-            parseXJSExpression = extra.parseXJSExpression;
+            parseXJSExpressionContainer = extra.parseXJSExpressionContainer;
+            parseXJSEmptyExpression = extra.parseXJSEmptyExpression;
             parseXJSElement = extra.parseXJSElement;
             parseXJSClosingElement = extra.parseXJSClosingElement;
             parseXJSOpeningElement = extra.parseXJSOpeningElement;

@@ -19510,7 +19510,8 @@ var testFixture = {
                 WhileStatement: 'WhileStatement',
                 WithStatement: 'WithStatement',
                 XJSIdentifier: 'XJSIdentifier',
-                XJSExpression: "XJSExpression",
+                XJSEmptyExpression: "XJSEmptyExpression",
+                XJSExpressionContainer: "XJSExpressionContainer",
                 XJSElement: 'XJSElement',
                 XJSClosingElement: 'XJSClosingElement',
                 XJSOpeningElement: 'XJSOpeningElement',
@@ -22583,8 +22584,8 @@ var testFixture = {
                         }
                     },
                     {
-                        type: "XJSExpression",
-                        value: {
+                        type: "XJSExpressionContainer",
+                        expression: {
                             type: "Identifier",
                             name: "value",
                             range: [17, 22],
@@ -22757,8 +22758,8 @@ var testFixture = {
                                 }
                             },
                             value: {
-                                type: "XJSExpression",
-                                value: {
+                                type: "XJSExpressionContainer",
+                                expression: {
                                     type: "Literal",
                                     value: " ",
                                     raw: "\" \"",
@@ -22854,8 +22855,8 @@ var testFixture = {
                             }
                         },
                         value: {
-                            type: "XJSExpression",
-                            value: {
+                            type: "XJSExpressionContainer",
+                            expression: {
                                 type: "Literal",
                                 value: " ",
                                 raw: "\" \"",
@@ -23489,8 +23490,8 @@ var testFixture = {
                                 }
                             },
                             value: {
-                                type: "XJSExpression",
-                                value: {
+                                type: "XJSExpressionContainer",
+                                expression: {
                                     type: "ConditionalExpression",
                                     test: {
                                         type: "Identifier",
@@ -23743,8 +23744,8 @@ var testFixture = {
                             }
                         },
                         value: {
-                            type: "XJSExpression",
-                            value: {
+                            type: "XJSExpressionContainer",
+                            expression: {
                                 type: "ConditionalExpression",
                                 test: {
                                     type: "Identifier",
@@ -23990,71 +23991,166 @@ var testFixture = {
                     column: 27
                 }
             }
-        }
-    },
-
-    'Invalid XJS Syntax': {
-        '</>': {
-            index: 1,
-            lineNumber: 1,
-            column: 2,
-            message: 'Error: Line 1: XJS tag name can not be empty'
         },
 
-        '<a: />': {
-            index: 3,
-            lineNumber: 1,
-            column: 4,
-            message: 'Error: Line 1: XJS tag name can not be empty'
+        '<a>{}</a>': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'XJSElement',
+                name: {
+                    type: 'XJSIdentifier',
+                    name: 'a',
+                    range: [1, 2],
+                    loc: {
+                        start: { line: 1, column: 1 },
+                        end: { line: 1, column: 2 }
+                    }
+                },
+                selfClosing: false,
+                openingElement: {
+                    type: 'XJSOpeningElement',
+                    name: {
+                        type: 'XJSIdentifier',
+                        name: 'a',
+                        range: [1, 2],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 2 }
+                        }
+                    },
+                    selfClosing: false,
+                    attributes: [],
+                    range: [0, 3],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 3 }
+                    }
+                },
+                closingElement: {
+                    type: 'XJSClosingElement',
+                    name: {
+                        type: 'XJSIdentifier',
+                        name: 'a',
+                        range: [7, 8],
+                        loc: {
+                            start: { line: 1, column: 7 },
+                            end: { line: 1, column: 8 }
+                        }
+                    },
+                    range: [5, 9],
+                    loc: {
+                        start: { line: 1, column: 5 },
+                        end: { line: 1, column: 9 }
+                    }
+                },
+                attributes: [],
+                children: [{
+                    type: 'XJSExpressionContainer',
+                    expression: {
+                        type: 'XJSEmptyExpression',
+                        range: [4, 4],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 4 }
+                        }
+                    },
+                    range: [3, 5],
+                    loc: {
+                        start: { line: 1, column: 3 },
+                        end: { line: 1, column: 5 }
+                    }
+                }],
+                range: [0, 9],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            range: [0, 9],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 9 }
+            }
         },
 
-        '<:a />': {
-            index: 1,
-            lineNumber: 1,
-            column: 2,
-            message: 'Error: Line 1: XJS tag name can not be empty'
-        },
-
-        '<a b=d />': {
-            index: 5,
-            lineNumber: 1,
-            column: 6,
-            message: 'Error: Line 1: XJS value should be either an expression or a quoted XJS text'
-        },
-
-        '<a>': {
-            index: 3,
-            lineNumber: 1,
-            column: 4,
-            message: 'Error: Line 1: Unexpected token '
-        },
-
-        '<a></b>': {
-            index: 7,
-            lineNumber: 1,
-            column: 8,
-            message: 'Error: Line 1: Expected corresponding XJS closing tag for a'
-        },
-
-        '<a foo="bar': {
-            index: 11,
-            lineNumber: 1,
-            column: 12,
-            message: "Error: Line 1: Unexpected token ILLEGAL"
-        },
-
-        '<a:b></b>': {
-            index: 9,
-            lineNumber: 1,
-            column: 10,
-            message: "Error: Line 1: Expected corresponding XJS closing tag for a:b",
-        },
-
-        '<a><a />': {
-            index: 8,
-            lineNumber: 1,
-            column: 9,
-            message: 'Error: Line 1: Unexpected end of input'
+        '<a>{/* this is a comment */}</a>': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'XJSElement',
+                name: {
+                    type: 'XJSIdentifier',
+                    name: 'a',
+                    range: [1, 2],
+                    loc: {
+                        start: { line: 1, column: 1 },
+                        end: { line: 1, column: 2 }
+                    }
+                },
+                selfClosing: false,
+                openingElement: {
+                    type: 'XJSOpeningElement',
+                    name: {
+                        type: 'XJSIdentifier',
+                        name: 'a',
+                        range: [1, 2],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 2 }
+                        }
+                    },
+                    selfClosing: false,
+                    attributes: [],
+                    range: [0, 3],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 3 }
+                    }
+                },
+                closingElement: {
+                    type: 'XJSClosingElement',
+                    name: {
+                        type: 'XJSIdentifier',
+                        name: 'a',
+                        range: [30, 31],
+                        loc: {
+                            start: { line: 1, column: 30 },
+                            end: { line: 1, column: 31 }
+                        }
+                    },
+                    range: [28, 32],
+                    loc: {
+                        start: { line: 1, column: 28 },
+                        end: { line: 1, column: 32 }
+                    }
+                },
+                attributes: [],
+                children: [{
+                    type: 'XJSExpressionContainer',
+                    expression: {
+                        type: 'XJSEmptyExpression',
+                        range: [4, 27],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 27 }
+                        }
+                    },
+                    range: [3, 28],
+                    loc: {
+                        start: { line: 1, column: 3 },
+                        end: { line: 1, column: 28 }
+                    }
+                }],
+                range: [0, 32],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 32 }
+                }
+            },
+            range: [0, 32],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 32 }
+            }
         },
 
         '<div>@test content</div>': {
@@ -24130,7 +24226,85 @@ var testFixture = {
                 end: { line: 1, column: 24 }
             }
         }
+    },
+
+    'Invalid XJS Syntax': {
+        '</>': {
+            index: 1,
+            lineNumber: 1,
+            column: 2,
+            message: 'Error: Line 1: XJS tag name can not be empty'
+        },
+
+        '<a: />': {
+            index: 3,
+            lineNumber: 1,
+            column: 4,
+            message: 'Error: Line 1: XJS tag name can not be empty'
+        },
+
+        '<:a />': {
+            index: 1,
+            lineNumber: 1,
+            column: 2,
+            message: 'Error: Line 1: XJS tag name can not be empty'
+        },
+
+        '<a b=d />': {
+            index: 5,
+            lineNumber: 1,
+            column: 6,
+            message: 'Error: Line 1: XJS value should be either an expression or a quoted XJS text'
+        },
+
+        '<a>': {
+            index: 3,
+            lineNumber: 1,
+            column: 4,
+            message: 'Error: Line 1: Unexpected token '
+        },
+
+        '<a></b>': {
+            index: 7,
+            lineNumber: 1,
+            column: 8,
+            message: 'Error: Line 1: Expected corresponding XJS closing tag for a'
+        },
+
+        '<a foo="bar': {
+            index: 11,
+            lineNumber: 1,
+            column: 12,
+            message: "Error: Line 1: Unexpected token ILLEGAL"
+        },
+
+        '<a:b></b>': {
+            index: 9,
+            lineNumber: 1,
+            column: 10,
+            message: "Error: Line 1: Expected corresponding XJS closing tag for a:b",
+        },
+
+        '<a><a />': {
+            index: 8,
+            lineNumber: 1,
+            column: 9,
+            message: 'Error: Line 1: Unexpected end of input'
+        },
+
+        '<a b={}>': {
+            index: 7,
+            lineNumber: 1,
+            column: 8,
+            message: 'Error: Line 1: XJS attributes must only be assigned a non-empty expression'
+        },
+
+        '<a>{"str";}</a>': {
+            index: 9,
+            lineNumber: 1,
+            column: 10,
+            message: 'Error: Line 1: Unexpected token ;',
+            description: 'Unexpected token ;'
+        }
     }
 };
-
-
