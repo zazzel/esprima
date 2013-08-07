@@ -1906,7 +1906,8 @@ var fbTestFixture = {
             index: 1,
             lineNumber: 1,
             column: 2,
-            message: 'Error: Line 1: XJS tag name can not be empty'
+            message: 'Error: Line 1: Unexpected token /',
+            description: 'Unexpected token /'
         },
 
         '<a: />': {
@@ -1920,7 +1921,8 @@ var fbTestFixture = {
             index: 1,
             lineNumber: 1,
             column: 2,
-            message: 'Error: Line 1: XJS tag name can not be empty'
+            message: 'Error: Line 1: Unexpected token :',
+            description: 'Unexpected token :'
         },
 
         '<a b=d />': {
@@ -1978,6 +1980,14 @@ var fbTestFixture = {
             column: 10,
             message: 'Error: Line 1: Unexpected token ;',
             description: 'Unexpected token ;'
+        },
+
+        '<span className="a", id="b" />': {
+            index: 19,
+            lineNumber: 1,
+            column: 20,
+            message: 'Error: Line 1: Unexpected token ,',
+            description: 'Unexpected token ,'
         }
     }
 };

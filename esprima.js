@@ -5282,7 +5282,7 @@ parseYieldExpression: true
         var token;
 
         if (lookahead.type !== Token.XJSIdentifier) {
-            throwError({}, Messages.InvalidXJSTagName);
+            throwUnexpected(lookahead);
         }
 
         token = lex();
