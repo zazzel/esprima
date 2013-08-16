@@ -1,7 +1,7 @@
 {
-    "name": "esprima",
-    "description": "ECMAScript parsing infrastructure for multipurpose analysis",
-    "homepage": "http://esprima.org",
+    "name": "esprima-fb",
+    "description": "Facebook-specific fork of the esprima project",
+    "homepage": "https://github.com/facebook/esprima/tree/fb-harmony",
     "main": "esprima.js",
     "bin": {
         "esparse": "./bin/esparse.js",
@@ -12,17 +12,17 @@
         "node": ">=0.4.0"
     },
     "maintainers": [{
-        "name": "Ariya Hidayat",
-        "email": "ariya.hidayat@gmail.com",
-        "web": "http://ariya.ofilabs.com"
+        "name": "Jeff Morrison",
+        "email": "jeffmo@fb.com",
+        "web": "https://www.facebook.com/lbljeffmo"
     }],
     "repository": {
         "type": "git",
-        "url": "http://github.com/ariya/esprima.git"
+        "url": "http://github.com/facebook/esprima.git"
     },
     "licenses": [{
         "type": "BSD",
-        "url": "http://github.com/ariya/esprima/raw/master/LICENSE.BSD"
+        "url": "http://github.com/facebook/esprima/raw/master/LICENSE.BSD"
     }],
     "devDependencies": {
         "jslint": "~0.1.9",
