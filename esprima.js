@@ -1216,6 +1216,7 @@ parseYieldExpression: true
                 if (ch ===  '\r' && source[index] === '\n') {
                     ++index;
                 }
+                cooked += '\n';
             } else {
                 cooked += ch;
             }
