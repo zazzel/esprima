@@ -45,6 +45,7 @@ parseStatement: true, parseSourceElement: true, parseModuleBlock: true, parseCon
 advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
+parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
 parseYieldExpression: true
 */
 
@@ -179,6 +180,7 @@ parseYieldExpression: true
         ThisExpression: 'ThisExpression',
         ThrowStatement: 'ThrowStatement',
         TryStatement: 'TryStatement',
+        TypeAnnotation: 'TypeAnnotation',
         UnaryExpression: 'UnaryExpression',
         UpdateExpression: 'UpdateExpression',
         VariableDeclaration: 'VariableDeclaration',
@@ -1684,7 +1686,8 @@ parseYieldExpression: true
             };
         },
 
-        createFunctionDeclaration: function (id, params, defaults, body, rest, generator, expression) {
+        createFunctionDeclaration: function (id, params, defaults, body, rest, generator, expression,
+                                             returnType) {
             return {
                 type: Syntax.FunctionDeclaration,
                 id: id,
@@ -1693,11 +1696,13 @@ parseYieldExpression: true
                 body: body,
                 rest: rest,
                 generator: generator,
-                expression: expression
+                expression: expression,
+                returnType: returnType
             };
         },
 
-        createFunctionExpression: function (id, params, defaults, body, rest, generator, expression) {
+        createFunctionExpression: function (id, params, defaults, body, rest, generator, expression,
+                                            returnType) {
             return {
                 type: Syntax.FunctionExpression,
                 id: id,
@@ -1706,14 +1711,31 @@ parseYieldExpression: true
                 body: body,
                 rest: rest,
                 generator: generator,
-                expression: expression
+                expression: expression,
+                returnType: returnType
             };
         },
 
         createIdentifier: function (name) {
             return {
                 type: Syntax.Identifier,
-                name: name
+                name: name,
+                // Only here to initialize the shape of the object to ensure
+                // that the 'typeAnnotation' key is ordered before others that
+                // are added later (like 'loc' and 'range'). This just helps
+                // keep the shape of Identifier nodes consistent with everything
+                // else.
+                typeAnnotation: undefined
+            };
+        },
+
+        createTypeAnnotation: function (typeIdentifier, paramTypes, returnType, isNullable) {
+            return {
+                type: Syntax.TypeAnnotation,
+                id: typeIdentifier,
+                paramTypes: paramTypes,
+                returnType: returnType,
+                isNullable: isNullable
             };
         },
 
@@ -2373,7 +2395,8 @@ parseYieldExpression: true
         strict = previousStrict;
         state.yieldAllowed = previousYieldAllowed;
 
-        return delegate.createFunctionExpression(null, params, defaults, body, options.rest || null, options.generator, body.type !== Syntax.BlockStatement);
+        return delegate.createFunctionExpression(null, params, defaults, body, options.rest || null, options.generator, body.type !== Syntax.BlockStatement,
+                options.returnTypeAnnotation);
     }
 
 
@@ -2394,7 +2417,8 @@ parseYieldExpression: true
             params: tmp.params,
             defaults: tmp.defaults,
             rest: tmp.rest,
-            generator: options.generator
+            generator: options.generator,
+            returnTypeAnnotation: tmp.returnTypeAnnotation
         });
 
         strict = previousStrict;
@@ -2440,7 +2464,7 @@ parseYieldExpression: true
                 key = parseObjectPropertyKey();
                 expect('(');
                 token = lookahead;
-                param = [ parseVariableIdentifier() ];
+                param = [ parseTypeAnnotatableIdentifier() ];
                 expect(')');
                 return delegate.createProperty('set', key, parsePropertyFunction({ params: param, generator: false, name: token }), false, false);
             }
@@ -3251,6 +3275,46 @@ parseYieldExpression: true
 
     // 12.2 Variable Statement
 
+    function parseTypeAnnotation() {
+        var typeIdentifier = null, paramTypes = null, returnType = null,
+            isNullable = false;
+
+        if (match('?')) {
+            lex();
+            isNullable = true;
+        }
+
+        if (lookahead.type === Token.Identifier) {
+            typeIdentifier = parseVariableIdentifier();
+        }
+
+        if (match('(')) {
+            lex();
+            paramTypes = [];
+            while (lookahead.type === Token.Identifier || match('?')) {
+                paramTypes.push(parseTypeAnnotation());
+                if (!match(')')) {
+                    expect(',');
+                }
+            }
+            expect(')');
+            expect('=>');
+
+            if (matchKeyword('void')) {
+                lex();
+            } else {
+                returnType = parseTypeAnnotation();
+            }
+        }
+
+        return delegate.createTypeAnnotation(
+            typeIdentifier,
+            paramTypes,
+            returnType,
+            isNullable
+        );
+    }
+
     function parseVariableIdentifier() {
         var token = lex();
 
@@ -3259,6 +3323,17 @@ parseYieldExpression: true
         }
 
         return delegate.createIdentifier(token.value);
+    }
+
+    function parseTypeAnnotatableIdentifier() {
+        var ident = parseVariableIdentifier();
+
+        if (match(':')) {
+            lex();
+            ident.typeAnnotation = parseTypeAnnotation();
+        }
+
+        return ident;
     }
 
     function parseVariableDeclaration(kind) {
@@ -3274,7 +3349,7 @@ parseYieldExpression: true
             if (state.allowDefault) {
                 id = matchKeyword('default') ? parseNonComputedProperty() : parseVariableIdentifier();
             } else {
-                id = parseVariableIdentifier();
+                id = parseTypeAnnotatableIdentifier();
             }
             // 12.2.1
             if (strict && isRestrictedWord(id.name)) {
@@ -4200,7 +4275,10 @@ parseYieldExpression: true
             param = parseObjectInitialiser();
             reinterpretAsDestructuredParameter(options, param);
         } else {
-            param = parseVariableIdentifier();
+            // Typing rest params is awkward, so punting on that for now
+            param = rest
+                ? parseVariableIdentifier()
+                : parseTypeAnnotatableIdentifier();
             validateParam(options, token, token.value);
             if (match('=')) {
                 if (rest) {
@@ -4252,6 +4330,11 @@ parseYieldExpression: true
 
         if (options.defaultCount === 0) {
             options.defaults = [];
+        }
+
+        if (match(':')) {
+            lex();
+            options.returnTypeAnnotation = parseTypeAnnotation();
         }
 
         return options;
@@ -4315,7 +4398,8 @@ parseYieldExpression: true
         strict = previousStrict;
         state.yieldAllowed = previousYieldAllowed;
 
-        return delegate.createFunctionDeclaration(id, tmp.params, tmp.defaults, body, tmp.rest, generator, expression);
+        return delegate.createFunctionDeclaration(id, tmp.params, tmp.defaults, body, tmp.rest, generator, expression,
+                tmp.returnTypeAnnotation);
     }
 
     function parseFunctionExpression() {
@@ -4374,7 +4458,8 @@ parseYieldExpression: true
         strict = previousStrict;
         state.yieldAllowed = previousYieldAllowed;
 
-        return delegate.createFunctionExpression(id, tmp.params, tmp.defaults, body, tmp.rest, generator, expression);
+        return delegate.createFunctionExpression(id, tmp.params, tmp.defaults, body, tmp.rest, generator, expression,
+                tmp.returnTypeAnnotation);
     }
 
     function parseYieldExpression() {
@@ -4480,7 +4565,7 @@ parseYieldExpression: true
 
             expect('(');
             token = lookahead;
-            param = [ parseVariableIdentifier() ];
+            param = [ parseTypeAnnotatableIdentifier() ];
             expect(')');
             return delegate.createMethodDefinition(
                 propType,
@@ -5832,6 +5917,7 @@ parseYieldExpression: true
             extra.parseSpreadOrAssignmentExpression = parseSpreadOrAssignmentExpression;
             extra.parseTemplateElement = parseTemplateElement;
             extra.parseTemplateLiteral = parseTemplateLiteral;
+            extra.parseTypeAnnotation = parseTypeAnnotation;
             extra.parseStatement = parseStatement;
             extra.parseSwitchCase = parseSwitchCase;
             extra.parseUnaryExpression = parseUnaryExpression;
@@ -5882,6 +5968,7 @@ parseYieldExpression: true
             parsePropertyFunction = wrapTracking(extra.parsePropertyFunction);
             parseTemplateElement = wrapTracking(extra.parseTemplateElement);
             parseTemplateLiteral = wrapTracking(extra.parseTemplateLiteral);
+            parseTypeAnnotation = wrapTracking(extra.parseTypeAnnotation);
             parseSpreadOrAssignmentExpression = wrapTracking(extra.parseSpreadOrAssignmentExpression);
             parseStatement = wrapTracking(extra.parseStatement);
             parseSwitchCase = wrapTracking(extra.parseSwitchCase);
@@ -5950,6 +6037,7 @@ parseYieldExpression: true
             parsePropertyFunction = extra.parsePropertyFunction;
             parseTemplateElement = extra.parseTemplateElement;
             parseTemplateLiteral = extra.parseTemplateLiteral;
+            parseTypeAnnotation = extra.parseTypeAnnotation;
             parseSpreadOrAssignmentExpression = extra.parseSpreadOrAssignmentExpression;
             parseStatement = extra.parseStatement;
             parseSwitchCase = extra.parseSwitchCase;
