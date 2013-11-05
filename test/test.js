@@ -19502,8 +19502,6 @@ var testFixture = {
                 ThisExpression: 'ThisExpression',
                 ThrowStatement: 'ThrowStatement',
                 TryStatement: 'TryStatement',
-                TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
-                TypeAnnotation: 'TypeAnnotation',
                 UnaryExpression: 'UnaryExpression',
                 UpdateExpression: 'UpdateExpression',
                 VariableDeclaration: 'VariableDeclaration',
