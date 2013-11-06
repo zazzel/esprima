@@ -180,6 +180,7 @@ parseYieldExpression: true
         ThisExpression: 'ThisExpression',
         ThrowStatement: 'ThrowStatement',
         TryStatement: 'TryStatement',
+        TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
         TypeAnnotation: 'TypeAnnotation',
         UnaryExpression: 'UnaryExpression',
         UpdateExpression: 'UpdateExpression',
@@ -1739,6 +1740,14 @@ parseYieldExpression: true
             };
         },
 
+        createTypeAnnotatedIdentifier: function (identifier, annotation) {
+            return {
+                type: Syntax.TypeAnnotatedIdentifier,
+                id: identifier,
+                annotation: annotation
+            };
+        },
+
         createXJSAttribute: function (name, value) {
             return {
                 type: Syntax.XJSAttribute,
@@ -3275,9 +3284,13 @@ parseYieldExpression: true
 
     // 12.2 Variable Statement
 
-    function parseTypeAnnotation() {
+    function parseTypeAnnotation(dontExpectColon) {
         var typeIdentifier = null, paramTypes = null, returnType = null,
             isNullable = false;
+
+        if (!dontExpectColon) {
+            expect(':');
+        }
 
         if (match('?')) {
             lex();
@@ -3292,7 +3305,7 @@ parseYieldExpression: true
             lex();
             paramTypes = [];
             while (lookahead.type === Token.Identifier || match('?')) {
-                paramTypes.push(parseTypeAnnotation());
+                paramTypes.push(parseTypeAnnotation(true));
                 if (!match(')')) {
                     expect(',');
                 }
@@ -3303,7 +3316,7 @@ parseYieldExpression: true
             if (matchKeyword('void')) {
                 lex();
             } else {
-                returnType = parseTypeAnnotation();
+                returnType = parseTypeAnnotation(true);
             }
         }
 
@@ -3329,8 +3342,7 @@ parseYieldExpression: true
         var ident = parseVariableIdentifier();
 
         if (match(':')) {
-            lex();
-            ident.typeAnnotation = parseTypeAnnotation();
+            return delegate.createTypeAnnotatedIdentifier(ident, parseTypeAnnotation());
         }
 
         return ident;
@@ -4333,7 +4345,6 @@ parseYieldExpression: true
         }
 
         if (match(':')) {
-            lex();
             options.returnTypeAnnotation = parseTypeAnnotation();
         }
 
@@ -5917,6 +5928,7 @@ parseYieldExpression: true
             extra.parseSpreadOrAssignmentExpression = parseSpreadOrAssignmentExpression;
             extra.parseTemplateElement = parseTemplateElement;
             extra.parseTemplateLiteral = parseTemplateLiteral;
+            extra.parseTypeAnnotatableIdentifier = parseTypeAnnotatableIdentifier;
             extra.parseTypeAnnotation = parseTypeAnnotation;
             extra.parseStatement = parseStatement;
             extra.parseSwitchCase = parseSwitchCase;
@@ -5968,6 +5980,7 @@ parseYieldExpression: true
             parsePropertyFunction = wrapTracking(extra.parsePropertyFunction);
             parseTemplateElement = wrapTracking(extra.parseTemplateElement);
             parseTemplateLiteral = wrapTracking(extra.parseTemplateLiteral);
+            parseTypeAnnotatableIdentifier = wrapTracking(extra.parseTypeAnnotatableIdentifier);
             parseTypeAnnotation = wrapTracking(extra.parseTypeAnnotation);
             parseSpreadOrAssignmentExpression = wrapTracking(extra.parseSpreadOrAssignmentExpression);
             parseStatement = wrapTracking(extra.parseStatement);
@@ -6037,6 +6050,7 @@ parseYieldExpression: true
             parsePropertyFunction = extra.parsePropertyFunction;
             parseTemplateElement = extra.parseTemplateElement;
             parseTemplateLiteral = extra.parseTemplateLiteral;
+            parseTypeAnnotatableIdentifier = extra.parseTypeAnnotatableIdentifier;
             parseTypeAnnotation = extra.parseTypeAnnotation;
             parseSpreadOrAssignmentExpression = extra.parseSpreadOrAssignmentExpression;
             parseStatement = extra.parseStatement;
