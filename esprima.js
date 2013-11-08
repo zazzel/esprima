@@ -1730,13 +1730,13 @@ parseYieldExpression: true
             };
         },
 
-        createTypeAnnotation: function (typeIdentifier, paramTypes, returnType, isNullable) {
+        createTypeAnnotation: function (typeIdentifier, paramTypes, returnType, nullable) {
             return {
                 type: Syntax.TypeAnnotation,
                 id: typeIdentifier,
                 paramTypes: paramTypes,
                 returnType: returnType,
-                isNullable: isNullable
+                nullable: nullable
             };
         },
 
@@ -3285,7 +3285,7 @@ parseYieldExpression: true
 
     function parseTypeAnnotation(dontExpectColon) {
         var typeIdentifier = null, paramTypes = null, returnType = null,
-            isNullable = false;
+            nullable = false;
 
         if (!dontExpectColon) {
             expect(':');
@@ -3293,7 +3293,7 @@ parseYieldExpression: true
 
         if (match('?')) {
             lex();
-            isNullable = true;
+            nullable = true;
         }
 
         if (lookahead.type === Token.Identifier) {
@@ -3323,7 +3323,7 @@ parseYieldExpression: true
             typeIdentifier,
             paramTypes,
             returnType,
-            isNullable
+            nullable
         );
     }
 
