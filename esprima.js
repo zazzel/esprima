@@ -206,7 +206,7 @@ parseYieldExpression: true
     };
 
     ClassPropertyType = {
-        static: 'static',
+        'static': 'static',
         prototype: 'prototype'
     };
 
@@ -3110,23 +3110,31 @@ parseYieldExpression: true
                 params.push(param.left);
                 defaults.push(param.right);
                 ++defaultCount;
+                validateParam(options, param.left, param.left.name);
             } else {
                 return null;
             }
         }
 
-        if (options.firstRestricted) {
-            throwError(options.firstRestricted, options.message);
-        }
-        if (options.stricted) {
-            throwErrorTolerant(options.stricted, options.message);
+        if (options.message === Messages.StrictParamDupe) {
+            throwError(
+                strict ? options.stricted : options.firstRestricted,
+                options.message
+            );
         }
 
         if (defaultCount === 0) {
             defaults = [];
         }
 
-        return { params: params, defaults: defaults, rest: rest };
+        return {
+            params: params,
+            defaults: defaults,
+            rest: rest,
+            stricted: options.stricted,
+            firstRestricted: options.firstRestricted,
+            message: options.message
+        };
     }
 
     function parseArrowFunctionExpression(options) {
@@ -3136,9 +3144,16 @@ parseYieldExpression: true
 
         previousStrict = strict;
         previousYieldAllowed = state.yieldAllowed;
-        strict = true;
         state.yieldAllowed = false;
         body = parseConciseBody();
+
+        if (strict && options.firstRestricted) {
+            throwError(options.firstRestricted, options.message);
+        }
+        if (strict && options.stricted) {
+            throwErrorTolerant(options.stricted, options.message);
+        }
+
         strict = previousStrict;
         state.yieldAllowed = previousYieldAllowed;
 
@@ -3170,10 +3185,12 @@ parseYieldExpression: true
 
         if (match('=>') && expr.type === Syntax.Identifier) {
             if (state.parenthesizedCount === oldParenthesizedCount || state.parenthesizedCount === (oldParenthesizedCount + 1)) {
+                params = { params: [ expr ], defaults: [], rest: null };
                 if (isRestrictedWord(expr.name)) {
-                    throwError({}, Messages.StrictParamName);
+                    params.firstRestricted = expr;
+                    params.message = Messages.StrictParamName;
                 }
-                return parseArrowFunctionExpression({ params: [ expr ], defaults: [], rest: null });
+                return parseArrowFunctionExpression(params);
             }
         }
 
