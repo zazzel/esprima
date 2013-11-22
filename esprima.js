@@ -1767,11 +1767,8 @@ parseYieldExpression: true
         createXJSElement: function (openingElement, closingElement, children) {
             return {
                 type: Syntax.XJSElement,
-                name: openingElement.name,
-                selfClosing: openingElement.selfClosing,
                 openingElement: openingElement,
                 closingElement: closingElement,
-                attributes: openingElement.attributes,
                 children: children
             };
         },

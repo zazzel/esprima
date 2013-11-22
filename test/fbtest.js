@@ -6,16 +6,6 @@ var fbTestFixture = {
             type: "ExpressionStatement",
             expression: {
                 type: "XJSElement",
-                name: {
-                    type: "XJSIdentifier",
-                    name: "a",
-                    range: [1, 2],
-                    loc: {
-                        start: { line: 1, column: 1 },
-                        end: { line: 1, column: 2 }
-                    }
-                },
-                selfClosing: true,
                 openingElement: {
                   type: "XJSOpeningElement",
                   name: {
@@ -35,7 +25,6 @@ var fbTestFixture = {
                       end: { line: 1, column: 5 }
                   }
                 },
-                attributes: [],
                 children: [],
                 range: [0, 5],
                 loc: {
@@ -53,17 +42,6 @@ var fbTestFixture = {
             type: "ExpressionStatement",
             expression: {
                 type: "XJSElement",
-                name: {
-                    type: "XJSIdentifier",
-                    name: "a",
-                    namespace: "n",
-                    range: [1, 4],
-                    loc: {
-                        start: { line: 1, column: 1 },
-                        end: { line: 1, column: 4 }
-                    }
-                },
-                selfClosing: true,
                 openingElement: {
                   type: "XJSOpeningElement",
                   name: {
@@ -103,26 +81,6 @@ var fbTestFixture = {
                       end: { line: 1, column: 11 }
                   }
                 },
-                attributes: [
-                    {
-                        type: "XJSAttribute",
-                        name: {
-                            type: "XJSIdentifier",
-                            name: "v",
-                            namespace: "n",
-                            range: [5, 8],
-                            loc: {
-                                start: { line: 1, column: 5 },
-                                end: { line: 1, column: 8 }
-                            }
-                        },
-                        range: [5, 8],
-                        loc: {
-                            start: { line: 1, column: 5 },
-                            end: { line: 1, column: 8 }
-                        }
-                    }
-                ],
                 children: [],
                 range: [0, 11],
                 loc: {
@@ -140,16 +98,6 @@ var fbTestFixture = {
             type: "ExpressionStatement",
             expression: {
                 type: "XJSElement",
-                name: {
-                    type: "XJSIdentifier",
-                    name: "a",
-                    range: [1, 2],
-                    loc: {
-                        start: { line: 1, column: 1 },
-                        end: { line: 1, column: 2 }
-                    }
-                },
-                selfClosing: false,
                 openingElement: {
                     type: "XJSOpeningElement",
                     name: {
@@ -215,36 +163,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 40 }
                     }
                 },
-                attributes: [
-                    {
-                        type: "XJSAttribute",
-                        name: {
-                            type: "XJSIdentifier",
-                            name: "foo",
-                            namespace: "n",
-                            range: [3, 8],
-                            loc: {
-                                start: { line: 1, column: 3 },
-                                end: { line: 1, column: 8 }
-                            }
-                        },
-                        value: {
-                            type: "Literal",
-                            value: "bar",
-                            raw: "\"bar\"",
-                            range: [9, 14],
-                            loc: {
-                                start: { line: 1, column: 9 },
-                                end: { line: 1, column: 14 }
-                            }
-                        },
-                        range: [3, 14],
-                        loc: {
-                            start: { line: 1, column: 3 },
-                            end: { line: 1, column: 14 }
-                        }
-                    }
-                ],
                 children: [
                     {
                         type: "Literal",
@@ -285,16 +203,6 @@ var fbTestFixture = {
                     },
                     {
                         type: "XJSElement",
-                        name: {
-                            type: "XJSIdentifier",
-                            name: "b",
-                            range: [25, 26],
-                            loc: {
-                                start: { line: 1, column: 25 },
-                                end: { line: 1, column: 26 }
-                            }
-                        },
-                        selfClosing: false,
                         openingElement: {
                             type: "XJSOpeningElement",
                             name: {
@@ -331,20 +239,9 @@ var fbTestFixture = {
                                 end: { line: 1, column: 36 }
                             }
                         },
-                        attributes: [],
                         children: [
                             {
                                 type: "XJSElement",
-                                name: {
-                                    type: "XJSIdentifier",
-                                    name: "c",
-                                    range: [28, 29],
-                                    loc: {
-                                        start: { line: 1, column: 28 },
-                                        end: { line: 1, column: 29 }
-                                    }
-                                },
-                                selfClosing: true,
                                 openingElement: {
                                     type: "XJSOpeningElement",
                                     name: {
@@ -364,7 +261,6 @@ var fbTestFixture = {
                                         end: { line: 1, column: 32 }
                                     }
                                 },
-                                attributes: [],
                                 children: [],
                                 range: [27, 32],
                                 loc: {
@@ -396,16 +292,6 @@ var fbTestFixture = {
             type: "ExpressionStatement",
             expression: {
                 type: "XJSElement",
-                name: {
-                    type: "XJSIdentifier",
-                    name: "a",
-                    range: [1, 2],
-                    loc: {
-                        start: { line: 1, column: 1 },
-                        end: { line: 1, column: 2 }
-                    }
-                },
-                selfClosing: true,
                 openingElement: {
                     type: "XJSOpeningElement",
                     name: {
@@ -515,97 +401,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 29 }
                     }
                 },
-                attributes: [
-                    {
-                        type: "XJSAttribute",
-                        name: {
-                            type: "XJSIdentifier",
-                            name: "b",
-                            range: [3, 4],
-                            loc: {
-                                start: { line: 1, column: 3 },
-                                end: { line: 1, column: 4 }
-                            }
-                        },
-                        value: {
-                            type: "XJSExpressionContainer",
-                            expression: {
-                                type: "Literal",
-                                value: " ",
-                                raw: "\" \"",
-                                range: [6, 9],
-                                loc: {
-                                    start: { line: 1, column: 6 },
-                                    end: { line: 1, column: 9 }
-                                }
-                            },
-                            range: [5, 10],
-                            loc: {
-                                start: { line: 1, column: 5 },
-                                end: { line: 1, column: 10 }
-                            }
-                        },
-                        range: [3, 10],
-                        loc: {
-                            start: { line: 1, column: 3 },
-                            end: { line: 1, column: 10 }
-                        }
-                    },
-                    {
-                        type: "XJSAttribute",
-                        name: {
-                            type: "XJSIdentifier",
-                            name: "c",
-                            range: [11, 12],
-                            loc: {
-                                start: { line: 1, column: 11 },
-                                end: { line: 1, column: 12 }
-                            }
-                        },
-                        value: {
-                            type: "Literal",
-                            value: " ",
-                            raw: "\" \"",
-                            range: [13, 16],
-                            loc: {
-                                start: { line: 1, column: 13 },
-                                end: { line: 1, column: 16 }
-                            }
-                        },
-                        range: [11, 16],
-                        loc: {
-                            start: { line: 1, column: 11 },
-                            end: { line: 1, column: 16 }
-                        }
-                    },
-                    {
-                        type: "XJSAttribute",
-                        name: {
-                            type: "XJSIdentifier",
-                            name: "d",
-                            range: [17, 18],
-                            loc: {
-                                start: { line: 1, column: 17 },
-                                end: { line: 1, column: 18 }
-                            }
-                        },
-                        value: {
-                            type: "Literal",
-                            value: "&",
-                            raw: "\"&amp;\"",
-                            range: [19, 26],
-                            loc: {
-                                start: { line: 1, column: 19 },
-                                end: { line: 1, column: 26 }
-                            }
-                        },
-                        range: [17, 26],
-                        loc: {
-                            start: { line: 1, column: 17 },
-                            end: { line: 1, column: 26 }
-                        }
-                    }
-                ],
                 children: [],
                 range: [0, 29],
                 loc: {
@@ -623,25 +418,6 @@ var fbTestFixture = {
             type: "ExpressionStatement",
             expression: {
                 type: "XJSElement",
-                name: {
-                    type: "XJSIdentifier",
-                    name: "a",
-                    range: [
-                        1,
-                        2
-                    ],
-                    loc: {
-                        start: {
-                            line: 1,
-                            column: 1
-                        },
-                        end: {
-                            line: 1,
-                            column: 2
-                        }
-                    }
-                },
-                selfClosing: true,
                 openingElement: {
                     type: "XJSOpeningElement",
                     name: {
@@ -679,7 +455,6 @@ var fbTestFixture = {
                         }
                     }
                 },
-                attributes: [],
                 children: [],
                 range: [
                     0,
@@ -715,25 +490,6 @@ var fbTestFixture = {
             type: "ExpressionStatement",
             expression: {
                 type: "XJSElement",
-                name: {
-                    type: "XJSIdentifier",
-                    name: "日本語",
-                    range: [
-                        1,
-                        4
-                    ],
-                    loc: {
-                        start: {
-                            line: 1,
-                            column: 1
-                        },
-                        end: {
-                            line: 1,
-                            column: 4
-                        }
-                    }
-                },
-                selfClosing: false,
                 openingElement: {
                     type: "XJSOpeningElement",
                     name: {
@@ -806,7 +562,6 @@ var fbTestFixture = {
                         }
                     }
                 },
-                attributes: [],
                 children: [],
                 range: [
                     0,
@@ -843,25 +598,6 @@ var fbTestFixture = {
             type: "ExpressionStatement",
             expression: {
                 type: "XJSElement",
-                name: {
-                    type: "XJSIdentifier",
-                    name: "AbC-def",
-                    range: [
-                        1,
-                        8
-                    ],
-                    loc: {
-                        start: {
-                            line: 1,
-                            column: 1
-                        },
-                        end: {
-                            line: 1,
-                            column: 8
-                        }
-                    }
-                },
-                selfClosing: false,
                 openingElement: {
                     type: "XJSOpeningElement",
                     name: {
@@ -989,62 +725,6 @@ var fbTestFixture = {
                         }
                     }
                 },
-                attributes: [
-                    {
-                        type: "XJSAttribute",
-                        name: {
-                            type: "XJSIdentifier",
-                            name: "test",
-                            range: [
-                                11,
-                                15
-                            ],
-                            loc: {
-                                start: {
-                                    line: 2,
-                                    column: 2
-                                },
-                                end: {
-                                    line: 2,
-                                    column: 6
-                                }
-                            }
-                        },
-                        value: {
-                            type: "Literal",
-                            value: "&&",
-                            raw: "\"&#x0026;&#38;\"",
-                            range: [
-                                16,
-                                31
-                            ],
-                            loc: {
-                                start: {
-                                    line: 2,
-                                    column: 7
-                                },
-                                end: {
-                                    line: 2,
-                                    column: 22
-                                }
-                            }
-                        },
-                        range: [
-                            11,
-                            31
-                        ],
-                        loc: {
-                            start: {
-                                line: 2,
-                                column: 2
-                            },
-                            end: {
-                                line: 2,
-                                column: 22
-                            }
-                        }
-                    }
-                ],
                 children: [
                     {
                         type: "Literal",
@@ -1101,25 +781,6 @@ var fbTestFixture = {
             type: "ExpressionStatement",
             expression: {
                 type: "XJSElement",
-                name: {
-                    type: "XJSIdentifier",
-                    name: "a",
-                    range: [
-                        1,
-                        2
-                    ],
-                    loc: {
-                        start: {
-                            line: 1,
-                            column: 1
-                        },
-                        end: {
-                            line: 1,
-                            column: 2
-                        }
-                    }
-                },
-                selfClosing: true,
                 openingElement: {
                     type: "XJSOpeningElement",
                     name: {
@@ -1186,25 +847,6 @@ var fbTestFixture = {
                                     },
                                     consequent: {
                                         type: "XJSElement",
-                                        name: {
-                                            type: "XJSIdentifier",
-                                            name: "c",
-                                            range: [
-                                                11,
-                                                12
-                                            ],
-                                            loc: {
-                                                start: {
-                                                    line: 1,
-                                                    column: 11
-                                                },
-                                                end: {
-                                                    line: 1,
-                                                    column: 12
-                                                }
-                                            }
-                                        },
-                                        selfClosing: true,
                                         openingElement: {
                                             type: "XJSOpeningElement",
                                             name: {
@@ -1242,7 +884,6 @@ var fbTestFixture = {
                                                 }
                                             }
                                         },
-                                        attributes: [],
                                         children: [],
                                         range: [
                                             10,
@@ -1261,25 +902,6 @@ var fbTestFixture = {
                                     },
                                     alternate: {
                                         type: "XJSElement",
-                                        name: {
-                                            type: "XJSIdentifier",
-                                            name: "d",
-                                            range: [
-                                                19,
-                                                20
-                                            ],
-                                            loc: {
-                                                start: {
-                                                    line: 1,
-                                                    column: 19
-                                                },
-                                                end: {
-                                                    line: 1,
-                                                    column: 20
-                                                }
-                                            }
-                                        },
-                                        selfClosing: true,
                                         openingElement: {
                                             type: "XJSOpeningElement",
                                             name: {
@@ -1317,7 +939,6 @@ var fbTestFixture = {
                                                 }
                                             }
                                         },
-                                        attributes: [],
                                         children: [],
                                         range: [
                                             18,
@@ -1395,245 +1016,6 @@ var fbTestFixture = {
                         }
                     }
                 },
-                attributes: [
-                    {
-                        type: "XJSAttribute",
-                        name: {
-                            type: "XJSIdentifier",
-                            name: "b",
-                            range: [
-                                3,
-                                4
-                            ],
-                            loc: {
-                                start: {
-                                    line: 1,
-                                    column: 3
-                                },
-                                end: {
-                                    line: 1,
-                                    column: 4
-                                }
-                            }
-                        },
-                        value: {
-                            type: "XJSExpressionContainer",
-                            expression: {
-                                type: "ConditionalExpression",
-                                test: {
-                                    type: "Identifier",
-                                    name: "x",
-                                    range: [
-                                        6,
-                                        7
-                                    ],
-                                    loc: {
-                                        start: {
-                                            line: 1,
-                                            column: 6
-                                        },
-                                        end: {
-                                            line: 1,
-                                            column: 7
-                                        }
-                                    }
-                                },
-                                consequent: {
-                                    type: "XJSElement",
-                                    name: {
-                                        type: "XJSIdentifier",
-                                        name: "c",
-                                        range: [
-                                            11,
-                                            12
-                                        ],
-                                        loc: {
-                                            start: {
-                                                line: 1,
-                                                column: 11
-                                            },
-                                            end: {
-                                                line: 1,
-                                                column: 12
-                                            }
-                                        }
-                                    },
-                                    selfClosing: true,
-                                    openingElement: {
-                                        type: "XJSOpeningElement",
-                                        name: {
-                                            type: "XJSIdentifier",
-                                            name: "c",
-                                            range: [
-                                                11,
-                                                12
-                                            ],
-                                            loc: {
-                                                start: {
-                                                    line: 1,
-                                                    column: 11
-                                                },
-                                                end: {
-                                                    line: 1,
-                                                    column: 12
-                                                }
-                                            }
-                                        },
-                                        selfClosing: true,
-                                        attributes: [],
-                                        range: [
-                                            10,
-                                            15
-                                        ],
-                                        loc: {
-                                            start: {
-                                                line: 1,
-                                                column: 10
-                                            },
-                                            end: {
-                                                line: 1,
-                                                column: 15
-                                            }
-                                        }
-                                    },
-                                    attributes: [],
-                                    children: [],
-                                    range: [
-                                        10,
-                                        15
-                                    ],
-                                    loc: {
-                                        start: {
-                                            line: 1,
-                                            column: 10
-                                        },
-                                        end: {
-                                            line: 1,
-                                            column: 15
-                                        }
-                                    }
-                                },
-                                alternate: {
-                                    type: "XJSElement",
-                                    name: {
-                                        type: "XJSIdentifier",
-                                        name: "d",
-                                        range: [
-                                            19,
-                                            20
-                                        ],
-                                        loc: {
-                                            start: {
-                                                line: 1,
-                                                column: 19
-                                            },
-                                            end: {
-                                                line: 1,
-                                                column: 20
-                                            }
-                                        }
-                                    },
-                                    selfClosing: true,
-                                    openingElement: {
-                                        type: "XJSOpeningElement",
-                                        name: {
-                                            type: "XJSIdentifier",
-                                            name: "d",
-                                            range: [
-                                                19,
-                                                20
-                                            ],
-                                            loc: {
-                                                start: {
-                                                    line: 1,
-                                                    column: 19
-                                                },
-                                                end: {
-                                                    line: 1,
-                                                    column: 20
-                                                }
-                                            }
-                                        },
-                                        selfClosing: true,
-                                        attributes: [],
-                                        range: [
-                                            18,
-                                            23
-                                        ],
-                                        loc: {
-                                            start: {
-                                                line: 1,
-                                                column: 18
-                                            },
-                                            end: {
-                                                line: 1,
-                                                column: 23
-                                            }
-                                        }
-                                    },
-                                    attributes: [],
-                                    children: [],
-                                    range: [
-                                        18,
-                                        23
-                                    ],
-                                    loc: {
-                                        start: {
-                                            line: 1,
-                                            column: 18
-                                        },
-                                        end: {
-                                            line: 1,
-                                            column: 23
-                                        }
-                                    }
-                                },
-                                range: [
-                                    6,
-                                    23
-                                ],
-                                loc: {
-                                    start: {
-                                        line: 1,
-                                        column: 6
-                                    },
-                                    end: {
-                                        line: 1,
-                                        column: 23
-                                    }
-                                }
-                            },
-                            range: [
-                                5,
-                                24
-                            ],
-                            loc: {
-                                start: {
-                                    line: 1,
-                                    column: 5
-                                },
-                                end: {
-                                    line: 1,
-                                    column: 24
-                                }
-                            }
-                        },
-                        range: [
-                            3,
-                            24
-                        ],
-                        loc: {
-                            start: {
-                                line: 1,
-                                column: 3
-                            },
-                            end: {
-                                line: 1,
-                                column: 24
-                            }
-                        }
-                    }
-                ],
                 children: [],
                 range: [
                     0,
@@ -1670,16 +1052,6 @@ var fbTestFixture = {
             type: 'ExpressionStatement',
             expression: {
                 type: 'XJSElement',
-                name: {
-                    type: 'XJSIdentifier',
-                    name: 'a',
-                    range: [1, 2],
-                    loc: {
-                        start: { line: 1, column: 1 },
-                        end: { line: 1, column: 2 }
-                    }
-                },
-                selfClosing: false,
                 openingElement: {
                     type: 'XJSOpeningElement',
                     name: {
@@ -1716,7 +1088,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 9 }
                     }
                 },
-                attributes: [],
                 children: [{
                     type: 'XJSExpressionContainer',
                     expression: {
@@ -1750,16 +1121,6 @@ var fbTestFixture = {
             type: 'ExpressionStatement',
             expression: {
                 type: 'XJSElement',
-                name: {
-                    type: 'XJSIdentifier',
-                    name: 'a',
-                    range: [1, 2],
-                    loc: {
-                        start: { line: 1, column: 1 },
-                        end: { line: 1, column: 2 }
-                    }
-                },
-                selfClosing: false,
                 openingElement: {
                     type: 'XJSOpeningElement',
                     name: {
@@ -1796,7 +1157,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 32 }
                     }
                 },
-                attributes: [],
                 children: [{
                     type: 'XJSExpressionContainer',
                     expression: {
@@ -1830,16 +1190,6 @@ var fbTestFixture = {
             type: 'ExpressionStatement',
             expression: {
                 type: 'XJSElement',
-                name: {
-                    type: 'XJSIdentifier',
-                    name: 'div',
-                    range: [1, 4],
-                    loc: {
-                        start: { line: 1, column: 1 },
-                        end: { line: 1, column: 4 }
-                    }
-                },
-                selfClosing: false,
                 openingElement: {
                     type: 'XJSOpeningElement',
                     name: {
@@ -1876,7 +1226,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 24 }
                     }
                 },
-                attributes: [],
                 children: [{
                     type: 'Literal',
                     value: '@test content',
