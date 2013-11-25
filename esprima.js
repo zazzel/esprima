@@ -5867,6 +5867,7 @@ parseYieldExpression: true
             wrapTrackingPreserveWhitespace =
                 wrapTrackingFunction(extra.range, extra.loc, true);
 
+            extra.parseArrayInitialiser = parseArrayInitialiser;
             extra.parseAssignmentExpression = parseAssignmentExpression;
             extra.parseBinaryExpression = parseBinaryExpression;
             extra.parseBlock = parseBlock;
@@ -5889,6 +5890,7 @@ parseYieldExpression: true
             extra.parseModuleBlock = parseModuleBlock;
             extra.parseNewExpression = parseNewExpression;
             extra.parseNonComputedProperty = parseNonComputedProperty;
+            extra.parseObjectInitialiser = parseObjectInitialiser;
             extra.parseObjectProperty = parseObjectProperty;
             extra.parseObjectPropertyKey = parseObjectPropertyKey;
             extra.parsePostfixExpression = parsePostfixExpression;
@@ -5919,6 +5921,7 @@ parseYieldExpression: true
             extra.parseXJSClosingElement = parseXJSClosingElement;
             extra.parseXJSOpeningElement = parseXJSOpeningElement;
 
+            parseArrayInitialiser = wrapTracking(extra.parseArrayInitialiser);
             parseAssignmentExpression = wrapTracking(extra.parseAssignmentExpression);
             parseBinaryExpression = wrapTracking(extra.parseBinaryExpression);
             parseBlock = wrapTracking(extra.parseBlock);
@@ -5942,6 +5945,7 @@ parseYieldExpression: true
             parseLeftHandSideExpression = wrapTracking(parseLeftHandSideExpression);
             parseNewExpression = wrapTracking(extra.parseNewExpression);
             parseNonComputedProperty = wrapTracking(extra.parseNonComputedProperty);
+            parseObjectInitialiser = wrapTracking(extra.parseObjectInitialiser);
             parseObjectProperty = wrapTracking(extra.parseObjectProperty);
             parseObjectPropertyKey = wrapTracking(extra.parseObjectPropertyKey);
             parsePostfixExpression = wrapTracking(extra.parsePostfixExpression);
@@ -5988,6 +5992,7 @@ parseYieldExpression: true
         }
 
         if (extra.range || extra.loc) {
+            parseArrayInitialiser = extra.parseArrayInitialiser;
             parseAssignmentExpression = extra.parseAssignmentExpression;
             parseBinaryExpression = extra.parseBinaryExpression;
             parseBlock = extra.parseBlock;
@@ -6012,6 +6017,7 @@ parseYieldExpression: true
             parseModuleBlock = extra.parseModuleBlock;
             parseNewExpression = extra.parseNewExpression;
             parseNonComputedProperty = extra.parseNonComputedProperty;
+            parseObjectInitialiser = extra.parseObjectInitialiser;
             parseObjectProperty = extra.parseObjectProperty;
             parseObjectPropertyKey = extra.parseObjectPropertyKey;
             parsePostfixExpression = extra.parsePostfixExpression;
