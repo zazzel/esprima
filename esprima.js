@@ -1432,11 +1432,9 @@ parseYieldExpression: true
     function advance() {
         var ch;
 
-        if (state.inXJSChild) {
-            return advanceXJSChild();
+        if (!state.inXJSChild) {
+            skipComment();
         }
-
-        skipComment();
 
         if (index >= length) {
             return {
@@ -1445,6 +1443,10 @@ parseYieldExpression: true
                 lineStart: lineStart,
                 range: [index, index]
             };
+        }
+
+        if (state.inXJSChild) {
+            return advanceXJSChild();
         }
 
         ch = source.charCodeAt(index);
@@ -5432,30 +5434,33 @@ parseYieldExpression: true
         } else if (lookahead.type === Token.XJSText) {
             token = delegate.createLiteral(lex());
         } else {
-            state.inXJSChild = false;
             token = parseXJSElement();
-            state.inXJSChild = true;
         }
         return token;
     }
 
     function parseXJSClosingElement() {
-        var name, origInXJSTag;
-        origInXJSTag = state.inXJSTag;
-        state.inXJSTag = true;
+        var name, origInXJSChild;
+        origInXJSChild = state.inXJSChild;
         state.inXJSChild = false;
+        state.inXJSTag = true;
         expect('<');
         expect('/');
         name = parseXJSIdentifier();
-        state.inXJSTag = origInXJSTag;
+        // Because advance() (called by lex() called by expect()) expects there
+        // to be a valid token after >, it needs to know whether to look for a
+        // standard JS token or an XJS text node
+        state.inXJSChild = origInXJSChild;
+        state.inXJSTag = false;
         expect('>');
         return delegate.createXJSClosingElement(name);
     }
 
     function parseXJSOpeningElement() {
-        var name, attribute, attributes = [], selfClosing = false, origInXJSTag;
+        var name, attribute, attributes = [], selfClosing = false, origInXJSChild;
 
-        origInXJSTag = state.inXJSTag;
+        origInXJSChild = state.inXJSChild;
+        state.inXJSChild = false;
         state.inXJSTag = true;
 
         expect('<');
@@ -5468,10 +5473,14 @@ parseYieldExpression: true
             attributes.push(parseXJSAttribute());
         }
 
-        state.inXJSTag = origInXJSTag;
+        state.inXJSTag = false;
 
         if (lookahead.value === '/') {
             expect('/');
+            // Because advance() (called by lex() called by expect()) expects
+            // there to be a valid token after >, it needs to know whether to
+            // look for a standard JS token or an XJS text node
+            state.inXJSChild = origInXJSChild;
             expect('>');
             selfClosing = true;
         } else {
@@ -5484,12 +5493,12 @@ parseYieldExpression: true
     function parseXJSElement() {
         var openingElement, closingElement, children = [], origInXJSChild;
 
+        origInXJSChild = state.inXJSChild;
         openingElement = parseXJSOpeningElement();
 
         if (!openingElement.selfClosing) {
-            origInXJSChild = state.inXJSChild;
             while (index < length) {
-                state.inXJSChild = false; // </ should not be considered in the child
+                state.inXJSChild = false; // Call lookahead2() with inXJSChild = false because </ should not be considered in the child
                 if (lookahead.value === '<' && lookahead2().value === '/') {
                     break;
                 }
@@ -6198,6 +6207,8 @@ parseYieldExpression: true
             inFunctionBody: false,
             inIteration: false,
             inSwitch: false,
+            inXJSChild: false,
+            inXJSTag: false,
             yieldAllowed: false,
             yieldFound: false
         };
