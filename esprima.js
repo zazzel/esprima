@@ -5374,6 +5374,8 @@ parseYieldExpression: true
                         'expression'
                 );
             }
+        } else if (match('<')) {
+            value = parseXJSElement();
         } else if (lookahead.type === Token.XJSText) {
             value = delegate.createLiteral(lex());
         } else {
@@ -5440,8 +5442,9 @@ parseYieldExpression: true
     }
 
     function parseXJSClosingElement() {
-        var name, origInXJSChild;
+        var name, origInXJSChild, origInXJSTag;
         origInXJSChild = state.inXJSChild;
+        origInXJSTag = state.inXJSTag;
         state.inXJSChild = false;
         state.inXJSTag = true;
         expect('<');
@@ -5451,15 +5454,16 @@ parseYieldExpression: true
         // to be a valid token after >, it needs to know whether to look for a
         // standard JS token or an XJS text node
         state.inXJSChild = origInXJSChild;
-        state.inXJSTag = false;
+        state.inXJSTag = origInXJSTag;
         expect('>');
         return delegate.createXJSClosingElement(name);
     }
 
     function parseXJSOpeningElement() {
-        var name, attribute, attributes = [], selfClosing = false, origInXJSChild;
+        var name, attribute, attributes = [], selfClosing = false, origInXJSChild, origInXJSTag;
 
         origInXJSChild = state.inXJSChild;
+        origInXJSTag = state.inXJSTag;
         state.inXJSChild = false;
         state.inXJSTag = true;
 
@@ -5473,7 +5477,7 @@ parseYieldExpression: true
             attributes.push(parseXJSAttribute());
         }
 
-        state.inXJSTag = false;
+        state.inXJSTag = origInXJSTag;
 
         if (lookahead.value === '/') {
             expect('/');
@@ -5491,9 +5495,10 @@ parseYieldExpression: true
     }
 
     function parseXJSElement() {
-        var openingElement, closingElement, children = [], origInXJSChild;
+        var openingElement, closingElement, children = [], origInXJSChild, origInXJSTag;
 
         origInXJSChild = state.inXJSChild;
+        origInXJSTag = state.inXJSTag;
         openingElement = parseXJSOpeningElement();
 
         if (!openingElement.selfClosing) {
@@ -5507,6 +5512,7 @@ parseYieldExpression: true
                 children.push(parseXJSChild());
             }
             state.inXJSChild = origInXJSChild;
+            state.inXJSTag = origInXJSTag;
             closingElement = parseXJSClosingElement();
             if (closingElement.name.namespace !== openingElement.name.namespace || closingElement.name.name !== openingElement.name.name) {
                 throwError({}, Messages.ExpectedXJSClosingTag, openingElement.name.namespace ? openingElement.name.namespace + ':' + openingElement.name.name : openingElement.name.name);
