@@ -2190,7 +2190,7 @@ parseYieldExpression: true
             throwError(token, Messages.UnexpectedNumber);
         }
 
-        if (token.type === Token.StringLiteral) {
+        if (token.type === Token.StringLiteral || token.type === Token.XJSText) {
             throwError(token, Messages.UnexpectedString);
         }
 
