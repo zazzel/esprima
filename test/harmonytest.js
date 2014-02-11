@@ -1102,6 +1102,150 @@ var harmonyTestFixture = {
             }
         },
 
+        'e => ({ property: 42 })': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'ArrowFunctionExpression',
+                id: null,
+                params: [{
+                    type: 'Identifier',
+                    name: 'e',
+                    range: [0, 1],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 1 }
+                    }
+                }],
+                defaults: [],
+                body: {
+                    type: 'ObjectExpression',
+                    properties: [{
+                        type: 'Property',
+                        key: {
+                            type: 'Identifier',
+                            name: 'property',
+                            range: [8, 16],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 16 }
+                            }
+                        },
+                        value: {
+                            type: 'Literal',
+                            value: 42,
+                            raw: '42',
+                            range: [18, 20],
+                            loc: {
+                                start: { line: 1, column: 18 },
+                                end: { line: 1, column: 20 }
+                            }
+                        },
+                        kind: 'init',
+                        method: false,
+                        shorthand: false,
+                        range: [8, 20],
+                        loc: {
+                            start: { line: 1, column: 8 },
+                            end: { line: 1, column: 20 }
+                        }
+                    }],
+                    range: [6, 22],
+                    loc: {
+                        start: { line: 1, column: 6 },
+                        end: { line: 1, column: 22 }
+                    }
+                },
+                rest: null,
+                generator: false,
+                expression: true,
+                range: [0, 23],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 23 }
+                }
+            },
+            range: [0, 23],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 23 }
+            }
+        },
+
+        // Not an object!
+        'e => { label: 42 }': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'ArrowFunctionExpression',
+                id: null,
+                params: [{
+                    type: 'Identifier',
+                    name: 'e',
+                    range: [0, 1],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 1 }
+                    }
+                }],
+                defaults: [],
+                body: {
+                    type: 'BlockStatement',
+                    body: [{
+                        type: 'LabeledStatement',
+                        label: {
+                            type: 'Identifier',
+                            name: 'label',
+                            range: [7, 12],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 12 }
+                            }
+                        },
+                        body: {
+                            type: 'ExpressionStatement',
+                            expression: {
+                                type: 'Literal',
+                                value: 42,
+                                raw: '42',
+                                range: [14, 16],
+                                loc: {
+                                    start: { line: 1, column: 14 },
+                                    end: { line: 1, column: 16 }
+                                }
+                            },
+                            range: [14, 17],
+                            loc: {
+                                start: { line: 1, column: 14 },
+                                end: { line: 1, column: 17 }
+                            }
+                        },
+                        range: [7, 17],
+                        loc: {
+                            start: { line: 1, column: 7 },
+                            end: { line: 1, column: 17 }
+                        }
+                    }],
+                    range: [5, 18],
+                    loc: {
+                        start: { line: 1, column: 5 },
+                        end: { line: 1, column: 18 }
+                    }
+                },
+                rest: null,
+                generator: false,
+                expression: false,
+                range: [0, 18],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 18 }
+                }
+            },
+            range: [0, 18],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 18 }
+            }
+        },
+
         '(a, b) => { 42; }': {
             type: 'ExpressionStatement',
             expression: {
@@ -6006,6 +6150,73 @@ var harmonyTestFixture = {
                 column: 17,
                 message: 'Error: Line 1: Missing yield in generator'
             }]
+        },
+
+        '(function* () { yield yield 10 })': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'FunctionExpression',
+                id: null,
+                params: [],
+                defaults: [],
+                body: {
+                    type: 'BlockStatement',
+                    body: [{
+                        type: 'ExpressionStatement',
+                        expression: {
+                            type: 'YieldExpression',
+                            argument: {
+                                type: 'YieldExpression',
+                                argument: {
+                                    type: 'Literal',
+                                    value: 10,
+                                    raw: '10',
+                                    range: [28, 30],
+                                    loc: {
+                                        start: { line: 1, column: 28 },
+                                        end: { line: 1, column: 30 }
+                                    }
+                                },
+                                delegate: false,
+                                range: [22, 30],
+                                loc: {
+                                    start: { line: 1, column: 22 },
+                                    end: { line: 1, column: 30 }
+                                }
+                            },
+                            delegate: false,
+                            range: [16, 30],
+                            loc: {
+                                start: { line: 1, column: 16 },
+                                end: { line: 1, column: 30 }
+                            }
+                        },
+                        range: [16, 31],
+                        loc: {
+                            start: { line: 1, column: 16 },
+                            end: { line: 1, column: 31 }
+                        }
+                    }],
+                    range: [14, 32],
+                    loc: {
+                        start: { line: 1, column: 14 },
+                        end: { line: 1, column: 32 }
+                    }
+                },
+                rest: null,
+                generator: true,
+                expression: false,
+                range: [1, 32],
+                loc: {
+                    start: { line: 1, column: 1 },
+                    end: { line: 1, column: 32 }
+                }
+            },
+            range: [0, 33],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 33 }
+            }
         }
 
     },
@@ -8524,128 +8735,6 @@ var harmonyTestFixture = {
             description: 'Illegal duplicate property in class definition'
         },
 
-    },
-
-    'Expression Closures': {
-
-        'function a() 1' : {
-            type: 'FunctionDeclaration',
-            id: {
-                type: 'Identifier',
-                name: 'a',
-                range: [
-                    9,
-                    10
-                ],
-                loc: {
-                    start: {
-                        line: 1,
-                        column: 9
-                    },
-                    end: {
-                        line: 1,
-                        column: 10
-                    }
-                }
-            },
-            params: [],
-            defaults: [],
-            body: {
-                type: 'Literal',
-                value: 1,
-                raw: '1',
-                range: [
-                    13,
-                    14
-                ],
-                loc: {
-                    start: {
-                        line: 1,
-                        column: 13
-                    },
-                    end: {
-                        line: 1,
-                        column: 14
-                    }
-                }
-            },
-            rest: null,
-            generator: false,
-            expression: true,
-            range: [
-                0,
-                14
-            ],
-            loc: {
-                start: {
-                    line: 1,
-                    column: 0
-                },
-                end: {
-                    line: 1,
-                    column: 14
-                }
-            }
-        },
-
-        'function a() {} // not an expression': {
-            type: 'FunctionDeclaration',
-            id: {
-                type: 'Identifier',
-                name: 'a',
-                range: [
-                    9,
-                    10
-                ],
-                loc: {
-                    start: {
-                        line: 1,
-                        column: 9
-                    },
-                    end: {
-                        line: 1,
-                        column: 10
-                    }
-                }
-            },
-            params: [],
-            defaults: [],
-            body: {
-                type: 'BlockStatement',
-                body: [],
-                range: [
-                    13,
-                    15
-                ],
-                loc: {
-                    start: {
-                        line: 1,
-                        column: 13
-                    },
-                    end: {
-                        line: 1,
-                        column: 15
-                    }
-                }
-            },
-            rest: null,
-            generator: false,
-            expression: false,
-            range: [
-                0,
-                15
-            ],
-            loc: {
-                start: {
-                    line: 1,
-                    column: 0
-                },
-                end: {
-                    line: 1,
-                    column: 15
-                }
-            }
-        }
     },
 
     'ES6: Default parameters': {
@@ -12090,13 +12179,6 @@ var harmonyTestFixture = {
             message: 'Error: Line 1: Illegal yield expression'
         },
 
-        '(function* () { yield yield 10 })': {
-            index: 27,
-            lineNumber: 1,
-            column: 28,
-            message: 'Error: Line 1: Illegal yield expression'
-        },
-
         '(function* () { })': {
             index: 17,
             lineNumber: 1,
@@ -12167,11 +12249,11 @@ var harmonyTestFixture = {
             message: 'Error: Line 1: Unexpected token ILLEGAL'
         },
 
-        'function () 1; // even with expression closures, must be named': {
-            index: 9,
+        'function a() 1 // expression closure is not supported': {
+            index: 13,
             lineNumber: 1,
-            column: 10,
-            message:  'Error: Line 1: Unexpected token ('
+            column: 14,
+            message: 'Error: Line 1: Unexpected number'
         },
 
         '[a,b if (a)] // (a,b)': {
