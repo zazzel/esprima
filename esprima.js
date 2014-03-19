@@ -83,6 +83,7 @@ parseYieldExpression: true
         delegate,
         lookahead,
         state,
+        createLocationMarkerOpt,
         extra;
 
     Token = {
@@ -2939,22 +2940,27 @@ parseYieldExpression: true
     // 11.11 Binary Logical Operators
 
     function parseBinaryExpression() {
-        var expr, token, prec, previousAllowIn, stack, right, operator, left, i;
+        var expr, token, prec, previousAllowIn, stack, right, operator, left, i,
+            marker, markers;
 
         previousAllowIn = state.allowIn;
         state.allowIn = true;
 
-        expr = parseUnaryExpression();
+        marker = createLocationMarkerOpt();
+        left = parseUnaryExpression();
 
         token = lookahead;
         prec = binaryPrecedence(token, previousAllowIn);
         if (prec === 0) {
-            return expr;
+            return left;
         }
         token.prec = prec;
         lex();
 
-        stack = [expr, token, parseUnaryExpression()];
+        markers = [marker, createLocationMarkerOpt()];
+        right = parseUnaryExpression();
+
+        stack = [left, token, right];
 
         while ((prec = binaryPrecedence(lookahead, previousAllowIn)) > 0) {
 
@@ -2963,14 +2969,24 @@ parseYieldExpression: true
                 right = stack.pop();
                 operator = stack.pop().value;
                 left = stack.pop();
-                stack.push(delegate.createBinaryExpression(operator, left, right));
+                expr = delegate.createBinaryExpression(operator, left, right);
+                markers.pop();
+                marker = markers.pop();
+                if (marker) {
+                    marker.end();
+                    marker.apply(expr);
+                }
+                stack.push(expr);
+                markers.push(marker);
             }
 
             // Shift.
             token = lex();
             token.prec = prec;
             stack.push(token);
-            stack.push(parseUnaryExpression());
+            markers.push(createLocationMarkerOpt());
+            expr = parseUnaryExpression();
+            stack.push(expr);
         }
 
         state.allowIn = previousAllowIn;
@@ -2978,10 +2994,17 @@ parseYieldExpression: true
         // Final reduce to clean-up the stack.
         i = stack.length - 1;
         expr = stack[i];
+        markers.pop();
         while (i > 1) {
             expr = delegate.createBinaryExpression(stack[i - 1].value, stack[i - 2], expr);
             i -= 2;
+            marker = markers.pop();
+            if (marker) {
+                marker.end();
+                marker.apply(expr);
+            }
         }
+
         return expr;
     }
 
@@ -4952,257 +4975,257 @@ parseYieldExpression: true
     XHTMLEntities = {
         quot: '\u0022',
         amp: '&',
-        apos: "\u0027",
-        lt: "<",
-        gt: ">",
-        nbsp: "\u00A0",
-        iexcl: "\u00A1",
-        cent: "\u00A2",
-        pound: "\u00A3",
-        curren: "\u00A4",
-        yen: "\u00A5",
-        brvbar: "\u00A6",
-        sect: "\u00A7",
-        uml: "\u00A8",
-        copy: "\u00A9",
-        ordf: "\u00AA",
-        laquo: "\u00AB",
-        not: "\u00AC",
-        shy: "\u00AD",
-        reg: "\u00AE",
-        macr: "\u00AF",
-        deg: "\u00B0",
-        plusmn: "\u00B1",
-        sup2: "\u00B2",
-        sup3: "\u00B3",
-        acute: "\u00B4",
-        micro: "\u00B5",
-        para: "\u00B6",
-        middot: "\u00B7",
-        cedil: "\u00B8",
-        sup1: "\u00B9",
-        ordm: "\u00BA",
-        raquo: "\u00BB",
-        frac14: "\u00BC",
-        frac12: "\u00BD",
-        frac34: "\u00BE",
-        iquest: "\u00BF",
-        Agrave: "\u00C0",
-        Aacute: "\u00C1",
-        Acirc: "\u00C2",
-        Atilde: "\u00C3",
-        Auml: "\u00C4",
-        Aring: "\u00C5",
-        AElig: "\u00C6",
-        Ccedil: "\u00C7",
-        Egrave: "\u00C8",
-        Eacute: "\u00C9",
-        Ecirc: "\u00CA",
-        Euml: "\u00CB",
-        Igrave: "\u00CC",
-        Iacute: "\u00CD",
-        Icirc: "\u00CE",
-        Iuml: "\u00CF",
-        ETH: "\u00D0",
-        Ntilde: "\u00D1",
-        Ograve: "\u00D2",
-        Oacute: "\u00D3",
-        Ocirc: "\u00D4",
-        Otilde: "\u00D5",
-        Ouml: "\u00D6",
-        times: "\u00D7",
-        Oslash: "\u00D8",
-        Ugrave: "\u00D9",
-        Uacute: "\u00DA",
-        Ucirc: "\u00DB",
-        Uuml: "\u00DC",
-        Yacute: "\u00DD",
-        THORN: "\u00DE",
-        szlig: "\u00DF",
-        agrave: "\u00E0",
-        aacute: "\u00E1",
-        acirc: "\u00E2",
-        atilde: "\u00E3",
-        auml: "\u00E4",
-        aring: "\u00E5",
-        aelig: "\u00E6",
-        ccedil: "\u00E7",
-        egrave: "\u00E8",
-        eacute: "\u00E9",
-        ecirc: "\u00EA",
-        euml: "\u00EB",
-        igrave: "\u00EC",
-        iacute: "\u00ED",
-        icirc: "\u00EE",
-        iuml: "\u00EF",
-        eth: "\u00F0",
-        ntilde: "\u00F1",
-        ograve: "\u00F2",
-        oacute: "\u00F3",
-        ocirc: "\u00F4",
-        otilde: "\u00F5",
-        ouml: "\u00F6",
-        divide: "\u00F7",
-        oslash: "\u00F8",
-        ugrave: "\u00F9",
-        uacute: "\u00FA",
-        ucirc: "\u00FB",
-        uuml: "\u00FC",
-        yacute: "\u00FD",
-        thorn: "\u00FE",
-        yuml: "\u00FF",
-        OElig: "\u0152",
-        oelig: "\u0153",
-        Scaron: "\u0160",
-        scaron: "\u0161",
-        Yuml: "\u0178",
-        fnof: "\u0192",
-        circ: "\u02C6",
-        tilde: "\u02DC",
-        Alpha: "\u0391",
-        Beta: "\u0392",
-        Gamma: "\u0393",
-        Delta: "\u0394",
-        Epsilon: "\u0395",
-        Zeta: "\u0396",
-        Eta: "\u0397",
-        Theta: "\u0398",
-        Iota: "\u0399",
-        Kappa: "\u039A",
-        Lambda: "\u039B",
-        Mu: "\u039C",
-        Nu: "\u039D",
-        Xi: "\u039E",
-        Omicron: "\u039F",
-        Pi: "\u03A0",
-        Rho: "\u03A1",
-        Sigma: "\u03A3",
-        Tau: "\u03A4",
-        Upsilon: "\u03A5",
-        Phi: "\u03A6",
-        Chi: "\u03A7",
-        Psi: "\u03A8",
-        Omega: "\u03A9",
-        alpha: "\u03B1",
-        beta: "\u03B2",
-        gamma: "\u03B3",
-        delta: "\u03B4",
-        epsilon: "\u03B5",
-        zeta: "\u03B6",
-        eta: "\u03B7",
-        theta: "\u03B8",
-        iota: "\u03B9",
-        kappa: "\u03BA",
-        lambda: "\u03BB",
-        mu: "\u03BC",
-        nu: "\u03BD",
-        xi: "\u03BE",
-        omicron: "\u03BF",
-        pi: "\u03C0",
-        rho: "\u03C1",
-        sigmaf: "\u03C2",
-        sigma: "\u03C3",
-        tau: "\u03C4",
-        upsilon: "\u03C5",
-        phi: "\u03C6",
-        chi: "\u03C7",
-        psi: "\u03C8",
-        omega: "\u03C9",
-        thetasym: "\u03D1",
-        upsih: "\u03D2",
-        piv: "\u03D6",
-        ensp: "\u2002",
-        emsp: "\u2003",
-        thinsp: "\u2009",
-        zwnj: "\u200C",
-        zwj: "\u200D",
-        lrm: "\u200E",
-        rlm: "\u200F",
-        ndash: "\u2013",
-        mdash: "\u2014",
-        lsquo: "\u2018",
-        rsquo: "\u2019",
-        sbquo: "\u201A",
-        ldquo: "\u201C",
-        rdquo: "\u201D",
-        bdquo: "\u201E",
-        dagger: "\u2020",
-        Dagger: "\u2021",
-        bull: "\u2022",
-        hellip: "\u2026",
-        permil: "\u2030",
-        prime: "\u2032",
-        Prime: "\u2033",
-        lsaquo: "\u2039",
-        rsaquo: "\u203A",
-        oline: "\u203E",
-        frasl: "\u2044",
-        euro: "\u20AC",
-        image: "\u2111",
-        weierp: "\u2118",
-        real: "\u211C",
-        trade: "\u2122",
-        alefsym: "\u2135",
-        larr: "\u2190",
-        uarr: "\u2191",
-        rarr: "\u2192",
-        darr: "\u2193",
-        harr: "\u2194",
-        crarr: "\u21B5",
-        lArr: "\u21D0",
-        uArr: "\u21D1",
-        rArr: "\u21D2",
-        dArr: "\u21D3",
-        hArr: "\u21D4",
-        forall: "\u2200",
-        part: "\u2202",
-        exist: "\u2203",
-        empty: "\u2205",
-        nabla: "\u2207",
-        isin: "\u2208",
-        notin: "\u2209",
-        ni: "\u220B",
-        prod: "\u220F",
-        sum: "\u2211",
-        minus: "\u2212",
-        lowast: "\u2217",
-        radic: "\u221A",
-        prop: "\u221D",
-        infin: "\u221E",
-        ang: "\u2220",
-        and: "\u2227",
-        or: "\u2228",
-        cap: "\u2229",
-        cup: "\u222A",
-        "int": "\u222B",
-        there4: "\u2234",
-        sim: "\u223C",
-        cong: "\u2245",
-        asymp: "\u2248",
-        ne: "\u2260",
-        equiv: "\u2261",
-        le: "\u2264",
-        ge: "\u2265",
-        sub: "\u2282",
-        sup: "\u2283",
-        nsub: "\u2284",
-        sube: "\u2286",
-        supe: "\u2287",
-        oplus: "\u2295",
-        otimes: "\u2297",
-        perp: "\u22A5",
-        sdot: "\u22C5",
-        lceil: "\u2308",
-        rceil: "\u2309",
-        lfloor: "\u230A",
-        rfloor: "\u230B",
-        lang: "\u2329",
-        rang: "\u232A",
-        loz: "\u25CA",
-        spades: "\u2660",
-        clubs: "\u2663",
-        hearts: "\u2665",
-        diams: "\u2666"
+        apos: '\u0027',
+        lt: '<',
+        gt: '>',
+        nbsp: '\u00A0',
+        iexcl: '\u00A1',
+        cent: '\u00A2',
+        pound: '\u00A3',
+        curren: '\u00A4',
+        yen: '\u00A5',
+        brvbar: '\u00A6',
+        sect: '\u00A7',
+        uml: '\u00A8',
+        copy: '\u00A9',
+        ordf: '\u00AA',
+        laquo: '\u00AB',
+        not: '\u00AC',
+        shy: '\u00AD',
+        reg: '\u00AE',
+        macr: '\u00AF',
+        deg: '\u00B0',
+        plusmn: '\u00B1',
+        sup2: '\u00B2',
+        sup3: '\u00B3',
+        acute: '\u00B4',
+        micro: '\u00B5',
+        para: '\u00B6',
+        middot: '\u00B7',
+        cedil: '\u00B8',
+        sup1: '\u00B9',
+        ordm: '\u00BA',
+        raquo: '\u00BB',
+        frac14: '\u00BC',
+        frac12: '\u00BD',
+        frac34: '\u00BE',
+        iquest: '\u00BF',
+        Agrave: '\u00C0',
+        Aacute: '\u00C1',
+        Acirc: '\u00C2',
+        Atilde: '\u00C3',
+        Auml: '\u00C4',
+        Aring: '\u00C5',
+        AElig: '\u00C6',
+        Ccedil: '\u00C7',
+        Egrave: '\u00C8',
+        Eacute: '\u00C9',
+        Ecirc: '\u00CA',
+        Euml: '\u00CB',
+        Igrave: '\u00CC',
+        Iacute: '\u00CD',
+        Icirc: '\u00CE',
+        Iuml: '\u00CF',
+        ETH: '\u00D0',
+        Ntilde: '\u00D1',
+        Ograve: '\u00D2',
+        Oacute: '\u00D3',
+        Ocirc: '\u00D4',
+        Otilde: '\u00D5',
+        Ouml: '\u00D6',
+        times: '\u00D7',
+        Oslash: '\u00D8',
+        Ugrave: '\u00D9',
+        Uacute: '\u00DA',
+        Ucirc: '\u00DB',
+        Uuml: '\u00DC',
+        Yacute: '\u00DD',
+        THORN: '\u00DE',
+        szlig: '\u00DF',
+        agrave: '\u00E0',
+        aacute: '\u00E1',
+        acirc: '\u00E2',
+        atilde: '\u00E3',
+        auml: '\u00E4',
+        aring: '\u00E5',
+        aelig: '\u00E6',
+        ccedil: '\u00E7',
+        egrave: '\u00E8',
+        eacute: '\u00E9',
+        ecirc: '\u00EA',
+        euml: '\u00EB',
+        igrave: '\u00EC',
+        iacute: '\u00ED',
+        icirc: '\u00EE',
+        iuml: '\u00EF',
+        eth: '\u00F0',
+        ntilde: '\u00F1',
+        ograve: '\u00F2',
+        oacute: '\u00F3',
+        ocirc: '\u00F4',
+        otilde: '\u00F5',
+        ouml: '\u00F6',
+        divide: '\u00F7',
+        oslash: '\u00F8',
+        ugrave: '\u00F9',
+        uacute: '\u00FA',
+        ucirc: '\u00FB',
+        uuml: '\u00FC',
+        yacute: '\u00FD',
+        thorn: '\u00FE',
+        yuml: '\u00FF',
+        OElig: '\u0152',
+        oelig: '\u0153',
+        Scaron: '\u0160',
+        scaron: '\u0161',
+        Yuml: '\u0178',
+        fnof: '\u0192',
+        circ: '\u02C6',
+        tilde: '\u02DC',
+        Alpha: '\u0391',
+        Beta: '\u0392',
+        Gamma: '\u0393',
+        Delta: '\u0394',
+        Epsilon: '\u0395',
+        Zeta: '\u0396',
+        Eta: '\u0397',
+        Theta: '\u0398',
+        Iota: '\u0399',
+        Kappa: '\u039A',
+        Lambda: '\u039B',
+        Mu: '\u039C',
+        Nu: '\u039D',
+        Xi: '\u039E',
+        Omicron: '\u039F',
+        Pi: '\u03A0',
+        Rho: '\u03A1',
+        Sigma: '\u03A3',
+        Tau: '\u03A4',
+        Upsilon: '\u03A5',
+        Phi: '\u03A6',
+        Chi: '\u03A7',
+        Psi: '\u03A8',
+        Omega: '\u03A9',
+        alpha: '\u03B1',
+        beta: '\u03B2',
+        gamma: '\u03B3',
+        delta: '\u03B4',
+        epsilon: '\u03B5',
+        zeta: '\u03B6',
+        eta: '\u03B7',
+        theta: '\u03B8',
+        iota: '\u03B9',
+        kappa: '\u03BA',
+        lambda: '\u03BB',
+        mu: '\u03BC',
+        nu: '\u03BD',
+        xi: '\u03BE',
+        omicron: '\u03BF',
+        pi: '\u03C0',
+        rho: '\u03C1',
+        sigmaf: '\u03C2',
+        sigma: '\u03C3',
+        tau: '\u03C4',
+        upsilon: '\u03C5',
+        phi: '\u03C6',
+        chi: '\u03C7',
+        psi: '\u03C8',
+        omega: '\u03C9',
+        thetasym: '\u03D1',
+        upsih: '\u03D2',
+        piv: '\u03D6',
+        ensp: '\u2002',
+        emsp: '\u2003',
+        thinsp: '\u2009',
+        zwnj: '\u200C',
+        zwj: '\u200D',
+        lrm: '\u200E',
+        rlm: '\u200F',
+        ndash: '\u2013',
+        mdash: '\u2014',
+        lsquo: '\u2018',
+        rsquo: '\u2019',
+        sbquo: '\u201A',
+        ldquo: '\u201C',
+        rdquo: '\u201D',
+        bdquo: '\u201E',
+        dagger: '\u2020',
+        Dagger: '\u2021',
+        bull: '\u2022',
+        hellip: '\u2026',
+        permil: '\u2030',
+        prime: '\u2032',
+        Prime: '\u2033',
+        lsaquo: '\u2039',
+        rsaquo: '\u203A',
+        oline: '\u203E',
+        frasl: '\u2044',
+        euro: '\u20AC',
+        image: '\u2111',
+        weierp: '\u2118',
+        real: '\u211C',
+        trade: '\u2122',
+        alefsym: '\u2135',
+        larr: '\u2190',
+        uarr: '\u2191',
+        rarr: '\u2192',
+        darr: '\u2193',
+        harr: '\u2194',
+        crarr: '\u21B5',
+        lArr: '\u21D0',
+        uArr: '\u21D1',
+        rArr: '\u21D2',
+        dArr: '\u21D3',
+        hArr: '\u21D4',
+        forall: '\u2200',
+        part: '\u2202',
+        exist: '\u2203',
+        empty: '\u2205',
+        nabla: '\u2207',
+        isin: '\u2208',
+        notin: '\u2209',
+        ni: '\u220B',
+        prod: '\u220F',
+        sum: '\u2211',
+        minus: '\u2212',
+        lowast: '\u2217',
+        radic: '\u221A',
+        prop: '\u221D',
+        infin: '\u221E',
+        ang: '\u2220',
+        and: '\u2227',
+        or: '\u2228',
+        cap: '\u2229',
+        cup: '\u222A',
+        'int': '\u222B',
+        there4: '\u2234',
+        sim: '\u223C',
+        cong: '\u2245',
+        asymp: '\u2248',
+        ne: '\u2260',
+        equiv: '\u2261',
+        le: '\u2264',
+        ge: '\u2265',
+        sub: '\u2282',
+        sup: '\u2283',
+        nsub: '\u2284',
+        sube: '\u2286',
+        supe: '\u2287',
+        oplus: '\u2295',
+        otimes: '\u2297',
+        perp: '\u22A5',
+        sdot: '\u22C5',
+        lceil: '\u2308',
+        rceil: '\u2309',
+        lfloor: '\u230A',
+        rfloor: '\u230B',
+        lang: '\u2329',
+        rang: '\u232A',
+        loz: '\u25CA',
+        spades: '\u2660',
+        clubs: '\u2663',
+        hearts: '\u2665',
+        diams: '\u2666'
     };
 
     function isXJSIdentifierStart(ch) {
@@ -5631,25 +5654,6 @@ parseYieldExpression: true
             this.loc.end.column = index - lineStart;
         },
 
-        applyGroup: function (node) {
-            if (extra.range) {
-                node.groupRange = [this.range[0], this.range[1]];
-            }
-            if (extra.loc) {
-                node.groupLoc = {
-                    start: {
-                        line: this.loc.start.line,
-                        column: this.loc.start.column
-                    },
-                    end: {
-                        line: this.loc.end.line,
-                        column: this.loc.end.column
-                    }
-                };
-                node = delegate.postProcess(node);
-            }
-        },
-
         apply: function (node) {
             var nodeType = typeof node;
             assert(nodeType === 'object',
@@ -5679,22 +5683,16 @@ parseYieldExpression: true
         return new LocationMarker();
     }
 
-    function trackGroupExpression() {
-        var marker, expr;
-
+    createLocationMarkerOpt = function () {
+        // parseBinaryExpression is too entangled with the location tracking,
+        // so instead of forking it, adding a new API that returns the markers
+        // conditionally.
+        if (!extra.loc && !extra.range) {
+            return null;
+        }
         skipComment();
-        marker = createLocationMarker();
-        expect('(');
-
-        ++state.parenthesizedCount;
-        expr = parseExpression();
-
-        expect(')');
-        marker.end();
-        marker.applyGroup(expr);
-
-        return expr;
-    }
+        return new LocationMarker();
+    };
 
     function trackLeftHandSideExpression() {
         var marker, expr;
@@ -5755,72 +5753,9 @@ parseYieldExpression: true
         return expr;
     }
 
-    function filterGroup(node) {
-        var n, i, entry;
-
-        n = (Object.prototype.toString.apply(node) === '[object Array]') ? [] : {};
-        for (i in node) {
-            if (node.hasOwnProperty(i) && i !== 'groupRange' && i !== 'groupLoc') {
-                entry = node[i];
-                if (entry === null || typeof entry !== 'object' || entry instanceof RegExp) {
-                    n[i] = entry;
-                } else {
-                    n[i] = filterGroup(entry);
-                }
-            }
-        }
-        return n;
-    }
-
     function wrapTrackingFunction(range, loc, preserveWhitespace) {
 
         return function (parseFunction) {
-
-            function isBinary(node) {
-                return node.type === Syntax.LogicalExpression ||
-                    node.type === Syntax.BinaryExpression;
-            }
-
-            function visit(node) {
-                var start, end;
-
-                if (isBinary(node.left)) {
-                    visit(node.left);
-                }
-                if (isBinary(node.right)) {
-                    visit(node.right);
-                }
-
-                if (range) {
-                    if (node.left.groupRange || node.right.groupRange) {
-                        start = node.left.groupRange ? node.left.groupRange[0] : node.left.range[0];
-                        end = node.right.groupRange ? node.right.groupRange[1] : node.right.range[1];
-                        node.range = [start, end];
-                    } else if (typeof node.range === 'undefined') {
-                        start = node.left.range[0];
-                        end = node.right.range[1];
-                        node.range = [start, end];
-                    }
-                }
-                if (loc) {
-                    if (node.left.groupLoc || node.right.groupLoc) {
-                        start = node.left.groupLoc ? node.left.groupLoc.start : node.left.loc.start;
-                        end = node.right.groupLoc ? node.right.groupLoc.end : node.right.loc.end;
-                        node.loc = {
-                            start: start,
-                            end: end
-                        };
-                        node = delegate.postProcess(node);
-                    } else if (typeof node.loc === 'undefined') {
-                        node.loc = {
-                            start: node.left.loc.start,
-                            end: node.right.loc.end
-                        };
-                        node = delegate.postProcess(node);
-                    }
-                }
-            }
-
             return function () {
                 var marker, node;
 
@@ -5832,16 +5767,9 @@ parseYieldExpression: true
                 node = parseFunction.apply(null, arguments);
                 marker.end();
 
-                if (range && typeof node.range === 'undefined') {
+                if ((range && typeof node.range === 'undefined') ||
+                        (loc && typeof node.loc === 'undefined')) {
                     marker.apply(node);
-                }
-
-                if (loc && typeof node.loc === 'undefined') {
-                    marker.apply(node);
-                }
-
-                if (isBinary(node)) {
-                    visit(node);
                 }
 
                 return node;
@@ -5860,10 +5788,8 @@ parseYieldExpression: true
 
         if (extra.range || extra.loc) {
 
-            extra.parseGroupExpression = parseGroupExpression;
             extra.parseLeftHandSideExpression = parseLeftHandSideExpression;
             extra.parseLeftHandSideExpressionAllowCall = parseLeftHandSideExpressionAllowCall;
-            parseGroupExpression = trackGroupExpression;
             parseLeftHandSideExpression = trackLeftHandSideExpression;
             parseLeftHandSideExpressionAllowCall = trackLeftHandSideExpressionAllowCall;
 
@@ -6014,7 +5940,6 @@ parseYieldExpression: true
             parseFunctionExpression = extra.parseFunctionExpression;
             parseImportDeclaration = extra.parseImportDeclaration;
             parseImportSpecifier = extra.parseImportSpecifier;
-            parseGroupExpression = extra.parseGroupExpression;
             parseLeftHandSideExpression = extra.parseLeftHandSideExpression;
             parseLeftHandSideExpressionAllowCall = extra.parseLeftHandSideExpressionAllowCall;
             parseModuleDeclaration = extra.parseModuleDeclaration;
@@ -6261,9 +6186,6 @@ parseYieldExpression: true
             if (typeof extra.errors !== 'undefined') {
                 program.errors = extra.errors;
             }
-            if (extra.range || extra.loc) {
-                program.body = filterGroup(program.body);
-            }
         } catch (e) {
             throw e;
         } finally {
@@ -6275,7 +6197,7 @@ parseYieldExpression: true
     }
 
     // Sync with *.json manifests.
-    exports.version = '1.1.0-dev-harmony';
+    exports.version = '3001.0001.0000-dev-harmony-fb';
 
     exports.tokenize = tokenize;
 
