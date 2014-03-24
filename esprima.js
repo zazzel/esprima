@@ -5841,6 +5841,7 @@ parseYieldExpression: true
             extra.parseClassDeclaration = parseClassDeclaration;
             extra.parseClassExpression = parseClassExpression;
             extra.parseClassBody = parseClassBody;
+            extra.parseForStatement = parseForStatement;
             extra.parseXJSIdentifier = parseXJSIdentifier;
             extra.parseXJSChild = parseXJSChild;
             extra.parseXJSAttribute = parseXJSAttribute;
@@ -5895,6 +5896,7 @@ parseYieldExpression: true
             parseClassDeclaration = wrapTracking(extra.parseClassDeclaration);
             parseClassExpression = wrapTracking(extra.parseClassExpression);
             parseClassBody = wrapTracking(extra.parseClassBody);
+            parseForStatement = wrapTracking(extra.parseForStatement);
             parseXJSIdentifier = wrapTracking(extra.parseXJSIdentifier);
             parseXJSChild = wrapTrackingPreserveWhitespace(extra.parseXJSChild);
             parseXJSAttribute = wrapTracking(extra.parseXJSAttribute);
@@ -5967,6 +5969,7 @@ parseYieldExpression: true
             parseClassDeclaration = extra.parseClassDeclaration;
             parseClassExpression = extra.parseClassExpression;
             parseClassBody = extra.parseClassBody;
+            parseForStatement = extra.parseForStatement;
             parseXJSIdentifier = extra.parseXJSIdentifier;
             parseXJSChild = extra.parseXJSChild;
             parseXJSAttribute = extra.parseXJSAttribute;
