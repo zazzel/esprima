@@ -19511,6 +19511,7 @@ var testFixture = {
                 WhileStatement: 'WhileStatement',
                 WithStatement: 'WithStatement',
                 XJSIdentifier: 'XJSIdentifier',
+                XJSMemberExpression: "XJSMemberExpression",
                 XJSEmptyExpression: "XJSEmptyExpression",
                 XJSExpressionContainer: "XJSExpressionContainer",
                 XJSElement: 'XJSElement',
