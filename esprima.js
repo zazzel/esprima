@@ -189,6 +189,7 @@ parseYieldExpression: true
         WhileStatement: 'WhileStatement',
         WithStatement: 'WithStatement',
         XJSIdentifier: 'XJSIdentifier',
+        XJSMemberExpression: 'XJSMemberExpression',
         XJSEmptyExpression: 'XJSEmptyExpression',
         XJSExpressionContainer: 'XJSExpressionContainer',
         XJSElement: 'XJSElement',
@@ -266,6 +267,7 @@ parseYieldExpression: true
         EachNotAllowed:  'Each is not supported',
         InvalidXJSTagName: 'XJS tag name can not be empty',
         InvalidXJSAttributeValue: 'XJS value should be either an expression or a quoted XJS text',
+        XJSMemberExpressionNamespaceNotAllowed: 'XJS member expressions does not support namespaces',
         ExpectedXJSClosingTag: 'Expected corresponding XJS closing tag for %0'
     };
 
@@ -1798,6 +1800,18 @@ parseYieldExpression: true
                 type: Syntax.XJSIdentifier,
                 name: name,
                 namespace: namespace
+            };
+        },
+
+        createXJSMemberExpression: function (object, property) {
+            if (property.namespace) {
+                throwError({}, Messages.XJSMemberExpressionNamespaceNotAllowed);
+            }
+
+            return {
+                type: Syntax.XJSMemberExpression,
+                object: object,
+                property: property
             };
         },
 
@@ -5292,6 +5306,18 @@ parseYieldExpression: true
         diams: '\u2666'
     };
 
+    function getQualifiedXJSName(object) {
+        if (object.type === Syntax.XJSIdentifier) {
+            return (object.namespace ? object.namespace + ':' : '') + object.name;
+        }
+        if (object.type === Syntax.XJSMemberExpression) {
+            return (
+                getQualifiedXJSName(object.object) + '.' +
+                getQualifiedXJSName(object.property)
+            );
+        }
+    }
+
     function isXJSIdentifierStart(ch) {
         // exclude backslash (\)
         return (ch !== 92) && isIdentifierStart(ch);
@@ -5442,6 +5468,30 @@ parseYieldExpression: true
         return markerApply(marker, delegate.createXJSIdentifier(token.value, token.namespace));
     }
 
+    function parseXJSMemberExpression() {
+        var marker = markerCreate(),
+            expr = parseXJSIdentifier();
+
+        if (expr.namespace) {
+            throwError({}, Messages.XJSMemberExpressionNamespaceNotAllowed);
+        }
+
+        while (match('.')) {
+            lex();
+            expr = markerApply(marker, delegate.createXJSMemberExpression(expr, parseXJSIdentifier()));
+        }
+
+        return expr;
+    }
+
+    function parseXJSElementName() {
+        if (lookahead2().value === '.') {
+            return parseXJSMemberExpression();
+        }
+
+        return parseXJSIdentifier();
+    }
+
     function parseXJSAttributeValue() {
         var value, marker;
         if (match('{')) {
@@ -5531,7 +5581,7 @@ parseYieldExpression: true
         state.inXJSTag = true;
         expect('<');
         expect('/');
-        name = parseXJSIdentifier();
+        name = parseXJSElementName();
         // Because advance() (called by lex() called by expect()) expects there
         // to be a valid token after >, it needs to know whether to look for a
         // standard JS token or an XJS text node
@@ -5551,7 +5601,7 @@ parseYieldExpression: true
 
         expect('<');
 
-        name = parseXJSIdentifier();
+        name = parseXJSElementName();
 
         while (index < length &&
                 lookahead.value !== '/' &&
@@ -5596,8 +5646,8 @@ parseYieldExpression: true
             state.inXJSChild = origInXJSChild;
             state.inXJSTag = origInXJSTag;
             closingElement = parseXJSClosingElement();
-            if (closingElement.name.namespace !== openingElement.name.namespace || closingElement.name.name !== openingElement.name.name) {
-                throwError({}, Messages.ExpectedXJSClosingTag, openingElement.name.namespace ? openingElement.name.namespace + ':' + openingElement.name.name : openingElement.name.name);
+            if (getQualifiedXJSName(closingElement.name) !== getQualifiedXJSName(openingElement.name)) {
+                throwError({}, Messages.ExpectedXJSClosingTag, getQualifiedXJSName(openingElement.name));
             }
         }
 

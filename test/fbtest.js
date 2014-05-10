@@ -1736,6 +1736,216 @@ var fbTestFixture = {
                     "column": 57
                 }
             }
+        },
+
+        '<a.b></a.b>': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'XJSElement',
+                openingElement: {
+                    type: 'XJSOpeningElement',
+                    name: {
+                        type: 'XJSMemberExpression',
+                        object: {
+                            type: 'XJSIdentifier',
+                            name: 'a',
+                            range: [1, 2],
+                            loc: {
+                                start: { line: 1, column: 1 },
+                                end: { line: 1, column: 2 }
+                            }
+                        },
+                        property: {
+                            type: 'XJSIdentifier',
+                            name: 'b',
+                            range: [3, 4],
+                            loc: {
+                                start: { line: 1, column: 3 },
+                                end: { line: 1, column: 4 }
+                            }
+                        },
+                        range: [1, 4],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 4 }
+                        }
+                    },
+                    selfClosing: false,
+                    attributes: [],
+                    range: [0, 5],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 5 }
+                    }
+                },
+                closingElement: {
+                    type: 'XJSClosingElement',
+                    name: {
+                        type: 'XJSMemberExpression',
+                        object: {
+                            type: 'XJSIdentifier',
+                            name: 'a',
+                            range: [7, 8],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 8 }
+                            }
+                        },
+                        property: {
+                            type: 'XJSIdentifier',
+                            name: 'b',
+                            range: [9, 10],
+                            loc: {
+                                start: { line: 1, column: 9 },
+                                end: { line: 1, column: 10 }
+                            }
+                        },
+                        range: [7, 10],
+                        loc: {
+                            start: { line: 1, column: 7 },
+                            end: { line: 1, column: 10 }
+                        }
+                    },
+                    range: [5, 11],
+                    loc: {
+                        start: { line: 1, column: 5 },
+                        end: { line: 1, column: 11 }
+                    }
+                },
+                children: [],
+                range: [0, 11],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 11 }
+                }
+            },
+            range: [0, 11],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 11 }
+            }
+        },
+
+        '<a.b.c></a.b.c>': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'XJSElement',
+                openingElement: {
+                    type: 'XJSOpeningElement',
+                    name: {
+                        type: 'XJSMemberExpression',
+                        object: {
+                            type: 'XJSMemberExpression',
+                            object: {
+                                type: 'XJSIdentifier',
+                                name: 'a',
+                                range: [1, 2],
+                                loc: {
+                                    start: { line: 1, column: 1 },
+                                    end: { line: 1, column: 2 }
+                                }
+                            },
+                            property: {
+                                type: 'XJSIdentifier',
+                                name: 'b',
+                                range: [3, 4],
+                                loc: {
+                                    start: { line: 1, column: 3 },
+                                    end: { line: 1, column: 4 }
+                                }
+                            },
+                            range: [1, 4],
+                            loc: {
+                                start: { line: 1, column: 1 },
+                                end: { line: 1, column: 4 }
+                            }
+                        },
+                        property: {
+                            type: 'XJSIdentifier',
+                            name: 'c',
+                            range: [5, 6],
+                            loc: {
+                                start: { line: 1, column: 5 },
+                                end: { line: 1, column: 6 }
+                            }
+                        },
+                        range: [1, 6],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 6 }
+                        }
+                    },
+                    selfClosing: false,
+                    attributes: [],
+                    range: [0, 7],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 7 }
+                    }
+                },
+                closingElement: {
+                    type: 'XJSClosingElement',
+                    name: {
+                        type: 'XJSMemberExpression',
+                        object: {
+                            type: 'XJSMemberExpression',
+                            object: {
+                                type: 'XJSIdentifier',
+                                name: 'a',
+                                range: [9, 10],
+                                loc: {
+                                    start: { line: 1, column: 9 },
+                                    end: { line: 1, column: 10 }
+                                }
+                            },
+                            property: {
+                                type: 'XJSIdentifier',
+                                name: 'b',
+                                range: [11, 12],
+                                loc: {
+                                    start: { line: 1, column: 11 },
+                                    end: { line: 1, column: 12 }
+                                }
+                            },
+                            range: [9, 12],
+                            loc: {
+                                start: { line: 1, column: 9 },
+                                end: { line: 1, column: 12 }
+                            }
+                        },
+                        property: {
+                            type: 'XJSIdentifier',
+                            name: 'c',
+                            range: [13, 14],
+                            loc: {
+                                start: { line: 1, column: 13 },
+                                end: { line: 1, column: 14 }
+                            }
+                        },
+                        range: [9, 14],
+                        loc: {
+                            start: { line: 1, column: 9 },
+                            end: { line: 1, column: 14 }
+                        }
+                    },
+                    range: [7, 15],
+                    loc: {
+                        start: { line: 1, column: 7 },
+                        end: { line: 1, column: 15 }
+                    }
+                },
+                children: [],
+                range: [0, 15],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 15 }
+                }
+            },
+            range: [0, 15],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 15 }
+            }
         }
     },
 
@@ -1796,6 +2006,55 @@ var fbTestFixture = {
             lineNumber: 1,
             column: 10,
             message: "Error: Line 1: Expected corresponding XJS closing tag for a:b",
+        },
+
+        '<a:b.c></a:b.c>': {
+            index: 4,
+            lineNumber: 1,
+            column: 5,
+            message: 'Error: Line 1: XJS member expressions does not support namespaces'
+        },
+
+        '<a.b:c></a.b:c>': {
+            index: 6,
+            lineNumber: 1,
+            column: 7,
+            message: 'Error: Line 1: XJS member expressions does not support namespaces'
+        },
+
+        '<a.b.c></a>': {
+            index: 11,
+            lineNumber: 1,
+            column: 12,
+            message: "Error: Line 1: Expected corresponding XJS closing tag for a.b.c"
+        },
+
+        '<.a></.a>': {
+            index: 1,
+            lineNumber: 1,
+            column: 2,
+            message: "Error: Line 1: Unexpected token ."
+        },
+
+        '<a.></a.>': {
+            index: 3,
+            lineNumber: 1,
+            column: 4,
+            message: "Error: Line 1: Unexpected token >"
+        },
+
+        '<a[foo]></a[foo]>': {
+            index: 2,
+            lineNumber: 1,
+            column: 3,
+            message: "Error: Line 1: Unexpected token ["
+        },
+
+        '<a[\'foo\']></a[\'foo\']>': {
+            index: 2,
+            lineNumber: 1,
+            column: 3,
+            message: "Error: Line 1: Unexpected token ["
         },
 
         '<a><a />': {
