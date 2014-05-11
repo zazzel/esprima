@@ -188,6 +188,7 @@ parseYieldExpression: true
         WhileStatement: 'WhileStatement',
         WithStatement: 'WithStatement',
         XJSIdentifier: 'XJSIdentifier',
+        XJSNamespacedName: 'XJSNamespacedName',
         XJSMemberExpression: 'XJSMemberExpression',
         XJSEmptyExpression: 'XJSEmptyExpression',
         XJSExpressionContainer: 'XJSExpressionContainer',
@@ -263,9 +264,7 @@ parseYieldExpression: true
         ComprehensionRequiresBlock: 'Comprehension must have at least one block',
         ComprehensionError:  'Comprehension Error',
         EachNotAllowed:  'Each is not supported',
-        InvalidXJSTagName: 'XJS tag name can not be empty',
         InvalidXJSAttributeValue: 'XJS value should be either an expression or a quoted XJS text',
-        XJSMemberExpressionNamespaceNotAllowed: 'XJS member expressions does not support namespaces',
         ExpectedXJSClosingTag: 'Expected corresponding XJS closing tag for %0'
     };
 
@@ -1794,19 +1793,22 @@ parseYieldExpression: true
             };
         },
 
-        createXJSIdentifier: function (name, namespace) {
+        createXJSIdentifier: function (name) {
             return {
                 type: Syntax.XJSIdentifier,
-                name: name,
-                namespace: namespace
+                name: name
+            };
+        },
+
+        createXJSNamespacedName: function (namespace, name) {
+            return {
+                type: Syntax.XJSNamespacedName,
+                namespace: namespace,
+                name: name
             };
         },
 
         createXJSMemberExpression: function (object, property) {
-            if (property.namespace) {
-                throwError({}, Messages.XJSMemberExpressionNamespaceNotAllowed);
-            }
-
             return {
                 type: Syntax.XJSMemberExpression,
                 object: object,
@@ -5302,7 +5304,10 @@ parseYieldExpression: true
 
     function getQualifiedXJSName(object) {
         if (object.type === Syntax.XJSIdentifier) {
-            return (object.namespace ? object.namespace + ':' : '') + object.name;
+            return object.name;
+        }
+        if (object.type === Syntax.XJSNamespacedName) {
+            return object.namespace.name + ':' + object.name.name;
         }
         if (object.type === Syntax.XJSMemberExpression) {
             return (
@@ -5323,7 +5328,7 @@ parseYieldExpression: true
     }
 
     function scanXJSIdentifier() {
-        var ch, start, id = '', namespace;
+        var ch, start, value = '';
 
         start = index;
         while (index < length) {
@@ -5331,31 +5336,12 @@ parseYieldExpression: true
             if (!isXJSIdentifierPart(ch)) {
                 break;
             }
-            id += source[index++];
-        }
-
-        if (ch === 58) { // :
-            ++index;
-            namespace = id;
-            id = '';
-
-            while (index < length) {
-                ch = source.charCodeAt(index);
-                if (!isXJSIdentifierPart(ch)) {
-                    break;
-                }
-                id += source[index++];
-            }
-        }
-
-        if (!id) {
-            throwError({}, Messages.InvalidXJSTagName);
+            value += source[index++];
         }
 
         return {
             type: Token.XJSIdentifier,
-            value: id,
-            namespace: namespace,
+            value: value,
             lineNumber: lineNumber,
             lineStart: lineStart,
             range: [start, index]
@@ -5459,16 +5445,22 @@ parseYieldExpression: true
         }
 
         token = lex();
-        return markerApply(marker, delegate.createXJSIdentifier(token.value, token.namespace));
+        return markerApply(marker, delegate.createXJSIdentifier(token.value));
+    }
+
+    function parseXJSNamespacedName() {
+        var namespace, name, marker = markerCreate();
+
+        namespace = parseXJSIdentifier();
+        expect(':');
+        name = parseXJSIdentifier();
+
+        return markerApply(marker, delegate.createXJSNamespacedName(namespace, name));
     }
 
     function parseXJSMemberExpression() {
         var marker = markerCreate(),
             expr = parseXJSIdentifier();
-
-        if (expr.namespace) {
-            throwError({}, Messages.XJSMemberExpressionNamespaceNotAllowed);
-        }
 
         while (match('.')) {
             lex();
@@ -5479,8 +5471,19 @@ parseYieldExpression: true
     }
 
     function parseXJSElementName() {
+        if (lookahead2().value === ':') {
+            return parseXJSNamespacedName();
+        }
         if (lookahead2().value === '.') {
             return parseXJSMemberExpression();
+        }
+
+        return parseXJSIdentifier();
+    }
+
+    function parseXJSAttributeName() {
+        if (lookahead2().value === ':') {
+            return parseXJSNamespacedName();
         }
 
         return parseXJSIdentifier();
@@ -5543,7 +5546,7 @@ parseYieldExpression: true
     function parseXJSAttribute() {
         var name, marker = markerCreate();
 
-        name = parseXJSIdentifier();
+        name = parseXJSAttributeName();
 
         // HTML empty attribute
         if (match('=')) {
