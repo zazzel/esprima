@@ -1983,7 +1983,66 @@ var fbTestFixture = {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 15 }
             }
-        }
+        },
+
+        // In order to more useful parse errors, we disallow following an
+        // XJSElement by a less-than symbol. In the rare case that the binary
+        // operator was intended, the tag can be wrapped in parentheses:
+        '(<div />) < x;': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'BinaryExpression',
+                operator: '<',
+                left: {
+                    type: 'XJSElement',
+                    openingElement: {
+                        type: 'XJSOpeningElement',
+                        name: {
+                            type: 'XJSIdentifier',
+                            name: 'div',
+                            range: [2, 5],
+                            loc: {
+                                start: { line: 1, column: 2 },
+                                end: { line: 1, column: 5 }
+                            }
+                        },
+                        selfClosing: true,
+                        attributes: [],
+                        range: [1, 8],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 8 }
+                        }
+                    },
+                    children: [],
+                    range: [1, 8],
+                    loc: {
+                        start: { line: 1, column: 1 },
+                        end: { line: 1, column: 8 }
+                    }
+                },
+                right: {
+                    type: 'Identifier',
+                    name: 'x',
+                    range: [12, 13],
+                    loc: {
+                        start: { line: 1, column: 12 },
+                        end: { line: 1, column: 13 }
+                    }
+                },
+                range: [0, 13],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 13 }
+                }
+            },
+            range: [0, 14],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 14 }
+            }
+        },
+
     },
 
     'Invalid XJS Syntax': {
@@ -2105,6 +2164,20 @@ var fbTestFixture = {
             lineNumber: 1,
             column: 8,
             message: 'Error: Line 1: XJS attributes must only be assigned a non-empty expression'
+        },
+
+        'var x = <div>one</div><div>two</div>;': {
+            index: 22,
+            lineNumber: 1,
+            column: 23,
+            message: 'Error: Line 1: Adjacent XJS elements must be wrapped in an enclosing tag'
+        },
+
+        'var x = <div>one</div> /* intervening comment */ <div>two</div>;': {
+            index: 49,
+            lineNumber: 1,
+            column: 50,
+            message: 'Error: Line 1: Adjacent XJS elements must be wrapped in an enclosing tag'
         },
 
         '<a>{"str";}</a>': {

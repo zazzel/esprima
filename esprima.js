@@ -265,7 +265,8 @@ parseYieldExpression: true
         ComprehensionError:  'Comprehension Error',
         EachNotAllowed:  'Each is not supported',
         InvalidXJSAttributeValue: 'XJS value should be either an expression or a quoted XJS text',
-        ExpectedXJSClosingTag: 'Expected corresponding XJS closing tag for %0'
+        ExpectedXJSClosingTag: 'Expected corresponding XJS closing tag for %0',
+        AdjacentXJSElements: 'Adjacent XJS elements must be wrapped in an enclosing tag'
     };
 
     // See also tools/generate-unicode-regex.py.
@@ -5646,6 +5647,19 @@ parseYieldExpression: true
             if (getQualifiedXJSName(closingElement.name) !== getQualifiedXJSName(openingElement.name)) {
                 throwError({}, Messages.ExpectedXJSClosingTag, getQualifiedXJSName(openingElement.name));
             }
+        }
+
+        // When (erroneously) writing two adjacent tags like
+        //
+        //     var x = <div>one</div><div>two</div>;
+        //
+        // the default error message is a bit incomprehensible. Since it's
+        // rarely (never?) useful to write a less-than sign after an XJS
+        // element, we disallow it here in the parser in order to provide a
+        // better error message. (In the rare case that the less-than operator
+        // was intended, the left tag can be wrapped in parentheses.)
+        if (!origInXJSChild && match('<')) {
+            throwError(lookahead, Messages.AdjacentXJSElements);
         }
 
         return markerApply(marker, delegate.createXJSElement(openingElement, closingElement, children));
