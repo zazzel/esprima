@@ -5638,7 +5638,6 @@ parseYieldExpression: true
                     break;
                 }
                 state.inXJSChild = true;
-                peek(); // reset lookahead token
                 children.push(parseXJSChild());
             }
             state.inXJSChild = origInXJSChild;
