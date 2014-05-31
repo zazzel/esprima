@@ -5383,7 +5383,7 @@ parseYieldExpression: true
             if (ch === '&') {
                 str += scanXJSEntity();
             } else {
-                ch = source[index++];
+                index++;
                 if (isLineTerminator(ch.charCodeAt(0))) {
                     ++lineNumber;
                     lineStart = index;
@@ -5668,7 +5668,10 @@ parseYieldExpression: true
     function collectToken() {
         var start, loc, token, range, value;
 
-        skipComment();
+        if (!state.inXJSChild) {
+            skipComment();
+        }
+
         start = index;
         loc = {
             start: {
