@@ -171,6 +171,7 @@ parseYieldExpression: true
         ReturnStatement: 'ReturnStatement',
         SequenceExpression: 'SequenceExpression',
         SpreadElement: 'SpreadElement',
+        SpreadProperty: 'SpreadProperty',
         SwitchCase: 'SwitchCase',
         SwitchStatement: 'SwitchStatement',
         TaggedTemplateExpression: 'TaggedTemplateExpression',
@@ -244,6 +245,7 @@ parseYieldExpression: true
         ParameterAfterRestParameter: 'Rest parameter must be final parameter of an argument list',
         DefaultRestParameter: 'Rest parameter can not have a default value',
         ElementAfterSpreadElement: 'Spread must be the final element of an element list',
+        PropertyAfterSpreadProperty: 'A rest property must be the final property of an object literal',
         ObjectPatternAsRestParameter: 'Invalid rest parameter',
         ObjectPatternAsSpread: 'Invalid spread argument',
         StrictFunctionName:  'Function name may not be eval or arguments in strict mode',
@@ -2056,6 +2058,13 @@ parseYieldExpression: true
             };
         },
 
+        createSpreadProperty: function (argument) {
+            return {
+                type: Syntax.SpreadProperty,
+                argument: argument
+            };
+        },
+
         createTaggedTemplateExpression: function (tag, quasi) {
             return {
                 type: Syntax.TaggedTemplateExpression,
@@ -2573,6 +2582,12 @@ parseYieldExpression: true
         throwUnexpected(lex());
     }
 
+    function parseObjectSpreadProperty() {
+        var marker = markerCreate();
+        expect('...');
+        return markerApply(marker, delegate.createSpreadProperty(parseAssignmentExpression()));
+    }
+
     function parseObjectInitialiser() {
         var properties = [], property, name, key, kind, map = {}, toString = String,
             marker = markerCreate();
@@ -2580,33 +2595,37 @@ parseYieldExpression: true
         expect('{');
 
         while (!match('}')) {
-            property = parseObjectProperty();
-
-            if (property.key.type === Syntax.Identifier) {
-                name = property.key.name;
+            if (match('...')) {
+                property = parseObjectSpreadProperty();
             } else {
-                name = toString(property.key.value);
-            }
-            kind = (property.kind === 'init') ? PropertyKind.Data : (property.kind === 'get') ? PropertyKind.Get : PropertyKind.Set;
+                property = parseObjectProperty();
 
-            key = '$' + name;
-            if (Object.prototype.hasOwnProperty.call(map, key)) {
-                if (map[key] === PropertyKind.Data) {
-                    if (strict && kind === PropertyKind.Data) {
-                        throwErrorTolerant({}, Messages.StrictDuplicateProperty);
-                    } else if (kind !== PropertyKind.Data) {
-                        throwErrorTolerant({}, Messages.AccessorDataProperty);
-                    }
+                if (property.key.type === Syntax.Identifier) {
+                    name = property.key.name;
                 } else {
-                    if (kind === PropertyKind.Data) {
-                        throwErrorTolerant({}, Messages.AccessorDataProperty);
-                    } else if (map[key] & kind) {
-                        throwErrorTolerant({}, Messages.AccessorGetSet);
-                    }
+                    name = toString(property.key.value);
                 }
-                map[key] |= kind;
-            } else {
-                map[key] = kind;
+                kind = (property.kind === 'init') ? PropertyKind.Data : (property.kind === 'get') ? PropertyKind.Get : PropertyKind.Set;
+
+                key = '$' + name;
+                if (Object.prototype.hasOwnProperty.call(map, key)) {
+                    if (map[key] === PropertyKind.Data) {
+                        if (strict && kind === PropertyKind.Data) {
+                            throwErrorTolerant({}, Messages.StrictDuplicateProperty);
+                        } else if (kind !== PropertyKind.Data) {
+                            throwErrorTolerant({}, Messages.AccessorDataProperty);
+                        }
+                    } else {
+                        if (kind === PropertyKind.Data) {
+                            throwErrorTolerant({}, Messages.AccessorDataProperty);
+                        } else if (map[key] & kind) {
+                            throwErrorTolerant({}, Messages.AccessorGetSet);
+                        }
+                    }
+                    map[key] |= kind;
+                } else {
+                    map[key] = kind;
+                }
             }
 
             properties.push(property);
@@ -3108,10 +3127,17 @@ parseYieldExpression: true
             expr.type = Syntax.ObjectPattern;
             for (i = 0, len = expr.properties.length; i < len; i += 1) {
                 property = expr.properties[i];
-                if (property.kind !== 'init') {
-                    throwError({}, Messages.InvalidLHSInAssignment);
+                if (property.type === Syntax.SpreadProperty) {
+                    if (i < len - 1) {
+                        throwError({}, Messages.PropertyAfterSpreadProperty);
+                    }
+                    reinterpretAsAssignmentBindingPattern(property.argument);
+                } else {
+                    if (property.kind !== 'init') {
+                        throwError({}, Messages.InvalidLHSInAssignment);
+                    }
+                    reinterpretAsAssignmentBindingPattern(property.value);
                 }
-                reinterpretAsAssignmentBindingPattern(property.value);
             }
         } else if (expr.type === Syntax.ArrayExpression) {
             expr.type = Syntax.ArrayPattern;

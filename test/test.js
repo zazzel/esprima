@@ -19550,6 +19550,7 @@ var testFixture = {
                 ReturnStatement: 'ReturnStatement',
                 SequenceExpression: 'SequenceExpression',
                 SpreadElement: 'SpreadElement',
+                SpreadProperty: 'SpreadProperty',
                 SwitchCase: 'SwitchCase',
                 SwitchStatement: 'SwitchStatement',
                 TaggedTemplateExpression: 'TaggedTemplateExpression',
