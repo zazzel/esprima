@@ -19576,6 +19576,7 @@ var testFixture = {
                 XJSClosingElement: 'XJSClosingElement',
                 XJSOpeningElement: 'XJSOpeningElement',
                 XJSAttribute: "XJSAttribute",
+                XJSSpreadAttribute: 'XJSSpreadAttribute',
                 XJSText: 'XJSText',
                 YieldExpression: 'YieldExpression'
             }

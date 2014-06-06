@@ -197,6 +197,7 @@ parseYieldExpression: true
         XJSClosingElement: 'XJSClosingElement',
         XJSOpeningElement: 'XJSOpeningElement',
         XJSAttribute: 'XJSAttribute',
+        XJSSpreadAttribute: 'XJSSpreadAttribute',
         XJSText: 'XJSText',
         YieldExpression: 'YieldExpression'
     };
@@ -1791,6 +1792,14 @@ parseYieldExpression: true
         createXJSAttribute: function (name, value) {
             return {
                 type: Syntax.XJSAttribute,
+                name: name,
+                value: value
+            };
+        },
+
+        createXJSSpreadAttribute: function (name, value) {
+            return {
+                type: Syntax.XJSSpreadAttribute,
                 name: name,
                 value: value
             };
@@ -5570,8 +5579,35 @@ parseYieldExpression: true
         return markerApply(marker, delegate.createXJSExpressionContainer(expression));
     }
 
+    function parseXJSSpreadAttribute() {
+        var expression, origInXJSChild, origInXJSTag, marker = markerCreate();
+
+        origInXJSChild = state.inXJSChild;
+        origInXJSTag = state.inXJSTag;
+        state.inXJSChild = false;
+        state.inXJSTag = false;
+
+        expect('{');
+        expect('...');
+
+        expression = parseAssignmentExpression();
+
+        state.inXJSChild = origInXJSChild;
+        state.inXJSTag = origInXJSTag;
+
+        expect('}');
+
+        return markerApply(marker, delegate.createXJSSpreadAttribute(expression));
+    }
+
     function parseXJSAttribute() {
-        var name, marker = markerCreate();
+        var name, marker;
+
+        if (match('{')) {
+            return parseXJSSpreadAttribute();
+        }
+
+        marker = markerCreate();
 
         name = parseXJSAttributeName();
 
