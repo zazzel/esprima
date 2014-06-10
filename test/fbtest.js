@@ -2071,7 +2071,7 @@ var fbTestFixture = {
                     "attributes": [
                         {
                             "type": "XJSSpreadAttribute",
-                            "name": {
+                            "argument": {
                                 "type": "Identifier",
                                 "name": "props",
                                 "range": [
@@ -2180,7 +2180,7 @@ var fbTestFixture = {
                     "attributes": [
                         {
                             "type": "XJSSpreadAttribute",
-                            "name": {
+                            "argument": {
                                 "type": "Identifier",
                                 "name": "props",
                                 "range": [

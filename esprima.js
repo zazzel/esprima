@@ -1797,11 +1797,10 @@ parseYieldExpression: true
             };
         },
 
-        createXJSSpreadAttribute: function (name, value) {
+        createXJSSpreadAttribute: function (argument) {
             return {
                 type: Syntax.XJSSpreadAttribute,
-                name: name,
-                value: value
+                argument: argument
             };
         },
 
