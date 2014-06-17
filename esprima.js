@@ -5417,7 +5417,7 @@ parseYieldExpression: true
             if (ch === '&') {
                 str += scanXJSEntity();
             } else {
-                ch = source[index++];
+                index++;
                 if (isLineTerminator(ch.charCodeAt(0))) {
                     ++lineNumber;
                     lineStart = index;
@@ -5699,7 +5699,6 @@ parseYieldExpression: true
                     break;
                 }
                 state.inXJSChild = true;
-                peek(); // reset lookahead token
                 children.push(parseXJSChild());
             }
             state.inXJSChild = origInXJSChild;
@@ -5729,7 +5728,10 @@ parseYieldExpression: true
     function collectToken() {
         var start, loc, token, range, value;
 
-        skipComment();
+        if (!state.inXJSChild) {
+            skipComment();
+        }
+
         start = index;
         loc = {
             start: {
@@ -6058,7 +6060,7 @@ parseYieldExpression: true
     }
 
     // Sync with *.json manifests.
-    exports.version = '4001.0001.0000-dev-harmony-fb';
+    exports.version = '4001.0002.0000-dev-harmony-fb';
 
     exports.tokenize = tokenize;
 
