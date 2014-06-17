@@ -19550,6 +19550,7 @@ var testFixture = {
                 ReturnStatement: 'ReturnStatement',
                 SequenceExpression: 'SequenceExpression',
                 SpreadElement: 'SpreadElement',
+                SpreadProperty: 'SpreadProperty',
                 SwitchCase: 'SwitchCase',
                 SwitchStatement: 'SwitchStatement',
                 TaggedTemplateExpression: 'TaggedTemplateExpression',
@@ -19575,6 +19576,7 @@ var testFixture = {
                 XJSClosingElement: 'XJSClosingElement',
                 XJSOpeningElement: 'XJSOpeningElement',
                 XJSAttribute: "XJSAttribute",
+                XJSSpreadAttribute: 'XJSSpreadAttribute',
                 XJSText: 'XJSText',
                 YieldExpression: 'YieldExpression'
             }

@@ -2043,6 +2043,529 @@ var fbTestFixture = {
             }
         },
 
+        '<div {...props} />': {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "XJSElement",
+                "openingElement": {
+                    "type": "XJSOpeningElement",
+                    "name": {
+                        "type": "XJSIdentifier",
+                        "name": "div",
+                        "range": [
+                            1,
+                            4
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 1
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 4
+                            }
+                        }
+                    },
+                    "selfClosing": true,
+                    "attributes": [
+                        {
+                            "type": "XJSSpreadAttribute",
+                            "argument": {
+                                "type": "Identifier",
+                                "name": "props",
+                                "range": [
+                                    9,
+                                    14
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 9
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 14
+                                    }
+                                }
+                            },
+                            "range": [
+                                5,
+                                15
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 5
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 15
+                                }
+                            }
+                        }
+                    ],
+                    "range": [
+                        0,
+                        18
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 0
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 18
+                        }
+                    }
+                },
+                "children": [],
+                "range": [
+                    0,
+                    18
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 18
+                    }
+                }
+            },
+            "range": [
+                0,
+                18
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 18
+                }
+            }
+        },
+
+        '<div {...props} post="attribute" />': {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "XJSElement",
+                "openingElement": {
+                    "type": "XJSOpeningElement",
+                    "name": {
+                        "type": "XJSIdentifier",
+                        "name": "div",
+                        "range": [
+                            1,
+                            4
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 1
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 4
+                            }
+                        }
+                    },
+                    "selfClosing": true,
+                    "attributes": [
+                        {
+                            "type": "XJSSpreadAttribute",
+                            "argument": {
+                                "type": "Identifier",
+                                "name": "props",
+                                "range": [
+                                    9,
+                                    14
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 9
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 14
+                                    }
+                                }
+                            },
+                            "range": [
+                                5,
+                                15
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 5
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 15
+                                }
+                            }
+                        },
+                        {
+                            "type": "XJSAttribute",
+                            "name": {
+                                "type": "XJSIdentifier",
+                                "name": "post",
+                                "range": [
+                                    16,
+                                    20
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 16
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 20
+                                    }
+                                }
+                            },
+                            "value": {
+                                "type": "Literal",
+                                "value": "attribute",
+                                "raw": "\"attribute\"",
+                                "range": [
+                                    21,
+                                    32
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 21
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 32
+                                    }
+                                }
+                            },
+                            "range": [
+                                16,
+                                32
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 16
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 32
+                                }
+                            }
+                        }
+                    ],
+                    "range": [
+                        0,
+                        35
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 0
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 35
+                        }
+                    }
+                },
+                "children": [],
+                "range": [
+                    0,
+                    35
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 35
+                    }
+                }
+            },
+            "range": [
+                0,
+                35
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 35
+                }
+            }
+        },
+
+        '<div pre="leading" pre2="attribute" {...props}></div>': {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "XJSElement",
+                "openingElement": {
+                    "type": "XJSOpeningElement",
+                    "name": {
+                        "type": "XJSIdentifier",
+                        "name": "div",
+                        "range": [
+                            1,
+                            4
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 1
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 4
+                            }
+                        }
+                    },
+                    "selfClosing": false,
+                    "attributes": [
+                        {
+                            "type": "XJSAttribute",
+                            "name": {
+                                "type": "XJSIdentifier",
+                                "name": "pre",
+                                "range": [
+                                    5,
+                                    8
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 5
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 8
+                                    }
+                                }
+                            },
+                            "value": {
+                                "type": "Literal",
+                                "value": "leading",
+                                "raw": "\"leading\"",
+                                "range": [
+                                    9,
+                                    18
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 9
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 18
+                                    }
+                                }
+                            },
+                            "range": [
+                                5,
+                                18
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 5
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 18
+                                }
+                            }
+                        },
+                        {
+                            "type": "XJSAttribute",
+                            "name": {
+                                "type": "XJSIdentifier",
+                                "name": "pre2",
+                                "range": [
+                                    19,
+                                    23
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 19
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 23
+                                    }
+                                }
+                            },
+                            "value": {
+                                "type": "Literal",
+                                "value": "attribute",
+                                "raw": "\"attribute\"",
+                                "range": [
+                                    24,
+                                    35
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 24
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 35
+                                    }
+                                }
+                            },
+                            "range": [
+                                19,
+                                35
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 19
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 35
+                                }
+                            }
+                        },
+                        {
+                            "type": "XJSSpreadAttribute",
+                            "argument": {
+                                "type": "Identifier",
+                                "name": "props",
+                                "range": [
+                                    40,
+                                    45
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 40
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 45
+                                    }
+                                }
+                            },
+                            "range": [
+                                36,
+                                46
+                            ],
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 36
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 46
+                                }
+                            }
+                        }
+                    ],
+                    "range": [
+                        0,
+                        47
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 0
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 47
+                        }
+                    }
+                },
+                "closingElement": {
+                    "type": "XJSClosingElement",
+                    "name": {
+                        "type": "XJSIdentifier",
+                        "name": "div",
+                        "range": [
+                            49,
+                            52
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 49
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 52
+                            }
+                        }
+                    },
+                    "range": [
+                        47,
+                        53
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 47
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 53
+                        }
+                    }
+                },
+                "children": [],
+                "range": [
+                    0,
+                    53
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 53
+                    }
+                }
+            },
+            "range": [
+                0,
+                53
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 53
+                }
+            }
+        }
     },
 
     'Invalid XJS Syntax': {
@@ -2202,7 +2725,32 @@ var fbTestFixture = {
             column: 15,
             message: 'Error: Line 1: Unexpected string',
             description: 'Unexpected string'
-        }
+        },
+
+        '<div {props} />': {
+            index: 6,
+            lineNumber: 1,
+            column: 7,
+            message: 'Error: Line 1: Unexpected identifier',
+            description: 'Unexpected string'
+        },
+
+        '<div>stuff</div {...props}>': {
+            index: 16,
+            lineNumber: 1,
+            column: 17,
+            message: 'Error: Line 1: Unexpected token {',
+            description: 'Unexpected token {'
+        },
+
+        '<div {...props}>stuff</div {...props}>': {
+            index: 27,
+            lineNumber: 1,
+            column: 28,
+            message: 'Error: Line 1: Unexpected token {',
+            description: 'Unexpected token {'
+        },
+
     },
 
     'Type Annotations': {
