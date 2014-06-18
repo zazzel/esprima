@@ -166,6 +166,7 @@ parseYieldExpression: true
         NewExpression: 'NewExpression',
         ObjectExpression: 'ObjectExpression',
         ObjectPattern: 'ObjectPattern',
+        ObjectTypeAnnotation: 'ObjectTypeAnnotation',
         Program: 'Program',
         Property: 'Property',
         ReturnStatement: 'ReturnStatement',
@@ -1771,13 +1772,20 @@ parseYieldExpression: true
             };
         },
 
-        createTypeAnnotation: function (typeIdentifier, paramTypes, returnType, nullable) {
+        createTypeAnnotation: function (typeIdentifier, params, returnType, nullable) {
             return {
                 type: Syntax.TypeAnnotation,
                 id: typeIdentifier,
-                paramTypes: paramTypes,
+                params: params,
                 returnType: returnType,
                 nullable: nullable
+            };
+        },
+
+        createObjectTypeAnnotation: function (properties) {
+            return {
+                type: Syntax.ObjectTypeAnnotation,
+                properties: properties
             };
         },
 
@@ -3461,12 +3469,45 @@ parseYieldExpression: true
 
     // 12.2 Variable Statement
 
+    function parseObjectTypeAnnotation() {
+        var isMethod, marker, properties = [], property, propertyKey,
+            propertyTypeAnnotation;
+
+        expect('{');
+
+        while (!match('}')) {
+            marker = markerCreate();
+            propertyKey = parseObjectPropertyKey();
+            isMethod = match('(');
+            propertyTypeAnnotation = parseTypeAnnotation();
+            properties.push(markerApply(marker, delegate.createProperty(
+                'init',
+                propertyKey,
+                propertyTypeAnnotation,
+                isMethod,
+                false
+            )));
+
+            if (!match('}')) {
+                expect(',');
+            }
+        }
+
+        expect('}');
+
+        return delegate.createObjectTypeAnnotation(properties);
+    }
+
     function parseTypeAnnotation(dontExpectColon) {
-        var typeIdentifier = null, paramTypes = null, returnType = null,
-            nullable = false, marker = markerCreate();
+        var typeIdentifier = null, params = null, returnType = null,
+            nullable = false, marker = markerCreate(), returnTypeMarker = null;
 
         if (!dontExpectColon) {
             expect(':');
+        }
+
+        if (match('{')) {
+            return markerApply(marker, parseObjectTypeAnnotation());
         }
 
         if (match('?')) {
@@ -3476,30 +3517,32 @@ parseYieldExpression: true
 
         if (lookahead.type === Token.Identifier) {
             typeIdentifier = parseVariableIdentifier();
-        }
-
-        if (match('(')) {
+        } else if (match('(')) {
             lex();
-            paramTypes = [];
+            params = [];
             while (lookahead.type === Token.Identifier || match('?')) {
-                paramTypes.push(parseTypeAnnotation(true));
+                params.push(parseTypeAnnotatableIdentifier(true));
                 if (!match(')')) {
                     expect(',');
                 }
             }
             expect(')');
+
+            returnTypeMarker = markerCreate();
             expect('=>');
 
             if (matchKeyword('void')) {
                 lex();
             } else {
-                returnType = parseTypeAnnotation(true);
+                returnType = markerApply(returnTypeMarker, parseTypeAnnotation(true));
             }
+        } else {
+            throwUnexpected(lookahead);
         }
 
         return markerApply(marker, delegate.createTypeAnnotation(
             typeIdentifier,
-            paramTypes,
+            params,
             returnType,
             nullable
         ));
@@ -3516,12 +3559,16 @@ parseYieldExpression: true
         return markerApply(marker, delegate.createIdentifier(token.value));
     }
 
-    function parseTypeAnnotatableIdentifier() {
+    function parseTypeAnnotatableIdentifier(requireTypeAnnotation) {
         var marker = markerCreate(),
             ident = parseVariableIdentifier();
 
-        if (match(':')) {
-            return markerApply(marker, delegate.createTypeAnnotatedIdentifier(ident, parseTypeAnnotation()));
+        if (requireTypeAnnotation || match(':')) {
+            expect(':');
+            return markerApply(marker, delegate.createTypeAnnotatedIdentifier(
+                ident,
+                parseTypeAnnotation(true)
+            ));
         }
 
         return ident;

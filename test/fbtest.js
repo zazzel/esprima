@@ -2934,12 +2934,12 @@ var fbTestFixture = {
                             end: { line: 1, column: 27 }
                         }
                     },
-                    paramTypes: null,
+                    params: null,
                     returnType: null,
                     nullable: false,
-                    range: [19, 27],
+                    range: [21, 27],
                     loc: {
-                        start: { line: 1, column: 19 },
+                        start: { line: 1, column: 21 },
                         end: { line: 1, column: 27 }
                     }
                 },
@@ -3002,12 +3002,12 @@ var fbTestFixture = {
                               end: { line: 1, column: 27 }
                           }
                       },
-                      paramTypes: null,
+                      params: null,
                       returnType: null,
                       nullable: false,
-                      range: [19, 27],
+                      range: [21, 27],
                       loc: {
-                          start: { line: 1, column: 19 },
+                          start: { line: 1, column: 21 },
                           end: { line: 1, column: 27 }
                       }
                   },
@@ -3038,12 +3038,12 @@ var fbTestFixture = {
                               end: { line: 1, column: 43 }
                           }
                       },
-                      paramTypes: null,
+                      params: null,
                       returnType: null,
                       nullable: false,
-                      range: [35, 43],
+                      range: [37, 43],
                       loc: {
-                          start: { line: 1, column: 35 },
+                          start: { line: 1, column: 37 },
                           end: { line: 1, column: 43 }
                       }
                   },
@@ -3106,12 +3106,12 @@ var fbTestFixture = {
                               end: { line: 1, column: 27 }
                           }
                       },
-                      paramTypes: null,
+                      params: null,
                       returnType: null,
                       nullable: false,
-                      range: [19, 27],
+                      range: [21, 27],
                       loc: {
-                          start: { line: 1, column: 19 },
+                          start: { line: 1, column: 21 },
                           end: { line: 1, column: 27 }
                       }
                   },
@@ -3190,12 +3190,12 @@ var fbTestFixture = {
                             end: { line: 1, column: 39 }
                         }
                     },
-                    paramTypes: null,
+                    params: null,
                     returnType: null,
                     nullable: false,
-                    range: [31, 39],
+                    range: [33, 39],
                     loc: {
-                        start: { line: 1, column: 31 },
+                        start: { line: 1, column: 33 },
                         end: { line: 1, column: 39 }
                     }
                 },
@@ -3258,12 +3258,12 @@ var fbTestFixture = {
                             end: { line: 1, column: 33 }
                         }
                     },
-                    paramTypes: null,
+                    params: null,
                     returnType: null,
                     nullable: true,
-                    range: [24, 33],
+                    range: [26, 33],
                     loc: {
-                        start: { line: 1, column: 24 },
+                        start: { line: 1, column: 26 },
                         end: { line: 1, column: 33 }
                     }
                 },
@@ -3318,12 +3318,12 @@ var fbTestFixture = {
                 annotation: {
                     type: 'TypeAnnotation',
                     id: null,
-                    paramTypes: [],
+                    params: [],
                     returnType: null,
                     nullable: false,
-                    range: [21, 33],
+                    range: [23, 33],
                     loc: {
-                        start: { line: 1, column: 21 },
+                        start: { line: 1, column: 23 },
                         end: { line: 1, column: 33 }
                     }
                 },
@@ -3378,7 +3378,7 @@ var fbTestFixture = {
                 annotation: {
                     type: 'TypeAnnotation',
                     id: null,
-                    paramTypes: [],
+                    params: [],
                     returnType: {
                         type: 'TypeAnnotation',
                         id: {
@@ -3390,19 +3390,19 @@ var fbTestFixture = {
                                 end: { line: 1, column: 35 }
                             }
                         },
-                        paramTypes: null,
+                        params: null,
                         returnType: null,
                         nullable: false,
-                        range: [29, 35],
+                        range: [26, 35],
                         loc: {
-                            start: { line: 1, column: 29 },
+                            start: { line: 1, column: 26 },
                             end: { line: 1, column: 35 }
                         }
                     },
                     nullable: false,
-                    range: [21, 35],
+                    range: [23, 35],
                     loc: {
-                        start: { line: 1, column: 21 },
+                        start: { line: 1, column: 23 },
                         end: { line: 1, column: 35 }
                     }
                 },
@@ -3432,7 +3432,7 @@ var fbTestFixture = {
             }
         },
 
-        'function foo(callback: (bool) => number){}': {
+        'function foo(callback: (_:bool) => number){}': {
             type: 'FunctionDeclaration',
             id: {
                 type: 'Identifier',
@@ -3457,24 +3457,41 @@ var fbTestFixture = {
                 annotation: {
                     type: 'TypeAnnotation',
                     id: null,
-                    paramTypes: [{
-                        type: 'TypeAnnotation',
+                    params: [{
+                        type: 'TypeAnnotatedIdentifier',
                         id: {
                             type: 'Identifier',
-                            name: 'bool',
-                            range: [24, 28],
+                            name: '_',
+                            range: [24, 25],
                             loc: {
                                 start: { line: 1, column: 24 },
-                                end: { line: 1, column: 28 }
+                                end: { line: 1, column: 25}
                             }
                         },
-                        paramTypes: null,
-                        returnType: null,
-                        nullable: false,
-                        range: [24, 28],
+                        annotation: {
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'bool',
+                                range: [26, 30],
+                                loc: {
+                                    start: { line: 1, column: 26 },
+                                    end: { line: 1, column: 30 },
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            nullable: false,
+                            range: [ 26, 30 ],
+                            loc: {
+                                start: { line: 1, column: 26 },
+                                end: { line: 1, column: 30 }
+                            }
+                        },
+                        range: [24, 30],
                         loc: {
                             start: { line: 1, column: 24 },
-                            end: { line: 1, column: 28 }
+                            end: { line: 1, column: 30 }
                         }
                     }],
                     returnType: {
@@ -3482,55 +3499,55 @@ var fbTestFixture = {
                         id: {
                             type: 'Identifier',
                             name: 'number',
-                            range: [33, 39],
+                            range: [35, 41],
                             loc: {
-                                start: { line: 1, column: 33 },
-                                end: { line: 1, column: 39 }
+                                start: { line: 1, column: 35 },
+                                end: { line: 1, column: 41 }
                             }
                         },
-                        paramTypes: null,
+                        params: null,
                         returnType: null,
                         nullable: false,
-                        range: [33, 39],
+                        range: [32, 41],
                         loc: {
-                            start: { line: 1, column: 33 },
-                            end: { line: 1, column: 39 }
+                            start: { line: 1, column: 32 },
+                            end: { line: 1, column: 41 }
                         }
                     },
                     nullable: false,
-                    range: [21, 39],
+                    range: [23, 41],
                     loc: {
-                        start: { line: 1, column: 21 },
-                        end: { line: 1, column: 39 }
+                        start: { line: 1, column: 23 },
+                        end: { line: 1, column: 41 }
                     }
                 },
-                range: [13, 39],
+                range: [13, 41],
                 loc: {
                     start: { line: 1, column: 13 },
-                    end: { line: 1, column: 39 }
+                    end: { line: 1, column: 41 }
                 }
             }],
             defaults: [],
             body: {
                 type: 'BlockStatement',
                 body: [],
-                range: [40, 42],
+                range: [42, 44],
                 loc: {
-                    start: { line: 1, column: 40 },
-                    end: { line: 1, column: 42 }
+                    start: { line: 1, column: 42 },
+                    end: { line: 1, column: 44 }
                 }
             },
             rest: null,
             generator: false,
             expression: false,
-            range: [0, 42],
+            range: [0, 44],
             loc: {
                 start: { line: 1, column: 0 },
-                end: { line: 1, column: 42 }
+                end: { line: 1, column: 44 }
             }
         },
 
-        'function foo(callback: (bool, string) => number){}': {
+        'function foo(callback: (_1:bool, _2:string) => number){}': {
             type: 'FunctionDeclaration',
             id: {
                 type: 'Identifier',
@@ -3555,43 +3572,77 @@ var fbTestFixture = {
                 annotation: {
                     type: 'TypeAnnotation',
                     id: null,
-                    paramTypes: [{
-                        type: 'TypeAnnotation',
+                    params: [{
+                        type: 'TypeAnnotatedIdentifier',
                         id: {
                             type: 'Identifier',
-                            name: 'bool',
-                            range: [24, 28],
+                            name: '_1',
+                            range: [24, 26],
                             loc: {
                                 start: { line: 1, column: 24 },
-                                end: { line: 1, column: 28 }
+                                end: { line: 1, column: 26 }
                             }
                         },
-                        paramTypes: null,
-                        returnType: null,
-                        nullable: false,
-                        range: [24, 28],
+                        annotation: {
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'bool',
+                                range: [27, 31],
+                                loc: {
+                                    start: { line: 1, column: 27 },
+                                    end: { line: 1, column: 31 }
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            nullable: false,
+                            range: [27, 31],
+                            loc: {
+                                start: { line: 1, column: 27 },
+                                end: { line: 1, column: 31 }
+                            }
+                        },
+                        range: [24, 31],
                         loc: {
-                            start: { line: 1, column: 24 },
-                            end: { line: 1, column: 28 }
+                           start: { line: 1, column: 24 },
+                           end: { line: 1, column: 31 }
                         }
                     }, {
-                        type: 'TypeAnnotation',
+                        type: 'TypeAnnotatedIdentifier',
                         id: {
                             type: 'Identifier',
-                            name: 'string',
-                            range: [30, 36],
+                            name: '_2',
+                            range: [33, 35],
                             loc: {
-                                start: { line: 1, column: 30 },
-                                end: { line: 1, column: 36 }
+                                start: { line: 1, column: 33 },
+                                end: { line: 1, column: 35 }
                             }
                         },
-                        paramTypes: null,
-                        returnType: null,
-                        nullable: false,
-                        range: [30, 36],
+                        annotation: {
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'string',
+                                range: [36, 42],
+                                loc: {
+                                    start: { line: 1, column: 36 },
+                                    end: { line: 1, column: 42 }
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            nullable: false,
+                            range: [36, 42],
+                            loc: {
+                                start: { line: 1, column: 36 },
+                                end: { line: 1, column: 42 }
+                            }
+                        },
+                        range: [33, 42],
                         loc: {
-                            start: { line: 1, column: 30 },
-                            end: { line: 1, column: 36 }
+                           start: { line: 1, column: 33 },
+                           end: { line: 1, column: 42 }
                         }
                     }],
                     returnType: {
@@ -3599,51 +3650,51 @@ var fbTestFixture = {
                         id: {
                             type: 'Identifier',
                             name: 'number',
-                            range: [41, 47],
+                            range: [47, 53],
                             loc: {
-                                start: { line: 1, column: 41 },
-                                end: { line: 1, column: 47 }
+                                start: { line: 1, column: 47 },
+                                end: { line: 1, column: 53 }
                             }
                         },
-                        paramTypes: null,
+                        params: null,
                         returnType: null,
                         nullable: false,
-                        range: [41, 47],
+                        range: [44, 53],
                         loc: {
-                            start: { line: 1, column: 41 },
-                            end: { line: 1, column: 47 }
+                            start: { line: 1, column: 44 },
+                            end: { line: 1, column: 53 }
                         }
                     },
                     nullable: false,
-                    range: [21, 47],
+                    range: [23, 53],
                     loc: {
-                        start: { line: 1, column: 21 },
-                        end: { line: 1, column: 47 }
+                        start: { line: 1, column: 23 },
+                        end: { line: 1, column: 53 }
                     }
                 },
-                range: [13, 47],
+                range: [13, 53],
                 loc: {
                     start: { line: 1, column: 13 },
-                    end: { line: 1, column: 47 }
+                    end: { line: 1, column: 53 }
                 }
             }],
             defaults: [],
             body: {
                 type: 'BlockStatement',
                 body: [],
-                range: [48, 50],
+                range: [54, 56],
                 loc: {
-                    start: { line: 1, column: 48 },
-                    end: { line: 1, column: 50 }
+                    start: { line: 1, column: 54 },
+                    end: { line: 1, column: 56 }
                 }
             },
             rest: null,
             generator: false,
             expression: false,
-            range: [0, 50],
+            range: [0, 56],
             loc: {
                 start: { line: 1, column: 0 },
-                end: { line: 1, column: 50 }
+                end: { line: 1, column: 56 }
             }
         },
 
@@ -3683,7 +3734,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 21 }
                     }
                 },
-                paramTypes: null,
+                params: null,
                 returnType: null,
                 nullable: false,
                 range: [14, 21],
@@ -3727,7 +3778,7 @@ var fbTestFixture = {
             returnType: {
                 type: 'TypeAnnotation',
                 id: null,
-                paramTypes: [],
+                params: [],
                 returnType: null,
                 nullable: false,
                 range: [14, 25],
@@ -3743,7 +3794,7 @@ var fbTestFixture = {
             }
         },
 
-        'function foo():(bool) => number{}': {
+        'function foo():(_:bool) => number{}': {
             type: 'FunctionDeclaration',
             id: {
                 type: 'Identifier',
@@ -3759,10 +3810,10 @@ var fbTestFixture = {
             body: {
                 type: 'BlockStatement',
                 body: [],
-                range: [31, 33],
+                range: [33, 35],
                 loc: {
-                    start: { line: 1, column: 31 },
-                    end: { line: 1, column: 33 }
+                    start: { line: 1, column: 33 },
+                    end: { line: 1, column: 35 }
                 }
             },
             rest: null,
@@ -3771,24 +3822,41 @@ var fbTestFixture = {
             returnType: {
                 type: 'TypeAnnotation',
                 id: null,
-                paramTypes: [{
-                    type: 'TypeAnnotation',
+                params: [{
+                    type: 'TypeAnnotatedIdentifier',
                     id: {
                         type: 'Identifier',
-                        name: 'bool',
-                        range: [16, 20],
+                        name: '_',
+                        range: [16, 17],
                         loc: {
                             start: { line: 1, column: 16 },
-                            end: { line: 1, column: 20 }
+                            end: { line: 1, column: 17 }
                         }
                     },
-                    paramTypes: null,
-                    returnType: null,
-                    nullable: false,
-                    range: [16, 20],
+                    annotation: {
+                        type: 'TypeAnnotation',
+                        id: {
+                            type: 'Identifier',
+                            name: 'bool',
+                            range: [18, 22],
+                            loc: {
+                                start: { line: 1, column: 18 },
+                                end: { line: 1, column: 22}
+                            }
+                        },
+                        params: null,
+                        returnType: null,
+                        nullable: false,
+                        range: [18, 22],
+                        loc: {
+                            start: { line: 1, column: 18 },
+                            end: { line: 1, column: 22 }
+                        }
+                    },
+                    range: [16, 22],
                     loc: {
                         start: { line: 1, column: 16 },
-                        end: { line: 1, column: 20 }
+                        end: { line: 1, column: 22 }
                     }
                 }],
                 returnType: {
@@ -3796,32 +3864,73 @@ var fbTestFixture = {
                     id: {
                         type: 'Identifier',
                         name: 'number',
-                        range: [25, 31],
+                        range: [27, 33],
                         loc: {
-                            start: { line: 1, column: 25 },
-                            end: { line: 1, column: 31 }
+                            start: { line: 1, column: 27 },
+                            end: { line: 1, column: 33 }
                         }
                     },
-                    paramTypes: null,
+                    params: null,
                     returnType: null,
                     nullable: false,
-                    range: [25, 31],
+                    range: [24, 33],
                     loc: {
-                        start: { line: 1, column: 25 },
-                        end: { line: 1, column: 31 }
+                        start: { line: 1, column: 24 },
+                        end: { line: 1, column: 33 }
                     }
                 },
                 nullable: false,
-                range: [14, 31],
+                range: [14, 33],
                 loc: {
                     start: { line: 1, column: 14 },
-                    end: { line: 1, column: 31 }
+                    end: { line: 1, column: 33 }
                 }
             },
-            range: [0, 33],
+            range: [0, 35],
             loc: {
                 start: { line: 1, column: 0 },
-                end: { line: 1, column: 33 }
+                end: { line: 1, column: 35 }
+            }
+        },
+
+        'function foo(): {} {}': {
+            type: 'FunctionDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'foo',
+                range: [9, 12],
+                loc: {
+                    start: { line: 1, column: 9 },
+                    end: { line: 1, column: 12 }
+                }
+            },
+            params: [],
+            defaults: [],
+            body: {
+                type: 'BlockStatement',
+                body: [],
+                range: [19, 21],
+                loc: {
+                    start: { line: 1, column: 19 },
+                    end: { line: 1, column: 21 }
+                }
+            },
+            rest: null,
+            generator: false,
+            expression: false,
+            returnType: {
+                type: 'ObjectTypeAnnotation',
+                properties: [],
+                range: [14, 18],
+                loc: {
+                    start: { line: 1, column: 14 },
+                    end: { line: 1, column: 18 }
+                }
+            },
+            range: [0, 21],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 21 }
             }
         },
 
@@ -3877,12 +3986,12 @@ var fbTestFixture = {
                                             end: { line: 1, column: 27 }
                                         }
                                     },
-                                    paramTypes: null,
+                                    params: null,
                                     returnType: null,
                                     nullable: false,
-                                    range: [20, 27],
+                                    range: [21, 27],
                                     loc: {
-                                        start: { line: 1, column: 20 },
+                                        start: { line: 1, column: 21 },
                                         end: { line: 1, column: 27 }
                                     }
                                 },
@@ -3990,12 +4099,12 @@ var fbTestFixture = {
                                         end: { line: 1, column: 35 }
                                     }
                                 },
-                                paramTypes: null,
+                                params: null,
                                 returnType: null,
                                 nullable: false,
-                                range: [28, 35],
+                                range: [29, 35],
                                 loc: {
-                                    start: { line: 1, column: 28 },
+                                    start: { line: 1, column: 29 },
                                     end: { line: 1, column: 35 }
                                 }
                             },
@@ -4071,12 +4180,12 @@ var fbTestFixture = {
                                 end: { line: 1, column: 17 }
                             }
                         },
-                        paramTypes: null,
+                        params: null,
                         returnType: null,
                         nullable: false,
-                        range: [10, 17],
+                        range: [11, 17],
                         loc: {
-                            start: { line: 1, column: 10 },
+                            start: { line: 1, column: 11 },
                             end: { line: 1, column: 17 }
                         }
                     },
@@ -4127,12 +4236,12 @@ var fbTestFixture = {
                                 end: { line: 1, column: 17 }
                             }
                         },
-                        paramTypes: null,
+                        params: null,
                         returnType: null,
                         nullable: false,
-                        range: [10, 17],
+                        range: [11, 17],
                         loc: {
-                            start: { line: 1, column: 10 },
+                            start: { line: 1, column: 11 },
                             end: { line: 1, column: 17 }
                         }
                     },
@@ -4163,6 +4272,367 @@ var fbTestFixture = {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 32 }
             }
+        },
+
+        'var a: {numVal: number};': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'TypeAnnotatedIdentifier',
+                    id: {
+                        type: 'Identifier',
+                        name: 'a',
+                        range: [4, 5],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    annotation: {
+                        type: 'ObjectTypeAnnotation',
+                        properties: [{
+                            type: 'Property',
+                            key: {
+                                type: 'Identifier',
+                                name: 'numVal',
+                                range: [8, 14],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 14 }
+                                }
+                            },
+                            value: {
+                                type: 'TypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'number',
+                                    range: [16, 22],
+                                    loc: {
+                                        start: { line: 1, column: 16 },
+                                        end: { line: 1, column: 22 }
+                                    }
+                                },
+                                params: null,
+                                returnType: null,
+                                nullable: false,
+                                range: [14, 22],
+                                loc: {
+                                    start: { line: 1, column: 14 },
+                                    end: { line: 1, column: 22 }
+                                }
+                            },
+                            kind: 'init',
+                            method: false,
+                            shorthand: false,
+                            range: [8, 22],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 22 }
+                            }
+                        }],
+                        range: [7, 23],
+                        loc: {
+                            start: { line: 1, column: 7 },
+                            end: { line: 1, column: 23 }
+                        }
+                    },
+                    range: [4, 23],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 23 }
+                    }
+                },
+                init: null,
+                range: [4, 23],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 23 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 24],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 24 }
+            }
+        },
+
+        'var a: {numVal: number, strVal: string}': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'TypeAnnotatedIdentifier',
+                    id: {
+                        type: 'Identifier',
+                        name: 'a',
+                        range: [4, 5],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    annotation: {
+                        type: 'ObjectTypeAnnotation',
+                        properties: [{
+                            type: 'Property',
+                            key: {
+                                type: 'Identifier',
+                                name: 'numVal',
+                                range: [8, 14],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 14 }
+                                }
+                            },
+                            value: {
+                                type: 'TypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'number',
+                                    range: [16, 22],
+                                    loc: {
+                                        start: { line: 1, column: 16 },
+                                        end: { line: 1, column: 22 }
+                                    }
+                                },
+                                params: null,
+                                returnType: null,
+                                nullable: false,
+                                range: [14, 22],
+                                loc: {
+                                    start: { line: 1, column: 14 },
+                                    end: { line: 1, column: 22 }
+                                }
+                            },
+                            kind: 'init',
+                            method: false,
+                            shorthand: false,
+                            range: [8, 22],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 22 }
+                            }
+                        }, {
+                            type: 'Property',
+                            key: {
+                                type: 'Identifier',
+                                name: 'strVal',
+                                range: [24, 30],
+                                loc: {
+                                    start: { line: 1, column: 24 },
+                                    end: { line: 1, column: 30 }
+                                }
+                            },
+                            value: {
+                                type: 'TypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'string',
+                                    range: [32, 38],
+                                    loc: {
+                                        start: { line: 1, column: 32 },
+                                        end: { line: 1, column: 38 }
+                                    }
+                                },
+                                params: null,
+                                returnType: null,
+                                nullable: false,
+                                range: [30, 38],
+                                loc: {
+                                    start: { line: 1, column: 30 },
+                                    end: { line: 1, column: 38 }
+                                }
+                            },
+                            kind: 'init',
+                            method: false,
+                            shorthand: false,
+                            range: [24, 38],
+                            loc: {
+                                start: { line: 1, column: 24 },
+                                end: { line: 1, column: 38 }
+                            }
+                        }],
+                        range: [7, 39],
+                        loc: {
+                            start: { line: 1, column: 7 },
+                            end: { line: 1, column: 39 }
+                        }
+                    },
+                    range: [4, 39],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 39 }
+                    }
+                },
+                init: null,
+                range: [4, 39],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 39 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 39],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 39 }
+            }
+        },
+
+        'var a: {subObj: {strVal: string}}': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'TypeAnnotatedIdentifier',
+                    id: {
+                        type: 'Identifier',
+                        name: 'a',
+                        range: [4, 5],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    annotation: {
+                        type: 'ObjectTypeAnnotation',
+                        properties: [{
+                            type: 'Property',
+                            key: {
+                                type: 'Identifier',
+                                name: 'subObj',
+                                range: [8, 14],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 14 }
+                                }
+                            },
+                            value: {
+                                type: 'ObjectTypeAnnotation',
+                                properties: [{
+                                    type: 'Property',
+                                    key: {
+                                        type: 'Identifier',
+                                        name: 'strVal',
+                                        range: [17, 23],
+                                        loc: {
+                                            start: { line: 1, column: 17 },
+                                            end: { line: 1, column: 23 }
+                                        }
+                                    },
+                                    value: {
+                                        type: 'TypeAnnotation',
+                                        id: {
+                                            type: 'Identifier',
+                                            name: 'string',
+                                            range: [25, 31],
+                                            loc: {
+                                                start: { line: 1, column: 25 },
+                                                end: { line: 1, column: 31 }
+                                            }
+                                        },
+                                        params: null,
+                                        returnType: null,
+                                        nullable: false,
+                                        range: [23, 31],
+                                        loc: {
+                                            start: { line: 1, column: 23 },
+                                            end: { line: 1, column: 31 }
+                                        }
+                                    },
+                                    kind: 'init',
+                                    method: false,
+                                    shorthand: false,
+                                    range: [17, 31],
+                                    loc: {
+                                        start: { line: 1, column: 17 },
+                                        end: { line: 1, column: 31 }
+                                    }
+                                }],
+                                range: [14, 32],
+                                loc: {
+                                    start: { line: 1, column: 14 },
+                                    end: { line: 1, column: 32 }
+                                }
+                            },
+                            kind: 'init',
+                            method: false,
+                            shorthand: false,
+                            range: [8, 32],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 32 }
+                            }
+                        }],
+                        range: [7, 33],
+                        loc: {
+                            start: { line: 1, column: 7 },
+                            end: { line: 1, column: 33 }
+                        }
+                    },
+                    range: [4, 33],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 33 }
+                    }
+                },
+                init: null,
+                range: [4, 33],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 33 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 33],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 33 }
+            }
+        }
+    },
+
+    'Invalid Type Annotations': {
+        'function foo(callback:) {}': {
+            index: 22,
+            lineNumber: 1,
+            column: 23,
+            message: 'Error: Line 1: Unexpected token )',
+            description: 'Unexpected token )'
+        },
+
+        'function foo(): {}': {
+            index: 18,
+            lineNumber: 1,
+            column: 19,
+            message: 'Error: Line 1: Unexpected end of input',
+            description: 'Unexpected end of input'
+        },
+
+        'function foo(): { foo() }': {
+            index: 21,
+            lineNumber: 1,
+            column: 22,
+            message: 'Error: Line 1: Unexpected token (',
+            description: 'Unexpected token ('
+        },
+
+        'function foo(callback:(string) => number) {}': {
+            index: 29,
+            lineNumber: 1,
+            column: 30,
+            message: 'Error: Line 1: Unexpected token )',
+            description: 'Unexpected token )'
+        },
+
+        'a = {foo(): { return 42; }}': {
+            index: 21,
+            lineNumber: 1,
+            column: 22,
+            message: 'Error: Line 1: Unexpected number',
+            description: 'Unexpected number'
         }
     }
 };
