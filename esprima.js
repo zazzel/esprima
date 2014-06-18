@@ -167,6 +167,7 @@ parseYieldExpression: true
         ObjectExpression: 'ObjectExpression',
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
+        ParametricallyTypedIdentifier: 'ParametricallyTypedIdentifier',
         Program: 'Program',
         Property: 'Property',
         ReturnStatement: 'ReturnStatement',
@@ -1792,6 +1793,14 @@ parseYieldExpression: true
         createTypeAnnotatedIdentifier: function (identifier, annotation) {
             return {
                 type: Syntax.TypeAnnotatedIdentifier,
+                id: identifier,
+                annotation: annotation
+            };
+        },
+
+        createParametricallyTypedIdentifier: function (identifier, annotation) {
+            return {
+                type: Syntax.ParametricallyTypedIdentifier,
                 id: identifier,
                 annotation: annotation
             };
@@ -3548,6 +3557,21 @@ parseYieldExpression: true
         ));
     }
 
+    function parseParametricTypeAnnotation() {
+        var marker = markerCreate(), typeIdentifier;
+
+        expect('<');
+        typeIdentifier = parseVariableIdentifier();
+        expect('>');
+
+        return markerApply(marker, delegate.createTypeAnnotation(
+            typeIdentifier,
+            null,
+            null,
+            false
+        ));
+    }
+
     function parseVariableIdentifier() {
         var marker = markerCreate(),
             token = lex();
@@ -3569,6 +3593,24 @@ parseYieldExpression: true
                 ident,
                 parseTypeAnnotation(true)
             ));
+        }
+
+        return ident;
+    }
+
+    function parseParametricallyTypeableIdentifier() {
+        var marker = markerCreate(),
+            ident = parseVariableIdentifier(),
+            parametricType;
+
+        if (match('<')) {
+            return markerApply(
+                marker,
+                delegate.createParametricallyTypedIdentifier(
+                    ident,
+                    parseParametricTypeAnnotation()
+                )
+            );
         }
 
         return ident;
@@ -4698,7 +4740,8 @@ parseYieldExpression: true
 
     function parseMethodDefinition(existingPropNames) {
         var token, key, param, propType, isValidDuplicateProp = false,
-            marker = markerCreate();
+            marker = markerCreate(), token2, parametricType,
+            parametricTypeMarker, annotationMarker;
 
         if (lookahead.value === 'static') {
             propType = ClassPropertyType.static;
@@ -4718,6 +4761,8 @@ parseYieldExpression: true
         }
 
         token = lookahead;
+        parametricTypeMarker = markerCreate();
+
         key = parseObjectPropertyKey();
 
         if (token.value === 'get' && !match('(')) {
@@ -4783,6 +4828,14 @@ parseYieldExpression: true
             ));
         }
 
+        if (match('<')) {
+            parametricType = parseParametricTypeAnnotation();
+            key = markerApply(parametricTypeMarker, delegate.createParametricallyTypedIdentifier(
+                key,
+                parametricType
+            ));
+        }
+
         // It is a syntax error if any other properties have the same name as a
         // non-getter, non-setter method
         if (existingPropNames[propType].hasOwnProperty(key.name)) {
@@ -4838,7 +4891,7 @@ parseYieldExpression: true
         expectKeyword('class');
 
         if (!matchKeyword('extends') && !match('{')) {
-            id = parseVariableIdentifier();
+            id = parseParametricallyTypeableIdentifier();
         }
 
         if (matchKeyword('extends')) {
@@ -4857,7 +4910,7 @@ parseYieldExpression: true
 
         expectKeyword('class');
 
-        id = parseVariableIdentifier();
+        id = parseParametricallyTypeableIdentifier();
 
         if (matchKeyword('extends')) {
             expectKeyword('extends');

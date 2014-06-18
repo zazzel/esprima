@@ -2896,8 +2896,7 @@ var fbTestFixture = {
             column: 28,
             message: 'Error: Line 1: Unexpected token {',
             description: 'Unexpected token {'
-        },
-
+        }
     },
 
     'Type Annotations': {
@@ -4591,6 +4590,404 @@ var fbTestFixture = {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 33 }
             }
+        },
+
+        'a = class Foo<T> { }': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'AssignmentExpression',
+                operator: '=',
+                left: {
+                    type: 'Identifier',
+                    name: 'a',
+                    range: [0, 1],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 1 }
+                    }
+                },
+                right: {
+                    type: 'ClassExpression',
+                    id: {
+                        type: 'ParametricallyTypedIdentifier',
+                        id: {
+                            type: 'Identifier',
+                            name: 'Foo',
+                            range: [10, 13],
+                            loc: {
+                                start: { line: 1, column: 10 },
+                                end: { line: 1, column: 13 }
+                            }
+                        },
+                        annotation: {
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'T',
+                                range: [14, 15],
+                                loc: {
+                                    start: { line: 1, column: 14 },
+                                    end: { line: 1, column: 15 }
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            nullable: false,
+                            range: [13, 16],
+                            loc: {
+                                start: { line: 1, column: 13 },
+                                end: { line: 1, column: 16 }
+                            }
+                        },
+                        range: [10, 16],
+                        loc: {
+                            start: { line: 1, column: 10 },
+                            end: { line: 1, column: 16 }
+                        }
+                    },
+                    superClass: null,
+                    body: {
+                        type: 'ClassBody',
+                        body: [],
+                        range: [17, 20],
+                        loc: {
+                            start: { line: 1, column: 17 },
+                            end: { line: 1, column: 20 }
+                        }
+                    },
+                    range: [4, 20],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 20 }
+                    }
+                },
+                range: [0, 20],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 20 }
+                }
+            },
+            range: [0, 20],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 20 }
+            }
+        },
+
+        'class Foo<T> {}': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'ParametricallyTypedIdentifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'Foo',
+                    range: [6, 9],
+                    loc: {
+                        start: { line: 1, column: 6 },
+                        end: { line: 1, column: 9 }
+                    }
+                },
+                annotation: {
+                    type: 'TypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'T',
+                        range: [10, 11],
+                        loc: {
+                            start: { line: 1, column: 10 },
+                            end: { line: 1, column: 11 }
+                        }
+                    },
+                    params: null,
+                    returnType: null,
+                    nullable: false,
+                    range: [9, 12],
+                    loc: {
+                        start: { line: 1, column: 9 },
+                        end: { line: 1, column: 12 }
+                    }
+                },
+                range: [6, 12],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 12 }
+                }
+            },
+            superClass: null,
+            body: {
+                type: 'ClassBody',
+                body: [],
+                range: [13, 15],
+                loc: {
+                    start: { line: 1, column: 13 },
+                    end: { line: 1, column: 15 }
+                }
+            },
+            range: [0, 15],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 15 }
+            }
+        },
+
+        'class Foo<T> { bar<U>():number { return 42; }}': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'ParametricallyTypedIdentifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'Foo',
+                    range: [6, 9],
+                    loc: {
+                        start: { line: 1, column: 6 },
+                        end: { line: 1, column: 9 }
+                    }
+                },
+                annotation: {
+                    type: 'TypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'T',
+                        range: [10, 11],
+                        loc: {
+                            start: { line: 1, column: 10 },
+                            end: { line: 1, column: 11 }
+                        }
+                    },
+                    params: null,
+                    returnType: null,
+                    nullable: false,
+                    range: [9, 12],
+                    loc: {
+                        start: { line: 1, column: 9 },
+                        end: { line: 1, column: 12 }
+                    }
+                },
+                range: [6, 12],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 12 }
+                }
+            },
+            superClass: null,
+            body: {
+                type: 'ClassBody',
+                body: [{
+                    type: 'MethodDefinition',
+                    key: {
+                        type: 'ParametricallyTypedIdentifier',
+                        id: {
+                            type: 'Identifier',
+                            name: 'bar',
+                            range: [15, 18],
+                            loc: {
+                                start: { line: 1, column: 15 },
+                                end: { line: 1, column: 18 }
+                            }
+                        },
+                        annotation: {
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'U',
+                                range: [19, 20],
+                                loc: {
+                                    start: { line: 1, column: 19 },
+                                    end: { line: 1, column: 20 }
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            nullable: false,
+                            range: [18, 21],
+                            loc: {
+                                start: { line: 1, column: 18 },
+                                end: { line: 1, column: 21 }
+                            }
+                        },
+                        range: [15, 21],
+                        loc: {
+                            start: { line: 1, column: 15 },
+                            end: { line: 1, column: 21 }
+                        }
+                    },
+                    value: {
+                        type: 'FunctionExpression',
+                        id: null,
+                        params: [],
+                        defaults: [],
+                        body: {
+                            type: 'BlockStatement',
+                            body: [{
+                                type: 'ReturnStatement',
+                                argument: {
+                                    type: 'Literal',
+                                    value: 42,
+                                    raw: '42',
+                                    range: [40, 42],
+                                    loc: {
+                                        start: { line: 1, column: 40 },
+                                        end: { line: 1, column: 42 }
+                                    }
+                                },
+                                range: [33, 43],
+                                loc: {
+                                    start: { line: 1, column: 33 },
+                                    end: { line: 1, column: 43 }
+                                }
+                            }],
+                            range: [31, 45],
+                            loc: {
+                                start: { line: 1, column: 31 },
+                                end: { line: 1, column: 45 }
+                            }
+                        },
+                        rest: null,
+                        generator: false,
+                        expression: false,
+                        returnType: {
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'number',
+                                range: [24, 30],
+                                loc: {
+                                    start: { line: 1, column: 24 },
+                                    end: { line: 1, column: 30 }
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            nullable: false,
+                            range: [23, 30],
+                            loc: {
+                                start: { line: 1, column: 23 },
+                                end: { line: 1, column: 30 }
+                            }
+                        },
+                        range: [31, 45],
+                        loc: {
+                            start: { line: 1, column: 31 },
+                            end: { line: 1, column: 45 }
+                        }
+                    },
+                    kind: '',
+                    'static': false,
+                    range: [15, 45],
+                    loc: {
+                        start: { line: 1, column: 15 },
+                        end: { line: 1, column: 45 }
+                    }
+                }],
+                range: [13, 46],
+                loc: {
+                    start: { line: 1, column: 13 },
+                    end: { line: 1, column: 46 }
+                }
+            },
+            range: [0, 46],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 46 }
+            }
+        },
+
+        'class Foo { "bar"<T>() { } }': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: null,
+            body: {
+                type: 'ClassBody',
+                body: [{
+                    type: 'MethodDefinition',
+                    key: {
+                        type: 'ParametricallyTypedIdentifier',
+                        id: {
+                            type: 'Literal',
+                            value: 'bar',
+                            raw: '"bar"',
+                            range: [12, 17],
+                            loc: {
+                                start: { line: 1, column: 12 },
+                                end: { line: 1, column: 17 }
+                            }
+                        },
+                        annotation: {
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'T',
+                                range: [18, 19],
+                                loc: {
+                                    start: { line: 1, column: 18 },
+                                    end: { line: 1, column: 19 }
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            nullable: false,
+                            range: [17, 20],
+                            loc: {
+                                start: { line: 1, column: 17 },
+                                end: { line: 1, column: 20 }
+                            }
+                        },
+                        range: [12, 20],
+                        loc: {
+                            start: { line: 1, column: 12 },
+                            end: { line: 1, column: 20 }
+                        }
+                    },
+                    value: {
+                        type: 'FunctionExpression',
+                        id: null,
+                        params: [],
+                        defaults: [],
+                        body: {
+                            type: 'BlockStatement',
+                            body: [],
+                            range: [23, 26],
+                            loc: {
+                                start: { line: 1, column: 23 },
+                                end: { line: 1, column: 26 }
+                            }
+                        },
+                        rest: null,
+                        generator: false,
+                        expression: false,
+                        range: [23, 26],
+                        loc: {
+                            start: { line: 1, column: 23 },
+                            end: { line: 1, column: 26 }
+                        }
+                    },
+                    kind: '',
+                    'static': false,
+                    range: [12, 26],
+                    loc: {
+                        start: { line: 1, column: 12 },
+                        end: { line: 1, column: 26 }
+                    }
+                }],
+                range: [10, 28],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 28 }
+                }
+            },
+            range: [0, 28],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 28 }
+            }
         }
     },
 
@@ -4633,6 +5030,14 @@ var fbTestFixture = {
             column: 22,
             message: 'Error: Line 1: Unexpected number',
             description: 'Unexpected number'
+        },
+
+        'class Foo { get bar<T>() { } }': {
+            index: 19,
+            lineNumber: 1,
+            column: 20,
+            message: 'Error: Line 1: Unexpected token <',
+            description: 'Unexpected token <'
         }
     }
 };
