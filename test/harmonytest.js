@@ -13455,6 +13455,7 @@ var harmonyTestFixture = {
                                 "kind": "init",
                                 "method": false,
                                 "shorthand": true,
+                                "computed": false,
                                 "range": [
                                     5,
                                     6
@@ -13751,6 +13752,7 @@ var harmonyTestFixture = {
                             "kind": "init",
                             "method": false,
                             "shorthand": true,
+                            "computed": false,
                             "range": [
                                 5,
                                 6
@@ -13893,6 +13895,7 @@ var harmonyTestFixture = {
                         "kind": "init",
                         "method": false,
                         "shorthand": true,
+                        "computed": false,
                         "range": [
                             2,
                             3
@@ -13984,6 +13987,7 @@ var harmonyTestFixture = {
                         "kind": "init",
                         "method": false,
                         "shorthand": true,
+                        "computed": false,
                         "range": [
                             11,
                             12
@@ -14075,6 +14079,7 @@ var harmonyTestFixture = {
                         "kind": "init",
                         "method": false,
                         "shorthand": true,
+                        "computed": false,
                         "range": [
                             20,
                             21

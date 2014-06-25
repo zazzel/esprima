@@ -3914,6 +3914,7 @@ var fbTestFixture = {
                         kind: 'set',
                         method: false,
                         shorthand: false,
+                        computed: false,
                         range: [3, 30],
                         loc: {
                             start: { line: 1, column: 3 },
