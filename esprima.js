@@ -3201,10 +3201,17 @@ parseYieldExpression: true
             expr.type = Syntax.ObjectPattern;
             for (i = 0, len = expr.properties.length; i < len; i += 1) {
                 property = expr.properties[i];
-                if (property.kind !== 'init') {
-                    throwError({}, Messages.InvalidLHSInFormalsList);
+                if (property.type === Syntax.SpreadProperty) {
+                    if (i < len - 1) {
+                        throwError({}, Messages.PropertyAfterSpreadProperty);
+                    }
+                    reinterpretAsDestructuredParameter(options, property.argument);
+                } else {
+                    if (property.kind !== 'init') {
+                        throwError({}, Messages.InvalidLHSInFormalsList);
+                    }
+                    reinterpretAsDestructuredParameter(options, property.value);
                 }
-                reinterpretAsDestructuredParameter(options, property.value);
             }
         } else if (expr.type === Syntax.ArrayExpression) {
             expr.type = Syntax.ArrayPattern;

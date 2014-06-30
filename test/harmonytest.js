@@ -13571,6 +13571,176 @@ var harmonyTestFixture = {
                     "column": 17
                 }
             }
+        },
+        '(function({x, ...y}) { })': {
+            "type": "ExpressionStatement",
+            "expression": {
+                "type": "FunctionExpression",
+                "id": null,
+                "params": [
+                    {
+                        "type": "ObjectPattern",
+                        "properties": [
+                            {
+                                "type": "Property",
+                                "key": {
+                                    "type": "Identifier",
+                                    "name": "x",
+                                    "range": [
+                                        11,
+                                        12
+                                    ],
+                                    "loc": {
+                                        "start": {
+                                            "line": 1,
+                                            "column": 11
+                                        },
+                                        "end": {
+                                            "line": 1,
+                                            "column": 12
+                                        }
+                                    }
+                                },
+                                "value": {
+                                    "type": "Identifier",
+                                    "name": "x",
+                                    "range": [
+                                        11,
+                                        12
+                                    ],
+                                    "loc": {
+                                        "start": {
+                                            "line": 1,
+                                            "column": 11
+                                        },
+                                        "end": {
+                                            "line": 1,
+                                            "column": 12
+                                        }
+                                    }
+                                },
+                                "kind": "init",
+                                "method": false,
+                                "shorthand": true,
+                                "computed": false,
+                                "range": [
+                                    11,
+                                    12
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 11
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 12
+                                    }
+                                }
+                            },
+                            {
+                                "type": "SpreadProperty",
+                                "argument": {
+                                    "type": "Identifier",
+                                    "name": "y",
+                                    "range": [
+                                        17,
+                                        18
+                                    ],
+                                    "loc": {
+                                        "start": {
+                                            "line": 1,
+                                            "column": 17
+                                        },
+                                        "end": {
+                                            "line": 1,
+                                            "column": 18
+                                        }
+                                    }
+                                },
+                                "range": [
+                                    14,
+                                    18
+                                ],
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 14
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 18
+                                    }
+                                }
+                            }
+                        ],
+                        "range": [
+                            10,
+                            19
+                        ],
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 10
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 19
+                            }
+                        }
+                    }
+                ],
+                "defaults": [],
+                "body": {
+                    "type": "BlockStatement",
+                    "body": [],
+                    "range": [
+                        21,
+                        24
+                    ],
+                    "loc": {
+                        "start": {
+                            "line": 1,
+                            "column": 21
+                        },
+                        "end": {
+                            "line": 1,
+                            "column": 24
+                        }
+                    }
+                },
+                "rest": null,
+                "generator": false,
+                "expression": false,
+                "range": [
+                    1,
+                    24
+                ],
+                "loc": {
+                    "start": {
+                        "line": 1,
+                        "column": 1
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 24
+                    }
+                }
+            },
+            "range": [
+                0,
+                25
+            ],
+            "loc": {
+                "start": {
+                    "line": 1,
+                    "column": 0
+                },
+                "end": {
+                    "line": 1,
+                    "column": 25
+                }
+            }
         }
     },
 
@@ -15153,6 +15323,13 @@ var harmonyTestFixture = {
             index: 13,
             lineNumber: 1,
             column: 14,
+            message: 'Error: Line 1: A rest property must be the final property of an object literal'
+        },
+
+        '(function({...a, b}) {})': {
+            index: 19,
+            lineNumber: 1,
+            column: 20,
             message: 'Error: Line 1: A rest property must be the final property of an object literal'
         },
 
