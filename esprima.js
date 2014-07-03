@@ -137,6 +137,7 @@ parseYieldExpression: true
         ClassBody: 'ClassBody',
         ClassDeclaration: 'ClassDeclaration',
         ClassExpression: 'ClassExpression',
+        ClassProperty: 'ClassProperty',
         ComprehensionBlock: 'ComprehensionBlock',
         ComprehensionExpression: 'ComprehensionExpression',
         ConditionalExpression: 'ConditionalExpression',
@@ -167,6 +168,8 @@ parseYieldExpression: true
         ObjectExpression: 'ObjectExpression',
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
+        OptionalParameter: 'OptionalParameter',
+        ParametricTypeAnnotation: 'ParametricTypeAnnotation',
         ParametricallyTypedIdentifier: 'ParametricallyTypedIdentifier',
         Program: 'Program',
         Property: 'Property',
@@ -188,6 +191,7 @@ parseYieldExpression: true
         UpdateExpression: 'UpdateExpression',
         VariableDeclaration: 'VariableDeclaration',
         VariableDeclarator: 'VariableDeclarator',
+        VoidTypeAnnotation: 'VoidTypeAnnotation',
         WhileStatement: 'WhileStatement',
         WithStatement: 'WithStatement',
         XJSIdentifier: 'XJSIdentifier',
@@ -1731,7 +1735,7 @@ parseYieldExpression: true
         },
 
         createFunctionDeclaration: function (id, params, defaults, body, rest, generator, expression,
-                                             returnType) {
+                                             returnType, parametricType) {
             return {
                 type: Syntax.FunctionDeclaration,
                 id: id,
@@ -1741,12 +1745,13 @@ parseYieldExpression: true
                 rest: rest,
                 generator: generator,
                 expression: expression,
-                returnType: returnType
+                returnType: returnType,
+                parametricType: parametricType
             };
         },
 
         createFunctionExpression: function (id, params, defaults, body, rest, generator, expression,
-                                            returnType) {
+                                            returnType, parametricType) {
             return {
                 type: Syntax.FunctionExpression,
                 id: id,
@@ -1756,7 +1761,8 @@ parseYieldExpression: true
                 rest: rest,
                 generator: generator,
                 expression: expression,
-                returnType: returnType
+                returnType: returnType,
+                parametricType: parametricType
             };
         },
 
@@ -1783,6 +1789,19 @@ parseYieldExpression: true
             };
         },
 
+        createParametricTypeAnnotation: function (parametricTypes) {
+            return {
+                type: Syntax.ParametricTypeAnnotation,
+                params: parametricTypes
+            };
+        },
+
+        createVoidTypeAnnotation: function () {
+            return {
+                type: Syntax.VoidTypeAnnotation
+            };
+        },
+
         createObjectTypeAnnotation: function (properties) {
             return {
                 type: Syntax.ObjectTypeAnnotation,
@@ -1790,11 +1809,18 @@ parseYieldExpression: true
             };
         },
 
-        createTypeAnnotatedIdentifier: function (identifier, annotation) {
+        createTypeAnnotatedIdentifier: function (identifier, annotation, isOptionalParam) {
             return {
                 type: Syntax.TypeAnnotatedIdentifier,
                 id: identifier,
                 annotation: annotation
+            };
+        },
+
+        createOptionalParameter: function (identifier) {
+            return {
+                type: Syntax.OptionalParameter,
+                id: identifier
             };
         },
 
@@ -2122,6 +2148,13 @@ parseYieldExpression: true
             };
         },
 
+        createClassProperty: function (propertyIdentifier) {
+            return {
+                type: Syntax.ClassProperty,
+                id: propertyIdentifier
+            };
+        },
+
         createClassBody: function (body) {
             return {
                 type: Syntax.ClassBody,
@@ -2138,12 +2171,14 @@ parseYieldExpression: true
             };
         },
 
-        createClassDeclaration: function (id, superClass, body) {
+        createClassDeclaration: function (id, superClass, body, parametricType, superParametricType) {
             return {
                 type: Syntax.ClassDeclaration,
                 id: id,
                 superClass: superClass,
-                body: body
+                body: body,
+                parametricType: parametricType,
+                superParametricType: superParametricType
             };
         },
 
@@ -3498,7 +3533,11 @@ parseYieldExpression: true
             )));
 
             if (!match('}')) {
-                expect(',');
+                if (match(',') || match(';')) {
+                    lex();
+                } else {
+                    throwUnexpected(lookahead);
+                }
             }
         }
 
@@ -3507,95 +3546,27 @@ parseYieldExpression: true
         return delegate.createObjectTypeAnnotation(properties);
     }
 
-    function parseTypeAnnotation(dontExpectColon) {
-        var typeIdentifier = null, params = null, returnType = null,
-            nullable = false, marker = markerCreate(), returnTypeMarker = null;
-
-        if (!dontExpectColon) {
-            expect(':');
-        }
-
-        if (match('{')) {
-            return markerApply(marker, parseObjectTypeAnnotation());
-        }
-
-        if (match('?')) {
-            lex();
-            nullable = true;
-        }
-
-        if (lookahead.type === Token.Identifier) {
-            typeIdentifier = parseVariableIdentifier();
-        } else if (match('(')) {
-            lex();
-            params = [];
-            while (lookahead.type === Token.Identifier || match('?')) {
-                params.push(parseTypeAnnotatableIdentifier(true));
-                if (!match(')')) {
-                    expect(',');
-                }
-            }
-            expect(')');
-
-            returnTypeMarker = markerCreate();
-            expect('=>');
-
-            if (matchKeyword('void')) {
-                lex();
-            } else {
-                returnType = markerApply(returnTypeMarker, parseTypeAnnotation(true));
-            }
-        } else {
-            throwUnexpected(lookahead);
-        }
-
-        return markerApply(marker, delegate.createTypeAnnotation(
-            typeIdentifier,
-            params,
-            returnType,
-            nullable
-        ));
+    function parseVoidTypeAnnotation() {
+        var marker = markerCreate();
+        expectKeyword('void');
+        return markerApply(marker, delegate.createVoidTypeAnnotation());
     }
 
     function parseParametricTypeAnnotation() {
-        var marker = markerCreate(), typeIdentifier;
+        var marker = markerCreate(), typeIdentifier, paramTypes = [];
 
         expect('<');
-        typeIdentifier = parseVariableIdentifier();
+        while (!match('>')) {
+            paramTypes.push(parseVariableIdentifier());
+            if (!match('>')) {
+                expect(',');
+            }
+        }
         expect('>');
 
-        return markerApply(marker, delegate.createTypeAnnotation(
-            typeIdentifier,
-            null,
-            null,
-            false
+        return markerApply(marker, delegate.createParametricTypeAnnotation(
+            paramTypes
         ));
-    }
-
-    function parseVariableIdentifier() {
-        var marker = markerCreate(),
-            token = lex();
-
-        if (token.type !== Token.Identifier) {
-            throwUnexpected(token);
-        }
-
-        return markerApply(marker, delegate.createIdentifier(token.value));
-    }
-
-    function parseTypeAnnotatableIdentifier(requireTypeAnnotation) {
-        var marker = markerCreate(),
-            ident = parseVariableIdentifier();
-
-        if (requireTypeAnnotation || match(':')) {
-            expect(':');
-            return markerApply(marker, delegate.createTypeAnnotatedIdentifier(
-                ident,
-                parseTypeAnnotation(true)
-            ));
-        }
-
-        return ident;
     }
 
     function parseParametricallyTypeableIdentifier() {
@@ -3611,6 +3582,95 @@ parseYieldExpression: true
                     parseParametricTypeAnnotation()
                 )
             );
+        }
+
+        return ident;
+    }
+
+    function parseTypeAnnotation(dontExpectColon) {
+        var typeIdentifier = null, params = null, returnType = null,
+            nullable = false, marker = markerCreate(), returnTypeMarker = null,
+            parametricExpression = null, annotation;
+
+        if (!dontExpectColon) {
+            expect(':');
+        }
+
+        if (match('{')) {
+            return markerApply(marker, parseObjectTypeAnnotation());
+        }
+
+        if (match('?')) {
+            lex();
+            nullable = true;
+        }
+
+        if (lookahead.type === Token.Identifier) {
+            typeIdentifier = parseParametricallyTypeableIdentifier();
+        } else if (match('(')) {
+            lex();
+            params = [];
+            while (lookahead.type === Token.Identifier || match('?')) {
+                params.push(parseTypeAnnotatableIdentifier(
+                    true, /* requireTypeAnnotation */
+                    true /* canBeOptionalParam */
+                ));
+                if (!match(')')) {
+                    expect(',');
+                }
+            }
+            expect(')');
+
+            returnTypeMarker = markerCreate();
+            expect('=>');
+
+            returnType = parseTypeAnnotation(true);
+        } else {
+            if (!matchKeyword('void')) {
+                throwUnexpected(lookahead);
+            } else {
+                return parseVoidTypeAnnotation();
+            }
+        }
+
+        return markerApply(marker, delegate.createTypeAnnotation(
+            typeIdentifier,
+            params,
+            returnType,
+            nullable
+        ));
+    }
+
+    function parseVariableIdentifier() {
+        var marker = markerCreate(),
+            token = lex();
+
+        if (token.type !== Token.Identifier) {
+            throwUnexpected(token);
+        }
+
+        return markerApply(marker, delegate.createIdentifier(token.value));
+    }
+
+    function parseTypeAnnotatableIdentifier(requireTypeAnnotation, canBeOptionalParam) {
+        var marker = markerCreate(),
+            ident = parseVariableIdentifier(),
+            isOptionalParam = false;
+
+        if (canBeOptionalParam && match('?')) {
+            expect('?');
+            isOptionalParam = true;
+        }
+
+        if (requireTypeAnnotation || match(':')) {
+            ident = markerApply(marker, delegate.createTypeAnnotatedIdentifier(
+                ident,
+                parseTypeAnnotation()
+            ));
+        }
+
+        if (isOptionalParam) {
+            ident = markerApply(marker, delegate.createOptionalParameter(ident));
         }
 
         return ident;
@@ -4540,9 +4600,14 @@ parseYieldExpression: true
             reinterpretAsDestructuredParameter(options, param);
         } else {
             // Typing rest params is awkward, so punting on that for now
-            param = rest
+            param =
+                rest
                 ? parseVariableIdentifier()
-                : parseTypeAnnotatableIdentifier();
+                : parseTypeAnnotatableIdentifier(
+                    false, /* requireTypeAnnotation */
+                    true /* canBeOptionalParam */
+                );
+
             validateParam(options, token, token.value);
         }
 
@@ -4606,7 +4671,7 @@ parseYieldExpression: true
 
     function parseFunctionDeclaration() {
         var id, body, token, tmp, firstRestricted, message, previousStrict, previousYieldAllowed, generator,
-            marker = markerCreate();
+            marker = markerCreate(), parametricType;
 
         expectKeyword('function');
 
@@ -4619,6 +4684,10 @@ parseYieldExpression: true
         token = lookahead;
 
         id = parseVariableIdentifier();
+
+        if (match('<')) {
+            parametricType = parseParametricTypeAnnotation();
+        }
 
         if (strict) {
             if (isRestrictedWord(token.value)) {
@@ -4656,12 +4725,12 @@ parseYieldExpression: true
         state.yieldAllowed = previousYieldAllowed;
 
         return markerApply(marker, delegate.createFunctionDeclaration(id, tmp.params, tmp.defaults, body, tmp.rest, generator, false,
-            tmp.returnTypeAnnotation));
+            tmp.returnTypeAnnotation, parametricType));
     }
 
     function parseFunctionExpression() {
         var token, id = null, firstRestricted, message, tmp, body, previousStrict, previousYieldAllowed, generator,
-            marker = markerCreate();
+            marker = markerCreate(), parametricType;
 
         expectKeyword('function');
 
@@ -4673,20 +4742,27 @@ parseYieldExpression: true
         }
 
         if (!match('(')) {
-            token = lookahead;
-            id = parseVariableIdentifier();
-            if (strict) {
-                if (isRestrictedWord(token.value)) {
-                    throwErrorTolerant(token, Messages.StrictFunctionName);
+            if (!match('<')) {
+                token = lookahead;
+                id = parseVariableIdentifier();
+
+                if (strict) {
+                    if (isRestrictedWord(token.value)) {
+                        throwErrorTolerant(token, Messages.StrictFunctionName);
+                    }
+                } else {
+                    if (isRestrictedWord(token.value)) {
+                        firstRestricted = token;
+                        message = Messages.StrictFunctionName;
+                    } else if (isStrictModeReservedWord(token.value)) {
+                        firstRestricted = token;
+                        message = Messages.StrictReservedWord;
+                    }
                 }
-            } else {
-                if (isRestrictedWord(token.value)) {
-                    firstRestricted = token;
-                    message = Messages.StrictFunctionName;
-                } else if (isStrictModeReservedWord(token.value)) {
-                    firstRestricted = token;
-                    message = Messages.StrictReservedWord;
-                }
+            }
+
+            if (match('<')) {
+                parametricType = parseParametricTypeAnnotation();
             }
         }
 
@@ -4712,7 +4788,7 @@ parseYieldExpression: true
         state.yieldAllowed = previousYieldAllowed;
 
         return markerApply(marker, delegate.createFunctionExpression(id, tmp.params, tmp.defaults, body, tmp.rest, generator, false,
-            tmp.returnTypeAnnotation));
+            tmp.returnTypeAnnotation, parametricType));
     }
 
     function parseYieldExpression() {
@@ -4853,11 +4929,30 @@ parseYieldExpression: true
         ));
     }
 
+    function parseClassProperty(existingPropNames) {
+        var marker = markerCreate(), propertyIdentifier;
+
+        propertyIdentifier = parseTypeAnnotatableIdentifier();
+        expect(';');
+
+        return markerApply(marker, delegate.createClassProperty(
+            propertyIdentifier
+        ));
+    }
+
     function parseClassElement(existingProps) {
         if (match(';')) {
             lex();
             return;
         }
+
+        var doubleLookahead = lookahead2();
+        if (doubleLookahead.type === Token.Punctuator) {
+            if (doubleLookahead.value === ':') {
+                return parseClassProperty(existingProps);
+            }
+        }
+
         return parseMethodDefinition(existingProps);
     }
 
@@ -4886,7 +4981,7 @@ parseYieldExpression: true
     }
 
     function parseClassExpression() {
-        var id, previousYieldAllowed, superClass = null, marker = markerCreate();
+        var id, previousYieldAllowed, superClass = null, marker = markerCreate(), doubleLookahead;
 
         expectKeyword('class');
 
@@ -4906,11 +5001,16 @@ parseYieldExpression: true
     }
 
     function parseClassDeclaration() {
-        var id, previousYieldAllowed, superClass = null, marker = markerCreate();
+        var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
+            doubleLookahead, parametricType, superParametricType;
 
         expectKeyword('class');
 
-        id = parseParametricallyTypeableIdentifier();
+        id = parseVariableIdentifier();
+
+        if (match('<')) {
+            parametricType = parseParametricTypeAnnotation();
+        }
 
         if (matchKeyword('extends')) {
             expectKeyword('extends');
@@ -4920,7 +5020,7 @@ parseYieldExpression: true
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        return markerApply(marker, delegate.createClassDeclaration(id, superClass, parseClassBody()));
+        return markerApply(marker, delegate.createClassDeclaration(id, superClass, parseClassBody(), parametricType, superParametricType));
     }
 
     // 15 Program
