@@ -1779,10 +1779,11 @@ parseYieldExpression: true
             };
         },
 
-        createTypeAnnotation: function (typeIdentifier, params, returnType, nullable) {
+        createTypeAnnotation: function (typeIdentifier, parametricType, params, returnType, nullable) {
             return {
                 type: Syntax.TypeAnnotation,
                 id: typeIdentifier,
+                parametricType: parametricType,
                 params: params,
                 returnType: returnType,
                 nullable: nullable
@@ -1821,14 +1822,6 @@ parseYieldExpression: true
             return {
                 type: Syntax.OptionalParameter,
                 id: identifier
-            };
-        },
-
-        createParametricallyTypedIdentifier: function (identifier, annotation) {
-            return {
-                type: Syntax.ParametricallyTypedIdentifier,
-                id: identifier,
-                annotation: annotation
             };
         },
 
@@ -2162,12 +2155,13 @@ parseYieldExpression: true
             };
         },
 
-        createClassExpression: function (id, superClass, body) {
+        createClassExpression: function (id, superClass, body, parametricType) {
             return {
                 type: Syntax.ClassExpression,
                 id: id,
                 superClass: superClass,
-                body: body
+                body: body,
+                parametricType: parametricType
             };
         },
 
@@ -2534,7 +2528,8 @@ parseYieldExpression: true
             options.rest || null,
             options.generator,
             body.type !== Syntax.BlockStatement,
-            options.returnTypeAnnotation
+            options.returnType,
+            options.parametricType
         ));
     }
 
@@ -2557,7 +2552,8 @@ parseYieldExpression: true
             defaults: tmp.defaults,
             rest: tmp.rest,
             generator: options.generator,
-            returnTypeAnnotation: tmp.returnTypeAnnotation
+            returnType: tmp.returnType,
+            parametricType: options.parametricType
         });
 
         strict = previousStrict;
@@ -3569,28 +3565,10 @@ parseYieldExpression: true
         ));
     }
 
-    function parseParametricallyTypeableIdentifier() {
-        var marker = markerCreate(),
-            ident = parseVariableIdentifier(),
-            parametricType;
-
-        if (match('<')) {
-            return markerApply(
-                marker,
-                delegate.createParametricallyTypedIdentifier(
-                    ident,
-                    parseParametricTypeAnnotation()
-                )
-            );
-        }
-
-        return ident;
-    }
-
     function parseTypeAnnotation(dontExpectColon) {
         var typeIdentifier = null, params = null, returnType = null,
             nullable = false, marker = markerCreate(), returnTypeMarker = null,
-            parametricExpression = null, annotation;
+            parametricType, annotation;
 
         if (!dontExpectColon) {
             expect(':');
@@ -3606,7 +3584,10 @@ parseYieldExpression: true
         }
 
         if (lookahead.type === Token.Identifier) {
-            typeIdentifier = parseParametricallyTypeableIdentifier();
+            typeIdentifier = parseVariableIdentifier();
+            if (match('<')) {
+                parametricType = parseParametricTypeAnnotation();
+            }
         } else if (match('(')) {
             lex();
             params = [];
@@ -3635,6 +3616,7 @@ parseYieldExpression: true
 
         return markerApply(marker, delegate.createTypeAnnotation(
             typeIdentifier,
+            parametricType,
             params,
             returnType,
             nullable
@@ -4663,7 +4645,7 @@ parseYieldExpression: true
         }
 
         if (match(':')) {
-            options.returnTypeAnnotation = parseTypeAnnotation();
+            options.returnType = parseTypeAnnotation();
         }
 
         return markerApply(marker, options);
@@ -4725,7 +4707,7 @@ parseYieldExpression: true
         state.yieldAllowed = previousYieldAllowed;
 
         return markerApply(marker, delegate.createFunctionDeclaration(id, tmp.params, tmp.defaults, body, tmp.rest, generator, false,
-            tmp.returnTypeAnnotation, parametricType));
+            tmp.returnType, parametricType));
     }
 
     function parseFunctionExpression() {
@@ -4788,7 +4770,7 @@ parseYieldExpression: true
         state.yieldAllowed = previousYieldAllowed;
 
         return markerApply(marker, delegate.createFunctionExpression(id, tmp.params, tmp.defaults, body, tmp.rest, generator, false,
-            tmp.returnTypeAnnotation, parametricType));
+            tmp.returnType, parametricType));
     }
 
     function parseYieldExpression() {
@@ -4837,8 +4819,7 @@ parseYieldExpression: true
         }
 
         token = lookahead;
-        parametricTypeMarker = markerCreate();
-
+        //parametricTypeMarker = markerCreate();
         key = parseObjectPropertyKey();
 
         if (token.value === 'get' && !match('(')) {
@@ -4906,10 +4887,6 @@ parseYieldExpression: true
 
         if (match('<')) {
             parametricType = parseParametricTypeAnnotation();
-            key = markerApply(parametricTypeMarker, delegate.createParametricallyTypedIdentifier(
-                key,
-                parametricType
-            ));
         }
 
         // It is a syntax error if any other properties have the same name as a
@@ -4925,7 +4902,10 @@ parseYieldExpression: true
             propType,
             '',
             key,
-            parsePropertyMethodFunction({ generator: false })
+            parsePropertyMethodFunction({
+                generator: false,
+                parametricType: parametricType
+            })
         ));
     }
 
@@ -4981,12 +4961,17 @@ parseYieldExpression: true
     }
 
     function parseClassExpression() {
-        var id, previousYieldAllowed, superClass = null, marker = markerCreate(), doubleLookahead;
+        var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
+            parametricType;
 
         expectKeyword('class');
 
         if (!matchKeyword('extends') && !match('{')) {
-            id = parseParametricallyTypeableIdentifier();
+            id = parseVariableIdentifier();
+        }
+
+        if (match('<')) {
+            parametricType = parseParametricTypeAnnotation();
         }
 
         if (matchKeyword('extends')) {
@@ -4997,12 +4982,12 @@ parseYieldExpression: true
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        return markerApply(marker, delegate.createClassExpression(id, superClass, parseClassBody()));
+        return markerApply(marker, delegate.createClassExpression(id, superClass, parseClassBody(), parametricType));
     }
 
     function parseClassDeclaration() {
         var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
-            doubleLookahead, parametricType, superParametricType;
+            parametricType, superParametricType;
 
         expectKeyword('class');
 

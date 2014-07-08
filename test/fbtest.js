@@ -4910,6 +4910,114 @@ var fbTestFixture = {
             }
         },
 
+        'var a:Array<number> = [1, 2, 3]': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'TypeAnnotatedIdentifier',
+                    id: {
+                        type: 'Identifier',
+                        name: 'a',
+                        range: [4, 5],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    annotation: {
+                        type: 'TypeAnnotation',
+                        id: {
+                            type: 'Identifier',
+                            name: 'Array',
+                            range: [6, 11],
+                            loc: {
+                                start: { line: 1, column: 6 },
+                                end: { line: 1, column: 11 }
+                            }
+                        },
+                        parametricType: {
+                            type: 'ParametricTypeAnnotation',
+                            params: [{
+                                type: 'Identifier',
+                                name: 'number',
+                                range: [12, 18],
+                                loc: {
+                                    start: { line: 1, column: 12 },
+                                    end: { line: 1, column: 18 }
+                                }
+                            }],
+                            range: [11, 19],
+                            loc: {
+                                start: { line: 1, column: 11 },
+                                end: { line: 1, column: 19 }
+                            }
+                        },
+                        params: null,
+                        returnType: null,
+                        nullable: false,
+                        range: [5, 19],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 19 }
+                        }
+                    },
+                    range: [4, 19],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 19 }
+                    }
+                },
+                init: {
+                    type: 'ArrayExpression',
+                    elements: [{
+                        type: 'Literal',
+                        value: 1,
+                        raw: '1',
+                        range: [23, 24],
+                        loc: {
+                            start: { line: 1, column: 23 },
+                            end: { line: 1, column: 24 }
+                        }
+                    }, {
+                        type: 'Literal',
+                        value: 2,
+                        raw: '2',
+                        range: [26, 27],
+                        loc: {
+                            start: { line: 1, column: 26 },
+                            end: { line: 1, column: 27 }
+                        }
+                    }, {
+                        type: 'Literal',
+                        value: 3,
+                        raw: '3',
+                        range: [29, 30],
+                        loc: {
+                            start: { line: 1, column: 29 },
+                            end: { line: 1, column: 30 }
+                        }
+                    }],
+                    range: [22, 31],
+                    loc: {
+                        start: { line: 1, column: 22 },
+                        end: { line: 1, column: 31 }
+                    }
+                },
+                range: [4, 31],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 31 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 31],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 31 }
+            }
+        },
+
         'a = class Foo<T> { }': {
             type: 'ExpressionStatement',
             expression: {
@@ -4927,37 +5035,12 @@ var fbTestFixture = {
                 right: {
                     type: 'ClassExpression',
                     id: {
-                        type: 'ParametricallyTypedIdentifier',
-                        id: {
-                            type: 'Identifier',
-                            name: 'Foo',
-                            range: [10, 13],
-                            loc: {
-                                start: { line: 1, column: 10 },
-                                end: { line: 1, column: 13 }
-                            }
-                        },
-                        annotation: {
-                            type: 'ParametricTypeAnnotation',
-                            params: [{
-                                type: 'Identifier',
-                                name: 'T',
-                                range: [14, 15],
-                                loc: {
-                                    start: { line: 1, column: 14 },
-                                    end: { line: 1, column: 15 }
-                                }
-                            }],
-                            range: [13, 16],
-                            loc: {
-                                start: { line: 1, column: 13 },
-                                end: { line: 1, column: 16 }
-                            }
-                        },
-                        range: [10, 16],
+                        type: 'Identifier',
+                        name: 'Foo',
+                        range: [10, 13],
                         loc: {
                             start: { line: 1, column: 10 },
-                            end: { line: 1, column: 16 }
+                            end: { line: 1, column: 13 }
                         }
                     },
                     superClass: null,
@@ -4968,6 +5051,23 @@ var fbTestFixture = {
                         loc: {
                             start: { line: 1, column: 17 },
                             end: { line: 1, column: 20 }
+                        }
+                    },
+                    parametricType: {
+                        type: 'ParametricTypeAnnotation',
+                        params: [{
+                            type: 'Identifier',
+                            name: 'T',
+                            range: [14, 15],
+                            loc: {
+                                start: { line: 1, column: 14 },
+                                end: { line: 1, column: 15 }
+                            }
+                        }],
+                        range: [13, 16],
+                        loc: {
+                            start: { line: 1, column: 13 },
+                            end: { line: 1, column: 16 }
                         }
                     },
                     range: [4, 20],
@@ -5051,37 +5151,12 @@ var fbTestFixture = {
                 body: [{
                     type: 'MethodDefinition',
                     key: {
-                        type: 'ParametricallyTypedIdentifier',
-                        id: {
-                            type: 'Identifier',
-                            name: 'bar',
-                            range: [15, 18],
-                            loc: {
-                                start: { line: 1, column: 15 },
-                                end: { line: 1, column: 18 }
-                            }
-                        },
-                        annotation: {
-                            type: 'ParametricTypeAnnotation',
-                            params: [{
-                                type: 'Identifier',
-                                name: 'U',
-                                range: [19, 20],
-                                loc: {
-                                    start: { line: 1, column: 19 },
-                                    end: { line: 1, column: 20 }
-                                }
-                            }],
-                            range: [18, 21],
-                            loc: {
-                                start: { line: 1, column: 18 },
-                                end: { line: 1, column: 21 }
-                            }
-                        },
-                        range: [15, 21],
+                        type: 'Identifier',
+                        name: 'bar',
+                        range: [15, 18],
                         loc: {
                             start: { line: 1, column: 15 },
-                            end: { line: 1, column: 21 }
+                            end: { line: 1, column: 18 }
                         }
                     },
                     value: {
@@ -5136,6 +5211,23 @@ var fbTestFixture = {
                             loc: {
                                 start: { line: 1, column: 23 },
                                 end: { line: 1, column: 30 }
+                            }
+                        },
+                        parametricType: {
+                            type: 'ParametricTypeAnnotation',
+                            params: [{
+                                type: 'Identifier',
+                                name: 'U',
+                                range: [19, 20],
+                                loc: {
+                                    start: { line: 1, column: 19 },
+                                    end: { line: 1, column: 20 }
+                                }
+                            }],
+                            range: [18, 21],
+                            loc: {
+                                start: { line: 1, column: 18 },
+                                end: { line: 1, column: 21 }
                             }
                         },
                         range: [31, 45],
@@ -5199,38 +5291,13 @@ var fbTestFixture = {
                 body: [{
                     type: 'MethodDefinition',
                     key: {
-                        type: 'ParametricallyTypedIdentifier',
-                        id: {
-                            type: 'Literal',
-                            value: 'bar',
-                            raw: '"bar"',
-                            range: [12, 17],
-                            loc: {
-                                start: { line: 1, column: 12 },
-                                end: { line: 1, column: 17 }
-                            }
-                        },
-                        annotation: {
-                            type: 'ParametricTypeAnnotation',
-                            params: [{
-                                type: 'Identifier',
-                                name: 'T',
-                                range: [18, 19],
-                                loc: {
-                                    start: { line: 1, column: 18 },
-                                    end: { line: 1, column: 19 }
-                                }
-                            }],
-                            range: [17, 20],
-                            loc: {
-                                start: { line: 1, column: 17 },
-                                end: { line: 1, column: 20 }
-                            }
-                        },
-                        range: [12, 20],
+                        type: 'Literal',
+                        value: 'bar',
+                        raw: '"bar"',
+                        range: [12, 17],
                         loc: {
                             start: { line: 1, column: 12 },
-                            end: { line: 1, column: 20 }
+                            end: { line: 1, column: 17 }
                         }
                     },
                     value: {
@@ -5250,6 +5317,23 @@ var fbTestFixture = {
                         rest: null,
                         generator: false,
                         expression: false,
+                        parametricType: {
+                            type: 'ParametricTypeAnnotation',
+                            params: [{
+                                type: 'Identifier',
+                                name: 'T',
+                                range: [18, 19],
+                                loc: {
+                                    start: { line: 1, column: 18 },
+                                    end: { line: 1, column: 19 }
+                                }
+                            }],
+                            range: [17, 20],
+                            loc: {
+                                start: { line: 1, column: 17 },
+                                end: { line: 1, column: 20 }
+                            }
+                        },
                         range: [23, 26],
                         loc: {
                             start: { line: 1, column: 23 },
