@@ -1829,7 +1829,7 @@ parseYieldExpression: true
             return {
                 type: Syntax.XJSAttribute,
                 name: name,
-                value: value
+                value: value || null
             };
         },
 
@@ -5901,7 +5901,7 @@ parseYieldExpression: true
     }
 
     function parseXJSElement() {
-        var openingElement, closingElement, children = [], origInXJSChild, origInXJSTag, marker = markerCreate();
+        var openingElement, closingElement = null, children = [], origInXJSChild, origInXJSTag, marker = markerCreate();
 
         origInXJSChild = state.inXJSChild;
         origInXJSTag = state.inXJSTag;

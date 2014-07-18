@@ -25,6 +25,7 @@ var fbTestFixture = {
                       end: { line: 1, column: 5 }
                   }
                 },
+                closingElement: null,
                 children: [],
                 range: [0, 5],
                 loc: {
@@ -99,6 +100,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 8 }
                             }
                         },
+                        value: null,
                         range: [5, 8],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -111,6 +113,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 11 }
                     }
                 },
+                closingElement: null,
                 children: [],
                 range: [0, 11],
                 loc: {
@@ -300,6 +303,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 32 }
                             }
                         },
+                        closingElement: null,
                         children: [],
                         range: [27, 32],
                         loc: {
@@ -438,6 +442,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 29 }
                     }
                 },
+                closingElement: null,
                 children: [],
                 range: [0, 29],
                 loc: {
@@ -492,6 +497,7 @@ var fbTestFixture = {
                         }
                     }
                 },
+                closingElement: null,
                 children: [],
                 range: [
                     0,
@@ -921,6 +927,7 @@ var fbTestFixture = {
                                                 }
                                             }
                                         },
+                                        closingElement: null,
                                         children: [],
                                         range: [
                                             10,
@@ -976,6 +983,7 @@ var fbTestFixture = {
                                                 }
                                             }
                                         },
+                                        closingElement: null,
                                         children: [],
                                         range: [
                                             18,
@@ -1053,6 +1061,7 @@ var fbTestFixture = {
                         }
                     }
                 },
+                closingElement: null,
                 children: [],
                 range: [
                     0,
@@ -1401,6 +1410,7 @@ var fbTestFixture = {
                             }
                         }
                     },
+                    closingElement: null,
                     children: [],
                     range: [
                         5,
@@ -1551,6 +1561,7 @@ var fbTestFixture = {
                                         }
                                     }
                                 },
+                                closingElement: null,
                                 "children": [],
                                 "range": [
                                     16,
@@ -1743,6 +1754,7 @@ var fbTestFixture = {
                         }
                     }
                 },
+                closingElement: null,
                 "children": [],
                 "range": [
                     0,
@@ -2014,6 +2026,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 8 }
                         }
                     },
+                    closingElement: null,
                     children: [],
                     range: [1, 8],
                     loc: {
@@ -2120,6 +2133,7 @@ var fbTestFixture = {
                         }
                     }
                 },
+                closingElement: null,
                 "children": [],
                 "range": [
                     0,
@@ -2283,6 +2297,7 @@ var fbTestFixture = {
                         }
                     }
                 },
+                closingElement: null,
                 "children": [],
                 "range": [
                     0,
