@@ -1860,10 +1860,11 @@ parseYieldExpression: true
             };
         },
 
-        createObjectTypeAnnotation: function (properties) {
+        createObjectTypeAnnotation: function (properties, nullable) {
             return {
                 type: Syntax.ObjectTypeAnnotation,
-                properties: properties
+                properties: properties,
+                nullable: nullable
             };
         },
 
@@ -3571,7 +3572,7 @@ parseYieldExpression: true
 
     // 12.2 Variable Statement
 
-    function parseObjectTypeAnnotation() {
+    function parseObjectTypeAnnotation(nullable) {
         var isMethod, marker, properties = [], property, propertyKey,
             propertyTypeAnnotation;
 
@@ -3601,7 +3602,7 @@ parseYieldExpression: true
 
         expect('}');
 
-        return delegate.createObjectTypeAnnotation(properties);
+        return delegate.createObjectTypeAnnotation(properties, nullable);
     }
 
     function parseVoidTypeAnnotation() {
@@ -3636,13 +3637,13 @@ parseYieldExpression: true
             expect(':');
         }
 
-        if (match('{')) {
-            return markerApply(marker, parseObjectTypeAnnotation());
-        }
-
         if (match('?')) {
             lex();
             nullable = true;
+        }
+
+        if (match('{')) {
+            return markerApply(marker, parseObjectTypeAnnotation(nullable));
         }
 
         if (lookahead.type === Token.Identifier) {
