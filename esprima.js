@@ -3673,7 +3673,7 @@ parseYieldExpression: true
             if (!matchKeyword('void')) {
                 throwUnexpected(lookahead);
             } else {
-                return parseVoidTypeAnnotation();
+                return markerApply(marker, parseVoidTypeAnnotation());
             }
         }
 
