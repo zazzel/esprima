@@ -443,8 +443,11 @@ parseYieldExpression: true
                 }
             } else if (blockComment) {
                 if (isLineTerminator(ch)) {
-                    if (ch === 13 && source.charCodeAt(index + 1) === 10) {
+                    if (ch === 13) {
                         ++index;
+                        if (source.charCodeAt(index) !== 10) {
+                            continue;
+                        }
                     }
                     ++lineNumber;
                     ++index;
@@ -5277,12 +5280,14 @@ parseYieldExpression: true
                 }
             } else if (blockComment) {
                 if (isLineTerminator(ch.charCodeAt(0))) {
-                    if (ch === '\r' && source[index + 1] === '\n') {
+                    if (ch === '\r') {
                         ++index;
-                        comment += '\r\n';
-                    } else {
-                        comment += ch;
+                        comment += '\r';
+                        if (source[index] !== '\n') {
+                            continue;
+                        }
                     }
+                    comment += source[index];
                     ++lineNumber;
                     ++index;
                     lineStart = index;
