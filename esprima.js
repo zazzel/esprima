@@ -6948,9 +6948,9 @@ parseYieldExpression: true, parseAwaitExpression: true
     function advanceXJSChild() {
         var ch = source.charCodeAt(index);
 
-        // { (123) and < (60)
-        if (ch !== 123 && ch !== 60) {
-            return scanXJSText(['<', '{']);
+        // '<' 60, '>' 62, '{' 123, '}' 125
+        if (ch !== 60 && ch !== 62 && ch !== 123 && ch !== 125) {
+            return scanXJSText(['<', '>', '{', '}']);
         }
 
         return scanPunctuator();
@@ -7110,8 +7110,10 @@ parseYieldExpression: true, parseAwaitExpression: true
         } else if (lookahead.type === Token.XJSText) {
             marker = markerCreatePreserveWhitespace();
             token = markerApply(marker, delegate.createLiteral(lex()));
-        } else {
+        } else if (match('<')) {
             token = parseXJSElement();
+        } else {
+            throwUnexpected(lookahead);
         }
         return token;
     }

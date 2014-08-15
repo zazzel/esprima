@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 199
+var numTests = 204
 var testFixture;
 
 var fbTestFixture = {
@@ -1228,7 +1228,7 @@ var fbTestFixture = {
                 end: { line: 1, column: 41 }
             }
         },
-        '<LeftRight left=<a /> right=<b>monkeys /> gorillas</b> />': {
+        '<LeftRight left=<a /> right=<b>monkeys</b> />': {
             type: 'ExpressionStatement',
             expression: {
                 type: 'XJSElement',
@@ -1326,58 +1326,58 @@ var fbTestFixture = {
                                 name: {
                                     type: 'XJSIdentifier',
                                     name: 'b',
-                                    range: [52, 53],
+                                    range: [40, 41],
                                     loc: {
-                                        start: { line: 1, column: 52 },
-                                        end: { line: 1, column: 53 }
+                                        start: { line: 1, column: 40 },
+                                        end: { line: 1, column: 41 }
                                     }
                                 },
-                                range: [50, 54],
+                                range: [38, 42],
                                 loc: {
-                                    start: { line: 1, column: 50 },
-                                    end: { line: 1, column: 54 }
+                                    start: { line: 1, column: 38 },
+                                    end: { line: 1, column: 42 }
                                 }
                             },
                             children: [{
                                 type: 'Literal',
-                                value: 'monkeys /> gorillas',
-                                raw: 'monkeys /> gorillas',
-                                range: [31, 50],
+                                value: 'monkeys',
+                                raw: 'monkeys',
+                                range: [31, 38],
                                 loc: {
                                     start: { line: 1, column: 31 },
-                                    end: { line: 1, column: 50 }
+                                    end: { line: 1, column: 38 }
                                 }
                             }],
-                            range: [28, 54],
+                            range: [28, 42],
                             loc: {
                                 start: { line: 1, column: 28 },
-                                end: { line: 1, column: 54 }
+                                end: { line: 1, column: 42 }
                             }
                         },
-                        range: [22, 54],
+                        range: [22, 42],
                         loc: {
                             start: { line: 1, column: 22 },
-                            end: { line: 1, column: 54 }
+                            end: { line: 1, column: 42 }
                         }
                     }],
-                    range: [0, 57],
+                    range: [0, 45],
                     loc: {
                         start: { line: 1, column: 0 },
-                        end: { line: 1, column: 57 }
+                        end: { line: 1, column: 45 }
                     }
                 },
                 closingElement: null,
                 children: [],
-                range: [0, 57],
+                range: [0, 45],
                 loc: {
                     start: { line: 1, column: 0 },
-                    end: { line: 1, column: 57 }
+                    end: { line: 1, column: 45 }
                 }
             },
-            range: [0, 57],
+            range: [0, 45],
             loc: {
                 start: { line: 1, column: 0 },
-                end: { line: 1, column: 57 }
+                end: { line: 1, column: 45 }
             }
         },
         '<a.b></a.b>': {
@@ -2228,6 +2228,46 @@ var fbTestFixture = {
             column: 28,
             message: 'Error: Line 1: Unexpected token {',
             description: 'Unexpected token {'
+
+        },
+        '<a>></a>': {
+            index: 3,
+            lineNumber: 1,
+            column: 4,
+            message: 'Error: Line 1: Unexpected token >',
+            description: 'Unexpected token >'
+
+        },
+        '<a> ></a>': {
+            index: 4,
+            lineNumber: 1,
+            column: 5,
+            message: 'Error: Line 1: Unexpected token >',
+            description: 'Unexpected token >'
+
+        },
+        '<a b=}>': {
+            index: 5,
+            lineNumber: 1,
+            column: 6,
+            message: 'Error: Line 1: XJS value should be either an expression or a quoted XJS text',
+            description: 'XJS value should be either an expression or a quoted XJS text'
+
+        },
+        '<a b=<}>': {
+            index: 6,
+            lineNumber: 1,
+            column: 7,
+            message: 'Error: Line 1: Unexpected token }',
+            description: 'Unexpected token }'
+
+        },
+        '<a>}</a>': {
+            index: 3,
+            lineNumber: 1,
+            column: 4,
+            message: 'Error: Line 1: Unexpected token }',
+            description: 'Unexpected token }'
 
         },
     },
