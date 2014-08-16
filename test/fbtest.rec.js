@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 198
+var numTests = 199
 var testFixture;
 
 var fbTestFixture = {
@@ -1965,6 +1965,68 @@ var fbTestFixture = {
             message: 'Error: Line 1: Unexpected token ...',
             description: 'Unexpected token ...'
 
+        },
+        '<a>= == =</a>': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'XJSElement',
+                openingElement: {
+                    type: 'XJSOpeningElement',
+                    name: {
+                        type: 'XJSIdentifier',
+                        name: 'a',
+                        range: [1, 2],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 2 }
+                        }
+                    },
+                    selfClosing: false,
+                    attributes: [],
+                    range: [0, 3],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 3 }
+                    }
+                },
+                closingElement: {
+                    type: 'XJSClosingElement',
+                    name: {
+                        type: 'XJSIdentifier',
+                        name: 'a',
+                        range: [11, 12],
+                        loc: {
+                            start: { line: 1, column: 11 },
+                            end: { line: 1, column: 12 }
+                        }
+                    },
+                    range: [9, 13],
+                    loc: {
+                        start: { line: 1, column: 9 },
+                        end: { line: 1, column: 13 }
+                    }
+                },
+                children: [{
+                    type: 'Literal',
+                    value: '= == =',
+                    raw: '= == =',
+                    range: [3, 9],
+                    loc: {
+                        start: { line: 1, column: 3 },
+                        end: { line: 1, column: 9 }
+                    }
+                }],
+                range: [0, 13],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 13 }
+                }
+            },
+            range: [0, 13],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 13 }
+            }
         },
     },
     'Invalid XJS Syntax': {
