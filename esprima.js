@@ -445,15 +445,14 @@ parseYieldExpression: true
                 if (isLineTerminator(ch)) {
                     if (ch === 13) {
                         ++index;
-                        if (source.charCodeAt(index) !== 10) {
-                            continue;
-                        }
                     }
-                    ++lineNumber;
-                    ++index;
-                    lineStart = index;
-                    if (index >= length) {
-                        throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+                    if (ch !== 13 || source.charCodeAt(index) === 10) {
+                        ++lineNumber;
+                        ++index;
+                        lineStart = index;
+                        if (index >= length) {
+                            throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+                        }
                     }
                 } else {
                     ch = source.charCodeAt(index++);
@@ -5283,16 +5282,15 @@ parseYieldExpression: true
                     if (ch === '\r') {
                         ++index;
                         comment += '\r';
-                        if (source[index] !== '\n') {
-                            continue;
-                        }
                     }
-                    comment += source[index];
-                    ++lineNumber;
-                    ++index;
-                    lineStart = index;
-                    if (index >= length) {
-                        throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+                    if (ch !== '\r' || source[index] === '\n') {
+                        comment += source[index];
+                        ++lineNumber;
+                        ++index;
+                        lineStart = index;
+                        if (index >= length) {
+                            throwError({}, Messages.UnexpectedToken, 'ILLEGAL');
+                        }
                     }
                 } else {
                     ch = source[index++];
