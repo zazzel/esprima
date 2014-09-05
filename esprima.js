@@ -6358,7 +6358,7 @@ parseYieldExpression: true
     }
 
     // Sync with *.json manifests.
-    exports.version = '5001.0001.0000-dev-harmony-fb';
+    exports.version = '6001.0001.0000-dev-harmony-fb';
 
     exports.tokenize = tokenize;
 
