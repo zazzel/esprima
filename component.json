@@ -1,6 +1,6 @@
 {
     "name": "esprima",
-    "version": "6001.1001.0000-dev-harmony-fb",
+    "version": "7001.0001.0000-dev-harmony-fb",
     "main": "./esprima.js",
     "dependencies": {},
     "repository": {
