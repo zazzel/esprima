@@ -5,7 +5,7 @@ parser written in ECMAScript (also popularly known as
 Esprima is created and maintained by [Ariya Hidayat](http://twitter.com/ariyahidayat),
 with the help of [many contributors](https://github.com/ariya/esprima/contributors).
 
-**Esprima-FB** is a fork of [Harmony branch](https://github.com/ariya/esprima/tree/harmony) of Esprima that implements [JSX specification](https://github.com/facebook/jsx) on top of ECMAScript syntax.
+**Esprima-FB** is a fork of the [Harmony branch](https://github.com/ariya/esprima/tree/harmony) of Esprima that implements [JSX specification](https://github.com/facebook/jsx) on top of ECMAScript syntax.
 
 ### Features
 
