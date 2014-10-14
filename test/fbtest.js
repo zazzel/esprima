@@ -5859,6 +5859,340 @@ var fbTestFixture = {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 41 }
             }
+        },
+        'var x : number | string = 4;': {
+          type: 'VariableDeclaration',
+          declarations: [{
+              type: 'VariableDeclarator',
+              id: {
+                  type: 'TypeAnnotatedIdentifier',
+                  id: {
+                      type: 'Identifier',
+                      name: 'x',
+                      range: [4, 5],
+                      loc: {
+                          start: { line: 1, column: 4 },
+                          end: { line: 1, column: 5 }
+                      }
+                  },
+                  annotation: {
+                      type: 'UnionTypeAnnotation',
+                      types: [{
+                          type: 'TypeAnnotation',
+                          id: {
+                              type: 'Identifier',
+                              name: 'number',
+                              range: [8, 14],
+                              loc: {
+                                  start: { line: 1, column: 8 },
+                                  end: { line: 1, column: 14 }
+                              }
+                          },
+                          params: null,
+                          returnType: null,
+                          nullable: false,
+                          range: [8, 14],
+                          loc: {
+                              start: { line: 1, column: 8 },
+                              end: { line: 1, column: 14 }
+                          }
+                      }, {
+                          type: 'TypeAnnotation',
+                          id: {
+                              type: 'Identifier',
+                              name: 'string',
+                              range: [17, 23],
+                              loc: {
+                                  start: { line: 1, column: 17 },
+                                  end: { line: 1, column: 23 }
+                              }
+                          },
+                          params: null,
+                          returnType: null,
+                          nullable: false,
+                          range: [17, 23],
+                          loc: {
+                              start: { line: 1, column: 17 },
+                              end: { line: 1, column: 23 }
+                          }
+                      }],
+                      range: [6, 23],
+                      loc: {
+                          start: { line: 1, column: 6 },
+                          end: { line: 1, column: 23 }
+                      }
+                  },
+                  range: [4, 23],
+                  loc: {
+                      start: { line: 1, column: 4 },
+                      end: { line: 1, column: 23 }
+                  }
+              },
+              init: {
+                  type: 'Literal',
+                  value: 4,
+                  raw: '4',
+                  range: [26, 27],
+                  loc: {
+                      start: { line: 1, column: 26 },
+                      end: { line: 1, column: 27 }
+                  }
+              },
+              range: [4, 27],
+              loc: {
+                  start: { line: 1, column: 4 },
+                  end: { line: 1, column: 27 }
+              }
+          }],
+          kind: 'var',
+          range: [0, 28],
+          loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 28 }
+          }
+        },
+        'class Array { concat(items:number | string) {}; }': {
+          type: 'ClassDeclaration',
+          id: {
+              type: 'Identifier',
+              name: 'Array',
+              range: [6, 11],
+              loc: {
+                  start: { line: 1, column: 6 },
+                  end: { line: 1, column: 11 }
+              }
+          },
+          superClass: null,
+          body: {
+              type: 'ClassBody',
+              body: [{
+                  type: 'MethodDefinition',
+                  key: {
+                      type: 'Identifier',
+                      name: 'concat',
+                      range: [14, 20],
+                      loc: {
+                          start: { line: 1, column: 14 },
+                          end: { line: 1, column: 20 }
+                      }
+                  },
+                  value: {
+                      type: 'FunctionExpression',
+                      id: null,
+                      params: [{
+                          type: 'TypeAnnotatedIdentifier',
+                          id: {
+                              type: 'Identifier',
+                              name: 'items',
+                              range: [21, 26],
+                              loc: {
+                                  start: { line: 1, column: 21 },
+                                  end: { line: 1, column: 26 }
+                              }
+                          },
+                          annotation: {
+                              type: 'UnionTypeAnnotation',
+                              types: [{
+                                  type: 'TypeAnnotation',
+                                  id: {
+                                      type: 'Identifier',
+                                      name: 'number',
+                                      range: [27, 33],
+                                      loc: {
+                                          start: { line: 1, column: 27 },
+                                          end: { line: 1, column: 33 }
+                                      }
+                                  },
+                                  params: null,
+                                  returnType: null,
+                                  nullable: false,
+                                  range: [27, 33],
+                                  loc: {
+                                      start: { line: 1, column: 27 },
+                                      end: { line: 1, column: 33 }
+                                  }
+                              }, {
+                                  type: 'TypeAnnotation',
+                                  id: {
+                                      type: 'Identifier',
+                                      name: 'string',
+                                      range: [36, 42],
+                                      loc: {
+                                          start: { line: 1, column: 36 },
+                                          end: { line: 1, column: 42 }
+                                      }
+                                  },
+                                  params: null,
+                                  returnType: null,
+                                  nullable: false,
+                                  range: [36, 42],
+                                  loc: {
+                                      start: { line: 1, column: 36 },
+                                      end: { line: 1, column: 42 }
+                                  }
+                              }],
+                              range: [26, 42],
+                              loc: {
+                                  start: { line: 1, column: 26 },
+                                  end: { line: 1, column: 42 }
+                              }
+                          },
+                          range: [21, 42],
+                          loc: {
+                              start: { line: 1, column: 21 },
+                              end: { line: 1, column: 42 }
+                          }
+                      }],
+                      defaults: [],
+                      body: {
+                          type: 'BlockStatement',
+                          body: [],
+                          range: [44, 46],
+                          loc: {
+                              start: { line: 1, column: 44 },
+                              end: { line: 1, column: 46 }
+                          }
+                      },
+                      rest: null,
+                      generator: false,
+                      expression: false,
+                      range: [44, 46],
+                      loc: {
+                          start: { line: 1, column: 44 },
+                          end: { line: 1, column: 46 }
+                      }
+                  },
+                  kind: '',
+                  'static': false,
+                  range: [14, 46],
+                  loc: {
+                      start: { line: 1, column: 14 },
+                      end: { line: 1, column: 46 }
+                  }
+              }],
+              range: [12, 49],
+              loc: {
+                  start: { line: 1, column: 12 },
+                  end: { line: 1, column: 49 }
+              }
+          },
+          range: [0, 49],
+          loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 49 }
+          }
+        },
+        'var x : () => number | () => string = fn;': {
+          type: 'VariableDeclaration',
+          declarations: [{
+              type: 'VariableDeclarator',
+              id: {
+                  type: 'TypeAnnotatedIdentifier',
+                  id: {
+                      type: 'Identifier',
+                      name: 'x',
+                      range: [4, 5],
+                      loc: {
+                          start: { line: 1, column: 4 },
+                          end: { line: 1, column: 5 }
+                      }
+                  },
+                  annotation: {
+                      type: 'TypeAnnotation',
+                      id: null,
+                      params: [],
+                      returnType: {
+                          type: 'UnionTypeAnnotation',
+                          types: [{
+                              type: 'TypeAnnotation',
+                              id: {
+                                  type: 'Identifier',
+                                  name: 'number',
+                                  range: [14, 20],
+                                  loc: {
+                                      start: { line: 1, column: 14 },
+                                      end: { line: 1, column: 20 }
+                                  }
+                              },
+                              params: null,
+                              returnType: null,
+                              nullable: false,
+                              range: [14, 20],
+                              loc: {
+                                  start: { line: 1, column: 14 },
+                                  end: { line: 1, column: 20 }
+                              }
+                          }, {
+                              type: 'TypeAnnotation',
+                              id: null,
+                              params: [],
+                              returnType: {
+                                  type: 'TypeAnnotation',
+                                  id: {
+                                      type: 'Identifier',
+                                      name: 'string',
+                                      range: [29, 35],
+                                      loc: {
+                                          start: { line: 1, column: 29 },
+                                          end: { line: 1, column: 35 }
+                                      }
+                                  },
+                                  params: null,
+                                  returnType: null,
+                                  nullable: false,
+                                  range: [29, 35],
+                                  loc: {
+                                      start: { line: 1, column: 29 },
+                                      end: { line: 1, column: 35 }
+                                  }
+                              },
+                              nullable: false,
+                              range: [23, 35],
+                              loc: {
+                                  start: { line: 1, column: 23 },
+                                  end: { line: 1, column: 35 }
+                              }
+                          }],
+                          range: [14, 35],
+                          loc: {
+                              start: { line: 1, column: 14 },
+                              end: { line: 1, column: 35 }
+                          }
+                      },
+                      nullable: false,
+                      range: [6, 35],
+                      loc: {
+                          start: { line: 1, column: 6 },
+                          end: { line: 1, column: 35 }
+                      }
+                  },
+                  range: [4, 35],
+                  loc: {
+                      start: { line: 1, column: 4 },
+                      end: { line: 1, column: 35 }
+                  }
+              },
+              init: {
+                  type: 'Identifier',
+                  name: 'fn',
+                  range: [38, 40],
+                  loc: {
+                      start: { line: 1, column: 38 },
+                      end: { line: 1, column: 40 }
+                  }
+              },
+              range: [4, 40],
+              loc: {
+                  start: { line: 1, column: 4 },
+                  end: { line: 1, column: 40 }
+              }
+          }],
+          kind: 'var',
+          range: [0, 41],
+          loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 41 }
+          }
         }
     },
 

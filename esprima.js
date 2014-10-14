@@ -190,6 +190,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
         TypeAnnotation: 'TypeAnnotation',
         UnaryExpression: 'UnaryExpression',
+        UnionTypeAnnotation: 'UnionTypeAnnotation',
         UpdateExpression: 'UpdateExpression',
         VariableDeclaration: 'VariableDeclaration',
         VariableDeclarator: 'VariableDeclarator',
@@ -1916,6 +1917,13 @@ parseYieldExpression: true, parseAwaitExpression: true
                 type: Syntax.ObjectTypeAnnotation,
                 properties: properties,
                 nullable: nullable
+            };
+        },
+
+        createUnionTypeAnnotation: function (types) {
+            return {
+                type: Syntax.UnionTypeAnnotation,
+                types: types
             };
         },
 
@@ -3880,14 +3888,10 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseTypeAnnotation(dontExpectColon) {
+    function parseTypeAnnotationWithoutUnions() {
         var typeIdentifier = null, params = null, returnType = null,
             nullable = false, marker = markerCreate(), returnTypeMarker = null,
             parametricType, annotation;
-
-        if (!dontExpectColon) {
-            expect(':');
-        }
 
         if (match('?')) {
             lex();
@@ -3936,6 +3940,32 @@ parseYieldExpression: true, parseAwaitExpression: true
             returnType,
             nullable
         ));
+    }
+
+    function parseUnionTypeAnnotation(types) {
+        while (match('|')) {
+            lex();
+            types.push(parseTypeAnnotationWithoutUnions());
+        }
+
+        return delegate.createUnionTypeAnnotation(
+            types
+        );
+    }
+
+    function parseTypeAnnotation(dontExpectColon) {
+        var type, marker = markerCreate();
+        if (!dontExpectColon) {
+            expect(':');
+        }
+
+        type = parseTypeAnnotationWithoutUnions(marker);
+
+        if (match('|')) {
+            type = parseUnionTypeAnnotation([type]);
+        }
+
+        return markerApply(marker, type);
     }
 
     function parseVariableIdentifier() {
