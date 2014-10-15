@@ -7019,6 +7019,3 @@ var fbTestFixture = {
     }
 
 }());
-
-
-
