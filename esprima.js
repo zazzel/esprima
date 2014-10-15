@@ -46,6 +46,7 @@ advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
 parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
+parseTypeAnnotationWithoutUnions: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -189,6 +190,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         TryStatement: 'TryStatement',
         TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
         TypeAnnotation: 'TypeAnnotation',
+        TypeofTypeAnnotation: 'TypeofTypeAnnotation',
         UnaryExpression: 'UnaryExpression',
         UnionTypeAnnotation: 'UnionTypeAnnotation',
         UpdateExpression: 'UpdateExpression',
@@ -1909,6 +1911,13 @@ parseYieldExpression: true, parseAwaitExpression: true
         createVoidTypeAnnotation: function () {
             return {
                 type: Syntax.VoidTypeAnnotation
+            };
+        },
+
+        createTypeofTypeAnnotation: function (argument) {
+            return {
+                type: Syntax.TypeofTypeAnnotation,
+                argument: argument
             };
         },
 
@@ -3871,6 +3880,15 @@ parseYieldExpression: true, parseAwaitExpression: true
         return markerApply(marker, delegate.createVoidTypeAnnotation());
     }
 
+    function parseTypeofTypeAnnotation() {
+        var argument, marker = markerCreate();
+        expectKeyword('typeof');
+        argument = parseTypeAnnotationWithoutUnions();
+        return markerApply(marker, delegate.createTypeofTypeAnnotation(
+            argument
+        ));
+    }
+
     function parseParametricTypeAnnotation() {
         var marker = markerCreate(), typeIdentifier, paramTypes = [];
 
@@ -3926,11 +3944,13 @@ parseYieldExpression: true, parseAwaitExpression: true
 
             returnType = parseTypeAnnotation(true);
         } else {
-            if (!matchKeyword('void')) {
-                throwUnexpected(lookahead);
-            } else {
+            if (matchKeyword('void')) {
                 return markerApply(marker, parseVoidTypeAnnotation());
             }
+            if (matchKeyword('typeof')) {
+                return markerApply(marker, parseTypeofTypeAnnotation());
+            }
+            throwUnexpected(lookahead);
         }
 
         return markerApply(marker, delegate.createTypeAnnotation(
@@ -3959,7 +3979,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             expect(':');
         }
 
-        type = parseTypeAnnotationWithoutUnions(marker);
+        type = parseTypeAnnotationWithoutUnions();
 
         if (match('|')) {
             type = parseUnionTypeAnnotation([type]);

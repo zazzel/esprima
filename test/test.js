@@ -20016,6 +20016,7 @@ var testFixture = {
                 TryStatement: 'TryStatement',
                 TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
                 TypeAnnotation: 'TypeAnnotation',
+                TypeofTypeAnnotation: 'TypeofTypeAnnotation',
                 UnaryExpression: 'UnaryExpression',
                 UnionTypeAnnotation: 'UnionTypeAnnotation',
                 UpdateExpression: 'UpdateExpression',
