@@ -4904,11 +4904,6 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
         }
 
-        if (lookahead.value === 'type'
-                && lookahead2().type === Token.Identifier) {
-            return parseTypeAlias();
-        }
-
         if (matchAsyncFuncExprOrDecl()) {
             return parseFunctionDeclaration();
         }
@@ -5556,6 +5551,11 @@ parseYieldExpression: true, parseAwaitExpression: true
             default:
                 return parseStatement();
             }
+        }
+
+        if (lookahead.value === 'type'
+                && lookahead2().type === Token.Identifier) {
+            return parseTypeAlias();
         }
 
         if (lookahead.type !== Token.EOF) {

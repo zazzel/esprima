@@ -7128,7 +7128,16 @@ var fbTestFixture = {
             start: { line: 1, column: 0 },
             end: { line: 1, column: 20 }
         }
-      }
+      },
+   },
+   'Invalid Type Alias': {
+    'if (true) type foo = number': {
+      index: 15,
+      lineNumber: 1,
+      column: 16,
+      message: 'Error: Line 1: Unexpected identifier',
+      description: 'Unexpected identifier'
+    }
    }
 };
 
