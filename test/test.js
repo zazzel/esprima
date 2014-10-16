@@ -20014,6 +20014,7 @@ var testFixture = {
                 ThisExpression: 'ThisExpression',
                 ThrowStatement: 'ThrowStatement',
                 TryStatement: 'TryStatement',
+                TypeAlias: 'TypeAlias',
                 TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
                 TypeAnnotation: 'TypeAnnotation',
                 TypeofTypeAnnotation: 'TypeofTypeAnnotation',
