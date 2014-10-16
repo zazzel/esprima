@@ -6997,7 +6997,148 @@ var fbTestFixture = {
             message: 'Error: Line 1: Unexpected identifier',
             description: 'Unexpected identifier'
         }
+    },
+    'Type Alias': {
+      'type FBID = number;': {
+        type: 'TypeAlias',
+        left: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'FBID',
+                range: [5, 9],
+                loc: {
+                    start: { line: 1, column: 5 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [5, 9],
+            loc: {
+                start: { line: 1, column: 5 },
+                end: { line: 1, column: 9 }
+            }
+        },
+        right: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'number',
+                range: [12, 18],
+                loc: {
+                    start: { line: 1, column: 12 },
+                    end: { line: 1, column: 18 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [12, 18],
+            loc: {
+                start: { line: 1, column: 12 },
+                end: { line: 1, column: 18 }
+            }
+        },
+        range: [0, 19],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 19 }
+        }
+      },
+      'type Foo<T> = Bar<T>': {
+        type: 'TypeAlias',
+        left: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [5, 8],
+                loc: {
+                    start: { line: 1, column: 5 },
+                    end: { line: 1, column: 8 }
+                }
+            },
+            parametricType: {
+                type: 'ParametricTypeAnnotation',
+                params: [{
+                    type: 'Identifier',
+                    name: 'T',
+                    range: [9, 10],
+                    loc: {
+                        start: { line: 1, column: 9 },
+                        end: { line: 1, column: 10 }
+                    }
+                }],
+                range: [8, 11],
+                loc: {
+                    start: { line: 1, column: 8 },
+                    end: { line: 1, column: 11 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [5, 11],
+            loc: {
+                start: { line: 1, column: 5 },
+                end: { line: 1, column: 11 }
+            }
+        },
+        right: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'Bar',
+                range: [14, 17],
+                loc: {
+                    start: { line: 1, column: 14 },
+                    end: { line: 1, column: 17 }
+                }
+            },
+            parametricType: {
+                type: 'ParametricTypeAnnotation',
+                params: [{
+                    type: 'Identifier',
+                    name: 'T',
+                    range: [18, 19],
+                    loc: {
+                        start: { line: 1, column: 18 },
+                        end: { line: 1, column: 19 }
+                    }
+                }],
+                range: [17, 20],
+                loc: {
+                    start: { line: 1, column: 17 },
+                    end: { line: 1, column: 20 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [14, 20],
+            loc: {
+                start: { line: 1, column: 14 },
+                end: { line: 1, column: 20 }
+            }
+        },
+        range: [0, 20],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 20 }
+        }
+      },
+   },
+   'Invalid Type Alias': {
+    'if (true) type foo = number': {
+      index: 15,
+      lineNumber: 1,
+      column: 16,
+      message: 'Error: Line 1: Unexpected identifier',
+      description: 'Unexpected identifier'
     }
+   }
 };
 
 // Merge fbTestFixture in to testFixture

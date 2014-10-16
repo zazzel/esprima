@@ -45,6 +45,7 @@ parseStatement: true, parseSourceElement: true, parseConciseBody: true,
 advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
+parseTypeAlias: true,
 parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
 parseTypeAnnotationWithoutUnions: true,
 parseYieldExpression: true, parseAwaitExpression: true
@@ -188,6 +189,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ThisExpression: 'ThisExpression',
         ThrowStatement: 'ThrowStatement',
         TryStatement: 'TryStatement',
+        TypeAlias: 'TypeAlias',
         TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
         TypeAnnotation: 'TypeAnnotation',
         TypeofTypeAnnotation: 'TypeofTypeAnnotation',
@@ -1933,6 +1935,14 @@ parseYieldExpression: true, parseAwaitExpression: true
             return {
                 type: Syntax.UnionTypeAnnotation,
                 types: types
+            };
+        },
+
+        createTypeAlias: function (left, right) {
+            return {
+                type: Syntax.TypeAlias,
+                left: left,
+                right: right
             };
         },
 
@@ -5543,6 +5553,11 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
         }
 
+        if (matchContextualKeyword('type')
+                && lookahead2().type === Token.Identifier) {
+            return parseTypeAlias();
+        }
+
         if (lookahead.type !== Token.EOF) {
             return parseStatement();
         }
@@ -6427,6 +6442,16 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         return markerApply(marker, delegate.createXJSElement(openingElement, closingElement, children));
+    }
+
+    function parseTypeAlias() {
+        var left, marker = markerCreate(), right;
+        expectContextualKeyword('type');
+        left = parseTypeAnnotationWithoutUnions();
+        expect('=');
+        right = parseTypeAnnotation(true);
+        consumeSemicolon();
+        return markerApply(marker, delegate.createTypeAlias(left, right));
     }
 
     function collectToken() {
