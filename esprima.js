@@ -5553,7 +5553,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
         }
 
-        if (lookahead.value === 'type'
+        if (matchContextualKeyword('type')
                 && lookahead2().type === Token.Identifier) {
             return parseTypeAlias();
         }
@@ -6446,10 +6446,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseTypeAlias() {
         var left, marker = markerCreate(), right;
-        if (lookahead.value !== 'type') {
-            throwUnexpected(lookahead);
-        }
-        lex();
+        expectContextualKeyword('type');
         left = parseTypeAnnotationWithoutUnions();
         expect('=');
         right = parseTypeAnnotation(true);
