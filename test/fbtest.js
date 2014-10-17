@@ -7129,15 +7129,343 @@ var fbTestFixture = {
             end: { line: 1, column: 20 }
         }
       },
+    },
+    'Interfaces': {
+      'interface A {}': {
+        type: 'InterfaceDeclaration',
+        id: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'A',
+                range: [10, 11],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 11 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [10, 11],
+            loc: {
+                start: { line: 1, column: 10 },
+                end: { line: 1, column: 11 }
+            }
+        },
+        body: {
+            type: 'ObjectTypeAnnotation',
+            properties: [],
+            range: [12, 14],
+            loc: {
+                start: { line: 1, column: 12 },
+                end: { line: 1, column: 14 }
+            }
+        },
+        'extends': [],
+        range: [0, 14],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 14 }
+        }
+      },
+      'interface A extends B {}': {
+        type: 'InterfaceDeclaration',
+        id: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'A',
+                range: [10, 11],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 11 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [10, 11],
+            loc: {
+                start: { line: 1, column: 10 },
+                end: { line: 1, column: 11 }
+            }
+        },
+        body: {
+            type: 'ObjectTypeAnnotation',
+            properties: [],
+            range: [22, 24],
+            loc: {
+                start: { line: 1, column: 22 },
+                end: { line: 1, column: 24 }
+            }
+        },
+        'extends': [{
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'B',
+                range: [20, 21],
+                loc: {
+                    start: { line: 1, column: 20 },
+                    end: { line: 1, column: 21 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [20, 21],
+            loc: {
+                start: { line: 1, column: 20 },
+                end: { line: 1, column: 21 }
+            }
+        }],
+        range: [0, 24],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 24 }
+        }
+      },
+      'interface A<T> extends B<T>, C<T> {}': {
+        type: 'InterfaceDeclaration',
+        id: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'A',
+                range: [10, 11],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 11 }
+                }
+            },
+            parametricType: {
+                type: 'ParametricTypeAnnotation',
+                params: [{
+                    type: 'Identifier',
+                    name: 'T',
+                    range: [12, 13],
+                    loc: {
+                        start: { line: 1, column: 12 },
+                        end: { line: 1, column: 13 }
+                    }
+                }],
+                range: [11, 14],
+                loc: {
+                    start: { line: 1, column: 11 },
+                    end: { line: 1, column: 14 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [10, 14],
+            loc: {
+                start: { line: 1, column: 10 },
+                end: { line: 1, column: 14 }
+            }
+        },
+        body: {
+            type: 'ObjectTypeAnnotation',
+            properties: [],
+            range: [34, 36],
+            loc: {
+                start: { line: 1, column: 34 },
+                end: { line: 1, column: 36 }
+            }
+        },
+        'extends': [{
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'B',
+                range: [23, 24],
+                loc: {
+                    start: { line: 1, column: 23 },
+                    end: { line: 1, column: 24 }
+                }
+            },
+            parametricType: {
+                type: 'ParametricTypeAnnotation',
+                params: [{
+                    type: 'Identifier',
+                    name: 'T',
+                    range: [25, 26],
+                    loc: {
+                        start: { line: 1, column: 25 },
+                        end: { line: 1, column: 26 }
+                    }
+                }],
+                range: [24, 27],
+                loc: {
+                    start: { line: 1, column: 24 },
+                    end: { line: 1, column: 27 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [23, 27],
+            loc: {
+                start: { line: 1, column: 23 },
+                end: { line: 1, column: 27 }
+            }
+        }, {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'C',
+                range: [29, 30],
+                loc: {
+                    start: { line: 1, column: 29 },
+                    end: { line: 1, column: 30 }
+                }
+            },
+            parametricType: {
+                type: 'ParametricTypeAnnotation',
+                params: [{
+                    type: 'Identifier',
+                    name: 'T',
+                    range: [31, 32],
+                    loc: {
+                        start: { line: 1, column: 31 },
+                        end: { line: 1, column: 32 }
+                    }
+                }],
+                range: [30, 33],
+                loc: {
+                    start: { line: 1, column: 30 },
+                    end: { line: 1, column: 33 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [29, 33],
+            loc: {
+                start: { line: 1, column: 29 },
+                end: { line: 1, column: 33 }
+            }
+        }],
+        range: [0, 36],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 36 }
+        }
+      },
+      'interface A { foo: () => number; }': {
+        type: 'InterfaceDeclaration',
+        id: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'A',
+                range: [10, 11],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 11 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [10, 11],
+            loc: {
+                start: { line: 1, column: 10 },
+                end: { line: 1, column: 11 }
+            }
+        },
+        body: {
+            type: 'ObjectTypeAnnotation',
+            properties: [{
+                type: 'Property',
+                key: {
+                    type: 'Identifier',
+                    name: 'foo',
+                    range: [14, 17],
+                    loc: {
+                        start: { line: 1, column: 14 },
+                        end: { line: 1, column: 17 }
+                    }
+                },
+                value: {
+                    type: 'TypeAnnotation',
+                    id: null,
+                    params: [],
+                    returnType: {
+                        type: 'TypeAnnotation',
+                        id: {
+                            type: 'Identifier',
+                            name: 'number',
+                            range: [25, 31],
+                            loc: {
+                                start: { line: 1, column: 25 },
+                                end: { line: 1, column: 31 }
+                            }
+                        },
+                        params: null,
+                        returnType: null,
+                        nullable: false,
+                        range: [25, 31],
+                        loc: {
+                            start: { line: 1, column: 25 },
+                            end: { line: 1, column: 31 }
+                        }
+                    },
+                    nullable: false,
+                    range: [17, 31],
+                    loc: {
+                        start: { line: 1, column: 17 },
+                        end: { line: 1, column: 31 }
+                    }
+                },
+                kind: 'init',
+                method: false,
+                shorthand: false,
+                range: [14, 31],
+                loc: {
+                    start: { line: 1, column: 14 },
+                    end: { line: 1, column: 31 }
+                }
+            }],
+            range: [12, 34],
+            loc: {
+                start: { line: 1, column: 12 },
+                end: { line: 1, column: 34 }
+            }
+        },
+        'extends': [],
+        range: [0, 34],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 34 }
+        }
+      }
+    },
+    'Invalid Type Alias': {
+      'if (true) type foo = number': {
+        index: 15,
+        lineNumber: 1,
+        column: 16,
+        message: 'Error: Line 1: Unexpected identifier',
+        description: 'Unexpected identifier'
+      }
    },
-   'Invalid Type Alias': {
-    'if (true) type foo = number': {
-      index: 15,
-      lineNumber: 1,
-      column: 16,
-      message: 'Error: Line 1: Unexpected identifier',
-      description: 'Unexpected identifier'
-    }
+   'Invalid Interfaces': {
+      'interface {}': {
+        index: 10,
+        lineNumber: 1,
+        column: 11,
+        message: 'Error: Line 1: Unexpected token {',
+        description: 'Unexpected token {'
+      },
+      'interface A extends {}': {
+        index: 20,
+        lineNumber: 1,
+        column: 21,
+        message: 'Error: Line 1: Unexpected token {',
+        description: 'Unexpected token {'
+      },
    }
 };
 
