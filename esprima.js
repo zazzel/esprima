@@ -3909,7 +3909,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseParametricTypeAnnotation() {
+    function parseTypeParameters() {
         var marker = markerCreate(), typeIdentifier, paramTypes = [];
 
         expect('<');
@@ -3934,7 +3934,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         typeIdentifier = parseVariableIdentifier();
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
         return markerApply(marker, delegate.createTypeAnnotation(
             typeIdentifier,
@@ -5181,7 +5181,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
 
         if (strict) {
@@ -5280,7 +5280,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
 
             if (match('<')) {
-                parametricType = parseParametricTypeAnnotation();
+                parametricType = parseTypeParameters();
             }
         }
 
@@ -5440,7 +5440,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
 
         isAsync = token.value === 'async' && !match('(');
@@ -5531,7 +5531,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
 
         if (matchKeyword('extends')) {
@@ -5554,7 +5554,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
 
         if (matchKeyword('extends')) {
