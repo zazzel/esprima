@@ -6939,6 +6939,258 @@ var fbTestFixture = {
               end: { line: 1, column: 35 }
           }
       },
+      'function foo(...rest: Array<number>) {}': {
+        type: 'FunctionDeclaration',
+        id: {
+            type: 'Identifier',
+            name: 'foo',
+            range: [9, 12],
+            loc: {
+                start: { line: 1, column: 9 },
+                end: { line: 1, column: 12 }
+            }
+        },
+        params: [],
+        defaults: [],
+        body: {
+            type: 'BlockStatement',
+            body: [],
+            range: [37, 39],
+            loc: {
+                start: { line: 1, column: 37 },
+                end: { line: 1, column: 39 }
+            }
+        },
+        rest: {
+            type: 'TypeAnnotatedIdentifier',
+            id: {
+                type: 'Identifier',
+                name: 'rest',
+                range: [16, 20],
+                loc: {
+                    start: { line: 1, column: 16 },
+                    end: { line: 1, column: 20 }
+                }
+            },
+            annotation: {
+                type: 'TypeAnnotation',
+                id: {
+                    type: 'Identifier',
+                    name: 'Array',
+                    range: [22, 27],
+                    loc: {
+                        start: { line: 1, column: 22 },
+                        end: { line: 1, column: 27 }
+                    }
+                },
+                parametricType: {
+                    type: 'ParametricTypeAnnotation',
+                    params: [{
+                        type: 'Identifier',
+                        name: 'number',
+                        range: [28, 34],
+                        loc: {
+                            start: { line: 1, column: 28 },
+                            end: { line: 1, column: 34 }
+                        }
+                    }],
+                    range: [27, 35],
+                    loc: {
+                        start: { line: 1, column: 27 },
+                        end: { line: 1, column: 35 }
+                    }
+                },
+                params: null,
+                returnType: null,
+                nullable: false,
+                range: [20, 35],
+                loc: {
+                    start: { line: 1, column: 20 },
+                    end: { line: 1, column: 35 }
+                }
+            },
+            range: [16, 35],
+            loc: {
+                start: { line: 1, column: 16 },
+                end: { line: 1, column: 35 }
+            }
+        },
+        generator: false,
+        expression: false,
+        range: [0, 39],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 39 }
+        }
+      },
+      '(function (...rest: Array<number>) {})': {
+        type: 'ExpressionStatement',
+        expression: {
+            type: 'FunctionExpression',
+            id: null,
+            params: [],
+            defaults: [],
+            body: {
+                type: 'BlockStatement',
+                body: [],
+                range: [35, 37],
+                loc: {
+                    start: { line: 1, column: 35 },
+                    end: { line: 1, column: 37 }
+                }
+            },
+            rest: {
+                type: 'TypeAnnotatedIdentifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'rest',
+                    range: [14, 18],
+                    loc: {
+                        start: { line: 1, column: 14 },
+                        end: { line: 1, column: 18 }
+                    }
+                },
+                annotation: {
+                    type: 'TypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'Array',
+                        range: [20, 25],
+                        loc: {
+                            start: { line: 1, column: 20 },
+                            end: { line: 1, column: 25 }
+                        }
+                    },
+                    parametricType: {
+                        type: 'ParametricTypeAnnotation',
+                        params: [{
+                            type: 'Identifier',
+                            name: 'number',
+                            range: [26, 32],
+                            loc: {
+                                start: { line: 1, column: 26 },
+                                end: { line: 1, column: 32 }
+                            }
+                        }],
+                        range: [25, 33],
+                        loc: {
+                            start: { line: 1, column: 25 },
+                            end: { line: 1, column: 33 }
+                        }
+                    },
+                    params: null,
+                    returnType: null,
+                    nullable: false,
+                    range: [18, 33],
+                    loc: {
+                        start: { line: 1, column: 18 },
+                        end: { line: 1, column: 33 }
+                    }
+                },
+                range: [14, 33],
+                loc: {
+                    start: { line: 1, column: 14 },
+                    end: { line: 1, column: 33 }
+                }
+            },
+            generator: false,
+            expression: false,
+            range: [1, 37],
+            loc: {
+                start: { line: 1, column: 1 },
+                end: { line: 1, column: 37 }
+            }
+        },
+        range: [0, 38],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 38 }
+        }
+      },
+      '((...rest: Array<number>) => rest)': {
+        type: 'ExpressionStatement',
+        expression: {
+            type: 'ArrowFunctionExpression',
+            id: null,
+            params: [],
+            defaults: [],
+            body: {
+                type: 'Identifier',
+                name: 'rest',
+                range: [29, 33],
+                loc: {
+                    start: { line: 1, column: 29 },
+                    end: { line: 1, column: 33 }
+                }
+            },
+            rest: {
+                type: 'TypeAnnotatedIdentifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'rest',
+                    range: [5, 9],
+                    loc: {
+                        start: { line: 1, column: 5 },
+                        end: { line: 1, column: 9 }
+                    }
+                },
+                annotation: {
+                    type: 'TypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'Array',
+                        range: [11, 16],
+                        loc: {
+                            start: { line: 1, column: 11 },
+                            end: { line: 1, column: 16 }
+                        }
+                    },
+                    parametricType: {
+                        type: 'ParametricTypeAnnotation',
+                        params: [{
+                            type: 'Identifier',
+                            name: 'number',
+                            range: [17, 23],
+                            loc: {
+                                start: { line: 1, column: 17 },
+                                end: { line: 1, column: 23 }
+                            }
+                        }],
+                        range: [16, 24],
+                        loc: {
+                            start: { line: 1, column: 16 },
+                            end: { line: 1, column: 24 }
+                        }
+                    },
+                    params: null,
+                    returnType: null,
+                    nullable: false,
+                    range: [9, 24],
+                    loc: {
+                        start: { line: 1, column: 9 },
+                        end: { line: 1, column: 24 }
+                    }
+                },
+                range: [5, 24],
+                loc: {
+                    start: { line: 1, column: 5 },
+                    end: { line: 1, column: 24 }
+                }
+            },
+            generator: false,
+            expression: true,
+            range: [1, 33],
+            loc: {
+                start: { line: 1, column: 1 },
+                end: { line: 1, column: 33 }
+            }
+        },
+        range: [0, 34],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 34 }
+        }
+      }
     },
 
     'Invalid Type Annotations': {
