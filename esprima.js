@@ -5087,10 +5087,12 @@ parseYieldExpression: true, parseAwaitExpression: true
                 param.typeAnnotation = parseTypeAnnotation();
             }
         } else {
-            // Typing rest params is awkward, so punting on that for now
             param =
                 rest
-                ? parseVariableIdentifier()
+                ? parseTypeAnnotatableIdentifier(
+                    false, /* requireTypeAnnotation */
+                    false /* canBeOptionalParam */
+                )
                 : parseTypeAnnotatableIdentifier(
                     false, /* requireTypeAnnotation */
                     true /* canBeOptionalParam */
