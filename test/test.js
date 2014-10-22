@@ -20024,6 +20024,7 @@ var testFixture = {
                 ImportDefaultSpecifier: "ImportDefaultSpecifier",
                 ImportNamespaceSpecifier: "ImportNamespaceSpecifier",
                 ImportSpecifier: 'ImportSpecifier',
+                InterfaceDeclaration: 'InterfaceDeclaration',
                 LabeledStatement: 'LabeledStatement',
                 Literal: 'Literal',
                 LogicalExpression: 'LogicalExpression',

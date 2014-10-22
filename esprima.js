@@ -38,7 +38,7 @@ parseClassExpression: true, parseClassDeclaration: true, parseExpression: true,
 parseForStatement: true,
 parseFunctionDeclaration: true, parseFunctionExpression: true,
 parseFunctionSourceElements: true, parseVariableIdentifier: true,
-parseImportSpecifier: true,
+parseImportSpecifier: true, parseInterface: true,
 parseLeftHandSideExpression: true, parseParams: true, validateParam: true,
 parseSpreadOrAssignmentExpression: true,
 parseStatement: true, parseSourceElement: true, parseConciseBody: true,
@@ -162,6 +162,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ImportDefaultSpecifier: 'ImportDefaultSpecifier',
         ImportNamespaceSpecifier: 'ImportNamespaceSpecifier',
         ImportSpecifier: 'ImportSpecifier',
+        InterfaceDeclaration: 'InterfaceDeclaration',
         LabeledStatement: 'LabeledStatement',
         Literal: 'Literal',
         LogicalExpression: 'LogicalExpression',
@@ -1943,6 +1944,15 @@ parseYieldExpression: true, parseAwaitExpression: true
                 type: Syntax.TypeAlias,
                 left: left,
                 right: right
+            };
+        },
+
+        createInterface: function (id, body, extended) {
+            return {
+                type: Syntax.InterfaceDeclaration,
+                id: id,
+                body: body,
+                extends: extended
             };
         },
 
@@ -3899,7 +3909,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseParametricTypeAnnotation() {
+    function parseTypeParameters() {
         var marker = markerCreate(), typeIdentifier, paramTypes = [];
 
         expect('<');
@@ -3913,6 +3923,25 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         return markerApply(marker, delegate.createParametricTypeAnnotation(
             paramTypes
+        ));
+    }
+
+    function parseGenericTypeAnnotation(nullable) {
+        var marker = markerCreate(), params = null, parametricType, returnType = null,
+            typeIdentifier;
+
+        nullable = nullable || false;
+
+        typeIdentifier = parseVariableIdentifier();
+        if (match('<')) {
+            parametricType = parseTypeParameters();
+        }
+        return markerApply(marker, delegate.createTypeAnnotation(
+            typeIdentifier,
+            parametricType,
+            params,
+            returnType,
+            nullable
         ));
     }
 
@@ -3931,11 +3960,10 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (lookahead.type === Token.Identifier) {
-            typeIdentifier = parseVariableIdentifier();
-            if (match('<')) {
-                parametricType = parseParametricTypeAnnotation();
-            }
-        } else if (match('(')) {
+            return markerApply(marker, parseGenericTypeAnnotation(nullable));
+        }
+
+        if (match('(')) {
             lex();
             params = [];
             while (lookahead.type === Token.Identifier || match('?')) {
@@ -3953,23 +3981,25 @@ parseYieldExpression: true, parseAwaitExpression: true
             expect('=>');
 
             returnType = parseTypeAnnotation(true);
-        } else {
-            if (matchKeyword('void')) {
-                return markerApply(marker, parseVoidTypeAnnotation());
-            }
-            if (matchKeyword('typeof')) {
-                return markerApply(marker, parseTypeofTypeAnnotation());
-            }
-            throwUnexpected(lookahead);
+
+            return markerApply(marker, delegate.createTypeAnnotation(
+                typeIdentifier,
+                parametricType,
+                params,
+                returnType,
+                nullable
+            ));
         }
 
-        return markerApply(marker, delegate.createTypeAnnotation(
-            typeIdentifier,
-            parametricType,
-            params,
-            returnType,
-            nullable
-        ));
+        if (matchKeyword('void')) {
+            return markerApply(marker, parseVoidTypeAnnotation());
+        }
+
+        if (matchKeyword('typeof')) {
+            return markerApply(marker, parseTypeofTypeAnnotation());
+        }
+
+        throwUnexpected(lookahead);
     }
 
     function parseUnionTypeAnnotation(types) {
@@ -5151,7 +5181,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
 
         if (strict) {
@@ -5250,7 +5280,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
 
             if (match('<')) {
-                parametricType = parseParametricTypeAnnotation();
+                parametricType = parseTypeParameters();
             }
         }
 
@@ -5410,7 +5440,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
 
         isAsync = token.value === 'async' && !match('(');
@@ -5501,7 +5531,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
 
         if (matchKeyword('extends')) {
@@ -5524,7 +5554,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseParametricTypeAnnotation();
+            parametricType = parseTypeParameters();
         }
 
         if (matchKeyword('extends')) {
@@ -5556,6 +5586,11 @@ parseYieldExpression: true, parseAwaitExpression: true
         if (matchContextualKeyword('type')
                 && lookahead2().type === Token.Identifier) {
             return parseTypeAlias();
+        }
+
+        if (matchContextualKeyword('interface')
+                && lookahead2().type === Token.Identifier) {
+            return parseInterface();
         }
 
         if (lookahead.type !== Token.EOF) {
@@ -6447,11 +6482,39 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseTypeAlias() {
         var left, marker = markerCreate(), right;
         expectContextualKeyword('type');
-        left = parseTypeAnnotationWithoutUnions();
+        left = parseGenericTypeAnnotation();
         expect('=');
         right = parseTypeAnnotation(true);
         consumeSemicolon();
         return markerApply(marker, delegate.createTypeAlias(left, right));
+    }
+
+    function parseInterface() {
+        var body, bodyMarker, extended = [], id, marker = markerCreate();
+
+        expectContextualKeyword('interface');
+        id = parseGenericTypeAnnotation();
+
+        if (matchKeyword('extends')) {
+            expectKeyword('extends');
+
+            while (index < length) {
+                extended.push(parseGenericTypeAnnotation());
+                if (!match(',')) {
+                    break;
+                }
+                expect(',');
+            }
+        }
+
+        bodyMarker = markerCreate();
+        body = markerApply(bodyMarker, parseObjectTypeAnnotation());
+
+        return markerApply(marker, delegate.createInterface(
+            id,
+            body,
+            extended
+        ));
     }
 
     function collectToken() {
