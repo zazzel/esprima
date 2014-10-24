@@ -4058,6 +4058,7 @@ var fbTestFixture = {
                 type: 'ObjectTypeAnnotation',
                 properties: [],
                 nullable: false,
+                indexer: null,
                 range: [14, 18],
                 loc: {
                     start: { line: 1, column: 14 },
@@ -4650,6 +4651,7 @@ var fbTestFixture = {
                             }
                         }],
                         nullable: false,
+                        indexer: null,
                         range: [5, 23],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -4675,6 +4677,148 @@ var fbTestFixture = {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 24 }
             }
+        },
+
+        'var a: {numVal: number, [indexer: string]: number};': {
+          type: 'VariableDeclaration',
+          declarations: [{
+              type: 'VariableDeclarator',
+              id: {
+                  type: 'TypeAnnotatedIdentifier',
+                  id: {
+                      type: 'Identifier',
+                      name: 'a',
+                      range: [4, 5],
+                      loc: {
+                          start: { line: 1, column: 4 },
+                          end: { line: 1, column: 5 }
+                      }
+                  },
+                  annotation: {
+                      type: 'ObjectTypeAnnotation',
+                      properties: [{
+                          type: 'Property',
+                          key: {
+                              type: 'Identifier',
+                              name: 'numVal',
+                              range: [8, 14],
+                              loc: {
+                                  start: { line: 1, column: 8 },
+                                  end: { line: 1, column: 14 }
+                              }
+                          },
+                          value: {
+                              type: 'TypeAnnotation',
+                              id: {
+                                  type: 'Identifier',
+                                  name: 'number',
+                                  range: [16, 22],
+                                  loc: {
+                                      start: { line: 1, column: 16 },
+                                      end: { line: 1, column: 22 }
+                                  }
+                              },
+                              params: null,
+                              returnType: null,
+                              nullable: false,
+                              range: [14, 22],
+                              loc: {
+                                  start: { line: 1, column: 14 },
+                                  end: { line: 1, column: 22 }
+                              }
+                          },
+                          kind: 'init',
+                          method: false,
+                          shorthand: false,
+                          range: [8, 22],
+                          loc: {
+                              start: { line: 1, column: 8 },
+                              end: { line: 1, column: 22 }
+                          }
+                      }],
+                      nullable: false,
+                      indexer: {
+                          type: 'ObjectTypeIndexer',
+                          id: {
+                              type: 'Identifier',
+                              name: 'indexer',
+                              range: [25, 32],
+                              loc: {
+                                  start: { line: 1, column: 25 },
+                                  end: { line: 1, column: 32 }
+                              }
+                          },
+                          key: {
+                              type: 'TypeAnnotation',
+                              id: {
+                                  type: 'Identifier',
+                                  name: 'string',
+                                  range: [34, 40],
+                                  loc: {
+                                      start: { line: 1, column: 34 },
+                                      end: { line: 1, column: 40 }
+                                  }
+                              },
+                              params: null,
+                              returnType: null,
+                              nullable: false,
+                              range: [34, 40],
+                              loc: {
+                                  start: { line: 1, column: 34 },
+                                  end: { line: 1, column: 40 }
+                              }
+                          },
+                          value: {
+                              type: 'TypeAnnotation',
+                              id: {
+                                  type: 'Identifier',
+                                  name: 'number',
+                                  range: [43, 49],
+                                  loc: {
+                                      start: { line: 1, column: 43 },
+                                      end: { line: 1, column: 49 }
+                                  }
+                              },
+                              params: null,
+                              returnType: null,
+                              nullable: false,
+                              range: [43, 49],
+                              loc: {
+                                  start: { line: 1, column: 43 },
+                                  end: { line: 1, column: 49 }
+                              }
+                          },
+                          range: [24, 49],
+                          loc: {
+                              start: { line: 1, column: 24 },
+                              end: { line: 1, column: 49 }
+                          }
+                      },
+                      range: [5, 50],
+                      loc: {
+                          start: { line: 1, column: 5 },
+                          end: { line: 1, column: 50 }
+                      }
+                  },
+                  range: [4, 50],
+                  loc: {
+                      start: { line: 1, column: 4 },
+                      end: { line: 1, column: 50 }
+                  }
+              },
+              init: null,
+              range: [4, 50],
+              loc: {
+                  start: { line: 1, column: 4 },
+                  end: { line: 1, column: 50 }
+              }
+          }],
+          kind: 'var',
+          range: [0, 51],
+          loc: {
+              start: { line: 1, column: 0 },
+              end: { line: 1, column: 51 }
+          }
         },
 
         'var a: ?{numVal: number};': {
@@ -4735,6 +4879,7 @@ var fbTestFixture = {
                             }
                         }],
                         nullable: true,
+                        indexer: null,
                         range: [5, 24],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -4859,6 +5004,7 @@ var fbTestFixture = {
                             }
                         }],
                         nullable: false,
+                        indexer: null,
                         range: [5, 39],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -4957,6 +5103,7 @@ var fbTestFixture = {
                                     }
                                 }],
                                 nullable: false,
+                                indexer: null,
                                 range: [14, 32],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -4973,6 +5120,7 @@ var fbTestFixture = {
                             }
                         }],
                         nullable: false,
+                        indexer: null,
                         range: [5, 33],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -5071,6 +5219,7 @@ var fbTestFixture = {
                                     }
                                 }],
                                 nullable: true,
+                                indexer: null,
                                 range: [14, 33],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -5087,6 +5236,7 @@ var fbTestFixture = {
                             }
                         }],
                         nullable: false,
+                        indexer: null,
                         range: [5, 34],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -5211,6 +5361,7 @@ var fbTestFixture = {
                             }
                         }],
                         nullable: false,
+                        indexer: null,
                         range: [5, 39],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -6447,6 +6598,7 @@ var fbTestFixture = {
                           }
                       }],
                       nullable: false,
+                      indexer: null,
                       range: [7, 22],
                       loc: {
                           start: { line: 1, column: 7 },
@@ -6590,6 +6742,7 @@ var fbTestFixture = {
                           }
                       }],
                       nullable: false,
+                      indexer: null,
                       range: [7, 21],
                       loc: {
                           start: { line: 1, column: 7 },
@@ -6829,6 +6982,7 @@ var fbTestFixture = {
                       }
                   }],
                   nullable: false,
+                  indexer: null,
                   range: [16, 32],
                   loc: {
                       start: { line: 1, column: 16 },
@@ -7248,6 +7402,14 @@ var fbTestFixture = {
             column: 17,
             message: 'Error: Line 1: Unexpected identifier',
             description: 'Unexpected identifier'
+        },
+
+        'var a: { [a: number]: string; [b: number]: string; };': {
+            index: 29,
+            lineNumber: 1,
+            column: 30,
+            message: 'Error: Line 1: An interface or object type can only have a single indexer property.',
+            description: 'An interface or object type can only have a single indexer property.'
         }
     },
     'Type Alias': {
@@ -7408,6 +7570,7 @@ var fbTestFixture = {
         body: {
             type: 'ObjectTypeAnnotation',
             properties: [],
+            indexer: null,
             range: [12, 14],
             loc: {
                 start: { line: 1, column: 12 },
@@ -7446,6 +7609,7 @@ var fbTestFixture = {
         body: {
             type: 'ObjectTypeAnnotation',
             properties: [],
+            indexer: null,
             range: [22, 24],
             loc: {
                 start: { line: 1, column: 22 },
@@ -7520,6 +7684,7 @@ var fbTestFixture = {
         body: {
             type: 'ObjectTypeAnnotation',
             properties: [],
+            indexer: null,
             range: [34, 36],
             loc: {
                 start: { line: 1, column: 34 },
@@ -7680,6 +7845,7 @@ var fbTestFixture = {
                     end: { line: 1, column: 31 }
                 }
             }],
+            indexer: null,
             range: [12, 34],
             loc: {
                 start: { line: 1, column: 12 },
