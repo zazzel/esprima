@@ -7858,6 +7858,140 @@ var fbTestFixture = {
             start: { line: 1, column: 0 },
             end: { line: 1, column: 34 }
         }
+      },
+      "interface Dictionary { [index: string]: string; length: number; }": {
+        type: 'InterfaceDeclaration',
+        id: {
+            type: 'TypeAnnotation',
+            id: {
+                type: 'Identifier',
+                name: 'Dictionary',
+                range: [10, 20],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 20 }
+                }
+            },
+            params: null,
+            returnType: null,
+            nullable: false,
+            range: [10, 20],
+            loc: {
+                start: { line: 1, column: 10 },
+                end: { line: 1, column: 20 }
+            }
+        },
+        body: {
+            type: 'ObjectTypeAnnotation',
+            properties: [{
+                type: 'Property',
+                key: {
+                    type: 'Identifier',
+                    name: 'length',
+                    range: [48, 54],
+                    loc: {
+                        start: { line: 1, column: 48 },
+                        end: { line: 1, column: 54 }
+                    }
+                },
+                value: {
+                    type: 'TypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'number',
+                        range: [56, 62],
+                        loc: {
+                            start: { line: 1, column: 56 },
+                            end: { line: 1, column: 62 }
+                        }
+                    },
+                    params: null,
+                    returnType: null,
+                    nullable: false,
+                    range: [54, 62],
+                    loc: {
+                        start: { line: 1, column: 54 },
+                        end: { line: 1, column: 62 }
+                    }
+                },
+                kind: 'init',
+                method: false,
+                shorthand: false,
+                range: [48, 62],
+                loc: {
+                    start: { line: 1, column: 48 },
+                    end: { line: 1, column: 62 }
+                }
+            }],
+            indexer: {
+                type: 'ObjectTypeIndexer',
+                id: {
+                    type: 'Identifier',
+                    name: 'index',
+                    range: [24, 29],
+                    loc: {
+                        start: { line: 1, column: 24 },
+                        end: { line: 1, column: 29 }
+                    }
+                },
+                key: {
+                    type: 'TypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'string',
+                        range: [31, 37],
+                        loc: {
+                            start: { line: 1, column: 31 },
+                            end: { line: 1, column: 37 }
+                        }
+                    },
+                    params: null,
+                    returnType: null,
+                    nullable: false,
+                    range: [31, 37],
+                    loc: {
+                        start: { line: 1, column: 31 },
+                        end: { line: 1, column: 37 }
+                    }
+                },
+                value: {
+                    type: 'TypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'string',
+                        range: [40, 46],
+                        loc: {
+                            start: { line: 1, column: 40 },
+                            end: { line: 1, column: 46 }
+                        }
+                    },
+                    params: null,
+                    returnType: null,
+                    nullable: false,
+                    range: [40, 46],
+                    loc: {
+                        start: { line: 1, column: 40 },
+                        end: { line: 1, column: 46 }
+                    }
+                },
+                range: [23, 46],
+                loc: {
+                    start: { line: 1, column: 23 },
+                    end: { line: 1, column: 46 }
+                }
+            },
+            range: [21, 65],
+            loc: {
+                start: { line: 1, column: 21 },
+                end: { line: 1, column: 65 }
+            }
+        },
+        'extends': [],
+        range: [0, 65],
+        loc: {
+            start: { line: 1, column: 0 },
+            end: { line: 1, column: 65 }
+        }
       }
     },
     'Invalid Type Alias': {
