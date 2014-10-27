@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 112
+var numTests = 117
 var testFixture;
 
 var fbTestFixture = {
@@ -6679,11 +6679,11 @@ var fbTestFixture = {
 
         },
         'function foo(callback:(string) => number) {}': {
-            index: 29,
+            index: 30,
             lineNumber: 1,
-            column: 30,
-            message: 'Error: Line 1: Unexpected token )',
-            description: 'Unexpected token )'
+            column: 31,
+            message: 'Error: Line 1: Unexpected token =>. It looks like you are trying to write a function type, but you ended up writing a grouped type followed by an =>, which is a syntax error. Remember, function type parameters are named so function types look like (name1: type1, name2: type2) => returnType. You probably wrote (type1) => returnType',
+            description: 'Unexpected token =>. It looks like you are trying to write a function type, but you ended up writing a grouped type followed by an =>, which is a syntax error. Remember, function type parameters are named so function types look like (name1: type1, name2: type2) => returnType. You probably wrote (type1) => returnType'
 
         },
         'a = {foo(): { return 42; }}': {
@@ -6716,6 +6716,14 @@ var fbTestFixture = {
             column: 30,
             message: 'Error: Line 1: An interface or object type can only have a single indexer property.',
             description: 'An interface or object type can only have a single indexer property.'
+
+        },
+        'var x: (number) => string': {
+            index: 15,
+            lineNumber: 1,
+            column: 16,
+            message: 'Error: Line 1: Unexpected token =>. It looks like you are trying to write a function type, but you ended up writing a grouped type followed by an =>, which is a syntax error. Remember, function type parameters are named so function types look like (name1: type1, name2: type2) => returnType. You probably wrote (type1) => returnType',
+            description: 'Unexpected token =>. It looks like you are trying to write a function type, but you ended up writing a grouped type followed by an =>, which is a syntax error. Remember, function type parameters are named so function types look like (name1: type1, name2: type2) => returnType. You probably wrote (type1) => returnType'
 
         },
     },
@@ -7331,6 +7339,330 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 65 }
+            }
+        },
+    },
+    'Type Grouping': {
+        'var a: (number)': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'TypeAnnotatedIdentifier',
+                    id: {
+                        type: 'Identifier',
+                        name: 'a',
+                        range: [4, 5],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    annotation: {
+                        type: 'TypeAnnotation',
+                        id: {
+                            type: 'Identifier',
+                            name: 'number',
+                            range: [8, 14],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 14 }
+                            }
+                        },
+                        params: null,
+                        returnType: null,
+                        range: [5, 15],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 15 }
+                        }
+                    },
+                    range: [4, 15],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 15 }
+                    }
+                },
+                init: null,
+                range: [4, 15],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 15 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 15],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 15 }
+            }
+        },
+        'var a: (() => number) | () => string': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'TypeAnnotatedIdentifier',
+                    id: {
+                        type: 'Identifier',
+                        name: 'a',
+                        range: [4, 5],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    annotation: {
+                        type: 'UnionTypeAnnotation',
+                        types: [{
+                            type: 'TypeAnnotation',
+                            id: null,
+                            params: [],
+                            returnType: {
+                                type: 'TypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'number',
+                                    range: [14, 20],
+                                    loc: {
+                                        start: { line: 1, column: 14 },
+                                        end: { line: 1, column: 20 }
+                                    }
+                                },
+                                params: null,
+                                returnType: null,
+                                range: [14, 20],
+                                loc: {
+                                    start: { line: 1, column: 14 },
+                                    end: { line: 1, column: 20 }
+                                }
+                            },
+                            range: [8, 20],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 20 }
+                            }
+                        }, {
+                            type: 'TypeAnnotation',
+                            id: null,
+                            params: [],
+                            returnType: {
+                                type: 'TypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'string',
+                                    range: [30, 36],
+                                    loc: {
+                                        start: { line: 1, column: 30 },
+                                        end: { line: 1, column: 36 }
+                                    }
+                                },
+                                params: null,
+                                returnType: null,
+                                range: [30, 36],
+                                loc: {
+                                    start: { line: 1, column: 30 },
+                                    end: { line: 1, column: 36 }
+                                }
+                            },
+                            range: [24, 36],
+                            loc: {
+                                start: { line: 1, column: 24 },
+                                end: { line: 1, column: 36 }
+                            }
+                        }],
+                        range: [5, 36],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 36 }
+                        }
+                    },
+                    range: [4, 36],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 36 }
+                    }
+                },
+                init: null,
+                range: [4, 36],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 36 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 36],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 36 }
+            }
+        },
+        'var a: number & (string | bool)': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'TypeAnnotatedIdentifier',
+                    id: {
+                        type: 'Identifier',
+                        name: 'a',
+                        range: [4, 5],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    annotation: {
+                        type: 'IntersectionTypeAnnotation',
+                        types: [{
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'number',
+                                range: [7, 13],
+                                loc: {
+                                    start: { line: 1, column: 7 },
+                                    end: { line: 1, column: 13 }
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            range: [7, 13],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 13 }
+                            }
+                        }, {
+                            type: 'UnionTypeAnnotation',
+                            types: [{
+                                type: 'TypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'string',
+                                    range: [17, 23],
+                                    loc: {
+                                        start: { line: 1, column: 17 },
+                                        end: { line: 1, column: 23 }
+                                    }
+                                },
+                                params: null,
+                                returnType: null,
+                                range: [17, 23],
+                                loc: {
+                                    start: { line: 1, column: 17 },
+                                    end: { line: 1, column: 23 }
+                                }
+                            }, {
+                                type: 'TypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'bool',
+                                    range: [26, 30],
+                                    loc: {
+                                        start: { line: 1, column: 26 },
+                                        end: { line: 1, column: 30 }
+                                    }
+                                },
+                                params: null,
+                                returnType: null,
+                                range: [26, 30],
+                                loc: {
+                                    start: { line: 1, column: 26 },
+                                    end: { line: 1, column: 30 }
+                                }
+                            }],
+                            range: [17, 30],
+                            loc: {
+                                start: { line: 1, column: 17 },
+                                end: { line: 1, column: 30 }
+                            }
+                        }],
+                        range: [5, 31],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 31 }
+                        }
+                    },
+                    range: [4, 31],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 31 }
+                    }
+                },
+                init: null,
+                range: [4, 31],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 31 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 31],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 31 }
+            }
+        },
+        'var a: (typeof A)': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'TypeAnnotatedIdentifier',
+                    id: {
+                        type: 'Identifier',
+                        name: 'a',
+                        range: [4, 5],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    annotation: {
+                        type: 'TypeofTypeAnnotation',
+                        argument: {
+                            type: 'TypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'A',
+                                range: [15, 16],
+                                loc: {
+                                    start: { line: 1, column: 15 },
+                                    end: { line: 1, column: 16 }
+                                }
+                            },
+                            params: null,
+                            returnType: null,
+                            range: [15, 16],
+                            loc: {
+                                start: { line: 1, column: 15 },
+                                end: { line: 1, column: 16 }
+                            }
+                        },
+                        range: [5, 17],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 17 }
+                        }
+                    },
+                    range: [4, 17],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 17 }
+                    }
+                },
+                init: null,
+                range: [4, 17],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 17 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 17],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 17 }
             }
         },
     },
