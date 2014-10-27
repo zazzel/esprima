@@ -3898,7 +3898,6 @@ parseYieldExpression: true, parseAwaitExpression: true
         expect('{');
 
         while (!match('}')) {
-            marker = markerCreate();
 
             if (match('[')) {
                 if (indexer) {
@@ -3906,6 +3905,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 }
                 indexer = parseObjectTypeIndexer();
             } else {
+                marker = markerCreate();
                 propertyKey = parseObjectPropertyKey();
                 isMethod = match('(');
                 propertyTypeAnnotation = parseTypeAnnotation();
