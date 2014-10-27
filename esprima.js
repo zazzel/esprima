@@ -173,6 +173,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ObjectExpression: 'ObjectExpression',
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
+        ObjectTypeIndexer: 'ObjectTypeIndexer',
         OptionalParameter: 'OptionalParameter',
         ParametricTypeAnnotation: 'ParametricTypeAnnotation',
         ParametricallyTypedIdentifier: 'ParametricallyTypedIdentifier',
@@ -282,7 +283,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         EachNotAllowed:  'Each is not supported',
         InvalidXJSAttributeValue: 'XJS value should be either an expression or a quoted XJS text',
         ExpectedXJSClosingTag: 'Expected corresponding XJS closing tag for %0',
-        AdjacentXJSElements: 'Adjacent XJS elements must be wrapped in an enclosing tag'
+        AdjacentXJSElements: 'Adjacent XJS elements must be wrapped in an enclosing tag',
+        DuplicateIndexer: 'An interface or object type can only have a single indexer property.'
     };
 
     // See also tools/generate-unicode-regex.py.
@@ -1924,11 +1926,21 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createObjectTypeAnnotation: function (properties, nullable) {
+        createObjectTypeAnnotation: function (properties, nullable, indexer) {
             return {
                 type: Syntax.ObjectTypeAnnotation,
                 properties: properties,
-                nullable: nullable
+                nullable: nullable,
+                indexer: indexer
+            };
+        },
+
+        createObjectTypeIndexer: function (id, key, value) {
+            return {
+                type: Syntax.ObjectTypeIndexer,
+                id: id,
+                key: key,
+                value: value
             };
         },
 
@@ -3861,24 +3873,50 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     // 12.2 Variable Statement
 
+    function parseObjectTypeIndexer() {
+        var id, key, marker = markerCreate(), value;
+
+        expect('[');
+        id = parseObjectPropertyKey();
+        expect(':');
+        key = parseTypeAnnotation(true);
+        expect(']');
+        expect(':');
+        value = parseTypeAnnotation(true);
+
+        return markerApply(marker, delegate.createObjectTypeIndexer(
+            id,
+            key,
+            value
+        ));
+    }
+
     function parseObjectTypeAnnotation(nullable) {
-        var isMethod, marker, properties = [], property, propertyKey,
-            propertyTypeAnnotation;
+        var indexer = null, isMethod, marker, properties = [], property,
+            propertyKey, propertyTypeAnnotation;
 
         expect('{');
 
         while (!match('}')) {
             marker = markerCreate();
-            propertyKey = parseObjectPropertyKey();
-            isMethod = match('(');
-            propertyTypeAnnotation = parseTypeAnnotation();
-            properties.push(markerApply(marker, delegate.createProperty(
-                'init',
-                propertyKey,
-                propertyTypeAnnotation,
-                isMethod,
-                false
-            )));
+
+            if (match('[')) {
+                if (indexer) {
+                    throwError({}, Messages.DuplicateIndexer);
+                }
+                indexer = parseObjectTypeIndexer();
+            } else {
+                propertyKey = parseObjectPropertyKey();
+                isMethod = match('(');
+                propertyTypeAnnotation = parseTypeAnnotation();
+                properties.push(markerApply(marker, delegate.createProperty(
+                    'init',
+                    propertyKey,
+                    propertyTypeAnnotation,
+                    isMethod,
+                    false
+                )));
+            }
 
             if (!match('}')) {
                 if (match(',') || match(';')) {
@@ -3891,7 +3929,11 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         expect('}');
 
-        return delegate.createObjectTypeAnnotation(properties, nullable);
+        return delegate.createObjectTypeAnnotation(
+            properties,
+            nullable,
+            indexer
+        );
     }
 
     function parseVoidTypeAnnotation() {
