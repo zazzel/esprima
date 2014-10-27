@@ -20032,6 +20032,7 @@ var testFixture = {
                 MethodDefinition: 'MethodDefinition',
                 ModuleSpecifier: 'ModuleSpecifier',
                 NewExpression: 'NewExpression',
+                NullableTypeAnnotation: 'NullableTypeAnnotation',
                 ObjectExpression: 'ObjectExpression',
                 ObjectPattern: 'ObjectPattern',
                 ObjectTypeAnnotation: 'ObjectTypeAnnotation',

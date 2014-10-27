@@ -2134,7 +2134,6 @@ var fbTestFixture = {
                     },
                     params: null,
                     returnType: null,
-                    nullable: false,
                     range: [19, 27],
                     loc: {
                         start: { line: 1, column: 19 },
@@ -2201,7 +2200,6 @@ var fbTestFixture = {
                     },
                     params: null,
                     returnType: null,
-                    nullable: false,
                     range: [19, 27],
                     loc: {
                         start: { line: 1, column: 19 },
@@ -2237,7 +2235,6 @@ var fbTestFixture = {
                     },
                     params: null,
                     returnType: null,
-                    nullable: false,
                     range: [35, 43],
                     loc: {
                         start: { line: 1, column: 35 },
@@ -2304,7 +2301,6 @@ var fbTestFixture = {
                     },
                     params: null,
                     returnType: null,
-                    nullable: false,
                     range: [19, 27],
                     loc: {
                         start: { line: 1, column: 19 },
@@ -2387,7 +2383,6 @@ var fbTestFixture = {
                     },
                     params: null,
                     returnType: null,
-                    nullable: false,
                     range: [31, 39],
                     loc: {
                         start: { line: 1, column: 31 },
@@ -2442,19 +2437,26 @@ var fbTestFixture = {
                     }
                 },
                 annotation: {
-                    type: 'TypeAnnotation',
-                    id: {
-                        type: 'Identifier',
-                        name: 'number',
+                    type: 'NullableTypeAnnotation',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        id: {
+                            type: 'Identifier',
+                            name: 'number',
+                            range: [27, 33],
+                            loc: {
+                                start: { line: 1, column: 27 },
+                                end: { line: 1, column: 33 }
+                            }
+                        },
+                        params: null,
+                        returnType: null,
                         range: [27, 33],
                         loc: {
                             start: { line: 1, column: 27 },
                             end: { line: 1, column: 33 }
                         }
                     },
-                    params: null,
-                    returnType: null,
-                    nullable: true,
                     range: [24, 33],
                     loc: {
                         start: { line: 1, column: 24 },
@@ -2520,7 +2522,6 @@ var fbTestFixture = {
                             end: { line: 1, column: 33 }
                         }
                     },
-                    nullable: false,
                     range: [21, 33],
                     loc: {
                         start: { line: 1, column: 21 },
@@ -2591,14 +2592,12 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [29, 35],
                         loc: {
                             start: { line: 1, column: 29 },
                             end: { line: 1, column: 35 }
                         }
                     },
-                    nullable: false,
                     range: [21, 35],
                     loc: {
                         start: { line: 1, column: 21 },
@@ -2679,7 +2678,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [25, 30],
                             loc: {
                                 start: { line: 1, column: 25 },
@@ -2705,14 +2703,12 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [35, 41],
                         loc: {
                             start: { line: 1, column: 35 },
                             end: { line: 1, column: 41 }
                         }
                     },
-                    nullable: false,
                     range: [21, 41],
                     loc: {
                         start: { line: 1, column: 21 },
@@ -2793,7 +2789,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [26, 31],
                             loc: {
                                 start: { line: 1, column: 26 },
@@ -2829,7 +2824,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [35, 42],
                             loc: {
                                 start: { line: 1, column: 35 },
@@ -2855,14 +2849,12 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [47, 53],
                         loc: {
                             start: { line: 1, column: 47 },
                             end: { line: 1, column: 53 }
                         }
                     },
-                    nullable: false,
                     range: [21, 53],
                     loc: {
                         start: { line: 1, column: 21 },
@@ -2932,7 +2924,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [14, 21],
                 loc: {
                     start: { line: 1, column: 14 },
@@ -2982,7 +2973,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 25 }
                     }
                 },
-                nullable: false,
                 range: [14, 25],
                 loc: {
                     start: { line: 1, column: 14 },
@@ -3047,7 +3037,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [17, 22],
                         loc: {
                             start: { line: 1, column: 17 },
@@ -3073,14 +3062,12 @@ var fbTestFixture = {
                     },
                     params: null,
                     returnType: null,
-                    nullable: false,
                     range: [27, 33],
                     loc: {
                         start: { line: 1, column: 27 },
                         end: { line: 1, column: 33 }
                     }
                 },
-                nullable: false,
                 range: [14, 33],
                 loc: {
                     start: { line: 1, column: 14 },
@@ -3121,7 +3108,6 @@ var fbTestFixture = {
             returnType: {
                 type: 'ObjectTypeAnnotation',
                 properties: [],
-                nullable: false,
                 indexer: null,
                 range: [14, 18],
                 loc: {
@@ -3367,7 +3353,6 @@ var fbTestFixture = {
                                     },
                                     params: null,
                                     returnType: null,
-                                    nullable: false,
                                     range: [20, 27],
                                     loc: {
                                         start: { line: 1, column: 20 },
@@ -3479,7 +3464,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [28, 35],
                                 loc: {
                                     start: { line: 1, column: 28 },
@@ -3559,7 +3543,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [10, 17],
                         loc: {
                             start: { line: 1, column: 10 },
@@ -3614,7 +3597,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [10, 17],
                         loc: {
                             start: { line: 1, column: 10 },
@@ -3690,7 +3672,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [14, 22],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -3706,7 +3687,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 22 }
                             }
                         }],
-                        nullable: false,
                         indexer: null,
                         range: [5, 23],
                         loc: {
@@ -3775,7 +3755,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [14, 22],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -3791,7 +3770,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 22 }
                             }
                         }],
-                        nullable: false,
                         indexer: {
                             type: 'ObjectTypeIndexer',
                             id: {
@@ -3816,7 +3794,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [34, 40],
                                 loc: {
                                     start: { line: 1, column: 34 },
@@ -3836,7 +3813,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [43, 49],
                                 loc: {
                                     start: { line: 1, column: 43 },
@@ -3891,49 +3867,55 @@ var fbTestFixture = {
                         }
                     },
                     annotation: {
-                        type: 'ObjectTypeAnnotation',
-                        properties: [{
-                            type: 'Property',
-                            key: {
-                                type: 'Identifier',
-                                name: 'numVal',
-                                range: [9, 15],
-                                loc: {
-                                    start: { line: 1, column: 9 },
-                                    end: { line: 1, column: 15 }
-                                }
-                            },
-                            value: {
-                                type: 'TypeAnnotation',
-                                id: {
+                        type: 'NullableTypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ObjectTypeAnnotation',
+                            properties: [{
+                                type: 'Property',
+                                key: {
                                     type: 'Identifier',
-                                    name: 'number',
-                                    range: [17, 23],
+                                    name: 'numVal',
+                                    range: [9, 15],
                                     loc: {
-                                        start: { line: 1, column: 17 },
+                                        start: { line: 1, column: 9 },
+                                        end: { line: 1, column: 15 }
+                                    }
+                                },
+                                value: {
+                                    type: 'TypeAnnotation',
+                                    id: {
+                                        type: 'Identifier',
+                                        name: 'number',
+                                        range: [17, 23],
+                                        loc: {
+                                            start: { line: 1, column: 17 },
+                                            end: { line: 1, column: 23 }
+                                        }
+                                    },
+                                    params: null,
+                                    returnType: null,
+                                    range: [15, 23],
+                                    loc: {
+                                        start: { line: 1, column: 15 },
                                         end: { line: 1, column: 23 }
                                     }
                                 },
-                                params: null,
-                                returnType: null,
-                                nullable: false,
-                                range: [15, 23],
+                                kind: 'init',
+                                method: false,
+                                shorthand: false,
+                                range: [9, 23],
                                 loc: {
-                                    start: { line: 1, column: 15 },
+                                    start: { line: 1, column: 9 },
                                     end: { line: 1, column: 23 }
                                 }
-                            },
-                            kind: 'init',
-                            method: false,
-                            shorthand: false,
-                            range: [9, 23],
+                            }],
+                            indexer: null,
+                            range: [8, 24],
                             loc: {
-                                start: { line: 1, column: 9 },
-                                end: { line: 1, column: 23 }
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 24 }
                             }
-                        }],
-                        nullable: true,
-                        indexer: null,
+                        },
                         range: [5, 24],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -4001,7 +3983,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [14, 22],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -4040,7 +4021,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [30, 38],
                                 loc: {
                                     start: { line: 1, column: 30 },
@@ -4056,7 +4036,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 38 }
                             }
                         }],
-                        nullable: false,
                         indexer: null,
                         range: [5, 39],
                         loc: {
@@ -4138,7 +4117,6 @@ var fbTestFixture = {
                                         },
                                         params: null,
                                         returnType: null,
-                                        nullable: false,
                                         range: [23, 31],
                                         loc: {
                                             start: { line: 1, column: 23 },
@@ -4154,7 +4132,6 @@ var fbTestFixture = {
                                         end: { line: 1, column: 31 }
                                     }
                                 }],
-                                nullable: false,
                                 indexer: null,
                                 range: [14, 32],
                                 loc: {
@@ -4171,7 +4148,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 32 }
                             }
                         }],
-                        nullable: false,
                         indexer: null,
                         range: [5, 33],
                         loc: {
@@ -4228,49 +4204,55 @@ var fbTestFixture = {
                                 }
                             },
                             value: {
-                                type: 'ObjectTypeAnnotation',
-                                properties: [{
-                                    type: 'Property',
-                                    key: {
-                                        type: 'Identifier',
-                                        name: 'strVal',
-                                        range: [18, 24],
-                                        loc: {
-                                            start: { line: 1, column: 18 },
-                                            end: { line: 1, column: 24 }
-                                        }
-                                    },
-                                    value: {
-                                        type: 'TypeAnnotation',
-                                        id: {
+                                type: 'NullableTypeAnnotation',
+                                typeAnnotation: {
+                                    type: 'ObjectTypeAnnotation',
+                                    properties: [{
+                                        type: 'Property',
+                                        key: {
                                             type: 'Identifier',
-                                            name: 'string',
-                                            range: [26, 32],
+                                            name: 'strVal',
+                                            range: [18, 24],
                                             loc: {
-                                                start: { line: 1, column: 26 },
+                                                start: { line: 1, column: 18 },
+                                                end: { line: 1, column: 24 }
+                                            }
+                                        },
+                                        value: {
+                                            type: 'TypeAnnotation',
+                                            id: {
+                                                type: 'Identifier',
+                                                name: 'string',
+                                                range: [26, 32],
+                                                loc: {
+                                                    start: { line: 1, column: 26 },
+                                                    end: { line: 1, column: 32 }
+                                                }
+                                            },
+                                            params: null,
+                                            returnType: null,
+                                            range: [24, 32],
+                                            loc: {
+                                                start: { line: 1, column: 24 },
                                                 end: { line: 1, column: 32 }
                                             }
                                         },
-                                        params: null,
-                                        returnType: null,
-                                        nullable: false,
-                                        range: [24, 32],
+                                        kind: 'init',
+                                        method: false,
+                                        shorthand: false,
+                                        range: [18, 32],
                                         loc: {
-                                            start: { line: 1, column: 24 },
+                                            start: { line: 1, column: 18 },
                                             end: { line: 1, column: 32 }
                                         }
-                                    },
-                                    kind: 'init',
-                                    method: false,
-                                    shorthand: false,
-                                    range: [18, 32],
+                                    }],
+                                    indexer: null,
+                                    range: [17, 33],
                                     loc: {
-                                        start: { line: 1, column: 18 },
-                                        end: { line: 1, column: 32 }
+                                        start: { line: 1, column: 17 },
+                                        end: { line: 1, column: 33 }
                                     }
-                                }],
-                                nullable: true,
-                                indexer: null,
+                                },
                                 range: [14, 33],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -4286,7 +4268,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 33 }
                             }
                         }],
-                        nullable: false,
                         indexer: null,
                         range: [5, 34],
                         loc: {
@@ -4355,7 +4336,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [14, 22],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -4394,7 +4374,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [30, 38],
                                 loc: {
                                     start: { line: 1, column: 30 },
@@ -4410,7 +4389,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 38 }
                             }
                         }],
-                        nullable: false,
                         indexer: null,
                         range: [5, 39],
                         loc: {
@@ -4479,7 +4457,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [12, 18],
                                 loc: {
                                     start: { line: 1, column: 12 },
@@ -4494,7 +4471,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [5, 19],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -4742,7 +4718,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [23, 30],
                             loc: {
                                 start: { line: 1, column: 23 },
@@ -4990,7 +4965,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [17, 24],
                             loc: {
                                 start: { line: 1, column: 17 },
@@ -5034,7 +5008,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [31, 38],
                             loc: {
                                 start: { line: 1, column: 31 },
@@ -5095,7 +5068,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [8, 14],
                             loc: {
                                 start: { line: 1, column: 8 },
@@ -5114,7 +5086,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [17, 23],
                             loc: {
                                 start: { line: 1, column: 17 },
@@ -5210,7 +5181,6 @@ var fbTestFixture = {
                                     },
                                     params: null,
                                     returnType: null,
-                                    nullable: false,
                                     range: [27, 33],
                                     loc: {
                                         start: { line: 1, column: 27 },
@@ -5229,7 +5199,6 @@ var fbTestFixture = {
                                     },
                                     params: null,
                                     returnType: null,
-                                    nullable: false,
                                     range: [36, 42],
                                     loc: {
                                         start: { line: 1, column: 36 },
@@ -5321,7 +5290,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [14, 20],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -5344,14 +5312,12 @@ var fbTestFixture = {
                                     },
                                     params: null,
                                     returnType: null,
-                                    nullable: false,
                                     range: [29, 35],
                                     loc: {
                                         start: { line: 1, column: 29 },
                                         end: { line: 1, column: 35 }
                                     }
                                 },
-                                nullable: false,
                                 range: [23, 35],
                                 loc: {
                                     start: { line: 1, column: 23 },
@@ -5364,7 +5330,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 35 }
                             }
                         },
-                        nullable: false,
                         range: [6, 35],
                         loc: {
                             start: { line: 1, column: 6 },
@@ -5429,7 +5394,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [14, 15],
                             loc: {
                                 start: { line: 1, column: 14 },
@@ -5502,7 +5466,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [14, 15],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -5527,7 +5490,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [18, 24],
                             loc: {
                                 start: { line: 1, column: 18 },
@@ -5635,7 +5597,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [11, 19],
                                 loc: {
                                     start: { line: 1, column: 11 },
@@ -5651,7 +5612,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 19 }
                             }
                         }],
-                        nullable: false,
                         indexer: null,
                         range: [7, 22],
                         loc: {
@@ -5779,7 +5739,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [11, 19],
                                 loc: {
                                     start: { line: 1, column: 11 },
@@ -5795,7 +5754,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 19 }
                             }
                         }],
-                        nullable: false,
                         indexer: null,
                         range: [7, 21],
                         loc: {
@@ -5902,7 +5860,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [15, 21],
                                 loc: {
                                     start: { line: 1, column: 15 },
@@ -5917,7 +5874,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [7, 22],
                         loc: {
                             start: { line: 1, column: 7 },
@@ -6030,7 +5986,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [21, 29],
                             loc: {
                                 start: { line: 1, column: 21 },
@@ -6046,7 +6001,6 @@ var fbTestFixture = {
                             end: { line: 1, column: 29 }
                         }
                     }],
-                    nullable: false,
                     indexer: null,
                     range: [16, 32],
                     loc: {
@@ -6127,7 +6081,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [24, 30],
                             loc: {
                                 start: { line: 1, column: 24 },
@@ -6142,7 +6095,6 @@ var fbTestFixture = {
                     },
                     params: null,
                     returnType: null,
-                    nullable: false,
                     range: [16, 31],
                     loc: {
                         start: { line: 1, column: 16 },
@@ -6228,7 +6180,6 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [28, 34],
                             loc: {
                                 start: { line: 1, column: 28 },
@@ -6243,7 +6194,6 @@ var fbTestFixture = {
                     },
                     params: null,
                     returnType: null,
-                    nullable: false,
                     range: [20, 35],
                     loc: {
                         start: { line: 1, column: 20 },
@@ -6317,7 +6267,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [26, 32],
                                 loc: {
                                     start: { line: 1, column: 26 },
@@ -6332,7 +6281,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [18, 33],
                         loc: {
                             start: { line: 1, column: 18 },
@@ -6412,7 +6360,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [17, 23],
                                 loc: {
                                     start: { line: 1, column: 17 },
@@ -6427,7 +6374,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [9, 24],
                         loc: {
                             start: { line: 1, column: 9 },
@@ -6495,7 +6441,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [11, 17],
                                 loc: {
                                     start: { line: 1, column: 11 },
@@ -6527,7 +6472,6 @@ var fbTestFixture = {
                                         },
                                         params: null,
                                         returnType: null,
-                                        nullable: false,
                                         range: [25, 31],
                                         loc: {
                                             start: { line: 1, column: 25 },
@@ -6542,7 +6486,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [19, 32],
                                 loc: {
                                     start: { line: 1, column: 19 },
@@ -6557,7 +6500,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [5, 34],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -6625,7 +6567,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [11, 17],
                                 loc: {
                                     start: { line: 1, column: 11 },
@@ -6657,7 +6598,6 @@ var fbTestFixture = {
                                         },
                                         params: null,
                                         returnType: null,
-                                        nullable: false,
                                         range: [25, 31],
                                         loc: {
                                             start: { line: 1, column: 25 },
@@ -6672,7 +6612,6 @@ var fbTestFixture = {
                                 },
                                 params: null,
                                 returnType: null,
-                                nullable: false,
                                 range: [19, 32],
                                 loc: {
                                     start: { line: 1, column: 19 },
@@ -6687,7 +6626,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [5, 33],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -6797,7 +6735,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [5, 9],
                 loc: {
                     start: { line: 1, column: 5 },
@@ -6817,7 +6754,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [12, 18],
                 loc: {
                     start: { line: 1, column: 12 },
@@ -6858,7 +6794,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [9, 10],
                         loc: {
                             start: { line: 1, column: 9 },
@@ -6873,7 +6808,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [5, 11],
                 loc: {
                     start: { line: 1, column: 5 },
@@ -6906,7 +6840,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [18, 19],
                         loc: {
                             start: { line: 1, column: 18 },
@@ -6921,7 +6854,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [14, 20],
                 loc: {
                     start: { line: 1, column: 14 },
@@ -6951,7 +6883,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -6990,7 +6921,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -7020,7 +6950,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [20, 21],
                 loc: {
                     start: { line: 1, column: 20 },
@@ -7061,7 +6990,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [12, 13],
                         loc: {
                             start: { line: 1, column: 12 },
@@ -7076,7 +7004,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [10, 14],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -7119,7 +7046,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [25, 26],
                         loc: {
                             start: { line: 1, column: 25 },
@@ -7134,7 +7060,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [23, 27],
                 loc: {
                     start: { line: 1, column: 23 },
@@ -7166,7 +7091,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [31, 32],
                         loc: {
                             start: { line: 1, column: 31 },
@@ -7181,7 +7105,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [29, 33],
                 loc: {
                     start: { line: 1, column: 29 },
@@ -7209,7 +7132,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -7246,14 +7168,12 @@ var fbTestFixture = {
                             },
                             params: null,
                             returnType: null,
-                            nullable: false,
                             range: [25, 31],
                             loc: {
                                 start: { line: 1, column: 25 },
                                 end: { line: 1, column: 31 }
                             }
                         },
-                        nullable: false,
                         range: [17, 31],
                         loc: {
                             start: { line: 1, column: 17 },
@@ -7298,7 +7218,6 @@ var fbTestFixture = {
                 },
                 params: null,
                 returnType: null,
-                nullable: false,
                 range: [10, 20],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -7331,7 +7250,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [54, 62],
                         loc: {
                             start: { line: 1, column: 54 },
@@ -7371,7 +7289,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [31, 37],
                         loc: {
                             start: { line: 1, column: 31 },
@@ -7391,7 +7308,6 @@ var fbTestFixture = {
                         },
                         params: null,
                         returnType: null,
-                        nullable: false,
                         range: [40, 46],
                         loc: {
                             start: { line: 1, column: 40 },

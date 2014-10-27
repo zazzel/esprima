@@ -170,6 +170,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         MethodDefinition: 'MethodDefinition',
         ModuleSpecifier: 'ModuleSpecifier',
         NewExpression: 'NewExpression',
+        NullableTypeAnnotation: 'NullableTypeAnnotation',
         ObjectExpression: 'ObjectExpression',
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
@@ -1897,14 +1898,20 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createTypeAnnotation: function (typeIdentifier, parametricType, params, returnType, nullable) {
+        createTypeAnnotation: function (typeIdentifier, parametricType, params, returnType) {
             return {
                 type: Syntax.TypeAnnotation,
                 id: typeIdentifier,
                 parametricType: parametricType,
                 params: params,
-                returnType: returnType,
-                nullable: nullable
+                returnType: returnType
+            };
+        },
+
+        createNullableTypeAnnotation: function (typeAnnotation) {
+            return {
+                type: Syntax.NullableTypeAnnotation,
+                typeAnnotation: typeAnnotation
             };
         },
 
@@ -1928,11 +1935,10 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createObjectTypeAnnotation: function (properties, nullable, indexer) {
+        createObjectTypeAnnotation: function (properties, indexer) {
             return {
                 type: Syntax.ObjectTypeAnnotation,
                 properties: properties,
-                nullable: nullable,
                 indexer: indexer
             };
         },
@@ -3893,7 +3899,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseObjectTypeAnnotation(nullable) {
+    function parseObjectTypeAnnotation() {
         var indexer = null, isMethod, marker, properties = [], property,
             propertyKey, propertyTypeAnnotation;
 
@@ -3933,7 +3939,6 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         return delegate.createObjectTypeAnnotation(
             properties,
-            nullable,
             indexer
         );
     }
@@ -3970,14 +3975,12 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseGenericTypeAnnotation(nullable) {
+    function parseGenericTypeAnnotation() {
         var marker = markerCreate(), oldInType = state.inType,
             parametricTypeMarker, params = null, paramTypes = [],
             parametricType, returnType = null, typeIdentifier;
 
         state.inType = true;
-
-        nullable = nullable || false;
 
         typeIdentifier = parseVariableIdentifier();
 
@@ -4004,27 +4007,28 @@ parseYieldExpression: true, parseAwaitExpression: true
             typeIdentifier,
             parametricType,
             params,
-            returnType,
-            nullable
+            returnType
         ));
     }
 
     function parseTypeAnnotationWithoutUnions() {
         var typeIdentifier = null, params = null, returnType = null,
-            nullable = false, marker = markerCreate(), returnTypeMarker = null,
+            marker = markerCreate(), returnTypeMarker = null,
             parametricType, annotation;
 
         if (match('?')) {
             lex();
-            nullable = true;
+            return markerApply(marker, delegate.createNullableTypeAnnotation(
+                parseTypeAnnotationWithoutUnions()
+            ));
         }
 
         if (match('{')) {
-            return markerApply(marker, parseObjectTypeAnnotation(nullable));
+            return markerApply(marker, parseObjectTypeAnnotation());
         }
 
         if (lookahead.type === Token.Identifier) {
-            return markerApply(marker, parseGenericTypeAnnotation(nullable));
+            return markerApply(marker, parseGenericTypeAnnotation());
         }
 
         if (match('(')) {
@@ -4050,8 +4054,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 typeIdentifier,
                 parametricType,
                 params,
-                returnType,
-                nullable
+                returnType
             ));
         }
 
