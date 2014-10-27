@@ -45,9 +45,9 @@ parseStatement: true, parseSourceElement: true, parseConciseBody: true,
 advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
+parsePrefixTypeAnnotation: true,
 parseTypeAlias: true,
 parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
-parsePrimaryTypeAnnotation: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -127,12 +127,14 @@ parseYieldExpression: true, parseAwaitExpression: true
                     '<=', '<', '>', '!=', '!=='];
 
     Syntax = {
+        AnyTypeAnnotation: 'AnyTypeAnnotation',
         ArrayExpression: 'ArrayExpression',
         ArrayPattern: 'ArrayPattern',
         ArrowFunctionExpression: 'ArrowFunctionExpression',
         AssignmentExpression: 'AssignmentExpression',
         BinaryExpression: 'BinaryExpression',
         BlockStatement: 'BlockStatement',
+        BooleanTypeAnnotation: 'BooleanTypeAnnotation',
         BreakStatement: 'BreakStatement',
         CallExpression: 'CallExpression',
         CatchClause: 'CatchClause',
@@ -172,6 +174,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ModuleSpecifier: 'ModuleSpecifier',
         NewExpression: 'NewExpression',
         NullableTypeAnnotation: 'NullableTypeAnnotation',
+        NumberTypeAnnotation: 'NumberTypeAnnotation',
         ObjectExpression: 'ObjectExpression',
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
@@ -185,6 +188,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         SequenceExpression: 'SequenceExpression',
         SpreadElement: 'SpreadElement',
         SpreadProperty: 'SpreadProperty',
+        StringTypeAnnotation: 'StringTypeAnnotation',
         SwitchCase: 'SwitchCase',
         SwitchStatement: 'SwitchStatement',
         TaggedTemplateExpression: 'TaggedTemplateExpression',
@@ -1926,6 +1930,30 @@ parseYieldExpression: true, parseAwaitExpression: true
             return {
                 type: Syntax.ParametricTypeAnnotation,
                 params: parametricTypes
+            };
+        },
+
+        createAnyTypeAnnotation: function () {
+            return {
+                type: Syntax.AnyTypeAnnotation
+            };
+        },
+
+        createBooleanTypeAnnotation: function () {
+            return {
+                type: Syntax.BooleanTypeAnnotation
+            };
+        },
+
+        createNumberTypeAnnotation: function () {
+            return {
+                type: Syntax.NumberTypeAnnotation
+            };
+        },
+
+        createStringTypeAnnotation: function () {
+            return {
+                type: Syntax.StringTypeAnnotation
             };
         },
 
@@ -3957,21 +3985,6 @@ parseYieldExpression: true, parseAwaitExpression: true
         );
     }
 
-    function parseVoidTypeAnnotation() {
-        var marker = markerCreate();
-        expectKeyword('void');
-        return markerApply(marker, delegate.createVoidTypeAnnotation());
-    }
-
-    function parseTypeofTypeAnnotation() {
-        var argument, marker = markerCreate();
-        expectKeyword('typeof');
-        argument = parsePrimaryTypeAnnotation();
-        return markerApply(marker, delegate.createTypeofTypeAnnotation(
-            argument
-        ));
-    }
-
     function parseTypeParameters() {
         var marker = markerCreate(), typeIdentifier, paramTypes = [];
 
@@ -4026,94 +4039,130 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
+    function parseVoidTypeAnnotation() {
+        var marker = markerCreate();
+        expectKeyword('void');
+        return markerApply(marker, delegate.createVoidTypeAnnotation());
+    }
+
+    function parseTypeofTypeAnnotation() {
+        var argument, marker = markerCreate();
+        expectKeyword('typeof');
+        argument = parsePrefixTypeAnnotation();
+        return markerApply(marker, delegate.createTypeofTypeAnnotation(
+            argument
+        ));
+    }
+
     function parsePrimaryTypeAnnotation() {
         var typeIdentifier = null, params = null, returnType = null,
             marker = markerCreate(), returnTypeMarker = null,
-            parametricType, annotation, token, type, isGroupedType = false;
+            parametricType, token, type, isGroupedType = false;
 
-        if (match('?')) {
-            lex();
-            return markerApply(marker, delegate.createNullableTypeAnnotation(
-                parsePrimaryTypeAnnotation()
-            ));
-        }
-
-        if (match('{')) {
-            return markerApply(marker, parseObjectTypeAnnotation());
-        }
-
-        if (lookahead.type === Token.Identifier) {
-            return markerApply(marker, parseGenericTypeAnnotation());
-        }
-
-        if (match('(')) {
-            lex();
-            // Check to see if this is actually a grouped type
-            if (!match(')')) {
-                if (lookahead.type === Token.Identifier) {
-                    token = lookahead2();
-                    isGroupedType = token.value !== '?' && token.value !== ':';
-                } else {
-                    isGroupedType = true;
-                }
+        switch (lookahead.type) {
+        case Token.Identifier:
+            switch (lookahead.value) {
+            case 'any':
+                lex();
+                return markerApply(marker, delegate.createAnyTypeAnnotation());
+            case 'bool':  // fallthrough
+            case 'boolean':
+                lex();
+                return markerApply(marker, delegate.createBooleanTypeAnnotation());
+            case 'number':
+                lex();
+                return markerApply(marker, delegate.createNumberTypeAnnotation());
+            case 'string':
+                lex();
+                return markerApply(marker, delegate.createStringTypeAnnotation());
             }
+            return markerApply(marker, parseGenericTypeAnnotation());
+        case Token.Punctuator:
+            switch (lookahead.value) {
+            case '{':
+                return markerApply(marker, parseObjectTypeAnnotation());
+            case '(':
+                lex();
+                // Check to see if this is actually a grouped type
+                if (!match(')')) {
+                    if (lookahead.type === Token.Identifier) {
+                        token = lookahead2();
+                        isGroupedType = token.value !== '?' && token.value !== ':';
+                    } else {
+                        isGroupedType = true;
+                    }
+                }
 
-            if (isGroupedType) {
-                type = parseTypeAnnotation(true);
+                if (isGroupedType) {
+                    type = parseTypeAnnotation(true);
+                    expect(')');
+
+                    // If we see a => next then someone was probably confused about
+                    // function types, so we can provide a better error message
+                    if (match('=>')) {
+                        throwError({}, Messages.ConfusedAboutFunctionType);
+                    }
+
+                    return type;
+                }
+
+                params = [];
+                while (lookahead.type === Token.Identifier) {
+                    params.push(parseTypeAnnotatableIdentifier(
+                        true, /* requireTypeAnnotation */
+                        true /* canBeOptionalParam */
+                    ));
+                    if (!match(')')) {
+                        expect(',');
+                    }
+                }
                 expect(')');
 
-                // If we see a => next then someone was probably confused about
-                // function types, so we can provide a better error message
-                if (match('=>')) {
-                    throwError({}, Messages.ConfusedAboutFunctionType);
-                }
+                returnTypeMarker = markerCreate();
+                expect('=>');
 
-                return type;
-            }
+                returnType = parseTypeAnnotation(true);
 
-            params = [];
-            while (lookahead.type === Token.Identifier) {
-                params.push(parseTypeAnnotatableIdentifier(
-                    true, /* requireTypeAnnotation */
-                    true /* canBeOptionalParam */
+                return markerApply(marker, delegate.createTypeAnnotation(
+                    typeIdentifier,
+                    parametricType,
+                    params,
+                    returnType
                 ));
-                if (!match(')')) {
-                    expect(',');
-                }
             }
-            expect(')');
-
-            returnTypeMarker = markerCreate();
-            expect('=>');
-
-            returnType = parseTypeAnnotation(true);
-
-            return markerApply(marker, delegate.createTypeAnnotation(
-                typeIdentifier,
-                parametricType,
-                params,
-                returnType
-            ));
-        }
-
-        if (matchKeyword('void')) {
-            return markerApply(marker, parseVoidTypeAnnotation());
-        }
-
-        if (matchKeyword('typeof')) {
-            return markerApply(marker, parseTypeofTypeAnnotation());
+            break;
+        case Token.Keyword:
+            switch (lookahead.value) {
+            case 'void':
+                return markerApply(marker, parseVoidTypeAnnotation());
+            case 'typeof':
+                return markerApply(marker, parseTypeofTypeAnnotation());
+            }
+            break;
         }
 
         throwUnexpected(lookahead);
     }
 
+    function parsePrefixTypeAnnotation() {
+        var marker = markerCreate();
+        if (match('?')) {
+            lex();
+            return markerApply(marker, delegate.createNullableTypeAnnotation(
+                parsePrefixTypeAnnotation()
+            ));
+        }
+        return parsePrimaryTypeAnnotation();
+    }
+
+
     function parseIntersectionTypeAnnotation() {
         var type, types;
-        type = parsePrimaryTypeAnnotation();
+        type = parsePrefixTypeAnnotation();
         types = [type];
         while (match('&')) {
             lex();
-            types.push(parsePrimaryTypeAnnotation());
+            types.push(parsePrefixTypeAnnotation());
         }
 
         return types.length === 1 ?

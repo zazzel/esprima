@@ -75,6 +75,7 @@ module.exports = {
         '<div {...props}>stuff</div {...props}>',
     ],
     'Type Annotations': [
+        'function foo(numVal: any){}',
         'function foo(numVal: number){}',
         'function foo(numVal: number, strVal: string){}',
         'function foo(numVal: number, untypedVal){}',
@@ -135,6 +136,7 @@ module.exports = {
         'var a:{a:number b:string}',
         'var a: { [a: number]: string; [b: number]: string; };',
         'var x: (number) => string',
+        'var y: return',
     ],
     'Type Alias': [
         'type FBID = number;',
