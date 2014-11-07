@@ -122,6 +122,8 @@ module.exports = {
         'function foo(...rest: Array<number>) {}',
         '(function (...rest: Array<number>) {})',
         '((...rest: Array<number>) => rest)',
+        'var a: Map<string, Array<string> >',
+        'var a: Map<string, Array<string>>',
     ],
     'Invalid Type Annotations': [
         'function foo(callback:) {}',

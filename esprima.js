@@ -810,7 +810,9 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         // Other 2-character punctuators: ++ -- << >> && ||
 
-        if (ch1 === ch2 && ('+-<>&|'.indexOf(ch1) >= 0)) {
+        // Don't match these tokens if we're in a type, since they never can
+        // occur and can mess up types like Map<string, Array<string>>
+        if (ch1 === ch2 && ('+-<>&|'.indexOf(ch1) >= 0) && !state.inType) {
             index += 2;
             return {
                 type: Token.Punctuator,
@@ -3969,15 +3971,35 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseGenericTypeAnnotation(nullable) {
-        var marker = markerCreate(), params = null, parametricType, returnType = null,
-            typeIdentifier;
+        var marker = markerCreate(), oldInType = state.inType,
+            parametricTypeMarker, params = null, paramTypes = [],
+            parametricType, returnType = null, typeIdentifier;
+
+        state.inType = true;
 
         nullable = nullable || false;
 
         typeIdentifier = parseVariableIdentifier();
+
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            parametricTypeMarker = markerCreate();
+            expect('<');
+            while (!match('>')) {
+                paramTypes.push(parseTypeAnnotation(true));
+                if (!match('>')) {
+                    expect(',');
+                }
+            }
+            expect('>');
+
+            parametricType = markerApply(
+                parametricTypeMarker,
+                delegate.createParametricTypeAnnotation(paramTypes)
+            );
         }
+
+        state.inType = oldInType;
+
         return markerApply(marker, delegate.createTypeAnnotation(
             typeIdentifier,
             parametricType,
@@ -4056,7 +4078,8 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseTypeAnnotation(dontExpectColon) {
-        var type, marker = markerCreate();
+        var type, marker = markerCreate(), oldInType = state.inType;
+        state.inType = true;
         if (!dontExpectColon) {
             expect(':');
         }
@@ -4067,6 +4090,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             type = parseUnionTypeAnnotation([type]);
         }
 
+        state.inType = oldInType;
         return markerApply(marker, type);
     }
 
@@ -6846,6 +6870,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             inSwitch: false,
             inXJSChild: false,
             inXJSTag: false,
+            inType: false,
             lastCommentStart: -1,
             yieldAllowed: false,
             awaitAllowed: false
