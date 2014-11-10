@@ -2917,7 +2917,7 @@ var fbTestFixture = {
             generator: false,
             expression: false,
             parametricType: {
-                type: 'ParametricTypeAnnotation',
+                type: 'TypeParameterDeclaration',
                 params: [{
                     type: 'Identifier',
                     name: 'T',
@@ -2965,7 +2965,7 @@ var fbTestFixture = {
             generator: false,
             expression: false,
             parametricType: {
-                type: 'ParametricTypeAnnotation',
+                type: 'TypeParameterDeclaration',
                 params: [{
                     type: 'Identifier',
                     name: 'T',
@@ -3027,7 +3027,7 @@ var fbTestFixture = {
                     generator: false,
                     expression: false,
                     parametricType: {
-                        type: 'ParametricTypeAnnotation',
+                        type: 'TypeParameterDeclaration',
                         params: [{
                             type: 'Identifier',
                             name: 'T',
@@ -3941,7 +3941,7 @@ var fbTestFixture = {
                     type: 'Identifier',
                     name: 'a',
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'Array',
@@ -3951,8 +3951,8 @@ var fbTestFixture = {
                                 end: { line: 1, column: 11 }
                             }
                         },
-                        parametricType: {
-                            type: 'ParametricTypeAnnotation',
+                        typeParameters: {
+                            type: 'TypeParameterInstantiation',
                             params: [{
                                 type: 'NumberTypeAnnotation',
                                 range: [12, 18],
@@ -3967,8 +3967,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 19 }
                             }
                         },
-                        params: null,
-                        returnType: null,
                         range: [5, 19],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -4066,7 +4064,7 @@ var fbTestFixture = {
                         }
                     },
                     parametricType: {
-                        type: 'ParametricTypeAnnotation',
+                        type: 'TypeParameterDeclaration',
                         params: [{
                             type: 'Identifier',
                             name: 'T',
@@ -4122,7 +4120,7 @@ var fbTestFixture = {
                 }
             },
             parametricType: {
-                type: 'ParametricTypeAnnotation',
+                type: 'TypeParameterDeclaration',
                 params: [{
                     type: 'Identifier',
                     name: 'T',
@@ -4212,7 +4210,7 @@ var fbTestFixture = {
                             }
                         },
                         parametricType: {
-                            type: 'ParametricTypeAnnotation',
+                            type: 'TypeParameterDeclaration',
                             params: [{
                                 type: 'Identifier',
                                 name: 'U',
@@ -4249,7 +4247,7 @@ var fbTestFixture = {
                 }
             },
             parametricType: {
-                type: 'ParametricTypeAnnotation',
+                type: 'TypeParameterDeclaration',
                 params: [{
                     type: 'Identifier',
                     name: 'T',
@@ -4315,7 +4313,7 @@ var fbTestFixture = {
                         generator: false,
                         expression: false,
                         parametricType: {
-                            type: 'ParametricTypeAnnotation',
+                            type: 'TypeParameterDeclaration',
                             params: [{
                                 type: 'Identifier',
                                 name: 'T',
@@ -4726,7 +4724,7 @@ var fbTestFixture = {
                     typeAnnotation: {
                         type: 'TypeofTypeAnnotation',
                         argument: {
-                            type: 'TypeAnnotation',
+                            type: 'GenericTypeAnnotation',
                             id: {
                                 type: 'Identifier',
                                 name: 'Y',
@@ -4736,8 +4734,7 @@ var fbTestFixture = {
                                     end: { line: 1, column: 15 }
                                 }
                             },
-                            params: null,
-                            returnType: null,
+                            typeParameters: null,
                             range: [14, 15],
                             loc: {
                                 start: { line: 1, column: 14 },
@@ -4790,7 +4787,7 @@ var fbTestFixture = {
                         types: [{
                             type: 'TypeofTypeAnnotation',
                             argument: {
-                                type: 'TypeAnnotation',
+                                type: 'GenericTypeAnnotation',
                                 id: {
                                     type: 'Identifier',
                                     name: 'Y',
@@ -4800,8 +4797,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 15 }
                                     }
                                 },
-                                params: null,
-                                returnType: null,
+                                typeParameters: null,
                                 range: [14, 15],
                                 loc: {
                                     start: { line: 1, column: 14 },
@@ -5138,7 +5134,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 7 }
                     },
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'Array',
@@ -5148,8 +5144,8 @@ var fbTestFixture = {
                                 end: { line: 1, column: 14 }
                             }
                         },
-                        parametricType: {
-                            type: 'ParametricTypeAnnotation',
+                        typeParameters: {
+                            type: 'TypeParameterInstantiation',
                             params: [{
                                 type: 'StringTypeAnnotation',
                                 range: [15, 21],
@@ -5164,8 +5160,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 22 }
                             }
                         },
-                        params: null,
-                        returnType: null,
                         range: [7, 22],
                         loc: {
                             start: { line: 1, column: 7 },
@@ -5337,7 +5331,7 @@ var fbTestFixture = {
                     end: { line: 1, column: 16 }
                 },
                 typeAnnotation: {
-                    type: 'TypeAnnotation',
+                    type: 'GenericTypeAnnotation',
                     id: {
                         type: 'Identifier',
                         name: 'Array',
@@ -5347,8 +5341,8 @@ var fbTestFixture = {
                             end: { line: 1, column: 23 }
                         }
                     },
-                    parametricType: {
-                        type: 'ParametricTypeAnnotation',
+                    typeParameters: {
+                        type: 'TypeParameterInstantiation',
                         params: [{
                             type: 'StringTypeAnnotation',
                             range: [24, 30],
@@ -5363,8 +5357,6 @@ var fbTestFixture = {
                             end: { line: 1, column: 31 }
                         }
                     },
-                    params: null,
-                    returnType: null,
                     range: [16, 31],
                     loc: {
                         start: { line: 1, column: 16 },
@@ -5417,7 +5409,7 @@ var fbTestFixture = {
                 type: 'Identifier',
                 name: 'rest',
                 typeAnnotation: {
-                    type: 'TypeAnnotation',
+                    type: 'GenericTypeAnnotation',
                     id: {
                         type: 'Identifier',
                         name: 'Array',
@@ -5427,8 +5419,8 @@ var fbTestFixture = {
                             end: { line: 1, column: 27 }
                         }
                     },
-                    parametricType: {
-                        type: 'ParametricTypeAnnotation',
+                    typeParameters: {
+                        type: 'TypeParameterInstantiation',
                         params: [{
                             type: 'NumberTypeAnnotation',
                             range: [28, 34],
@@ -5443,8 +5435,6 @@ var fbTestFixture = {
                             end: { line: 1, column: 35 }
                         }
                     },
-                    params: null,
-                    returnType: null,
                     range: [20, 35],
                     loc: {
                         start: { line: 1, column: 20 },
@@ -5485,7 +5475,7 @@ var fbTestFixture = {
                     type: 'Identifier',
                     name: 'rest',
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'Array',
@@ -5495,8 +5485,8 @@ var fbTestFixture = {
                                 end: { line: 1, column: 25 }
                             }
                         },
-                        parametricType: {
-                            type: 'ParametricTypeAnnotation',
+                        typeParameters: {
+                            type: 'TypeParameterInstantiation',
                             params: [{
                                 type: 'NumberTypeAnnotation',
                                 range: [26, 32],
@@ -5511,8 +5501,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 33 }
                             }
                         },
-                        params: null,
-                        returnType: null,
                         range: [18, 33],
                         loc: {
                             start: { line: 1, column: 18 },
@@ -5559,7 +5547,7 @@ var fbTestFixture = {
                     type: 'Identifier',
                     name: 'rest',
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'Array',
@@ -5569,8 +5557,8 @@ var fbTestFixture = {
                                 end: { line: 1, column: 16 }
                             }
                         },
-                        parametricType: {
-                            type: 'ParametricTypeAnnotation',
+                        typeParameters: {
+                            type: 'TypeParameterInstantiation',
                             params: [{
                                 type: 'NumberTypeAnnotation',
                                 range: [17, 23],
@@ -5585,8 +5573,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 24 }
                             }
                         },
-                        params: null,
-                        returnType: null,
                         range: [9, 24],
                         loc: {
                             start: { line: 1, column: 9 },
@@ -5621,7 +5607,7 @@ var fbTestFixture = {
                     type: 'Identifier',
                     name: 'a',
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'Map',
@@ -5631,8 +5617,8 @@ var fbTestFixture = {
                                 end: { line: 1, column: 10 }
                             }
                         },
-                        parametricType: {
-                            type: 'ParametricTypeAnnotation',
+                        typeParameters: {
+                            type: 'TypeParameterInstantiation',
                             params: [{
                                 type: 'StringTypeAnnotation',
                                 range: [11, 17],
@@ -5641,7 +5627,7 @@ var fbTestFixture = {
                                     end: { line: 1, column: 17 }
                                 }
                             }, {
-                                type: 'TypeAnnotation',
+                                type: 'GenericTypeAnnotation',
                                 id: {
                                     type: 'Identifier',
                                     name: 'Array',
@@ -5651,8 +5637,8 @@ var fbTestFixture = {
                                         end: { line: 1, column: 24 }
                                     }
                                 },
-                                parametricType: {
-                                    type: 'ParametricTypeAnnotation',
+                                typeParameters: {
+                                    type: 'TypeParameterInstantiation',
                                     params: [{
                                         type: 'StringTypeAnnotation',
                                         range: [25, 31],
@@ -5667,8 +5653,6 @@ var fbTestFixture = {
                                         end: { line: 1, column: 32 }
                                     }
                                 },
-                                params: null,
-                                returnType: null,
                                 range: [19, 32],
                                 loc: {
                                     start: { line: 1, column: 19 },
@@ -5681,8 +5665,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 34 }
                             }
                         },
-                        params: null,
-                        returnType: null,
                         range: [5, 34],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -5717,7 +5699,7 @@ var fbTestFixture = {
                     type: 'Identifier',
                     name: 'a',
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'Map',
@@ -5727,8 +5709,8 @@ var fbTestFixture = {
                                 end: { line: 1, column: 10 }
                             }
                         },
-                        parametricType: {
-                            type: 'ParametricTypeAnnotation',
+                        typeParameters: {
+                            type: 'TypeParameterInstantiation',
                             params: [{
                                 type: 'StringTypeAnnotation',
                                 range: [11, 17],
@@ -5737,7 +5719,7 @@ var fbTestFixture = {
                                     end: { line: 1, column: 17 }
                                 }
                             }, {
-                                type: 'TypeAnnotation',
+                                type: 'GenericTypeAnnotation',
                                 id: {
                                     type: 'Identifier',
                                     name: 'Array',
@@ -5747,8 +5729,8 @@ var fbTestFixture = {
                                         end: { line: 1, column: 24 }
                                     }
                                 },
-                                parametricType: {
-                                    type: 'ParametricTypeAnnotation',
+                                typeParameters: {
+                                    type: 'TypeParameterInstantiation',
                                     params: [{
                                         type: 'StringTypeAnnotation',
                                         range: [25, 31],
@@ -5763,8 +5745,6 @@ var fbTestFixture = {
                                         end: { line: 1, column: 32 }
                                     }
                                 },
-                                params: null,
-                                returnType: null,
                                 range: [19, 32],
                                 loc: {
                                     start: { line: 1, column: 19 },
@@ -5777,8 +5757,6 @@ var fbTestFixture = {
                                 end: { line: 1, column: 33 }
                             }
                         },
-                        params: null,
-                        returnType: null,
                         range: [5, 33],
                         loc: {
                             start: { line: 1, column: 5 },
@@ -5909,7 +5887,7 @@ var fbTestFixture = {
                     typeAnnotation: {
                         type: 'ArrayTypeAnnotation',
                         elementType: {
-                            type: 'TypeAnnotation',
+                            type: 'GenericTypeAnnotation',
                             id: {
                                 type: 'Identifier',
                                 name: 'Promise',
@@ -5919,8 +5897,8 @@ var fbTestFixture = {
                                     end: { line: 1, column: 14 }
                                 }
                             },
-                            parametricType: {
-                                type: 'ParametricTypeAnnotation',
+                            typeParameters: {
+                                type: 'TypeParameterInstantiation',
                                 params: [{
                                     type: 'BooleanTypeAnnotation',
                                     range: [15, 19],
@@ -5935,8 +5913,6 @@ var fbTestFixture = {
                                     end: { line: 1, column: 20 }
                                 }
                             },
-                            params: null,
-                            returnType: null,
                             range: [7, 20],
                             loc: {
                                 start: { line: 1, column: 7 },
@@ -6056,7 +6032,7 @@ var fbTestFixture = {
         'type FBID = number;': {
             type: 'TypeAlias',
             left: {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'FBID',
@@ -6066,8 +6042,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 9 }
                     }
                 },
-                params: null,
-                returnType: null,
+                typeParameters: null,
                 range: [5, 9],
                 loc: {
                     start: { line: 1, column: 5 },
@@ -6091,7 +6066,7 @@ var fbTestFixture = {
         'type Foo<T> = Bar<T>': {
             type: 'TypeAlias',
             left: {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'Foo',
@@ -6101,10 +6076,10 @@ var fbTestFixture = {
                         end: { line: 1, column: 8 }
                     }
                 },
-                parametricType: {
-                    type: 'ParametricTypeAnnotation',
+                typeParameters: {
+                    type: 'TypeParameterInstantiation',
                     params: [{
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'T',
@@ -6114,8 +6089,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 10 }
                             }
                         },
-                        params: null,
-                        returnType: null,
+                        typeParameters: null,
                         range: [9, 10],
                         loc: {
                             start: { line: 1, column: 9 },
@@ -6128,8 +6102,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 11 }
                     }
                 },
-                params: null,
-                returnType: null,
                 range: [5, 11],
                 loc: {
                     start: { line: 1, column: 5 },
@@ -6137,7 +6109,7 @@ var fbTestFixture = {
                 }
             },
             right: {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'Bar',
@@ -6147,10 +6119,10 @@ var fbTestFixture = {
                         end: { line: 1, column: 17 }
                     }
                 },
-                parametricType: {
-                    type: 'ParametricTypeAnnotation',
+                typeParameters: {
+                    type: 'TypeParameterInstantiation',
                     params: [{
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'T',
@@ -6160,8 +6132,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 19 }
                             }
                         },
-                        params: null,
-                        returnType: null,
+                        typeParameters: null,
                         range: [18, 19],
                         loc: {
                             start: { line: 1, column: 18 },
@@ -6174,8 +6145,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 20 }
                     }
                 },
-                params: null,
-                returnType: null,
                 range: [14, 20],
                 loc: {
                     start: { line: 1, column: 14 },
@@ -6193,7 +6162,7 @@ var fbTestFixture = {
         'interface A {}': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'A',
@@ -6203,8 +6172,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 11 }
                     }
                 },
-                params: null,
-                returnType: null,
+                typeParameters: null,
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -6231,7 +6199,7 @@ var fbTestFixture = {
         'interface A extends B {}': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'A',
@@ -6241,8 +6209,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 11 }
                     }
                 },
-                params: null,
-                returnType: null,
+                typeParameters: null,
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -6260,7 +6227,7 @@ var fbTestFixture = {
                 }
             },
             'extends': [{
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'B',
@@ -6270,8 +6237,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 21 }
                     }
                 },
-                params: null,
-                returnType: null,
+                typeParameters: null,
                 range: [20, 21],
                 loc: {
                     start: { line: 1, column: 20 },
@@ -6287,7 +6253,7 @@ var fbTestFixture = {
         'interface A<T> extends B<T>, C<T> {}': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'A',
@@ -6297,10 +6263,10 @@ var fbTestFixture = {
                         end: { line: 1, column: 11 }
                     }
                 },
-                parametricType: {
-                    type: 'ParametricTypeAnnotation',
+                typeParameters: {
+                    type: 'TypeParameterInstantiation',
                     params: [{
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'T',
@@ -6310,8 +6276,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 13 }
                             }
                         },
-                        params: null,
-                        returnType: null,
+                        typeParameters: null,
                         range: [12, 13],
                         loc: {
                             start: { line: 1, column: 12 },
@@ -6324,8 +6289,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 14 }
                     }
                 },
-                params: null,
-                returnType: null,
                 range: [10, 14],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -6343,7 +6306,7 @@ var fbTestFixture = {
                 }
             },
             'extends': [{
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'B',
@@ -6353,10 +6316,10 @@ var fbTestFixture = {
                         end: { line: 1, column: 24 }
                     }
                 },
-                parametricType: {
-                    type: 'ParametricTypeAnnotation',
+                typeParameters: {
+                    type: 'TypeParameterInstantiation',
                     params: [{
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'T',
@@ -6366,8 +6329,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 26 }
                             }
                         },
-                        params: null,
-                        returnType: null,
+                        typeParameters: null,
                         range: [25, 26],
                         loc: {
                             start: { line: 1, column: 25 },
@@ -6380,15 +6342,13 @@ var fbTestFixture = {
                         end: { line: 1, column: 27 }
                     }
                 },
-                params: null,
-                returnType: null,
                 range: [23, 27],
                 loc: {
                     start: { line: 1, column: 23 },
                     end: { line: 1, column: 27 }
                 }
             }, {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'C',
@@ -6398,10 +6358,10 @@ var fbTestFixture = {
                         end: { line: 1, column: 30 }
                     }
                 },
-                parametricType: {
-                    type: 'ParametricTypeAnnotation',
+                typeParameters: {
+                    type: 'TypeParameterInstantiation',
                     params: [{
-                        type: 'TypeAnnotation',
+                        type: 'GenericTypeAnnotation',
                         id: {
                             type: 'Identifier',
                             name: 'T',
@@ -6411,8 +6371,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 32 }
                             }
                         },
-                        params: null,
-                        returnType: null,
+                        typeParameters: null,
                         range: [31, 32],
                         loc: {
                             start: { line: 1, column: 31 },
@@ -6425,8 +6384,6 @@ var fbTestFixture = {
                         end: { line: 1, column: 33 }
                     }
                 },
-                params: null,
-                returnType: null,
                 range: [29, 33],
                 loc: {
                     start: { line: 1, column: 29 },
@@ -6442,7 +6399,7 @@ var fbTestFixture = {
         'interface A { foo: () => number; }': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'A',
@@ -6452,8 +6409,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 11 }
                     }
                 },
-                params: null,
-                returnType: null,
+                typeParameters: null,
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -6517,7 +6473,7 @@ var fbTestFixture = {
         'interface Dictionary { [index: string]: string; length: number; }': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'TypeAnnotation',
+                type: 'GenericTypeAnnotation',
                 id: {
                     type: 'Identifier',
                     name: 'Dictionary',
@@ -6527,8 +6483,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 20 }
                     }
                 },
-                params: null,
-                returnType: null,
+                typeParameters: null,
                 range: [10, 20],
                 loc: {
                     start: { line: 1, column: 10 },
@@ -6793,7 +6748,7 @@ var fbTestFixture = {
                     typeAnnotation: {
                         type: 'TypeofTypeAnnotation',
                         argument: {
-                            type: 'TypeAnnotation',
+                            type: 'GenericTypeAnnotation',
                             id: {
                                 type: 'Identifier',
                                 name: 'A',
@@ -6803,8 +6758,7 @@ var fbTestFixture = {
                                     end: { line: 1, column: 16 }
                                 }
                             },
-                            params: null,
-                            returnType: null,
+                            typeParameters: null,
                             range: [15, 16],
                             loc: {
                                 start: { line: 1, column: 15 },

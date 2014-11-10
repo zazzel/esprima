@@ -159,6 +159,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ForStatement: 'ForStatement',
         FunctionDeclaration: 'FunctionDeclaration',
         FunctionExpression: 'FunctionExpression',
+        GenericTypeAnnotation: 'GenericTypeAnnotation',
         Identifier: 'Identifier',
         IfStatement: 'IfStatement',
         ImportDeclaration: 'ImportDeclaration',
@@ -180,7 +181,6 @@ parseYieldExpression: true, parseAwaitExpression: true
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
         ObjectTypeIndexer: 'ObjectTypeIndexer',
-        ParametricTypeAnnotation: 'ParametricTypeAnnotation',
         Program: 'Program',
         Property: 'Property',
         ReturnStatement: 'ReturnStatement',
@@ -199,6 +199,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         TypeAlias: 'TypeAlias',
         TypeAnnotation: 'TypeAnnotation',
         TypeofTypeAnnotation: 'TypeofTypeAnnotation',
+        TypeParameterDeclaration: 'TypeParameterDeclaration',
+        TypeParameterInstantiation: 'TypeParameterInstantiation',
         UnaryExpression: 'UnaryExpression',
         UnionTypeAnnotation: 'UnionTypeAnnotation',
         UpdateExpression: 'UpdateExpression',
@@ -1932,10 +1934,25 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createParametricTypeAnnotation: function (parametricTypes) {
+        createGenericTypeAnnotation: function (id, typeParameters) {
             return {
-                type: Syntax.ParametricTypeAnnotation,
-                params: parametricTypes
+                type: Syntax.GenericTypeAnnotation,
+                id: id,
+                typeParameters: typeParameters
+            };
+        },
+
+        createTypeParameterDeclaration: function (params) {
+            return {
+                type: Syntax.TypeParameterDeclaration,
+                params: params
+            };
+        },
+
+        createTypeParameterInstantiation: function (params) {
+            return {
+                type: Syntax.TypeParameterInstantiation,
+                params: params
             };
         },
 
@@ -3976,12 +3993,11 @@ parseYieldExpression: true, parseAwaitExpression: true
         );
     }
 
-    function parseTypeParameters() {
-        var marker = markerCreate(), typeIdentifier, paramTypes = [];
+    function parseTypeParameterDeclaration() {
+        var marker = markerCreate(), paramTypes = [];
 
         expect('<');
         while (!match('>')) {
-            /* TODO Support any type here */
             paramTypes.push(parseVariableIdentifier());
             if (!match('>')) {
                 expect(',');
@@ -3989,44 +4005,45 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
         expect('>');
 
-        return markerApply(marker, delegate.createParametricTypeAnnotation(
+        return markerApply(marker, delegate.createTypeParameterDeclaration(
+            paramTypes
+        ));
+    }
+
+    function parseTypeParameterInstantiation() {
+        var marker = markerCreate(), oldInType = state.inType, paramTypes = [];
+
+        state.inType = true;
+
+        expect('<');
+        while (!match('>')) {
+            paramTypes.push(parseTypeAnnotation(true));
+            if (!match('>')) {
+                expect(',');
+            }
+        }
+        expect('>');
+
+        state.inType = oldInType;
+
+        return markerApply(marker, delegate.createTypeParameterInstantiation(
             paramTypes
         ));
     }
 
     function parseGenericTypeAnnotation() {
-        var marker = markerCreate(), oldInType = state.inType,
-            parametricTypeMarker, params = null, paramTypes = [],
-            parametricType, returnType = null, typeIdentifier;
-
-        state.inType = true;
+        var marker = markerCreate(), returnType = null,
+            typeParameters = null, typeIdentifier;
 
         typeIdentifier = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricTypeMarker = markerCreate();
-            expect('<');
-            while (!match('>')) {
-                paramTypes.push(parseTypeAnnotation(true));
-                if (!match('>')) {
-                    expect(',');
-                }
-            }
-            expect('>');
-
-            parametricType = markerApply(
-                parametricTypeMarker,
-                delegate.createParametricTypeAnnotation(paramTypes)
-            );
+            typeParameters = parseTypeParameterInstantiation();
         }
 
-        state.inType = oldInType;
-
-        return markerApply(marker, delegate.createTypeAnnotation(
+        return markerApply(marker, delegate.createGenericTypeAnnotation(
             typeIdentifier,
-            parametricType,
-            params,
-            returnType
+            typeParameters
         ));
     }
 
@@ -5355,7 +5372,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            parametricType = parseTypeParameterDeclaration();
         }
 
         if (strict) {
@@ -5454,7 +5471,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
 
             if (match('<')) {
-                parametricType = parseTypeParameters();
+                parametricType = parseTypeParameterDeclaration();
             }
         }
 
@@ -5614,7 +5631,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            parametricType = parseTypeParameterDeclaration();
         }
 
         isAsync = token.value === 'async' && !match('(');
@@ -5705,7 +5722,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            parametricType = parseTypeParameterDeclaration();
         }
 
         if (matchKeyword('extends')) {
@@ -5728,7 +5745,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            parametricType = parseTypeParameterDeclaration();
         }
 
         if (matchKeyword('extends')) {
