@@ -2436,8 +2436,7 @@ var fbTestFixture = {
                 type: 'Identifier',
                 name: 'callback',
                 typeAnnotation: {
-                    type: 'TypeAnnotation',
-                    id: null,
+                    type: 'FunctionTypeAnnotation',
                     params: [],
                     returnType: {
                         type: 'VoidTypeAnnotation',
@@ -2447,6 +2446,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 33 }
                         }
                     },
+                    typeParameters: null,
                     range: [21, 33],
                     loc: {
                         start: { line: 1, column: 21 },
@@ -2493,8 +2493,7 @@ var fbTestFixture = {
                 type: 'Identifier',
                 name: 'callback',
                 typeAnnotation: {
-                    type: 'TypeAnnotation',
-                    id: null,
+                    type: 'FunctionTypeAnnotation',
                     params: [],
                     returnType: {
                         type: 'NumberTypeAnnotation',
@@ -2504,6 +2503,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 35 }
                         }
                     },
+                    typeParameters: null,
                     range: [21, 35],
                     loc: {
                         start: { line: 1, column: 21 },
@@ -2550,8 +2550,7 @@ var fbTestFixture = {
                 type: 'Identifier',
                 name: 'callback',
                 typeAnnotation: {
-                    type: 'TypeAnnotation',
-                    id: null,
+                    type: 'FunctionTypeAnnotation',
                     params: [{
                         type: 'Identifier',
                         name: '_',
@@ -2577,6 +2576,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 41 }
                         }
                     },
+                    typeParameters: null,
                     range: [21, 41],
                     loc: {
                         start: { line: 1, column: 21 },
@@ -2623,8 +2623,7 @@ var fbTestFixture = {
                 type: 'Identifier',
                 name: 'callback',
                 typeAnnotation: {
-                    type: 'TypeAnnotation',
-                    id: null,
+                    type: 'FunctionTypeAnnotation',
                     params: [{
                         type: 'Identifier',
                         name: '_1',
@@ -2666,6 +2665,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 53 }
                         }
                     },
+                    typeParameters: null,
                     range: [21, 53],
                     loc: {
                         start: { line: 1, column: 21 },
@@ -2762,8 +2762,7 @@ var fbTestFixture = {
             generator: false,
             expression: false,
             returnType: {
-                type: 'TypeAnnotation',
-                id: null,
+                type: 'FunctionTypeAnnotation',
                 params: [],
                 returnType: {
                     type: 'VoidTypeAnnotation',
@@ -2773,6 +2772,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 25 }
                     }
                 },
+                typeParameters: null,
                 range: [14, 25],
                 loc: {
                     start: { line: 1, column: 14 },
@@ -2811,8 +2811,7 @@ var fbTestFixture = {
             generator: false,
             expression: false,
             returnType: {
-                type: 'TypeAnnotation',
-                id: null,
+                type: 'FunctionTypeAnnotation',
                 params: [{
                     type: 'Identifier',
                     name: '_',
@@ -2838,6 +2837,7 @@ var fbTestFixture = {
                         end: { line: 1, column: 33 }
                     }
                 },
+                typeParameters: null,
                 range: [14, 33],
                 loc: {
                     start: { line: 1, column: 14 },
@@ -4644,8 +4644,7 @@ var fbTestFixture = {
                     type: 'Identifier',
                     name: 'x',
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
-                        id: null,
+                        type: 'FunctionTypeAnnotation',
                         params: [],
                         returnType: {
                             type: 'UnionTypeAnnotation',
@@ -4657,8 +4656,7 @@ var fbTestFixture = {
                                     end: { line: 1, column: 20 }
                                 }
                             }, {
-                                type: 'TypeAnnotation',
-                                id: null,
+                                type: 'FunctionTypeAnnotation',
                                 params: [],
                                 returnType: {
                                     type: 'StringTypeAnnotation',
@@ -4668,6 +4666,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 35 }
                                     }
                                 },
+                                typeParameters: null,
                                 range: [23, 35],
                                 loc: {
                                     start: { line: 1, column: 23 },
@@ -4680,6 +4679,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 35 }
                             }
                         },
+                        typeParameters: null,
                         range: [6, 35],
                         loc: {
                             start: { line: 1, column: 6 },
@@ -6430,8 +6430,7 @@ var fbTestFixture = {
                         }
                     },
                     value: {
-                        type: 'TypeAnnotation',
-                        id: null,
+                        type: 'FunctionTypeAnnotation',
                         params: [],
                         returnType: {
                             type: 'NumberTypeAnnotation',
@@ -6441,6 +6440,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 31 }
                             }
                         },
+                        typeParameters: null,
                         range: [19, 31],
                         loc: {
                             start: { line: 1, column: 19 },
@@ -6613,8 +6613,7 @@ var fbTestFixture = {
                     typeAnnotation: {
                         type: 'UnionTypeAnnotation',
                         types: [{
-                            type: 'TypeAnnotation',
-                            id: null,
+                            type: 'FunctionTypeAnnotation',
                             params: [],
                             returnType: {
                                 type: 'NumberTypeAnnotation',
@@ -6624,14 +6623,14 @@ var fbTestFixture = {
                                     end: { line: 1, column: 20 }
                                 }
                             },
+                            typeParameters: null,
                             range: [8, 20],
                             loc: {
                                 start: { line: 1, column: 8 },
                                 end: { line: 1, column: 20 }
                             }
                         }, {
-                            type: 'TypeAnnotation',
-                            id: null,
+                            type: 'FunctionTypeAnnotation',
                             params: [],
                             returnType: {
                                 type: 'StringTypeAnnotation',
@@ -6641,6 +6640,7 @@ var fbTestFixture = {
                                     end: { line: 1, column: 36 }
                                 }
                             },
+                            typeParameters: null,
                             range: [24, 36],
                             loc: {
                                 start: { line: 1, column: 24 },

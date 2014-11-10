@@ -20021,6 +20021,7 @@ var testFixture = {
                 ForStatement: 'ForStatement',
                 FunctionDeclaration: 'FunctionDeclaration',
                 FunctionExpression: 'FunctionExpression',
+                FunctionTypeAnnotation: 'FunctionTypeAnnotation',
                 GenericTypeAnnotation: 'GenericTypeAnnotation',
                 Identifier: 'Identifier',
                 IfStatement: 'IfStatement',

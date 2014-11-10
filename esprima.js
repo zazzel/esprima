@@ -159,6 +159,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ForStatement: 'ForStatement',
         FunctionDeclaration: 'FunctionDeclaration',
         FunctionExpression: 'FunctionExpression',
+        FunctionTypeAnnotation: 'FunctionTypeAnnotation',
         GenericTypeAnnotation: 'GenericTypeAnnotation',
         Identifier: 'Identifier',
         IfStatement: 'IfStatement',
@@ -1910,13 +1911,12 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createTypeAnnotation: function (typeIdentifier, parametricType, params, returnType) {
+        createFunctionTypeAnnotation: function (params, returnType, typeParameters) {
             return {
-                type: Syntax.TypeAnnotation,
-                id: typeIdentifier,
-                parametricType: parametricType,
+                type: Syntax.FunctionTypeAnnotation,
                 params: params,
-                returnType: returnType
+                returnType: returnType,
+                typeParameters: typeParameters
             };
         },
 
@@ -4065,7 +4065,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parsePrimaryType() {
         var typeIdentifier = null, params = null, returnType = null,
-            marker = markerCreate(), returnTypeMarker = null,
+            marker = markerCreate(),
             parametricType, token, type, isGroupedType = false;
 
         switch (lookahead.type) {
@@ -4127,16 +4127,14 @@ parseYieldExpression: true, parseAwaitExpression: true
                 }
                 expect(')');
 
-                returnTypeMarker = markerCreate();
                 expect('=>');
 
                 returnType = parseType();
 
-                return markerApply(marker, delegate.createTypeAnnotation(
-                    typeIdentifier,
-                    parametricType,
+                return markerApply(marker, delegate.createFunctionTypeAnnotation(
                     params,
-                    returnType
+                    returnType,
+                    null
                 ));
             }
             break;
