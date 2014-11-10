@@ -134,6 +134,7 @@ module.exports = {
         'class Foo { get bar<T>() { } }',
         'var a:{a:number b:string}',
         'var a: { [a: number]: string; [b: number]: string; };',
+        'var x: (number) => string',
     ],
     'Type Alias': [
         'type FBID = number;',
@@ -145,6 +146,12 @@ module.exports = {
         'interface A<T> extends B<T>, C<T> {}',
         'interface A { foo: () => number; }',
         'interface Dictionary { [index: string]: string; length: number; }',
+    ],
+    'Type Grouping': [
+        'var a: (number)',
+        'var a: (() => number) | () => string',
+        'var a: number & (string | bool)',
+        'var a: (typeof A)',
     ],
     'Invalid Type Alias': [
         'if (true) type foo = number',

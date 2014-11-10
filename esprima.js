@@ -47,7 +47,7 @@ scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
 parseTypeAlias: true,
 parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
-parseTypeAnnotationWithoutUnions: true,
+parsePrimaryTypeAnnotation: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -163,6 +163,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ImportNamespaceSpecifier: 'ImportNamespaceSpecifier',
         ImportSpecifier: 'ImportSpecifier',
         InterfaceDeclaration: 'InterfaceDeclaration',
+        IntersectionTypeAnnotation: 'IntersectionTypeAnnotation',
         LabeledStatement: 'LabeledStatement',
         Literal: 'Literal',
         LogicalExpression: 'LogicalExpression',
@@ -285,7 +286,13 @@ parseYieldExpression: true, parseAwaitExpression: true
         InvalidXJSAttributeValue: 'XJS value should be either an expression or a quoted XJS text',
         ExpectedXJSClosingTag: 'Expected corresponding XJS closing tag for %0',
         AdjacentXJSElements: 'Adjacent XJS elements must be wrapped in an enclosing tag',
-        DuplicateIndexer: 'An interface or object type can only have a single indexer property.'
+        DuplicateIndexer: 'An interface or object type can only have a single indexer property.',
+        ConfusedAboutFunctionType: 'Unexpected token =>. It looks like ' +
+            'you are trying to write a function type, but you ended up ' +
+            'writing a grouped type followed by an =>, which is a syntax ' +
+            'error. Remember, function type parameters are named so function ' +
+            'types look like (name1: type1, name2: type2) => returnType. You ' +
+            'probably wrote (type1) => returnType'
     };
 
     // See also tools/generate-unicode-regex.py.
@@ -1955,6 +1962,13 @@ parseYieldExpression: true, parseAwaitExpression: true
         createUnionTypeAnnotation: function (types) {
             return {
                 type: Syntax.UnionTypeAnnotation,
+                types: types
+            };
+        },
+
+        createIntersectionTypeAnnotation: function (types) {
+            return {
+                type: Syntax.IntersectionTypeAnnotation,
                 types: types
             };
         },
@@ -3952,7 +3966,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseTypeofTypeAnnotation() {
         var argument, marker = markerCreate();
         expectKeyword('typeof');
-        argument = parseTypeAnnotationWithoutUnions();
+        argument = parsePrimaryTypeAnnotation();
         return markerApply(marker, delegate.createTypeofTypeAnnotation(
             argument
         ));
@@ -3963,6 +3977,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         expect('<');
         while (!match('>')) {
+            /* TODO Support any type here */
             paramTypes.push(parseVariableIdentifier());
             if (!match('>')) {
                 expect(',');
@@ -4011,15 +4026,15 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseTypeAnnotationWithoutUnions() {
+    function parsePrimaryTypeAnnotation() {
         var typeIdentifier = null, params = null, returnType = null,
             marker = markerCreate(), returnTypeMarker = null,
-            parametricType, annotation;
+            parametricType, annotation, token, type, isGroupedType = false;
 
         if (match('?')) {
             lex();
             return markerApply(marker, delegate.createNullableTypeAnnotation(
-                parseTypeAnnotationWithoutUnions()
+                parsePrimaryTypeAnnotation()
             ));
         }
 
@@ -4033,8 +4048,31 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         if (match('(')) {
             lex();
+            // Check to see if this is actually a grouped type
+            if (!match(')')) {
+                if (lookahead.type === Token.Identifier) {
+                    token = lookahead2();
+                    isGroupedType = token.value !== '?' && token.value !== ':';
+                } else {
+                    isGroupedType = true;
+                }
+            }
+
+            if (isGroupedType) {
+                type = parseTypeAnnotation(true);
+                expect(')');
+
+                // If we see a => next then someone was probably confused about
+                // function types, so we can provide a better error message
+                if (match('=>')) {
+                    throwError({}, Messages.ConfusedAboutFunctionType);
+                }
+
+                return type;
+            }
+
             params = [];
-            while (lookahead.type === Token.Identifier || match('?')) {
+            while (lookahead.type === Token.Identifier) {
                 params.push(parseTypeAnnotatableIdentifier(
                     true, /* requireTypeAnnotation */
                     true /* canBeOptionalParam */
@@ -4069,15 +4107,35 @@ parseYieldExpression: true, parseAwaitExpression: true
         throwUnexpected(lookahead);
     }
 
-    function parseUnionTypeAnnotation(types) {
-        while (match('|')) {
+    function parseIntersectionTypeAnnotation() {
+        var type, types;
+        type = parsePrimaryTypeAnnotation();
+        types = [type];
+        while (match('&')) {
             lex();
-            types.push(parseTypeAnnotationWithoutUnions());
+            types.push(parsePrimaryTypeAnnotation());
         }
 
-        return delegate.createUnionTypeAnnotation(
-            types
-        );
+        return types.length === 1 ?
+                type :
+                delegate.createIntersectionTypeAnnotation(
+                    types
+                );
+    }
+
+    function parseUnionTypeAnnotation() {
+        var type, types;
+        type = parseIntersectionTypeAnnotation();
+        types = [type];
+        while (match('|')) {
+            lex();
+            types.push(parseIntersectionTypeAnnotation());
+        }
+        return types.length === 1 ?
+                type :
+                delegate.createUnionTypeAnnotation(
+                    types
+                );
     }
 
     function parseTypeAnnotation(dontExpectColon) {
@@ -4087,11 +4145,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             expect(':');
         }
 
-        type = parseTypeAnnotationWithoutUnions();
-
-        if (match('|')) {
-            type = parseUnionTypeAnnotation([type]);
-        }
+        type = parseUnionTypeAnnotation();
 
         state.inType = oldInType;
         return markerApply(marker, type);
