@@ -180,9 +180,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
         ObjectTypeIndexer: 'ObjectTypeIndexer',
-        OptionalParameter: 'OptionalParameter',
         ParametricTypeAnnotation: 'ParametricTypeAnnotation',
-        ParametricallyTypedIdentifier: 'ParametricallyTypedIdentifier',
         Program: 'Program',
         Property: 'Property',
         ReturnStatement: 'ReturnStatement',
@@ -199,7 +197,6 @@ parseYieldExpression: true, parseAwaitExpression: true
         ThrowStatement: 'ThrowStatement',
         TryStatement: 'TryStatement',
         TypeAlias: 'TypeAlias',
-        TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
         TypeAnnotation: 'TypeAnnotation',
         TypeofTypeAnnotation: 'TypeofTypeAnnotation',
         UnaryExpression: 'UnaryExpression',
@@ -1906,7 +1903,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                 // are added later (like 'loc' and 'range'). This just helps
                 // keep the shape of Identifier nodes consistent with everything
                 // else.
-                typeAnnotation: undefined
+                typeAnnotation: undefined,
+                optional: undefined
             };
         },
 
@@ -2023,21 +2021,6 @@ parseYieldExpression: true, parseAwaitExpression: true
                 id: id,
                 body: body,
                 extends: extended
-            };
-        },
-
-        createTypeAnnotatedIdentifier: function (identifier, annotation, isOptionalParam) {
-            return {
-                type: Syntax.TypeAnnotatedIdentifier,
-                id: identifier,
-                annotation: annotation
-            };
-        },
-
-        createOptionalParameter: function (identifier) {
-            return {
-                type: Syntax.OptionalParameter,
-                id: identifier
             };
         },
 
@@ -4240,14 +4223,13 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (requireTypeAnnotation || match(':')) {
-            ident = markerApply(marker, delegate.createTypeAnnotatedIdentifier(
-                ident,
-                parseTypeAnnotation()
-            ));
+            ident.typeAnnotation = parseTypeAnnotation();
+            ident = markerApply(marker, ident);
         }
 
         if (isOptionalParam) {
-            ident = markerApply(marker, delegate.createOptionalParameter(ident));
+            ident.optional = true;
+            ident = markerApply(marker, ident);
         }
 
         return ident;
