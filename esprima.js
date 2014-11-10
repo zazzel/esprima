@@ -45,9 +45,9 @@ parseStatement: true, parseSourceElement: true, parseConciseBody: true,
 advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
-parsePrefixTypeAnnotation: true,
+parsePrefixType: true,
 parseTypeAlias: true,
-parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
+parseType: true, parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -3937,10 +3937,10 @@ parseYieldExpression: true, parseAwaitExpression: true
         expect('[');
         id = parseObjectPropertyKey();
         expect(':');
-        key = parseTypeAnnotation(true);
+        key = parseType();
         expect(']');
         expect(':');
-        value = parseTypeAnnotation(true);
+        value = parseType();
 
         return markerApply(marker, delegate.createObjectTypeIndexer(
             id,
@@ -3949,7 +3949,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseObjectTypeAnnotation() {
+    function parseObjectType() {
         var indexer = null, isMethod, marker, properties = [], property,
             propertyKey, propertyTypeAnnotation;
 
@@ -3965,7 +3965,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             } else {
                 marker = markerCreate();
                 propertyKey = parseObjectPropertyKey();
-                isMethod = match('(');
+                isMethod = false;
                 propertyTypeAnnotation = parseTypeAnnotation();
                 properties.push(markerApply(marker, delegate.createProperty(
                     'init',
@@ -4017,7 +4017,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         expect('<');
         while (!match('>')) {
-            paramTypes.push(parseTypeAnnotation(true));
+            paramTypes.push(parseType());
             if (!match('>')) {
                 expect(',');
             }
@@ -4031,7 +4031,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseGenericTypeAnnotation() {
+    function parseGenericType() {
         var marker = markerCreate(), returnType = null,
             typeParameters = null, typeIdentifier;
 
@@ -4047,22 +4047,22 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseVoidTypeAnnotation() {
+    function parseVoidType() {
         var marker = markerCreate();
         expectKeyword('void');
         return markerApply(marker, delegate.createVoidTypeAnnotation());
     }
 
-    function parseTypeofTypeAnnotation() {
+    function parseTypeofType() {
         var argument, marker = markerCreate();
         expectKeyword('typeof');
-        argument = parsePrefixTypeAnnotation();
+        argument = parsePrefixType();
         return markerApply(marker, delegate.createTypeofTypeAnnotation(
             argument
         ));
     }
 
-    function parsePrimaryTypeAnnotation() {
+    function parsePrimaryType() {
         var typeIdentifier = null, params = null, returnType = null,
             marker = markerCreate(), returnTypeMarker = null,
             parametricType, token, type, isGroupedType = false;
@@ -4084,11 +4084,11 @@ parseYieldExpression: true, parseAwaitExpression: true
                 lex();
                 return markerApply(marker, delegate.createStringTypeAnnotation());
             }
-            return markerApply(marker, parseGenericTypeAnnotation());
+            return markerApply(marker, parseGenericType());
         case Token.Punctuator:
             switch (lookahead.value) {
             case '{':
-                return markerApply(marker, parseObjectTypeAnnotation());
+                return markerApply(marker, parseObjectType());
             case '(':
                 lex();
                 // Check to see if this is actually a grouped type
@@ -4102,7 +4102,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 }
 
                 if (isGroupedType) {
-                    type = parseTypeAnnotation(true);
+                    type = parseType();
                     expect(')');
 
                     // If we see a => next then someone was probably confused about
@@ -4129,7 +4129,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 returnTypeMarker = markerCreate();
                 expect('=>');
 
-                returnType = parseTypeAnnotation(true);
+                returnType = parseType();
 
                 return markerApply(marker, delegate.createTypeAnnotation(
                     typeIdentifier,
@@ -4142,9 +4142,9 @@ parseYieldExpression: true, parseAwaitExpression: true
         case Token.Keyword:
             switch (lookahead.value) {
             case 'void':
-                return markerApply(marker, parseVoidTypeAnnotation());
+                return markerApply(marker, parseVoidType());
             case 'typeof':
-                return markerApply(marker, parseTypeofTypeAnnotation());
+                return markerApply(marker, parseTypeofType());
             }
             break;
         }
@@ -4152,8 +4152,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         throwUnexpected(lookahead);
     }
 
-    function parsePostfixTypeAnnotation() {
-        var marker = markerCreate(), t = parsePrimaryTypeAnnotation();
+    function parsePostfixType() {
+        var marker = markerCreate(), t = parsePrimaryType();
         if (match('[')) {
             expect('[');
             expect(']');
@@ -4162,59 +4162,65 @@ parseYieldExpression: true, parseAwaitExpression: true
         return t;
     }
 
-    function parsePrefixTypeAnnotation() {
+    function parsePrefixType() {
         var marker = markerCreate();
         if (match('?')) {
             lex();
             return markerApply(marker, delegate.createNullableTypeAnnotation(
-                parsePrefixTypeAnnotation()
+                parsePrefixType()
             ));
         }
-        return parsePostfixTypeAnnotation();
+        return parsePostfixType();
     }
 
 
-    function parseIntersectionTypeAnnotation() {
-        var type, types;
-        type = parsePrefixTypeAnnotation();
+    function parseIntersectionType() {
+        var marker = markerCreate(), type, types;
+        type = parsePrefixType();
         types = [type];
         while (match('&')) {
             lex();
-            types.push(parsePrefixTypeAnnotation());
+            types.push(parsePrefixType());
         }
 
         return types.length === 1 ?
                 type :
-                delegate.createIntersectionTypeAnnotation(
+                markerApply(marker, delegate.createIntersectionTypeAnnotation(
                     types
-                );
+                ));
     }
 
-    function parseUnionTypeAnnotation() {
-        var type, types;
-        type = parseIntersectionTypeAnnotation();
+    function parseUnionType() {
+        var marker = markerCreate(), type, types;
+        type = parseIntersectionType();
         types = [type];
         while (match('|')) {
             lex();
-            types.push(parseIntersectionTypeAnnotation());
+            types.push(parseIntersectionType());
         }
         return types.length === 1 ?
                 type :
-                delegate.createUnionTypeAnnotation(
+                markerApply(marker, delegate.createUnionTypeAnnotation(
                     types
-                );
+                ));
     }
 
-    function parseTypeAnnotation(dontExpectColon) {
-        var type, marker = markerCreate(), oldInType = state.inType;
+    function parseType() {
+        var oldInType = state.inType, type;
         state.inType = true;
-        if (!dontExpectColon) {
-            expect(':');
-        }
 
-        type = parseUnionTypeAnnotation();
+        type = parseUnionType();
 
         state.inType = oldInType;
+        return type;
+    }
+
+    function parseTypeAnnotation() {
+        var marker = markerCreate(), type;
+
+        expect(':');
+        type = parseType();
+
         return markerApply(marker, type);
     }
 
@@ -6673,9 +6679,9 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseTypeAlias() {
         var left, marker = markerCreate(), right;
         expectContextualKeyword('type');
-        left = parseGenericTypeAnnotation();
+        left = parseGenericType();
         expect('=');
-        right = parseTypeAnnotation(true);
+        right = parseType();
         consumeSemicolon();
         return markerApply(marker, delegate.createTypeAlias(left, right));
     }
@@ -6684,13 +6690,13 @@ parseYieldExpression: true, parseAwaitExpression: true
         var body, bodyMarker, extended = [], id, marker = markerCreate();
 
         expectContextualKeyword('interface');
-        id = parseGenericTypeAnnotation();
+        id = parseGenericType();
 
         if (matchKeyword('extends')) {
             expectKeyword('extends');
 
             while (index < length) {
-                extended.push(parseGenericTypeAnnotation());
+                extended.push(parseGenericType());
                 if (!match(',')) {
                     break;
                 }
@@ -6699,7 +6705,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         bodyMarker = markerCreate();
-        body = markerApply(bodyMarker, parseObjectTypeAnnotation());
+        body = markerApply(bodyMarker, parseObjectType());
 
         return markerApply(marker, delegate.createInterface(
             id,
