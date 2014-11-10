@@ -3347,9 +3347,9 @@ var fbTestFixture = {
                             },
                             value: {
                                 type: 'NumberTypeAnnotation',
-                                range: [14, 22],
+                                range: [16, 22],
                                 loc: {
-                                    start: { line: 1, column: 14 },
+                                    start: { line: 1, column: 16 },
                                     end: { line: 1, column: 22 }
                                 }
                             },
@@ -3411,9 +3411,9 @@ var fbTestFixture = {
                             },
                             value: {
                                 type: 'NumberTypeAnnotation',
-                                range: [14, 22],
+                                range: [16, 22],
                                 loc: {
-                                    start: { line: 1, column: 14 },
+                                    start: { line: 1, column: 16 },
                                     end: { line: 1, column: 22 }
                                 }
                             },
@@ -3509,9 +3509,9 @@ var fbTestFixture = {
                                 },
                                 value: {
                                     type: 'NumberTypeAnnotation',
-                                    range: [15, 23],
+                                    range: [17, 23],
                                     loc: {
-                                        start: { line: 1, column: 15 },
+                                        start: { line: 1, column: 17 },
                                         end: { line: 1, column: 23 }
                                     }
                                 },
@@ -3579,9 +3579,9 @@ var fbTestFixture = {
                             },
                             value: {
                                 type: 'NumberTypeAnnotation',
-                                range: [14, 22],
+                                range: [16, 22],
                                 loc: {
-                                    start: { line: 1, column: 14 },
+                                    start: { line: 1, column: 16 },
                                     end: { line: 1, column: 22 }
                                 }
                             },
@@ -3606,9 +3606,9 @@ var fbTestFixture = {
                             },
                             value: {
                                 type: 'StringTypeAnnotation',
-                                range: [30, 38],
+                                range: [32, 38],
                                 loc: {
-                                    start: { line: 1, column: 30 },
+                                    start: { line: 1, column: 32 },
                                     end: { line: 1, column: 38 }
                                 }
                             },
@@ -3683,9 +3683,9 @@ var fbTestFixture = {
                                     },
                                     value: {
                                         type: 'StringTypeAnnotation',
-                                        range: [23, 31],
+                                        range: [25, 31],
                                         loc: {
-                                            start: { line: 1, column: 23 },
+                                            start: { line: 1, column: 25 },
                                             end: { line: 1, column: 31 }
                                         }
                                     },
@@ -3699,9 +3699,9 @@ var fbTestFixture = {
                                     }
                                 }],
                                 indexer: null,
-                                range: [14, 32],
+                                range: [16, 32],
                                 loc: {
-                                    start: { line: 1, column: 14 },
+                                    start: { line: 1, column: 16 },
                                     end: { line: 1, column: 32 }
                                 }
                             },
@@ -3778,9 +3778,9 @@ var fbTestFixture = {
                                         },
                                         value: {
                                             type: 'StringTypeAnnotation',
-                                            range: [24, 32],
+                                            range: [26, 32],
                                             loc: {
-                                                start: { line: 1, column: 24 },
+                                                start: { line: 1, column: 26 },
                                                 end: { line: 1, column: 32 }
                                             }
                                         },
@@ -3800,9 +3800,9 @@ var fbTestFixture = {
                                         end: { line: 1, column: 33 }
                                     }
                                 },
-                                range: [14, 33],
+                                range: [16, 33],
                                 loc: {
-                                    start: { line: 1, column: 14 },
+                                    start: { line: 1, column: 16 },
                                     end: { line: 1, column: 33 }
                                 }
                             },
@@ -3864,9 +3864,9 @@ var fbTestFixture = {
                             },
                             value: {
                                 type: 'NumberTypeAnnotation',
-                                range: [14, 22],
+                                range: [16, 22],
                                 loc: {
-                                    start: { line: 1, column: 14 },
+                                    start: { line: 1, column: 16 },
                                     end: { line: 1, column: 22 }
                                 }
                             },
@@ -3891,9 +3891,9 @@ var fbTestFixture = {
                             },
                             value: {
                                 type: 'StringTypeAnnotation',
-                                range: [30, 38],
+                                range: [32, 38],
                                 loc: {
-                                    start: { line: 1, column: 30 },
+                                    start: { line: 1, column: 32 },
                                     end: { line: 1, column: 38 }
                                 }
                             },
@@ -4907,9 +4907,9 @@ var fbTestFixture = {
                             },
                             value: {
                                 type: 'StringTypeAnnotation',
-                                range: [11, 19],
+                                range: [13, 19],
                                 loc: {
-                                    start: { line: 1, column: 11 },
+                                    start: { line: 1, column: 13 },
                                     end: { line: 1, column: 19 }
                                 }
                             },
@@ -5038,9 +5038,9 @@ var fbTestFixture = {
                             },
                             value: {
                                 type: 'StringTypeAnnotation',
-                                range: [11, 19],
+                                range: [13, 19],
                                 loc: {
-                                    start: { line: 1, column: 11 },
+                                    start: { line: 1, column: 13 },
                                     end: { line: 1, column: 19 }
                                 }
                             },
@@ -5261,9 +5261,9 @@ var fbTestFixture = {
                         },
                         value: {
                             type: 'StringTypeAnnotation',
-                            range: [21, 29],
+                            range: [23, 29],
                             loc: {
-                                start: { line: 1, column: 21 },
+                                start: { line: 1, column: 23 },
                                 end: { line: 1, column: 29 }
                             }
                         },
@@ -6441,9 +6441,9 @@ var fbTestFixture = {
                                 end: { line: 1, column: 31 }
                             }
                         },
-                        range: [17, 31],
+                        range: [19, 31],
                         loc: {
-                            start: { line: 1, column: 17 },
+                            start: { line: 1, column: 19 },
                             end: { line: 1, column: 31 }
                         }
                     },
@@ -6505,9 +6505,9 @@ var fbTestFixture = {
                     },
                     value: {
                         type: 'NumberTypeAnnotation',
-                        range: [54, 62],
+                        range: [56, 62],
                         loc: {
-                            start: { line: 1, column: 54 },
+                            start: { line: 1, column: 56 },
                             end: { line: 1, column: 62 }
                         }
                     },

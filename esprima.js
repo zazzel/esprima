@@ -47,7 +47,7 @@ scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
 parsePrefixType: true,
 parseTypeAlias: true,
-parseType: true, parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
+parseType: true, parseTypeAnnotatableIdentifier: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -3966,7 +3966,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                 marker = markerCreate();
                 propertyKey = parseObjectPropertyKey();
                 isMethod = false;
-                propertyTypeAnnotation = parseTypeAnnotation();
+                expect(':');
+                propertyTypeAnnotation = parseType();
                 properties.push(markerApply(marker, delegate.createProperty(
                     'init',
                     propertyKey,
