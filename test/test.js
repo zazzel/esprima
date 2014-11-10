@@ -19992,6 +19992,7 @@ var testFixture = {
                 AnyTypeAnnotation: 'AnyTypeAnnotation',
                 ArrayExpression: 'ArrayExpression',
                 ArrayPattern: 'ArrayPattern',
+                ArrayTypeAnnotation: 'ArrayTypeAnnotation',
                 ArrowFunctionExpression: 'ArrowFunctionExpression',
                 AssignmentExpression: 'AssignmentExpression',
                 BinaryExpression: 'BinaryExpression',

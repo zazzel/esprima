@@ -130,6 +130,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         AnyTypeAnnotation: 'AnyTypeAnnotation',
         ArrayExpression: 'ArrayExpression',
         ArrayPattern: 'ArrayPattern',
+        ArrayTypeAnnotation: 'ArrayTypeAnnotation',
         ArrowFunctionExpression: 'ArrowFunctionExpression',
         AssignmentExpression: 'AssignmentExpression',
         BinaryExpression: 'BinaryExpression',
@@ -1923,6 +1924,13 @@ parseYieldExpression: true, parseAwaitExpression: true
             return {
                 type: Syntax.NullableTypeAnnotation,
                 typeAnnotation: typeAnnotation
+            };
+        },
+
+        createArrayTypeAnnotation: function (elementType) {
+            return {
+                type: Syntax.ArrayTypeAnnotation,
+                elementType: elementType
             };
         },
 
@@ -4144,6 +4152,16 @@ parseYieldExpression: true, parseAwaitExpression: true
         throwUnexpected(lookahead);
     }
 
+    function parsePostfixTypeAnnotation() {
+        var marker = markerCreate(), t = parsePrimaryTypeAnnotation();
+        if (match('[')) {
+            expect('[');
+            expect(']');
+            return markerApply(marker, delegate.createArrayTypeAnnotation(t));
+        }
+        return t;
+    }
+
     function parsePrefixTypeAnnotation() {
         var marker = markerCreate();
         if (match('?')) {
@@ -4152,7 +4170,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 parsePrefixTypeAnnotation()
             ));
         }
-        return parsePrimaryTypeAnnotation();
+        return parsePostfixTypeAnnotation();
     }
 
 
