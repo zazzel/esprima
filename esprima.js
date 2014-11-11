@@ -2395,10 +2395,12 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createClassProperty: function (propertyIdentifier) {
+        createClassProperty: function (key, typeAnnotation, computed) {
             return {
                 type: Syntax.ClassProperty,
-                id: propertyIdentifier
+                key: key,
+                typeAnnotation: typeAnnotation,
+                computed: computed
             };
         },
 
@@ -5594,32 +5596,25 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     // 14 Classes
 
-    function parseMethodDefinition(existingPropNames) {
-        var token, key, param, propType, isValidDuplicateProp = false,
-            isAsync, marker = markerCreate(), token2, typeParameters,
+    function parseMethodDefinition(existingPropNames, key, isStatic, generator, computed) {
+        var token, param, propType, isValidDuplicateProp = false,
+            isAsync, typeParameters, tokenValue,
             annotationMarker;
 
-        if (lookahead.value === 'static') {
-            propType = ClassPropertyType.static;
-            lex();
-        } else {
-            propType = ClassPropertyType.prototype;
-        }
+        propType = isStatic ? ClassPropertyType.static : ClassPropertyType.prototype;
 
-        if (match('*')) {
-            lex();
-            return markerApply(marker, delegate.createMethodDefinition(
+        if (generator) {
+            return delegate.createMethodDefinition(
                 propType,
                 '',
-                parseObjectPropertyKey(),
+                key,
                 parsePropertyMethodFunction({ generator: true })
-            ));
+            );
         }
 
-        token = lookahead;
-        key = parseObjectPropertyKey();
+        tokenValue = key.type === 'Identifier' && key.name;
 
-        if (token.value === 'get' && !match('(')) {
+        if (tokenValue === 'get' && !match('(')) {
             key = parseObjectPropertyKey();
 
             // It is a syntax error if any other properties have a name
@@ -5642,14 +5637,14 @@ parseYieldExpression: true, parseAwaitExpression: true
 
             expect('(');
             expect(')');
-            return markerApply(marker, delegate.createMethodDefinition(
+            return delegate.createMethodDefinition(
                 propType,
                 'get',
                 key,
                 parsePropertyFunction({ generator: false })
-            ));
+            );
         }
-        if (token.value === 'set' && !match('(')) {
+        if (tokenValue === 'set' && !match('(')) {
             key = parseObjectPropertyKey();
 
             // It is a syntax error if any other properties have a name
@@ -5674,19 +5669,19 @@ parseYieldExpression: true, parseAwaitExpression: true
             token = lookahead;
             param = [ parseTypeAnnotatableIdentifier() ];
             expect(')');
-            return markerApply(marker, delegate.createMethodDefinition(
+            return delegate.createMethodDefinition(
                 propType,
                 'set',
                 key,
                 parsePropertyFunction({ params: param, generator: false, name: token })
-            ));
+            );
         }
 
         if (match('<')) {
             typeParameters = parseTypeParameterDeclaration();
         }
 
-        isAsync = token.value === 'async' && !match('(');
+        isAsync = tokenValue === 'async' && !match('(');
         if (isAsync) {
             key = parseObjectPropertyKey();
         }
@@ -5700,7 +5695,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
         existingPropNames[propType][key.name].data = true;
 
-        return markerApply(marker, delegate.createMethodDefinition(
+        return delegate.createMethodDefinition(
             propType,
             '',
             key,
@@ -5709,34 +5704,54 @@ parseYieldExpression: true, parseAwaitExpression: true
                 async: isAsync,
                 typeParameters: typeParameters
             })
-        ));
+        );
     }
 
-    function parseClassProperty(existingPropNames) {
-        var marker = markerCreate(), propertyIdentifier;
+    function parseClassProperty(existingPropNames, key, computed) {
+        var typeAnnotation;
 
-        propertyIdentifier = parseTypeAnnotatableIdentifier();
+        typeAnnotation = parseTypeAnnotation();
         expect(';');
 
-        return markerApply(marker, delegate.createClassProperty(
-            propertyIdentifier
-        ));
+        return delegate.createClassProperty(
+            key,
+            typeAnnotation,
+            computed
+        );
     }
 
     function parseClassElement(existingProps) {
+        var computed, generator = false, key, marker = markerCreate(),
+            isStatic = false;
         if (match(';')) {
             lex();
             return;
         }
 
-        var doubleLookahead = lookahead2();
-        if (doubleLookahead.type === Token.Punctuator) {
-            if (doubleLookahead.value === ':') {
-                return parseClassProperty(existingProps);
-            }
+        if (lookahead.value === 'static') {
+            lex();
+            isStatic = true;
         }
 
-        return parseMethodDefinition(existingProps);
+        if (match('*')) {
+            lex();
+            generator = true;
+        }
+
+        computed = (lookahead.value === '[');
+        key = parseObjectPropertyKey();
+
+        if (!isStatic && !generator && lookahead.value === ':') {
+            return markerApply(marker, parseClassProperty(existingProps, key, computed));
+        }
+
+        return markerApply(marker, parseMethodDefinition(
+            existingProps,
+            key,
+            isStatic,
+            generator,
+            computed
+        ));
     }
 
     function parseClassBody() {

@@ -4982,31 +4982,32 @@ var fbTestFixture = {
                 type: 'ClassBody',
                 body: [{
                     type: 'ClassProperty',
-                    id: {
+                    key: {
                         type: 'Identifier',
                         name: 'prop1',
+                        range: [12, 17],
+                        loc: {
+                            start: { line: 1, column: 12 },
+                            end: { line: 1, column: 17 }
+                        }
+                    },
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
                         typeAnnotation: {
-                            type: 'TypeAnnotation',
-                            typeAnnotation: {
-                                type: 'StringTypeAnnotation',
-                                range: [18, 24],
-                                loc: {
-                                    start: { line: 1, column: 18 },
-                                    end: { line: 1, column: 24 }
-                                }
-                            },
-                            range: [17, 24],
+                            type: 'StringTypeAnnotation',
+                            range: [18, 24],
                             loc: {
-                                start: { line: 1, column: 17 },
+                                start: { line: 1, column: 18 },
                                 end: { line: 1, column: 24 }
                             }
                         },
-                        range: [12, 24],
+                        range: [17, 24],
                         loc: {
-                            start: { line: 1, column: 12 },
+                            start: { line: 1, column: 17 },
                             end: { line: 1, column: 24 }
                         }
                     },
+                    computed: false,
                     range: [12, 25],
                     loc: {
                         start: { line: 1, column: 12 },
@@ -5014,31 +5015,32 @@ var fbTestFixture = {
                     }
                 }, {
                     type: 'ClassProperty',
-                    id: {
+                    key: {
                         type: 'Identifier',
                         name: 'prop2',
+                        range: [26, 31],
+                        loc: {
+                            start: { line: 1, column: 26 },
+                            end: { line: 1, column: 31 }
+                        }
+                    },
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
                         typeAnnotation: {
-                            type: 'TypeAnnotation',
-                            typeAnnotation: {
-                                type: 'NumberTypeAnnotation',
-                                range: [32, 38],
-                                loc: {
-                                    start: { line: 1, column: 32 },
-                                    end: { line: 1, column: 38 }
-                                }
-                            },
-                            range: [31, 38],
+                            type: 'NumberTypeAnnotation',
+                            range: [32, 38],
                             loc: {
-                                start: { line: 1, column: 31 },
+                                start: { line: 1, column: 32 },
                                 end: { line: 1, column: 38 }
                             }
                         },
-                        range: [26, 38],
+                        range: [31, 38],
                         loc: {
-                            start: { line: 1, column: 26 },
+                            start: { line: 1, column: 31 },
                             end: { line: 1, column: 38 }
                         }
                     },
+                    computed: false,
                     range: [26, 39],
                     loc: {
                         start: { line: 1, column: 26 },
