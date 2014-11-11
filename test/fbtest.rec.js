@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 128
+var numTests = 131
 var testFixture;
 
 var fbTestFixture = {
@@ -3813,6 +3813,76 @@ var fbTestFixture = {
                 end: { line: 1, column: 24 }
             }
         },
+        'var a: {numVal: number;};': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ObjectTypeAnnotation',
+                            properties: [{
+                                type: 'ObjectTypeProperty',
+                                key: {
+                                    type: 'Identifier',
+                                    name: 'numVal',
+                                    range: [8, 14],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 14 }
+                                    }
+                                },
+                                value: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [16, 22],
+                                    loc: {
+                                        start: { line: 1, column: 16 },
+                                        end: { line: 1, column: 22 }
+                                    }
+                                },
+                                optional: false,
+                                range: [8, 22],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 22 }
+                                }
+                            }],
+                            indexer: null,
+                            range: [7, 24],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 24 }
+                            }
+                        },
+                        range: [5, 24],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 24 }
+                        }
+                    },
+                    range: [4, 24],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 24 }
+                    }
+                },
+                init: null,
+                range: [4, 24],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 24 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 25],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 25 }
+            }
+        },
         'var a: {numVal: number; [indexer: string]: number};': {
             type: 'VariableDeclaration',
             declarations: [{
@@ -4478,6 +4548,304 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 40 }
+            }
+        },
+        'var a: {add(x:number, ...y:Array<string>): void}': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ObjectTypeAnnotation',
+                            properties: [{
+                                type: 'ObjectTypeProperty',
+                                key: {
+                                    type: 'Identifier',
+                                    name: 'add',
+                                    range: [8, 11],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 11 }
+                                    }
+                                },
+                                value: {
+                                    type: 'FunctionTypeAnnotation',
+                                    params: [{
+                                        type: 'FunctionTypeParam',
+                                        name: {
+                                            type: 'Identifier',
+                                            name: 'x',
+                                            range: [12, 13],
+                                            loc: {
+                                                start: { line: 1, column: 12 },
+                                                end: { line: 1, column: 13 }
+                                            }
+                                        },
+                                        typeAnnotation: {
+                                            type: 'NumberTypeAnnotation',
+                                            range: [14, 20],
+                                            loc: {
+                                                start: { line: 1, column: 14 },
+                                                end: { line: 1, column: 20 }
+                                            }
+                                        },
+                                        optional: false,
+                                        range: [12, 20],
+                                        loc: {
+                                            start: { line: 1, column: 12 },
+                                            end: { line: 1, column: 20 }
+                                        }
+                                    }],
+                                    returnType: {
+                                        type: 'VoidTypeAnnotation',
+                                        range: [43, 47],
+                                        loc: {
+                                            start: { line: 1, column: 43 },
+                                            end: { line: 1, column: 47 }
+                                        }
+                                    },
+                                    rest: {
+                                        type: 'FunctionTypeParam',
+                                        name: {
+                                            type: 'Identifier',
+                                            name: 'y',
+                                            range: [25, 26],
+                                            loc: {
+                                                start: { line: 1, column: 25 },
+                                                end: { line: 1, column: 26 }
+                                            }
+                                        },
+                                        typeAnnotation: {
+                                            type: 'GenericTypeAnnotation',
+                                            id: {
+                                                type: 'Identifier',
+                                                name: 'Array',
+                                                range: [27, 32],
+                                                loc: {
+                                                    start: { line: 1, column: 27 },
+                                                    end: { line: 1, column: 32 }
+                                                }
+                                            },
+                                            typeParameters: {
+                                                type: 'TypeParameterInstantiation',
+                                                params: [{
+                                                    type: 'StringTypeAnnotation',
+                                                    range: [33, 39],
+                                                    loc: {
+                                                        start: { line: 1, column: 33 },
+                                                        end: { line: 1, column: 39 }
+                                                    }
+                                                }],
+                                                range: [32, 40],
+                                                loc: {
+                                                    start: { line: 1, column: 32 },
+                                                    end: { line: 1, column: 40 }
+                                                }
+                                            },
+                                            range: [27, 40],
+                                            loc: {
+                                                start: { line: 1, column: 27 },
+                                                end: { line: 1, column: 40 }
+                                            }
+                                        },
+                                        optional: false,
+                                        range: [25, 40],
+                                        loc: {
+                                            start: { line: 1, column: 25 },
+                                            end: { line: 1, column: 40 }
+                                        }
+                                    },
+                                    typeParameters: null,
+                                    range: [8, 47],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 47 }
+                                    }
+                                },
+                                optional: false,
+                                range: [8, 47],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 47 }
+                                }
+                            }],
+                            indexer: null,
+                            range: [7, 48],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 48 }
+                            }
+                        },
+                        range: [5, 48],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 48 }
+                        }
+                    },
+                    range: [4, 48],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 48 }
+                    }
+                },
+                init: null,
+                range: [4, 48],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 48 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 48],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 48 }
+            }
+        },
+        'var a: { id<T>(x: T): T; }': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ObjectTypeAnnotation',
+                            properties: [{
+                                type: 'ObjectTypeProperty',
+                                key: {
+                                    type: 'Identifier',
+                                    name: 'id',
+                                    range: [9, 11],
+                                    loc: {
+                                        start: { line: 1, column: 9 },
+                                        end: { line: 1, column: 11 }
+                                    }
+                                },
+                                value: {
+                                    type: 'FunctionTypeAnnotation',
+                                    params: [{
+                                        type: 'FunctionTypeParam',
+                                        name: {
+                                            type: 'Identifier',
+                                            name: 'x',
+                                            range: [15, 16],
+                                            loc: {
+                                                start: { line: 1, column: 15 },
+                                                end: { line: 1, column: 16 }
+                                            }
+                                        },
+                                        typeAnnotation: {
+                                            type: 'GenericTypeAnnotation',
+                                            id: {
+                                                type: 'Identifier',
+                                                name: 'T',
+                                                range: [18, 19],
+                                                loc: {
+                                                    start: { line: 1, column: 18 },
+                                                    end: { line: 1, column: 19 }
+                                                }
+                                            },
+                                            typeParameters: null,
+                                            range: [18, 19],
+                                            loc: {
+                                                start: { line: 1, column: 18 },
+                                                end: { line: 1, column: 19 }
+                                            }
+                                        },
+                                        optional: false,
+                                        range: [15, 19],
+                                        loc: {
+                                            start: { line: 1, column: 15 },
+                                            end: { line: 1, column: 19 }
+                                        }
+                                    }],
+                                    returnType: {
+                                        type: 'GenericTypeAnnotation',
+                                        id: {
+                                            type: 'Identifier',
+                                            name: 'T',
+                                            range: [22, 23],
+                                            loc: {
+                                                start: { line: 1, column: 22 },
+                                                end: { line: 1, column: 23 }
+                                            }
+                                        },
+                                        typeParameters: null,
+                                        range: [22, 23],
+                                        loc: {
+                                            start: { line: 1, column: 22 },
+                                            end: { line: 1, column: 23 }
+                                        }
+                                    },
+                                    rest: null,
+                                    typeParameters: {
+                                        type: 'TypeParameterDeclaration',
+                                        params: [{
+                                            type: 'Identifier',
+                                            name: 'T',
+                                            range: [12, 13],
+                                            loc: {
+                                                start: { line: 1, column: 12 },
+                                                end: { line: 1, column: 13 }
+                                            }
+                                        }],
+                                        range: [11, 14],
+                                        loc: {
+                                            start: { line: 1, column: 11 },
+                                            end: { line: 1, column: 14 }
+                                        }
+                                    },
+                                    range: [9, 23],
+                                    loc: {
+                                        start: { line: 1, column: 9 },
+                                        end: { line: 1, column: 23 }
+                                    }
+                                },
+                                optional: false,
+                                range: [9, 23],
+                                loc: {
+                                    start: { line: 1, column: 9 },
+                                    end: { line: 1, column: 23 }
+                                }
+                            }],
+                            indexer: null,
+                            range: [7, 26],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 26 }
+                            }
+                        },
+                        range: [5, 26],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 26 }
+                        }
+                    },
+                    range: [4, 26],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 26 }
+                    }
+                },
+                init: null,
+                range: [4, 26],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 26 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 26],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 26 }
             }
         },
         'var a:Array<number> = [1, 2, 3]': {
@@ -6867,11 +7235,11 @@ var fbTestFixture = {
 
         },
         'function foo(): { foo() }': {
-            index: 21,
+            index: 24,
             lineNumber: 1,
-            column: 22,
-            message: 'Error: Line 1: Unexpected token (',
-            description: 'Unexpected token ('
+            column: 25,
+            message: 'Error: Line 1: Unexpected token }',
+            description: 'Unexpected token }'
 
         },
         'function foo(callback:(string) => number) {}': {
