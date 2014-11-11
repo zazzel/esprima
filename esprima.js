@@ -4007,7 +4007,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
 
             if (!match('}')) {
-                if (match(',') || match(';')) {
+                if (match(';')) {
                     lex();
                 } else {
                     throwUnexpected(lookahead);

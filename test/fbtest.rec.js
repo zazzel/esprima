@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 125
+var numTests = 126
 var testFixture;
 
 var fbTestFixture = {
@@ -3813,7 +3813,7 @@ var fbTestFixture = {
                 end: { line: 1, column: 24 }
             }
         },
-        'var a: {numVal: number, [indexer: string]: number};': {
+        'var a: {numVal: number; [indexer: string]: number};': {
             type: 'VariableDeclaration',
             declarations: [{
                 type: 'VariableDeclarator',
@@ -3993,7 +3993,7 @@ var fbTestFixture = {
                 end: { line: 1, column: 25 }
             }
         },
-        'var a: {numVal: number, strVal: string}': {
+        'var a: {numVal: number; strVal: string}': {
             type: 'VariableDeclaration',
             declarations: [{
                 type: 'VariableDeclarator',
@@ -6744,6 +6744,14 @@ var fbTestFixture = {
             column: 8,
             message: 'Error: Line 1: Unexpected token return',
             description: 'Unexpected token return'
+
+        },
+        'var a: { x: number, y: string }': {
+            index: 18,
+            lineNumber: 1,
+            column: 19,
+            message: 'Error: Line 1: Unexpected token ,',
+            description: 'Unexpected token ,'
 
         },
     },
