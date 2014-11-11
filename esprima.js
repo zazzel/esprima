@@ -4192,7 +4192,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             case '(':
                 lex();
                 // Check to see if this is actually a grouped type
-                if (!match(')')) {
+                if (!match(')') && !match('...')) {
                     if (lookahead.type === Token.Identifier) {
                         token = lookahead2();
                         isGroupedType = token.value !== '?' && token.value !== ':';
