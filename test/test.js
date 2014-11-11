@@ -20004,6 +20004,7 @@ var testFixture = {
                 ClassBody: 'ClassBody',
                 ClassDeclaration: 'ClassDeclaration',
                 ClassExpression: 'ClassExpression',
+                ClassImplements: 'ClassImplements',
                 ClassProperty: 'ClassProperty',
                 ComprehensionBlock: 'ComprehensionBlock',
                 ComprehensionExpression: 'ComprehensionExpression',

@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 132
+var numTests = 136
 var testFixture;
 
 var fbTestFixture = {
@@ -7870,6 +7870,296 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 65 }
+            }
+        },
+        'class Foo implements Bar {}': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: null,
+            body: {
+                type: 'ClassBody',
+                body: [],
+                range: [25, 27],
+                loc: {
+                    start: { line: 1, column: 25 },
+                    end: { line: 1, column: 27 }
+                }
+            },
+            'implements': [{
+                type: 'ClassImplements',
+                id: {
+                    type: 'Identifier',
+                    name: 'Bar',
+                    range: [21, 24],
+                    loc: {
+                        start: { line: 1, column: 21 },
+                        end: { line: 1, column: 24 }
+                    }
+                },
+                typeParameters: null,
+                range: [21, 24],
+                loc: {
+                    start: { line: 1, column: 21 },
+                    end: { line: 1, column: 24 }
+                }
+            }],
+            range: [0, 27],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 27 }
+            }
+        },
+        'class Foo extends Bar implements Bat, Man<number> {}': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: {
+                type: 'Identifier',
+                name: 'Bar',
+                range: [18, 21],
+                loc: {
+                    start: { line: 1, column: 18 },
+                    end: { line: 1, column: 21 }
+                }
+            },
+            body: {
+                type: 'ClassBody',
+                body: [],
+                range: [50, 52],
+                loc: {
+                    start: { line: 1, column: 50 },
+                    end: { line: 1, column: 52 }
+                }
+            },
+            'implements': [{
+                type: 'ClassImplements',
+                id: {
+                    type: 'Identifier',
+                    name: 'Bat',
+                    range: [33, 36],
+                    loc: {
+                        start: { line: 1, column: 33 },
+                        end: { line: 1, column: 36 }
+                    }
+                },
+                typeParameters: null,
+                range: [33, 36],
+                loc: {
+                    start: { line: 1, column: 33 },
+                    end: { line: 1, column: 36 }
+                }
+            }, {
+                type: 'ClassImplements',
+                id: {
+                    type: 'Identifier',
+                    name: 'Man',
+                    range: [38, 41],
+                    loc: {
+                        start: { line: 1, column: 38 },
+                        end: { line: 1, column: 41 }
+                    }
+                },
+                typeParameters: {
+                    type: 'TypeParameterInstantiation',
+                    params: [{
+                        type: 'NumberTypeAnnotation',
+                        range: [42, 48],
+                        loc: {
+                            start: { line: 1, column: 42 },
+                            end: { line: 1, column: 48 }
+                        }
+                    }],
+                    range: [41, 49],
+                    loc: {
+                        start: { line: 1, column: 41 },
+                        end: { line: 1, column: 49 }
+                    }
+                },
+                range: [38, 49],
+                loc: {
+                    start: { line: 1, column: 38 },
+                    end: { line: 1, column: 49 }
+                }
+            }],
+            range: [0, 52],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 52 }
+            }
+        },
+        'class Foo extends class Bar implements Bat {} {}': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: {
+                type: 'ClassExpression',
+                id: {
+                    type: 'Identifier',
+                    name: 'Bar',
+                    range: [24, 27],
+                    loc: {
+                        start: { line: 1, column: 24 },
+                        end: { line: 1, column: 27 }
+                    }
+                },
+                superClass: null,
+                body: {
+                    type: 'ClassBody',
+                    body: [],
+                    range: [43, 45],
+                    loc: {
+                        start: { line: 1, column: 43 },
+                        end: { line: 1, column: 45 }
+                    }
+                },
+                'implements': [{
+                    type: 'ClassImplements',
+                    id: {
+                        type: 'Identifier',
+                        name: 'Bat',
+                        range: [39, 42],
+                        loc: {
+                            start: { line: 1, column: 39 },
+                            end: { line: 1, column: 42 }
+                        }
+                    },
+                    typeParameters: null,
+                    range: [39, 42],
+                    loc: {
+                        start: { line: 1, column: 39 },
+                        end: { line: 1, column: 42 }
+                    }
+                }],
+                range: [18, 45],
+                loc: {
+                    start: { line: 1, column: 18 },
+                    end: { line: 1, column: 45 }
+                }
+            },
+            body: {
+                type: 'ClassBody',
+                body: [],
+                range: [46, 48],
+                loc: {
+                    start: { line: 1, column: 46 },
+                    end: { line: 1, column: 48 }
+                }
+            },
+            range: [0, 48],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 48 }
+            }
+        },
+        'class Foo extends class Bar implements Bat {} implements Man {}': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: {
+                type: 'ClassExpression',
+                id: {
+                    type: 'Identifier',
+                    name: 'Bar',
+                    range: [24, 27],
+                    loc: {
+                        start: { line: 1, column: 24 },
+                        end: { line: 1, column: 27 }
+                    }
+                },
+                superClass: null,
+                body: {
+                    type: 'ClassBody',
+                    body: [],
+                    range: [43, 45],
+                    loc: {
+                        start: { line: 1, column: 43 },
+                        end: { line: 1, column: 45 }
+                    }
+                },
+                'implements': [{
+                    type: 'ClassImplements',
+                    id: {
+                        type: 'Identifier',
+                        name: 'Bat',
+                        range: [39, 42],
+                        loc: {
+                            start: { line: 1, column: 39 },
+                            end: { line: 1, column: 42 }
+                        }
+                    },
+                    typeParameters: null,
+                    range: [39, 42],
+                    loc: {
+                        start: { line: 1, column: 39 },
+                        end: { line: 1, column: 42 }
+                    }
+                }],
+                range: [18, 45],
+                loc: {
+                    start: { line: 1, column: 18 },
+                    end: { line: 1, column: 45 }
+                }
+            },
+            body: {
+                type: 'ClassBody',
+                body: [],
+                range: [61, 63],
+                loc: {
+                    start: { line: 1, column: 61 },
+                    end: { line: 1, column: 63 }
+                }
+            },
+            'implements': [{
+                type: 'ClassImplements',
+                id: {
+                    type: 'Identifier',
+                    name: 'Man',
+                    range: [57, 60],
+                    loc: {
+                        start: { line: 1, column: 57 },
+                        end: { line: 1, column: 60 }
+                    }
+                },
+                typeParameters: null,
+                range: [57, 60],
+                loc: {
+                    start: { line: 1, column: 57 },
+                    end: { line: 1, column: 60 }
+                }
+            }],
+            range: [0, 63],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 63 }
             }
         },
     },

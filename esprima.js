@@ -143,6 +143,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ClassBody: 'ClassBody',
         ClassDeclaration: 'ClassDeclaration',
         ClassExpression: 'ClassExpression',
+        ClassImplements: 'ClassImplements',
         ClassProperty: 'ClassProperty',
         ComprehensionBlock: 'ComprehensionBlock',
         ComprehensionExpression: 'ComprehensionExpression',
@@ -2423,25 +2424,35 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createClassExpression: function (id, superClass, body, typeParameters, superTypeParameters) {
+        createClassImplements: function (id, typeParameters) {
+            return {
+                type: Syntax.ClassImplements,
+                id: id,
+                typeParameters: typeParameters
+            };
+        },
+
+        createClassExpression: function (id, superClass, body, typeParameters, superTypeParameters, implemented) {
             return {
                 type: Syntax.ClassExpression,
                 id: id,
                 superClass: superClass,
                 body: body,
                 typeParameters: typeParameters,
-                superTypeParameters: superTypeParameters
+                superTypeParameters: superTypeParameters,
+                implements: implemented
             };
         },
 
-        createClassDeclaration: function (id, superClass, body, typeParameters, superTypeParameters) {
+        createClassDeclaration: function (id, superClass, body, typeParameters, superTypeParameters, implemented) {
             return {
                 type: Syntax.ClassDeclaration,
                 id: id,
                 superClass: superClass,
                 body: body,
                 typeParameters: typeParameters,
-                superTypeParameters: superTypeParameters
+                superTypeParameters: superTypeParameters,
+                implements: implemented
             };
         },
 
@@ -5838,13 +5849,36 @@ parseYieldExpression: true, parseAwaitExpression: true
         return markerApply(marker, delegate.createClassBody(classElements));
     }
 
+    function parseClassImplements() {
+        var id, implemented = [], marker, typeParameters;
+        expectContextualKeyword('implements');
+        while (index < length) {
+            marker = markerCreate();
+            id = parseVariableIdentifier();
+            if (match('<')) {
+                typeParameters = parseTypeParameterInstantiation();
+            } else {
+                typeParameters = null;
+            }
+            implemented.push(markerApply(marker, delegate.createClassImplements(
+                id,
+                typeParameters
+            )));
+            if (!match(',')) {
+                break;
+            }
+            expect(',');
+        }
+        return implemented;
+    }
+
     function parseClassExpression() {
-        var id, previousYieldAllowed, superClass = null, superTypeParameters,
-            marker = markerCreate(), typeParameters;
+        var id, implemented, previousYieldAllowed, superClass = null,
+            superTypeParameters, marker = markerCreate(), typeParameters;
 
         expectKeyword('class');
 
-        if (!matchKeyword('extends') && !match('{')) {
+        if (!matchKeyword('extends') && !matchContextualKeyword('implements') && !match('{')) {
             id = parseVariableIdentifier();
         }
 
@@ -5863,18 +5897,23 @@ parseYieldExpression: true, parseAwaitExpression: true
             state.yieldAllowed = previousYieldAllowed;
         }
 
+        if (matchContextualKeyword('implements')) {
+            implemented = parseClassImplements();
+        }
+
         return markerApply(marker, delegate.createClassExpression(
             id,
             superClass,
             parseClassBody(),
             typeParameters,
-            superTypeParameters
+            superTypeParameters,
+            implemented
         ));
     }
 
     function parseClassDeclaration() {
-        var id, previousYieldAllowed, superClass = null, superTypeParameters,
-            marker = markerCreate(), typeParameters;
+        var id, implemented, previousYieldAllowed, superClass = null,
+            superTypeParameters, marker = markerCreate(), typeParameters;
 
         expectKeyword('class');
 
@@ -5895,12 +5934,17 @@ parseYieldExpression: true, parseAwaitExpression: true
             state.yieldAllowed = previousYieldAllowed;
         }
 
+        if (matchContextualKeyword('implements')) {
+            implemented = parseClassImplements();
+        }
+
         return markerApply(marker, delegate.createClassDeclaration(
             id,
             superClass,
             parseClassBody(),
             typeParameters,
-            superTypeParameters
+            superTypeParameters,
+            implemented
         ));
     }
 
