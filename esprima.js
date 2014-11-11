@@ -183,6 +183,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
         ObjectTypeIndexer: 'ObjectTypeIndexer',
+        ObjectTypeProperty: 'ObjectTypeProperty',
         Program: 'Program',
         Property: 'Property',
         ReturnStatement: 'ReturnStatement',
@@ -2025,6 +2026,15 @@ parseYieldExpression: true, parseAwaitExpression: true
                 id: id,
                 key: key,
                 value: value
+            };
+        },
+
+        createObjectTypeProperty: function (key, value, optional) {
+            return {
+                type: Syntax.ObjectTypeProperty,
+                key: key,
+                value: value,
+                optional: optional
             };
         },
 
@@ -3968,7 +3978,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseObjectType() {
-        var indexer = null, isMethod, marker, properties = [], property,
+        var indexer = null, marker, optional = false, properties = [], property,
             propertyKey, propertyTypeAnnotation;
 
         expect('{');
@@ -3983,15 +3993,16 @@ parseYieldExpression: true, parseAwaitExpression: true
             } else {
                 marker = markerCreate();
                 propertyKey = parseObjectPropertyKey();
-                isMethod = false;
+                if (match('?')) {
+                    lex();
+                    optional = true;
+                }
                 expect(':');
                 propertyTypeAnnotation = parseType();
-                properties.push(markerApply(marker, delegate.createProperty(
-                    'init',
+                properties.push(markerApply(marker, delegate.createObjectTypeProperty(
                     propertyKey,
                     propertyTypeAnnotation,
-                    isMethod,
-                    false
+                    optional
                 )));
             }
 

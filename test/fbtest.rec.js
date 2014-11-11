@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 124
+var numTests = 125
 var testFixture;
 
 var fbTestFixture = {
@@ -3755,7 +3755,7 @@ var fbTestFixture = {
                         typeAnnotation: {
                             type: 'ObjectTypeAnnotation',
                             properties: [{
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'numVal',
@@ -3773,9 +3773,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 22 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [8, 22],
                                 loc: {
                                     start: { line: 1, column: 8 },
@@ -3827,7 +3825,7 @@ var fbTestFixture = {
                         typeAnnotation: {
                             type: 'ObjectTypeAnnotation',
                             properties: [{
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'numVal',
@@ -3845,9 +3843,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 22 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [8, 22],
                                 loc: {
                                     start: { line: 1, column: 8 },
@@ -3933,7 +3929,7 @@ var fbTestFixture = {
                             typeAnnotation: {
                                 type: 'ObjectTypeAnnotation',
                                 properties: [{
-                                    type: 'Property',
+                                    type: 'ObjectTypeProperty',
                                     key: {
                                         type: 'Identifier',
                                         name: 'numVal',
@@ -3951,9 +3947,7 @@ var fbTestFixture = {
                                             end: { line: 1, column: 23 }
                                         }
                                     },
-                                    kind: 'init',
-                                    method: false,
-                                    shorthand: false,
+                                    optional: false,
                                     range: [9, 23],
                                     loc: {
                                         start: { line: 1, column: 9 },
@@ -4011,7 +4005,7 @@ var fbTestFixture = {
                         typeAnnotation: {
                             type: 'ObjectTypeAnnotation',
                             properties: [{
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'numVal',
@@ -4029,16 +4023,14 @@ var fbTestFixture = {
                                         end: { line: 1, column: 22 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [8, 22],
                                 loc: {
                                     start: { line: 1, column: 8 },
                                     end: { line: 1, column: 22 }
                                 }
                             }, {
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'strVal',
@@ -4056,9 +4048,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 38 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [24, 38],
                                 loc: {
                                     start: { line: 1, column: 24 },
@@ -4110,7 +4100,7 @@ var fbTestFixture = {
                         typeAnnotation: {
                             type: 'ObjectTypeAnnotation',
                             properties: [{
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'subObj',
@@ -4123,7 +4113,7 @@ var fbTestFixture = {
                                 value: {
                                     type: 'ObjectTypeAnnotation',
                                     properties: [{
-                                        type: 'Property',
+                                        type: 'ObjectTypeProperty',
                                         key: {
                                             type: 'Identifier',
                                             name: 'strVal',
@@ -4141,9 +4131,7 @@ var fbTestFixture = {
                                                 end: { line: 1, column: 31 }
                                             }
                                         },
-                                        kind: 'init',
-                                        method: false,
-                                        shorthand: false,
+                                        optional: false,
                                         range: [17, 31],
                                         loc: {
                                             start: { line: 1, column: 17 },
@@ -4157,9 +4145,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 32 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [8, 32],
                                 loc: {
                                     start: { line: 1, column: 8 },
@@ -4211,7 +4197,7 @@ var fbTestFixture = {
                         typeAnnotation: {
                             type: 'ObjectTypeAnnotation',
                             properties: [{
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'subObj',
@@ -4226,7 +4212,7 @@ var fbTestFixture = {
                                     typeAnnotation: {
                                         type: 'ObjectTypeAnnotation',
                                         properties: [{
-                                            type: 'Property',
+                                            type: 'ObjectTypeProperty',
                                             key: {
                                                 type: 'Identifier',
                                                 name: 'strVal',
@@ -4244,9 +4230,7 @@ var fbTestFixture = {
                                                     end: { line: 1, column: 32 }
                                                 }
                                             },
-                                            kind: 'init',
-                                            method: false,
-                                            shorthand: false,
+                                            optional: false,
                                             range: [18, 32],
                                             loc: {
                                                 start: { line: 1, column: 18 },
@@ -4266,9 +4250,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 33 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [8, 33],
                                 loc: {
                                     start: { line: 1, column: 8 },
@@ -4320,7 +4302,7 @@ var fbTestFixture = {
                         typeAnnotation: {
                             type: 'ObjectTypeAnnotation',
                             properties: [{
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'param1',
@@ -4338,16 +4320,14 @@ var fbTestFixture = {
                                         end: { line: 1, column: 22 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [8, 22],
                                 loc: {
                                     start: { line: 1, column: 8 },
                                     end: { line: 1, column: 22 }
                                 }
                             }, {
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'param2',
@@ -4365,9 +4345,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 38 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [24, 38],
                                 loc: {
                                     start: { line: 1, column: 24 },
@@ -4405,6 +4383,101 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 39 }
+            }
+        },
+        'var a: {param1: number; param2?: string}': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ObjectTypeAnnotation',
+                            properties: [{
+                                type: 'ObjectTypeProperty',
+                                key: {
+                                    type: 'Identifier',
+                                    name: 'param1',
+                                    range: [8, 14],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 14 }
+                                    }
+                                },
+                                value: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [16, 22],
+                                    loc: {
+                                        start: { line: 1, column: 16 },
+                                        end: { line: 1, column: 22 }
+                                    }
+                                },
+                                optional: false,
+                                range: [8, 22],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 22 }
+                                }
+                            }, {
+                                type: 'ObjectTypeProperty',
+                                key: {
+                                    type: 'Identifier',
+                                    name: 'param2',
+                                    range: [24, 30],
+                                    loc: {
+                                        start: { line: 1, column: 24 },
+                                        end: { line: 1, column: 30 }
+                                    }
+                                },
+                                value: {
+                                    type: 'StringTypeAnnotation',
+                                    range: [33, 39],
+                                    loc: {
+                                        start: { line: 1, column: 33 },
+                                        end: { line: 1, column: 39 }
+                                    }
+                                },
+                                optional: true,
+                                range: [24, 39],
+                                loc: {
+                                    start: { line: 1, column: 24 },
+                                    end: { line: 1, column: 39 }
+                                }
+                            }],
+                            indexer: null,
+                            range: [7, 40],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 40 }
+                            }
+                        },
+                        range: [5, 40],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 40 }
+                        }
+                    },
+                    range: [4, 40],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 40 }
+                    }
+                },
+                init: null,
+                range: [4, 40],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 40 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 40],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 40 }
             }
         },
         'var a:Array<number> = [1, 2, 3]': {
@@ -5445,7 +5518,7 @@ var fbTestFixture = {
                         typeAnnotation: {
                             type: 'ObjectTypeAnnotation',
                             properties: [{
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'x',
@@ -5463,9 +5536,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 19 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [10, 19],
                                 loc: {
                                     start: { line: 1, column: 10 },
@@ -5584,7 +5655,7 @@ var fbTestFixture = {
                         typeAnnotation: {
                             type: 'ObjectTypeAnnotation',
                             properties: [{
-                                type: 'Property',
+                                type: 'ObjectTypeProperty',
                                 key: {
                                     type: 'Identifier',
                                     name: 'x',
@@ -5602,9 +5673,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 19 }
                                     }
                                 },
-                                kind: 'init',
-                                method: false,
-                                shorthand: false,
+                                optional: false,
                                 range: [10, 19],
                                 loc: {
                                     start: { line: 1, column: 10 },
@@ -5823,7 +5892,7 @@ var fbTestFixture = {
                     typeAnnotation: {
                         type: 'ObjectTypeAnnotation',
                         properties: [{
-                            type: 'Property',
+                            type: 'ObjectTypeProperty',
                             key: {
                                 type: 'Identifier',
                                 name: 'x',
@@ -5841,9 +5910,7 @@ var fbTestFixture = {
                                     end: { line: 1, column: 29 }
                                 }
                             },
-                            kind: 'init',
-                            method: false,
-                            shorthand: false,
+                            optional: false,
                             range: [20, 29],
                             loc: {
                                 start: { line: 1, column: 20 },
@@ -7071,7 +7138,7 @@ var fbTestFixture = {
             body: {
                 type: 'ObjectTypeAnnotation',
                 properties: [{
-                    type: 'Property',
+                    type: 'ObjectTypeProperty',
                     key: {
                         type: 'Identifier',
                         name: 'foo',
@@ -7100,9 +7167,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 31 }
                         }
                     },
-                    kind: 'init',
-                    method: false,
-                    shorthand: false,
+                    optional: false,
                     range: [14, 31],
                     loc: {
                         start: { line: 1, column: 14 },
@@ -7146,7 +7211,7 @@ var fbTestFixture = {
             body: {
                 type: 'ObjectTypeAnnotation',
                 properties: [{
-                    type: 'Property',
+                    type: 'ObjectTypeProperty',
                     key: {
                         type: 'Identifier',
                         name: 'length',
@@ -7164,9 +7229,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 62 }
                         }
                     },
-                    kind: 'init',
-                    method: false,
-                    shorthand: false,
+                    optional: false,
                     range: [48, 62],
                     loc: {
                         start: { line: 1, column: 48 },

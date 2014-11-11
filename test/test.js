@@ -20045,6 +20045,7 @@ var testFixture = {
                 ObjectPattern: 'ObjectPattern',
                 ObjectTypeAnnotation: 'ObjectTypeAnnotation',
                 ObjectTypeIndexer: 'ObjectTypeIndexer',
+                ObjectTypeProperty: 'ObjectTypeProperty',
                 Program: 'Program',
                 Property: 'Property',
                 ReturnStatement: 'ReturnStatement',

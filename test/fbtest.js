@@ -105,6 +105,7 @@ module.exports = {
         'var a: {subObj: {strVal: string}}',
         'var a: {subObj: ?{strVal: string}}',
         'var a: {param1: number; param2: string}',
+        'var a: {param1: number; param2?: string}',
         'var a:Array<number> = [1, 2, 3]',
         'a = class Foo<T> { }',
         'class Foo<T> {}',
