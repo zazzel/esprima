@@ -85,6 +85,7 @@ module.exports = {
         'function foo(callback: () => number){}',
         'function foo(callback: (_:bool) => number){}',
         'function foo(callback: (_1:bool, _2:string) => number){}',
+        'function foo(callback: (_1:bool, ...foo:Array<number>) => number){}',
         'function foo():number{}',
         'function foo():() => void{}',
         'function foo():(_:bool) => number{}',

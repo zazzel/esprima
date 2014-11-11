@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 123
+var numTests = 124
 var testFixture;
 
 var fbTestFixture = {
@@ -2504,6 +2504,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 33 }
                             }
                         },
+                        rest: null,
                         typeParameters: null,
                         range: [23, 33],
                         loc: {
@@ -2569,6 +2570,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 35 }
                             }
                         },
+                        rest: null,
                         typeParameters: null,
                         range: [23, 35],
                         loc: {
@@ -2659,6 +2661,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 41 }
                             }
                         },
+                        rest: null,
                         typeParameters: null,
                         range: [23, 41],
                         loc: {
@@ -2774,6 +2777,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 53 }
                             }
                         },
+                        rest: null,
                         typeParameters: null,
                         range: [23, 53],
                         loc: {
@@ -2810,6 +2814,147 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 56 }
+            }
+        },
+        'function foo(callback: (_1:bool, ...foo:Array<number>) => number){}': {
+            type: 'FunctionDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'foo',
+                range: [9, 12],
+                loc: {
+                    start: { line: 1, column: 9 },
+                    end: { line: 1, column: 12 }
+                }
+            },
+            params: [{
+                type: 'Identifier',
+                name: 'callback',
+                typeAnnotation: {
+                    type: 'TypeAnnotation',
+                    typeAnnotation: {
+                        type: 'FunctionTypeAnnotation',
+                        params: [{
+                            type: 'FunctionTypeParam',
+                            name: {
+                                type: 'Identifier',
+                                name: '_1',
+                                range: [24, 26],
+                                loc: {
+                                    start: { line: 1, column: 24 },
+                                    end: { line: 1, column: 26 }
+                                }
+                            },
+                            typeAnnotation: {
+                                type: 'BooleanTypeAnnotation',
+                                range: [27, 31],
+                                loc: {
+                                    start: { line: 1, column: 27 },
+                                    end: { line: 1, column: 31 }
+                                }
+                            },
+                            optional: false,
+                            range: [24, 31],
+                            loc: {
+                                start: { line: 1, column: 24 },
+                                end: { line: 1, column: 31 }
+                            }
+                        }],
+                        returnType: {
+                            type: 'NumberTypeAnnotation',
+                            range: [58, 64],
+                            loc: {
+                                start: { line: 1, column: 58 },
+                                end: { line: 1, column: 64 }
+                            }
+                        },
+                        rest: {
+                            type: 'FunctionTypeParam',
+                            name: {
+                                type: 'Identifier',
+                                name: 'foo',
+                                range: [36, 39],
+                                loc: {
+                                    start: { line: 1, column: 36 },
+                                    end: { line: 1, column: 39 }
+                                }
+                            },
+                            typeAnnotation: {
+                                type: 'GenericTypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'Array',
+                                    range: [40, 45],
+                                    loc: {
+                                        start: { line: 1, column: 40 },
+                                        end: { line: 1, column: 45 }
+                                    }
+                                },
+                                typeParameters: {
+                                    type: 'TypeParameterInstantiation',
+                                    params: [{
+                                        type: 'NumberTypeAnnotation',
+                                        range: [46, 52],
+                                        loc: {
+                                            start: { line: 1, column: 46 },
+                                            end: { line: 1, column: 52 }
+                                        }
+                                    }],
+                                    range: [45, 53],
+                                    loc: {
+                                        start: { line: 1, column: 45 },
+                                        end: { line: 1, column: 53 }
+                                    }
+                                },
+                                range: [40, 53],
+                                loc: {
+                                    start: { line: 1, column: 40 },
+                                    end: { line: 1, column: 53 }
+                                }
+                            },
+                            optional: false,
+                            range: [36, 53],
+                            loc: {
+                                start: { line: 1, column: 36 },
+                                end: { line: 1, column: 53 }
+                            }
+                        },
+                        typeParameters: null,
+                        range: [23, 64],
+                        loc: {
+                            start: { line: 1, column: 23 },
+                            end: { line: 1, column: 64 }
+                        }
+                    },
+                    range: [21, 64],
+                    loc: {
+                        start: { line: 1, column: 21 },
+                        end: { line: 1, column: 64 }
+                    }
+                },
+                range: [13, 64],
+                loc: {
+                    start: { line: 1, column: 13 },
+                    end: { line: 1, column: 64 }
+                }
+            }],
+            defaults: [],
+            body: {
+                type: 'BlockStatement',
+                body: [],
+                range: [65, 67],
+                loc: {
+                    start: { line: 1, column: 65 },
+                    end: { line: 1, column: 67 }
+                }
+            },
+            rest: null,
+            generator: false,
+            expression: false,
+            range: [0, 67],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 67 }
             }
         },
         'function foo():number{}': {
@@ -2897,6 +3042,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 25 }
                         }
                     },
+                    rest: null,
                     typeParameters: null,
                     range: [15, 25],
                     loc: {
@@ -2979,6 +3125,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 33 }
                         }
                     },
+                    rest: null,
                     typeParameters: null,
                     range: [15, 33],
                     loc: {
@@ -3061,6 +3208,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 34 }
                         }
                     },
+                    rest: null,
                     typeParameters: null,
                     range: [15, 34],
                     loc: {
@@ -5042,6 +5190,7 @@ var fbTestFixture = {
                                             end: { line: 1, column: 35 }
                                         }
                                     },
+                                    rest: null,
                                     typeParameters: null,
                                     range: [23, 35],
                                     loc: {
@@ -5055,6 +5204,7 @@ var fbTestFixture = {
                                     end: { line: 1, column: 35 }
                                 }
                             },
+                            rest: null,
                             typeParameters: null,
                             range: [8, 35],
                             loc: {
@@ -6942,6 +7092,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 31 }
                             }
                         },
+                        rest: null,
                         typeParameters: null,
                         range: [19, 31],
                         loc: {
@@ -7135,6 +7286,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 20 }
                                     }
                                 },
+                                rest: null,
                                 typeParameters: null,
                                 range: [8, 20],
                                 loc: {
@@ -7152,6 +7304,7 @@ var fbTestFixture = {
                                         end: { line: 1, column: 36 }
                                     }
                                 },
+                                rest: null,
                                 typeParameters: null,
                                 range: [24, 36],
                                 loc: {

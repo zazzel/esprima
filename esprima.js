@@ -1919,11 +1919,12 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createFunctionTypeAnnotation: function (params, returnType, typeParameters) {
+        createFunctionTypeAnnotation: function (params, returnType, rest, typeParameters) {
             return {
                 type: Syntax.FunctionTypeAnnotation,
                 params: params,
                 returnType: returnType,
+                rest: rest,
                 typeParameters: typeParameters
             };
         },
@@ -4098,7 +4099,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parsePrimaryType() {
         var typeIdentifier = null, params = null, returnType = null,
-            marker = markerCreate(),
+            marker = markerCreate(), rest = null,
             typeParameters, token, type, isGroupedType = false;
 
         switch (lookahead.type) {
@@ -4155,6 +4156,11 @@ parseYieldExpression: true, parseAwaitExpression: true
                         expect(',');
                     }
                 }
+
+                if (match('...')) {
+                    lex();
+                    rest = parseFunctionTypeParam();
+                }
                 expect(')');
 
                 expect('=>');
@@ -4164,6 +4170,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 return markerApply(marker, delegate.createFunctionTypeAnnotation(
                     params,
                     returnType,
+                    rest,
                     null
                 ));
             }
