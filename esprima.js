@@ -2411,13 +2411,14 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createClassExpression: function (id, superClass, body, typeParameters) {
+        createClassExpression: function (id, superClass, body, typeParameters, superTypeParameters) {
             return {
                 type: Syntax.ClassExpression,
                 id: id,
                 superClass: superClass,
                 body: body,
-                typeParameters: typeParameters
+                typeParameters: typeParameters,
+                superTypeParameters: superTypeParameters
             };
         },
 
@@ -5779,8 +5780,8 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseClassExpression() {
-        var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
-            typeParameters;
+        var id, previousYieldAllowed, superClass = null, superTypeParameters,
+            marker = markerCreate(), typeParameters;
 
         expectKeyword('class');
 
@@ -5796,16 +5797,25 @@ parseYieldExpression: true, parseAwaitExpression: true
             expectKeyword('extends');
             previousYieldAllowed = state.yieldAllowed;
             state.yieldAllowed = false;
-            superClass = parseAssignmentExpression();
+            superClass = parseLeftHandSideExpression();
+            if (match('<')) {
+                superTypeParameters = parseTypeParameterInstantiation();
+            }
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        return markerApply(marker, delegate.createClassExpression(id, superClass, parseClassBody(), typeParameters));
+        return markerApply(marker, delegate.createClassExpression(
+            id,
+            superClass,
+            parseClassBody(),
+            typeParameters,
+            superTypeParameters
+        ));
     }
 
     function parseClassDeclaration() {
-        var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
-            typeParameters, superTypeParameters;
+        var id, previousYieldAllowed, superClass = null, superTypeParameters,
+            marker = markerCreate(), typeParameters;
 
         expectKeyword('class');
 
@@ -5819,11 +5829,20 @@ parseYieldExpression: true, parseAwaitExpression: true
             expectKeyword('extends');
             previousYieldAllowed = state.yieldAllowed;
             state.yieldAllowed = false;
-            superClass = parseAssignmentExpression();
+            superClass = parseLeftHandSideExpression();
+            if (match('<')) {
+                superTypeParameters = parseTypeParameterInstantiation();
+            }
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        return markerApply(marker, delegate.createClassDeclaration(id, superClass, parseClassBody(), typeParameters, superTypeParameters));
+        return markerApply(marker, delegate.createClassDeclaration(
+            id,
+            superClass,
+            parseClassBody(),
+            typeParameters,
+            superTypeParameters
+        ));
     }
 
     // 15 Program

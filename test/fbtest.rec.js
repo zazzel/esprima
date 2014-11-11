@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 126
+var numTests = 128
 var testFixture;
 
 var fbTestFixture = {
@@ -4653,6 +4653,110 @@ var fbTestFixture = {
                 end: { line: 1, column: 20 }
             }
         },
+        'a = class Foo<T> extends Bar<T> { }': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'AssignmentExpression',
+                operator: '=',
+                left: {
+                    type: 'Identifier',
+                    name: 'a',
+                    range: [0, 1],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 1 }
+                    }
+                },
+                right: {
+                    type: 'ClassExpression',
+                    id: {
+                        type: 'Identifier',
+                        name: 'Foo',
+                        range: [10, 13],
+                        loc: {
+                            start: { line: 1, column: 10 },
+                            end: { line: 1, column: 13 }
+                        }
+                    },
+                    superClass: {
+                        type: 'Identifier',
+                        name: 'Bar',
+                        range: [25, 28],
+                        loc: {
+                            start: { line: 1, column: 25 },
+                            end: { line: 1, column: 28 }
+                        }
+                    },
+                    body: {
+                        type: 'ClassBody',
+                        body: [],
+                        range: [32, 35],
+                        loc: {
+                            start: { line: 1, column: 32 },
+                            end: { line: 1, column: 35 }
+                        }
+                    },
+                    typeParameters: {
+                        type: 'TypeParameterDeclaration',
+                        params: [{
+                            type: 'Identifier',
+                            name: 'T',
+                            range: [14, 15],
+                            loc: {
+                                start: { line: 1, column: 14 },
+                                end: { line: 1, column: 15 }
+                            }
+                        }],
+                        range: [13, 16],
+                        loc: {
+                            start: { line: 1, column: 13 },
+                            end: { line: 1, column: 16 }
+                        }
+                    },
+                    superTypeParameters: {
+                        type: 'TypeParameterInstantiation',
+                        params: [{
+                            type: 'GenericTypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'T',
+                                range: [29, 30],
+                                loc: {
+                                    start: { line: 1, column: 29 },
+                                    end: { line: 1, column: 30 }
+                                }
+                            },
+                            typeParameters: null,
+                            range: [29, 30],
+                            loc: {
+                                start: { line: 1, column: 29 },
+                                end: { line: 1, column: 30 }
+                            }
+                        }],
+                        range: [28, 31],
+                        loc: {
+                            start: { line: 1, column: 28 },
+                            end: { line: 1, column: 31 }
+                        }
+                    },
+                    range: [4, 35],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 35 }
+                    }
+                },
+                range: [0, 35],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 35 }
+                }
+            },
+            range: [0, 35],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 35 }
+            }
+        },
         'class Foo<T> {}': {
             type: 'ClassDeclaration',
             id: {
@@ -4695,6 +4799,84 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 15 }
+            }
+        },
+        'class Foo<T> extends Bar<T> { }': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: {
+                type: 'Identifier',
+                name: 'Bar',
+                range: [21, 24],
+                loc: {
+                    start: { line: 1, column: 21 },
+                    end: { line: 1, column: 24 }
+                }
+            },
+            body: {
+                type: 'ClassBody',
+                body: [],
+                range: [28, 31],
+                loc: {
+                    start: { line: 1, column: 28 },
+                    end: { line: 1, column: 31 }
+                }
+            },
+            typeParameters: {
+                type: 'TypeParameterDeclaration',
+                params: [{
+                    type: 'Identifier',
+                    name: 'T',
+                    range: [10, 11],
+                    loc: {
+                        start: { line: 1, column: 10 },
+                        end: { line: 1, column: 11 }
+                    }
+                }],
+                range: [9, 12],
+                loc: {
+                    start: { line: 1, column: 9 },
+                    end: { line: 1, column: 12 }
+                }
+            },
+            superTypeParameters: {
+                type: 'TypeParameterInstantiation',
+                params: [{
+                    type: 'GenericTypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'T',
+                        range: [25, 26],
+                        loc: {
+                            start: { line: 1, column: 25 },
+                            end: { line: 1, column: 26 }
+                        }
+                    },
+                    typeParameters: null,
+                    range: [25, 26],
+                    loc: {
+                        start: { line: 1, column: 25 },
+                        end: { line: 1, column: 26 }
+                    }
+                }],
+                range: [24, 27],
+                loc: {
+                    start: { line: 1, column: 24 },
+                    end: { line: 1, column: 27 }
+                }
+            },
+            range: [0, 31],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 31 }
             }
         },
         'class Foo<T> { bar<U>():number { return 42; }}': {
