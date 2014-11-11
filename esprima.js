@@ -1912,6 +1912,13 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
+        createTypeAnnotation: function (typeAnnotation) {
+            return {
+                type: Syntax.TypeAnnotation,
+                typeAnnotation: typeAnnotation
+            };
+        },
+
         createFunctionTypeAnnotation: function (params, returnType, typeParameters) {
             return {
                 type: Syntax.FunctionTypeAnnotation,
@@ -4243,7 +4250,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         expect(':');
         type = parseType();
 
-        return markerApply(marker, type);
+        return markerApply(marker, delegate.createTypeAnnotation(type));
     }
 
     function parseVariableIdentifier() {
