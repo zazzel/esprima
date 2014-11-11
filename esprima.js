@@ -5890,7 +5890,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             expectKeyword('extends');
             previousYieldAllowed = state.yieldAllowed;
             state.yieldAllowed = false;
-            superClass = parseLeftHandSideExpression();
+            superClass = parseLeftHandSideExpressionAllowCall();
             if (match('<')) {
                 superTypeParameters = parseTypeParameterInstantiation();
             }
@@ -5927,7 +5927,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             expectKeyword('extends');
             previousYieldAllowed = state.yieldAllowed;
             state.yieldAllowed = false;
-            superClass = parseLeftHandSideExpression();
+            superClass = parseLeftHandSideExpressionAllowCall();
             if (match('<')) {
                 superTypeParameters = parseTypeParameterInstantiation();
             }

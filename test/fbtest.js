@@ -114,6 +114,7 @@ module.exports = {
         'a = class Foo<T> extends Bar<T> { }',
         'class Foo<T> {}',
         'class Foo<T> extends Bar<T> { }',
+        'class Foo<T> extends mixin(Bar) { }',
         'class Foo<T> { bar<U>():number { return 42; }}',
         'class Foo { "bar"<T>() { } }',
         'function foo(requiredParam, optParam?) {}',
