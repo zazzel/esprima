@@ -6060,10 +6060,10 @@ var fbTestFixture = {
                             end: { line: 1, column: 6 }
                         }
                     }],
-                    range: [4, 7],
+                    range: [4, 22],
                     loc: {
                         start: { line: 1, column: 4 },
-                        end: { line: 1, column: 7 }
+                        end: { line: 1, column: 22 }
                     },
                     typeAnnotation: {
                         type: 'TypeAnnotation',
@@ -6197,10 +6197,10 @@ var fbTestFixture = {
                             end: { line: 1, column: 6 }
                         }
                     }],
-                    range: [4, 7],
+                    range: [4, 21],
                     loc: {
                         start: { line: 1, column: 4 },
-                        end: { line: 1, column: 7 }
+                        end: { line: 1, column: 21 }
                     },
                     typeAnnotation: {
                         type: 'TypeAnnotation',
@@ -6313,10 +6313,10 @@ var fbTestFixture = {
                             end: { line: 1, column: 6 }
                         }
                     }],
-                    range: [4, 7],
+                    range: [4, 22],
                     loc: {
                         start: { line: 1, column: 4 },
-                        end: { line: 1, column: 7 }
+                        end: { line: 1, column: 22 }
                     },
                     typeAnnotation: {
                         type: 'TypeAnnotation',
@@ -6434,10 +6434,10 @@ var fbTestFixture = {
                         end: { line: 1, column: 15 }
                     }
                 }],
-                range: [13, 16],
+                range: [13, 32],
                 loc: {
                     start: { line: 1, column: 13 },
-                    end: { line: 1, column: 16 }
+                    end: { line: 1, column: 32 }
                 },
                 typeAnnotation: {
                     type: 'TypeAnnotation',
@@ -6524,10 +6524,10 @@ var fbTestFixture = {
                         end: { line: 1, column: 15 }
                     }
                 }],
-                range: [13, 16],
+                range: [13, 31],
                 loc: {
                     start: { line: 1, column: 13 },
-                    end: { line: 1, column: 16 }
+                    end: { line: 1, column: 31 }
                 },
                 typeAnnotation: {
                     type: 'TypeAnnotation',

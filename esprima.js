@@ -4362,18 +4362,21 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseVariableDeclaration(kind) {
         var id,
             marker = markerCreate(),
-            init = null;
+            init = null,
+            typeAnnotationMaker = markerCreate();
         if (match('{')) {
             id = parseObjectInitialiser();
             reinterpretAsAssignmentBindingPattern(id);
             if (match(':')) {
                 id.typeAnnotation = parseTypeAnnotation();
+                markerApply(typeAnnotationMaker, id);
             }
         } else if (match('[')) {
             id = parseArrayInitialiser();
             reinterpretAsAssignmentBindingPattern(id);
             if (match(':')) {
                 id.typeAnnotation = parseTypeAnnotation();
+                markerApply(typeAnnotationMaker, id);
             }
         } else {
             id = state.allowKeyword ? parseNonComputedProperty() : parseTypeAnnotatableIdentifier();
@@ -5359,7 +5362,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseParam(options) {
-        var token, rest, param, def;
+        var marker, token, rest, param, def;
 
         token = lookahead;
         if (token.value === '...') {
@@ -5368,12 +5371,15 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('[')) {
+            marker = markerCreate();
             param = parseArrayInitialiser();
             reinterpretAsDestructuredParameter(options, param);
             if (match(':')) {
                 param.typeAnnotation = parseTypeAnnotation();
+                markerApply(marker, param);
             }
         } else if (match('{')) {
+            marker = markerCreate();
             if (rest) {
                 throwError({}, Messages.ObjectPatternAsRestParameter);
             }
@@ -5381,6 +5387,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             reinterpretAsDestructuredParameter(options, param);
             if (match(':')) {
                 param.typeAnnotation = parseTypeAnnotation();
+                markerApply(marker, param);
             }
         } else {
             param =
