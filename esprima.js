@@ -160,6 +160,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         FunctionDeclaration: 'FunctionDeclaration',
         FunctionExpression: 'FunctionExpression',
         FunctionTypeAnnotation: 'FunctionTypeAnnotation',
+        FunctionTypeParam: 'FunctionTypeParam',
         GenericTypeAnnotation: 'GenericTypeAnnotation',
         Identifier: 'Identifier',
         IfStatement: 'IfStatement',
@@ -1917,6 +1918,15 @@ parseYieldExpression: true, parseAwaitExpression: true
                 params: params,
                 returnType: returnType,
                 typeParameters: typeParameters
+            };
+        },
+
+        createFunctionTypeParam: function (name, typeAnnotation, optional) {
+            return {
+                type: Syntax.FunctionTypeParam,
+                name: name,
+                typeAnnotation: typeAnnotation,
+                optional: optional
             };
         },
 
@@ -4063,6 +4073,22 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
+    function parseFunctionTypeParam() {
+        var marker = markerCreate(), name, optional = false, typeAnnotation;
+        name = parseVariableIdentifier();
+        if (match('?')) {
+            lex();
+            optional = true;
+        }
+        expect(':');
+        typeAnnotation = parseType();
+        return markerApply(marker, delegate.createFunctionTypeParam(
+            name,
+            typeAnnotation,
+            optional
+        ));
+    }
+
     function parsePrimaryType() {
         var typeIdentifier = null, params = null, returnType = null,
             marker = markerCreate(),
@@ -4117,10 +4143,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
                 params = [];
                 while (lookahead.type === Token.Identifier) {
-                    params.push(parseTypeAnnotatableIdentifier(
-                        true, /* requireTypeAnnotation */
-                        true /* canBeOptionalParam */
-                    ));
+                    params.push(parseFunctionTypeParam());
                     if (!match(')')) {
                         expect(',');
                     }

@@ -88,6 +88,7 @@ module.exports = {
         'function foo():number{}',
         'function foo():() => void{}',
         'function foo():(_:bool) => number{}',
+        'function foo():(_?:bool) => number{}',
         'function foo(): {} {}',
         'function foo<T>() {}',
         'function foo<T,S>() {}',

@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 122
+var numTests = 123
 var testFixture;
 
 var fbTestFixture = {
@@ -2552,16 +2552,25 @@ var fbTestFixture = {
                 typeAnnotation: {
                     type: 'FunctionTypeAnnotation',
                     params: [{
-                        type: 'Identifier',
-                        name: '_',
+                        type: 'FunctionTypeParam',
+                        name: {
+                            type: 'Identifier',
+                            name: '_',
+                            range: [24, 25],
+                            loc: {
+                                start: { line: 1, column: 24 },
+                                end: { line: 1, column: 25 }
+                            }
+                        },
                         typeAnnotation: {
                             type: 'BooleanTypeAnnotation',
-                            range: [25, 30],
+                            range: [26, 30],
                             loc: {
-                                start: { line: 1, column: 25 },
+                                start: { line: 1, column: 26 },
                                 end: { line: 1, column: 30 }
                             }
                         },
+                        optional: false,
                         range: [24, 30],
                         loc: {
                             start: { line: 1, column: 24 },
@@ -2625,32 +2634,50 @@ var fbTestFixture = {
                 typeAnnotation: {
                     type: 'FunctionTypeAnnotation',
                     params: [{
-                        type: 'Identifier',
-                        name: '_1',
+                        type: 'FunctionTypeParam',
+                        name: {
+                            type: 'Identifier',
+                            name: '_1',
+                            range: [24, 26],
+                            loc: {
+                                start: { line: 1, column: 24 },
+                                end: { line: 1, column: 26 }
+                            }
+                        },
                         typeAnnotation: {
                             type: 'BooleanTypeAnnotation',
-                            range: [26, 31],
+                            range: [27, 31],
                             loc: {
-                                start: { line: 1, column: 26 },
+                                start: { line: 1, column: 27 },
                                 end: { line: 1, column: 31 }
                             }
                         },
+                        optional: false,
                         range: [24, 31],
                         loc: {
                             start: { line: 1, column: 24 },
                             end: { line: 1, column: 31 }
                         }
                     }, {
-                        type: 'Identifier',
-                        name: '_2',
+                        type: 'FunctionTypeParam',
+                        name: {
+                            type: 'Identifier',
+                            name: '_2',
+                            range: [33, 35],
+                            loc: {
+                                start: { line: 1, column: 33 },
+                                end: { line: 1, column: 35 }
+                            }
+                        },
                         typeAnnotation: {
                             type: 'StringTypeAnnotation',
-                            range: [35, 42],
+                            range: [36, 42],
                             loc: {
-                                start: { line: 1, column: 35 },
+                                start: { line: 1, column: 36 },
                                 end: { line: 1, column: 42 }
                             }
                         },
+                        optional: false,
                         range: [33, 42],
                         loc: {
                             start: { line: 1, column: 33 },
@@ -2813,16 +2840,25 @@ var fbTestFixture = {
             returnType: {
                 type: 'FunctionTypeAnnotation',
                 params: [{
-                    type: 'Identifier',
-                    name: '_',
+                    type: 'FunctionTypeParam',
+                    name: {
+                        type: 'Identifier',
+                        name: '_',
+                        range: [16, 17],
+                        loc: {
+                            start: { line: 1, column: 16 },
+                            end: { line: 1, column: 17 }
+                        }
+                    },
                     typeAnnotation: {
                         type: 'BooleanTypeAnnotation',
-                        range: [17, 22],
+                        range: [18, 22],
                         loc: {
-                            start: { line: 1, column: 17 },
+                            start: { line: 1, column: 18 },
                             end: { line: 1, column: 22 }
                         }
                     },
+                    optional: false,
                     range: [16, 22],
                     loc: {
                         start: { line: 1, column: 16 },
@@ -2848,6 +2884,80 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 35 }
+            }
+        },
+        'function foo():(_?:bool) => number{}': {
+            type: 'FunctionDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'foo',
+                range: [9, 12],
+                loc: {
+                    start: { line: 1, column: 9 },
+                    end: { line: 1, column: 12 }
+                }
+            },
+            params: [],
+            defaults: [],
+            body: {
+                type: 'BlockStatement',
+                body: [],
+                range: [34, 36],
+                loc: {
+                    start: { line: 1, column: 34 },
+                    end: { line: 1, column: 36 }
+                }
+            },
+            rest: null,
+            generator: false,
+            expression: false,
+            returnType: {
+                type: 'FunctionTypeAnnotation',
+                params: [{
+                    type: 'FunctionTypeParam',
+                    name: {
+                        type: 'Identifier',
+                        name: '_',
+                        range: [16, 17],
+                        loc: {
+                            start: { line: 1, column: 16 },
+                            end: { line: 1, column: 17 }
+                        }
+                    },
+                    typeAnnotation: {
+                        type: 'BooleanTypeAnnotation',
+                        range: [19, 23],
+                        loc: {
+                            start: { line: 1, column: 19 },
+                            end: { line: 1, column: 23 }
+                        }
+                    },
+                    optional: true,
+                    range: [16, 23],
+                    loc: {
+                        start: { line: 1, column: 16 },
+                        end: { line: 1, column: 23 }
+                    }
+                }],
+                returnType: {
+                    type: 'NumberTypeAnnotation',
+                    range: [28, 34],
+                    loc: {
+                        start: { line: 1, column: 28 },
+                        end: { line: 1, column: 34 }
+                    }
+                },
+                typeParameters: null,
+                range: [14, 34],
+                loc: {
+                    start: { line: 1, column: 14 },
+                    end: { line: 1, column: 34 }
+                }
+            },
+            range: [0, 36],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 36 }
             }
         },
         'function foo(): {} {}': {
