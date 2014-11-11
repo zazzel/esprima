@@ -170,6 +170,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ImportNamespaceSpecifier: 'ImportNamespaceSpecifier',
         ImportSpecifier: 'ImportSpecifier',
         InterfaceDeclaration: 'InterfaceDeclaration',
+        InterfaceExtends: 'InterfaceExtends',
         IntersectionTypeAnnotation: 'IntersectionTypeAnnotation',
         LabeledStatement: 'LabeledStatement',
         Literal: 'Literal',
@@ -2061,12 +2062,21 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createInterface: function (id, body, extended) {
+        createInterface: function (id, typeParameters, body, extended) {
             return {
                 type: Syntax.InterfaceDeclaration,
                 id: id,
+                typeParameters: typeParameters,
                 body: body,
                 extends: extended
+            };
+        },
+
+        createInterfaceExtends: function (id, typeParameters) {
+            return {
+                type: Syntax.InterfaceExtends,
+                id: id,
+                typeParameters: typeParameters
             };
         },
 
@@ -6807,17 +6817,35 @@ parseYieldExpression: true, parseAwaitExpression: true
         return markerApply(marker, delegate.createTypeAlias(left, right));
     }
 
+    function parseInterfaceExtends() {
+        var marker = markerCreate(), id, typeParameters = null;
+
+        id = parseVariableIdentifier();
+        if (match('<')) {
+            typeParameters = parseTypeParameterInstantiation();
+        }
+
+        return markerApply(marker, delegate.createInterfaceExtends(
+            id,
+            typeParameters
+        ));
+    }
+
     function parseInterface() {
-        var body, bodyMarker, extended = [], id, marker = markerCreate();
+        var body, bodyMarker, extended = [], id, marker = markerCreate(),
+            typeParameters = null;
 
         expectContextualKeyword('interface');
-        id = parseGenericType();
+        id = parseVariableIdentifier();
+        if (match('<')) {
+            typeParameters = parseTypeParameterDeclaration();
+        }
 
         if (matchKeyword('extends')) {
             expectKeyword('extends');
 
             while (index < length) {
-                extended.push(parseGenericType());
+                extended.push(parseInterfaceExtends());
                 if (!match(',')) {
                     break;
                 }
@@ -6830,6 +6858,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         return markerApply(marker, delegate.createInterface(
             id,
+            typeParameters,
             body,
             extended
         ));

@@ -7441,23 +7441,15 @@ var fbTestFixture = {
         'interface A {}': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'GenericTypeAnnotation',
-                id: {
-                    type: 'Identifier',
-                    name: 'A',
-                    range: [10, 11],
-                    loc: {
-                        start: { line: 1, column: 10 },
-                        end: { line: 1, column: 11 }
-                    }
-                },
-                typeParameters: null,
+                type: 'Identifier',
+                name: 'A',
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
                     end: { line: 1, column: 11 }
                 }
             },
+            typeParameters: null,
             body: {
                 type: 'ObjectTypeAnnotation',
                 properties: [],
@@ -7478,23 +7470,15 @@ var fbTestFixture = {
         'interface A extends B {}': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'GenericTypeAnnotation',
-                id: {
-                    type: 'Identifier',
-                    name: 'A',
-                    range: [10, 11],
-                    loc: {
-                        start: { line: 1, column: 10 },
-                        end: { line: 1, column: 11 }
-                    }
-                },
-                typeParameters: null,
+                type: 'Identifier',
+                name: 'A',
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
                     end: { line: 1, column: 11 }
                 }
             },
+            typeParameters: null,
             body: {
                 type: 'ObjectTypeAnnotation',
                 properties: [],
@@ -7506,7 +7490,7 @@ var fbTestFixture = {
                 }
             },
             'extends': [{
-                type: 'GenericTypeAnnotation',
+                type: 'InterfaceExtends',
                 id: {
                     type: 'Identifier',
                     name: 'B',
@@ -7532,45 +7516,28 @@ var fbTestFixture = {
         'interface A<T> extends B<T>, C<T> {}': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'GenericTypeAnnotation',
-                id: {
-                    type: 'Identifier',
-                    name: 'A',
-                    range: [10, 11],
-                    loc: {
-                        start: { line: 1, column: 10 },
-                        end: { line: 1, column: 11 }
-                    }
-                },
-                typeParameters: {
-                    type: 'TypeParameterInstantiation',
-                    params: [{
-                        type: 'GenericTypeAnnotation',
-                        id: {
-                            type: 'Identifier',
-                            name: 'T',
-                            range: [12, 13],
-                            loc: {
-                                start: { line: 1, column: 12 },
-                                end: { line: 1, column: 13 }
-                            }
-                        },
-                        typeParameters: null,
-                        range: [12, 13],
-                        loc: {
-                            start: { line: 1, column: 12 },
-                            end: { line: 1, column: 13 }
-                        }
-                    }],
-                    range: [11, 14],
-                    loc: {
-                        start: { line: 1, column: 11 },
-                        end: { line: 1, column: 14 }
-                    }
-                },
-                range: [10, 14],
+                type: 'Identifier',
+                name: 'A',
+                range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
+                    end: { line: 1, column: 11 }
+                }
+            },
+            typeParameters: {
+                type: 'TypeParameterDeclaration',
+                params: [{
+                    type: 'Identifier',
+                    name: 'T',
+                    range: [12, 13],
+                    loc: {
+                        start: { line: 1, column: 12 },
+                        end: { line: 1, column: 13 }
+                    }
+                }],
+                range: [11, 14],
+                loc: {
+                    start: { line: 1, column: 11 },
                     end: { line: 1, column: 14 }
                 }
             },
@@ -7585,7 +7552,7 @@ var fbTestFixture = {
                 }
             },
             'extends': [{
-                type: 'GenericTypeAnnotation',
+                type: 'InterfaceExtends',
                 id: {
                     type: 'Identifier',
                     name: 'B',
@@ -7627,7 +7594,7 @@ var fbTestFixture = {
                     end: { line: 1, column: 27 }
                 }
             }, {
-                type: 'GenericTypeAnnotation',
+                type: 'InterfaceExtends',
                 id: {
                     type: 'Identifier',
                     name: 'C',
@@ -7678,23 +7645,15 @@ var fbTestFixture = {
         'interface A { foo: () => number; }': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'GenericTypeAnnotation',
-                id: {
-                    type: 'Identifier',
-                    name: 'A',
-                    range: [10, 11],
-                    loc: {
-                        start: { line: 1, column: 10 },
-                        end: { line: 1, column: 11 }
-                    }
-                },
-                typeParameters: null,
+                type: 'Identifier',
+                name: 'A',
                 range: [10, 11],
                 loc: {
                     start: { line: 1, column: 10 },
                     end: { line: 1, column: 11 }
                 }
             },
+            typeParameters: null,
             body: {
                 type: 'ObjectTypeAnnotation',
                 properties: [{
@@ -7751,23 +7710,15 @@ var fbTestFixture = {
         'interface Dictionary { [index: string]: string; length: number; }': {
             type: 'InterfaceDeclaration',
             id: {
-                type: 'GenericTypeAnnotation',
-                id: {
-                    type: 'Identifier',
-                    name: 'Dictionary',
-                    range: [10, 20],
-                    loc: {
-                        start: { line: 1, column: 10 },
-                        end: { line: 1, column: 20 }
-                    }
-                },
-                typeParameters: null,
+                type: 'Identifier',
+                name: 'Dictionary',
                 range: [10, 20],
                 loc: {
                     start: { line: 1, column: 10 },
                     end: { line: 1, column: 20 }
                 }
             },
+            typeParameters: null,
             body: {
                 type: 'ObjectTypeAnnotation',
                 properties: [{
