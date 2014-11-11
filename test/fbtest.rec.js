@@ -2916,7 +2916,7 @@ var fbTestFixture = {
             rest: null,
             generator: false,
             expression: false,
-            parametricType: {
+            typeParameters: {
                 type: 'TypeParameterDeclaration',
                 params: [{
                     type: 'Identifier',
@@ -2964,7 +2964,7 @@ var fbTestFixture = {
             rest: null,
             generator: false,
             expression: false,
-            parametricType: {
+            typeParameters: {
                 type: 'TypeParameterDeclaration',
                 params: [{
                     type: 'Identifier',
@@ -3026,7 +3026,7 @@ var fbTestFixture = {
                     rest: null,
                     generator: false,
                     expression: false,
-                    parametricType: {
+                    typeParameters: {
                         type: 'TypeParameterDeclaration',
                         params: [{
                             type: 'Identifier',
@@ -4063,7 +4063,7 @@ var fbTestFixture = {
                             end: { line: 1, column: 20 }
                         }
                     },
-                    parametricType: {
+                    typeParameters: {
                         type: 'TypeParameterDeclaration',
                         params: [{
                             type: 'Identifier',
@@ -4119,7 +4119,7 @@ var fbTestFixture = {
                     end: { line: 1, column: 15 }
                 }
             },
-            parametricType: {
+            typeParameters: {
                 type: 'TypeParameterDeclaration',
                 params: [{
                     type: 'Identifier',
@@ -4209,7 +4209,7 @@ var fbTestFixture = {
                                 end: { line: 1, column: 30 }
                             }
                         },
-                        parametricType: {
+                        typeParameters: {
                             type: 'TypeParameterDeclaration',
                             params: [{
                                 type: 'Identifier',
@@ -4246,7 +4246,7 @@ var fbTestFixture = {
                     end: { line: 1, column: 46 }
                 }
             },
-            parametricType: {
+            typeParameters: {
                 type: 'TypeParameterDeclaration',
                 params: [{
                     type: 'Identifier',
@@ -4312,7 +4312,7 @@ var fbTestFixture = {
                         rest: null,
                         generator: false,
                         expression: false,
-                        parametricType: {
+                        typeParameters: {
                             type: 'TypeParameterDeclaration',
                             params: [{
                                 type: 'Identifier',

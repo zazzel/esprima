@@ -1854,7 +1854,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         },
 
         createFunctionDeclaration: function (id, params, defaults, body, rest, generator, expression,
-                                             isAsync, returnType, parametricType) {
+                                             isAsync, returnType, typeParameters) {
             var funDecl = {
                 type: Syntax.FunctionDeclaration,
                 id: id,
@@ -1865,7 +1865,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 generator: generator,
                 expression: expression,
                 returnType: returnType,
-                parametricType: parametricType
+                typeParameters: typeParameters
             };
 
             if (isAsync) {
@@ -1876,7 +1876,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         },
 
         createFunctionExpression: function (id, params, defaults, body, rest, generator, expression,
-                                            isAsync, returnType, parametricType) {
+                                            isAsync, returnType, typeParameters) {
             var funExpr = {
                 type: Syntax.FunctionExpression,
                 id: id,
@@ -1887,7 +1887,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 generator: generator,
                 expression: expression,
                 returnType: returnType,
-                parametricType: parametricType
+                typeParameters: typeParameters
             };
 
             if (isAsync) {
@@ -2381,24 +2381,24 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createClassExpression: function (id, superClass, body, parametricType) {
+        createClassExpression: function (id, superClass, body, typeParameters) {
             return {
                 type: Syntax.ClassExpression,
                 id: id,
                 superClass: superClass,
                 body: body,
-                parametricType: parametricType
+                typeParameters: typeParameters
             };
         },
 
-        createClassDeclaration: function (id, superClass, body, parametricType, superParametricType) {
+        createClassDeclaration: function (id, superClass, body, typeParameters, superTypeParameters) {
             return {
                 type: Syntax.ClassDeclaration,
                 id: id,
                 superClass: superClass,
                 body: body,
-                parametricType: parametricType,
-                superParametricType: superParametricType
+                typeParameters: typeParameters,
+                superTypeParameters: superTypeParameters
             };
         },
 
@@ -2816,7 +2816,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             body.type !== Syntax.BlockStatement,
             options.async,
             options.returnType,
-            options.parametricType
+            options.typeParameters
         ));
     }
 
@@ -2840,7 +2840,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             generator: options.generator,
             async: options.async,
             returnType: tmp.returnType,
-            parametricType: options.parametricType
+            typeParameters: options.typeParameters
         });
 
         strict = previousStrict;
@@ -4066,7 +4066,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parsePrimaryType() {
         var typeIdentifier = null, params = null, returnType = null,
             marker = markerCreate(),
-            parametricType, token, type, isGroupedType = false;
+            typeParameters, token, type, isGroupedType = false;
 
         switch (lookahead.type) {
         case Token.Identifier:
@@ -5356,7 +5356,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseFunctionDeclaration() {
         var id, body, token, tmp, firstRestricted, message, generator, isAsync,
             previousStrict, previousYieldAllowed, previousAwaitAllowed,
-            marker = markerCreate(), parametricType;
+            marker = markerCreate(), typeParameters;
 
         isAsync = false;
         if (matchAsync()) {
@@ -5377,7 +5377,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseTypeParameterDeclaration();
+            typeParameters = parseTypeParameterDeclaration();
         }
 
         if (strict) {
@@ -5430,7 +5430,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 false,
                 isAsync,
                 tmp.returnType,
-                parametricType
+                typeParameters
             )
         );
     }
@@ -5438,7 +5438,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseFunctionExpression() {
         var token, id = null, firstRestricted, message, tmp, body, generator, isAsync,
             previousStrict, previousYieldAllowed, previousAwaitAllowed,
-            marker = markerCreate(), parametricType;
+            marker = markerCreate(), typeParameters;
 
         isAsync = false;
         if (matchAsync()) {
@@ -5476,7 +5476,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
 
             if (match('<')) {
-                parametricType = parseTypeParameterDeclaration();
+                typeParameters = parseTypeParameterDeclaration();
             }
         }
 
@@ -5516,7 +5516,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 false,
                 isAsync,
                 tmp.returnType,
-                parametricType
+                typeParameters
             )
         );
     }
@@ -5548,8 +5548,8 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseMethodDefinition(existingPropNames) {
         var token, key, param, propType, isValidDuplicateProp = false,
-            isAsync, marker = markerCreate(), token2, parametricType,
-            parametricTypeMarker, annotationMarker;
+            isAsync, marker = markerCreate(), token2, typeParameters,
+            annotationMarker;
 
         if (lookahead.value === 'static') {
             propType = ClassPropertyType.static;
@@ -5569,7 +5569,6 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         token = lookahead;
-        //parametricTypeMarker = markerCreate();
         key = parseObjectPropertyKey();
 
         if (token.value === 'get' && !match('(')) {
@@ -5636,7 +5635,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('<')) {
-            parametricType = parseTypeParameterDeclaration();
+            typeParameters = parseTypeParameterDeclaration();
         }
 
         isAsync = token.value === 'async' && !match('(');
@@ -5660,7 +5659,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             parsePropertyMethodFunction({
                 generator: false,
                 async: isAsync,
-                parametricType: parametricType
+                typeParameters: typeParameters
             })
         ));
     }
@@ -5718,7 +5717,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseClassExpression() {
         var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
-            parametricType;
+            typeParameters;
 
         expectKeyword('class');
 
@@ -5727,7 +5726,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('<')) {
-            parametricType = parseTypeParameterDeclaration();
+            typeParameters = parseTypeParameterDeclaration();
         }
 
         if (matchKeyword('extends')) {
@@ -5738,19 +5737,19 @@ parseYieldExpression: true, parseAwaitExpression: true
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        return markerApply(marker, delegate.createClassExpression(id, superClass, parseClassBody(), parametricType));
+        return markerApply(marker, delegate.createClassExpression(id, superClass, parseClassBody(), typeParameters));
     }
 
     function parseClassDeclaration() {
         var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
-            parametricType, superParametricType;
+            typeParameters, superTypeParameters;
 
         expectKeyword('class');
 
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseTypeParameterDeclaration();
+            typeParameters = parseTypeParameterDeclaration();
         }
 
         if (matchKeyword('extends')) {
@@ -5761,7 +5760,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        return markerApply(marker, delegate.createClassDeclaration(id, superClass, parseClassBody(), parametricType, superParametricType));
+        return markerApply(marker, delegate.createClassDeclaration(id, superClass, parseClassBody(), typeParameters, superTypeParameters));
     }
 
     // 15 Program
