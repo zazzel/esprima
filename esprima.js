@@ -2054,10 +2054,11 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createTypeAlias: function (left, right) {
+        createTypeAlias: function (id, typeParameters, right) {
             return {
                 type: Syntax.TypeAlias,
-                left: left,
+                id: id,
+                typeParameters: typeParameters,
                 right: right
             };
         },
@@ -6815,13 +6816,16 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseTypeAlias() {
-        var left, marker = markerCreate(), right;
+        var id, marker = markerCreate(), typeParameters = null, right;
         expectContextualKeyword('type');
-        left = parseGenericType();
+        id = parseVariableIdentifier();
+        if (match('<')) {
+            typeParameters = parseTypeParameterDeclaration();
+        }
         expect('=');
         right = parseType();
         consumeSemicolon();
-        return markerApply(marker, delegate.createTypeAlias(left, right));
+        return markerApply(marker, delegate.createTypeAlias(id, typeParameters, right));
     }
 
     function parseInterfaceExtends() {

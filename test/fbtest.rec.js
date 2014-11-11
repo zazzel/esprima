@@ -7414,24 +7414,16 @@ var fbTestFixture = {
     'Type Alias': {
         'type FBID = number;': {
             type: 'TypeAlias',
-            left: {
-                type: 'GenericTypeAnnotation',
-                id: {
-                    type: 'Identifier',
-                    name: 'FBID',
-                    range: [5, 9],
-                    loc: {
-                        start: { line: 1, column: 5 },
-                        end: { line: 1, column: 9 }
-                    }
-                },
-                typeParameters: null,
+            id: {
+                type: 'Identifier',
+                name: 'FBID',
                 range: [5, 9],
                 loc: {
                     start: { line: 1, column: 5 },
                     end: { line: 1, column: 9 }
                 }
             },
+            typeParameters: null,
             right: {
                 type: 'NumberTypeAnnotation',
                 range: [12, 18],
@@ -7448,46 +7440,29 @@ var fbTestFixture = {
         },
         'type Foo<T> = Bar<T>': {
             type: 'TypeAlias',
-            left: {
-                type: 'GenericTypeAnnotation',
-                id: {
-                    type: 'Identifier',
-                    name: 'Foo',
-                    range: [5, 8],
-                    loc: {
-                        start: { line: 1, column: 5 },
-                        end: { line: 1, column: 8 }
-                    }
-                },
-                typeParameters: {
-                    type: 'TypeParameterInstantiation',
-                    params: [{
-                        type: 'GenericTypeAnnotation',
-                        id: {
-                            type: 'Identifier',
-                            name: 'T',
-                            range: [9, 10],
-                            loc: {
-                                start: { line: 1, column: 9 },
-                                end: { line: 1, column: 10 }
-                            }
-                        },
-                        typeParameters: null,
-                        range: [9, 10],
-                        loc: {
-                            start: { line: 1, column: 9 },
-                            end: { line: 1, column: 10 }
-                        }
-                    }],
-                    range: [8, 11],
-                    loc: {
-                        start: { line: 1, column: 8 },
-                        end: { line: 1, column: 11 }
-                    }
-                },
-                range: [5, 11],
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [5, 8],
                 loc: {
                     start: { line: 1, column: 5 },
+                    end: { line: 1, column: 8 }
+                }
+            },
+            typeParameters: {
+                type: 'TypeParameterDeclaration',
+                params: [{
+                    type: 'Identifier',
+                    name: 'T',
+                    range: [9, 10],
+                    loc: {
+                        start: { line: 1, column: 9 },
+                        end: { line: 1, column: 10 }
+                    }
+                }],
+                range: [8, 11],
+                loc: {
+                    start: { line: 1, column: 8 },
                     end: { line: 1, column: 11 }
                 }
             },
