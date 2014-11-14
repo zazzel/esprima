@@ -4174,6 +4174,9 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
+    // The parsing of types roughly parallels the parsing of expressions, and
+    // primary types are kind of like primary expressions...they're the
+    // primitives with which other types are constructed.
     function parsePrimaryType() {
         var typeIdentifier = null, params = null, returnType = null,
             marker = markerCreate(), rest = null,
@@ -4248,7 +4251,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                     params,
                     returnType,
                     rest,
-                    null
+                    null /* typeParameters */
                 ));
             }
             break;
@@ -4375,20 +4378,20 @@ parseYieldExpression: true, parseAwaitExpression: true
         var id,
             marker = markerCreate(),
             init = null,
-            typeAnnotationMaker = markerCreate();
+            typeAnnotationMarker = markerCreate();
         if (match('{')) {
             id = parseObjectInitialiser();
             reinterpretAsAssignmentBindingPattern(id);
             if (match(':')) {
                 id.typeAnnotation = parseTypeAnnotation();
-                markerApply(typeAnnotationMaker, id);
+                markerApply(typeAnnotationMarker, id);
             }
         } else if (match('[')) {
             id = parseArrayInitialiser();
             reinterpretAsAssignmentBindingPattern(id);
             if (match(':')) {
                 id.typeAnnotation = parseTypeAnnotation();
-                markerApply(typeAnnotationMaker, id);
+                markerApply(typeAnnotationMarker, id);
             }
         } else {
             id = state.allowKeyword ? parseNonComputedProperty() : parseTypeAnnotatableIdentifier();
