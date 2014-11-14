@@ -45,9 +45,10 @@ parseStatement: true, parseSourceElement: true, parseConciseBody: true,
 advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
+parseFunctionTypeParam: true,
+parsePrefixType: true,
 parseTypeAlias: true,
-parseTypeAnnotation: true, parseTypeAnnotatableIdentifier: true,
-parsePrimaryTypeAnnotation: true,
+parseType: true, parseTypeAnnotatableIdentifier: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -127,18 +128,22 @@ parseYieldExpression: true, parseAwaitExpression: true
                     '<=', '<', '>', '!=', '!=='];
 
     Syntax = {
+        AnyTypeAnnotation: 'AnyTypeAnnotation',
         ArrayExpression: 'ArrayExpression',
         ArrayPattern: 'ArrayPattern',
+        ArrayTypeAnnotation: 'ArrayTypeAnnotation',
         ArrowFunctionExpression: 'ArrowFunctionExpression',
         AssignmentExpression: 'AssignmentExpression',
         BinaryExpression: 'BinaryExpression',
         BlockStatement: 'BlockStatement',
+        BooleanTypeAnnotation: 'BooleanTypeAnnotation',
         BreakStatement: 'BreakStatement',
         CallExpression: 'CallExpression',
         CatchClause: 'CatchClause',
         ClassBody: 'ClassBody',
         ClassDeclaration: 'ClassDeclaration',
         ClassExpression: 'ClassExpression',
+        ClassImplements: 'ClassImplements',
         ClassProperty: 'ClassProperty',
         ComprehensionBlock: 'ComprehensionBlock',
         ComprehensionExpression: 'ComprehensionExpression',
@@ -156,6 +161,9 @@ parseYieldExpression: true, parseAwaitExpression: true
         ForStatement: 'ForStatement',
         FunctionDeclaration: 'FunctionDeclaration',
         FunctionExpression: 'FunctionExpression',
+        FunctionTypeAnnotation: 'FunctionTypeAnnotation',
+        FunctionTypeParam: 'FunctionTypeParam',
+        GenericTypeAnnotation: 'GenericTypeAnnotation',
         Identifier: 'Identifier',
         IfStatement: 'IfStatement',
         ImportDeclaration: 'ImportDeclaration',
@@ -163,6 +171,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ImportNamespaceSpecifier: 'ImportNamespaceSpecifier',
         ImportSpecifier: 'ImportSpecifier',
         InterfaceDeclaration: 'InterfaceDeclaration',
+        InterfaceExtends: 'InterfaceExtends',
         IntersectionTypeAnnotation: 'IntersectionTypeAnnotation',
         LabeledStatement: 'LabeledStatement',
         Literal: 'Literal',
@@ -172,19 +181,19 @@ parseYieldExpression: true, parseAwaitExpression: true
         ModuleSpecifier: 'ModuleSpecifier',
         NewExpression: 'NewExpression',
         NullableTypeAnnotation: 'NullableTypeAnnotation',
+        NumberTypeAnnotation: 'NumberTypeAnnotation',
         ObjectExpression: 'ObjectExpression',
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
         ObjectTypeIndexer: 'ObjectTypeIndexer',
-        OptionalParameter: 'OptionalParameter',
-        ParametricTypeAnnotation: 'ParametricTypeAnnotation',
-        ParametricallyTypedIdentifier: 'ParametricallyTypedIdentifier',
+        ObjectTypeProperty: 'ObjectTypeProperty',
         Program: 'Program',
         Property: 'Property',
         ReturnStatement: 'ReturnStatement',
         SequenceExpression: 'SequenceExpression',
         SpreadElement: 'SpreadElement',
         SpreadProperty: 'SpreadProperty',
+        StringTypeAnnotation: 'StringTypeAnnotation',
         SwitchCase: 'SwitchCase',
         SwitchStatement: 'SwitchStatement',
         TaggedTemplateExpression: 'TaggedTemplateExpression',
@@ -194,9 +203,10 @@ parseYieldExpression: true, parseAwaitExpression: true
         ThrowStatement: 'ThrowStatement',
         TryStatement: 'TryStatement',
         TypeAlias: 'TypeAlias',
-        TypeAnnotatedIdentifier: 'TypeAnnotatedIdentifier',
         TypeAnnotation: 'TypeAnnotation',
         TypeofTypeAnnotation: 'TypeofTypeAnnotation',
+        TypeParameterDeclaration: 'TypeParameterDeclaration',
+        TypeParameterInstantiation: 'TypeParameterInstantiation',
         UnaryExpression: 'UnaryExpression',
         UnionTypeAnnotation: 'UnionTypeAnnotation',
         UpdateExpression: 'UpdateExpression',
@@ -1849,7 +1859,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         },
 
         createFunctionDeclaration: function (id, params, defaults, body, rest, generator, expression,
-                                             isAsync, returnType, parametricType) {
+                                             isAsync, returnType, typeParameters) {
             var funDecl = {
                 type: Syntax.FunctionDeclaration,
                 id: id,
@@ -1860,7 +1870,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 generator: generator,
                 expression: expression,
                 returnType: returnType,
-                parametricType: parametricType
+                typeParameters: typeParameters
             };
 
             if (isAsync) {
@@ -1871,7 +1881,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         },
 
         createFunctionExpression: function (id, params, defaults, body, rest, generator, expression,
-                                            isAsync, returnType, parametricType) {
+                                            isAsync, returnType, typeParameters) {
             var funExpr = {
                 type: Syntax.FunctionExpression,
                 id: id,
@@ -1882,7 +1892,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 generator: generator,
                 expression: expression,
                 returnType: returnType,
-                parametricType: parametricType
+                typeParameters: typeParameters
             };
 
             if (isAsync) {
@@ -1901,17 +1911,34 @@ parseYieldExpression: true, parseAwaitExpression: true
                 // are added later (like 'loc' and 'range'). This just helps
                 // keep the shape of Identifier nodes consistent with everything
                 // else.
-                typeAnnotation: undefined
+                typeAnnotation: undefined,
+                optional: undefined
             };
         },
 
-        createTypeAnnotation: function (typeIdentifier, parametricType, params, returnType) {
+        createTypeAnnotation: function (typeAnnotation) {
             return {
                 type: Syntax.TypeAnnotation,
-                id: typeIdentifier,
-                parametricType: parametricType,
+                typeAnnotation: typeAnnotation
+            };
+        },
+
+        createFunctionTypeAnnotation: function (params, returnType, rest, typeParameters) {
+            return {
+                type: Syntax.FunctionTypeAnnotation,
                 params: params,
-                returnType: returnType
+                returnType: returnType,
+                rest: rest,
+                typeParameters: typeParameters
+            };
+        },
+
+        createFunctionTypeParam: function (name, typeAnnotation, optional) {
+            return {
+                type: Syntax.FunctionTypeParam,
+                name: name,
+                typeAnnotation: typeAnnotation,
+                optional: optional
             };
         },
 
@@ -1922,10 +1949,56 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createParametricTypeAnnotation: function (parametricTypes) {
+        createArrayTypeAnnotation: function (elementType) {
             return {
-                type: Syntax.ParametricTypeAnnotation,
-                params: parametricTypes
+                type: Syntax.ArrayTypeAnnotation,
+                elementType: elementType
+            };
+        },
+
+        createGenericTypeAnnotation: function (id, typeParameters) {
+            return {
+                type: Syntax.GenericTypeAnnotation,
+                id: id,
+                typeParameters: typeParameters
+            };
+        },
+
+        createTypeParameterDeclaration: function (params) {
+            return {
+                type: Syntax.TypeParameterDeclaration,
+                params: params
+            };
+        },
+
+        createTypeParameterInstantiation: function (params) {
+            return {
+                type: Syntax.TypeParameterInstantiation,
+                params: params
+            };
+        },
+
+        createAnyTypeAnnotation: function () {
+            return {
+                type: Syntax.AnyTypeAnnotation
+            };
+        },
+
+        createBooleanTypeAnnotation: function () {
+            return {
+                type: Syntax.BooleanTypeAnnotation
+            };
+        },
+
+        createNumberTypeAnnotation: function () {
+            return {
+                type: Syntax.NumberTypeAnnotation
+            };
+        },
+
+        createStringTypeAnnotation: function () {
+            return {
+                type: Syntax.StringTypeAnnotation
             };
         },
 
@@ -1959,6 +2032,15 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
+        createObjectTypeProperty: function (key, value, optional) {
+            return {
+                type: Syntax.ObjectTypeProperty,
+                key: key,
+                value: value,
+                optional: optional
+            };
+        },
+
         createUnionTypeAnnotation: function (types) {
             return {
                 type: Syntax.UnionTypeAnnotation,
@@ -1973,35 +2055,30 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createTypeAlias: function (left, right) {
+        createTypeAlias: function (id, typeParameters, right) {
             return {
                 type: Syntax.TypeAlias,
-                left: left,
+                id: id,
+                typeParameters: typeParameters,
                 right: right
             };
         },
 
-        createInterface: function (id, body, extended) {
+        createInterface: function (id, typeParameters, body, extended) {
             return {
                 type: Syntax.InterfaceDeclaration,
                 id: id,
+                typeParameters: typeParameters,
                 body: body,
                 extends: extended
             };
         },
 
-        createTypeAnnotatedIdentifier: function (identifier, annotation, isOptionalParam) {
+        createInterfaceExtends: function (id, typeParameters) {
             return {
-                type: Syntax.TypeAnnotatedIdentifier,
-                id: identifier,
-                annotation: annotation
-            };
-        },
-
-        createOptionalParameter: function (identifier) {
-            return {
-                type: Syntax.OptionalParameter,
-                id: identifier
+                type: Syntax.InterfaceExtends,
+                id: id,
+                typeParameters: typeParameters
             };
         },
 
@@ -2331,10 +2408,12 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createClassProperty: function (propertyIdentifier) {
+        createClassProperty: function (key, typeAnnotation, computed) {
             return {
                 type: Syntax.ClassProperty,
-                id: propertyIdentifier
+                key: key,
+                typeAnnotation: typeAnnotation,
+                computed: computed
             };
         },
 
@@ -2345,24 +2424,35 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createClassExpression: function (id, superClass, body, parametricType) {
+        createClassImplements: function (id, typeParameters) {
+            return {
+                type: Syntax.ClassImplements,
+                id: id,
+                typeParameters: typeParameters
+            };
+        },
+
+        createClassExpression: function (id, superClass, body, typeParameters, superTypeParameters, implemented) {
             return {
                 type: Syntax.ClassExpression,
                 id: id,
                 superClass: superClass,
                 body: body,
-                parametricType: parametricType
+                typeParameters: typeParameters,
+                superTypeParameters: superTypeParameters,
+                implements: implemented
             };
         },
 
-        createClassDeclaration: function (id, superClass, body, parametricType, superParametricType) {
+        createClassDeclaration: function (id, superClass, body, typeParameters, superTypeParameters, implemented) {
             return {
                 type: Syntax.ClassDeclaration,
                 id: id,
                 superClass: superClass,
                 body: body,
-                parametricType: parametricType,
-                superParametricType: superParametricType
+                typeParameters: typeParameters,
+                superTypeParameters: superTypeParameters,
+                implements: implemented
             };
         },
 
@@ -2780,7 +2870,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             body.type !== Syntax.BlockStatement,
             options.async,
             options.returnType,
-            options.parametricType
+            options.typeParameters
         ));
     }
 
@@ -2804,7 +2894,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             generator: options.generator,
             async: options.async,
             returnType: tmp.returnType,
-            parametricType: options.parametricType
+            typeParameters: options.typeParameters
         });
 
         strict = previousStrict;
@@ -3895,16 +3985,54 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     // 12.2 Variable Statement
 
+    function parseTypeParameterDeclaration() {
+        var marker = markerCreate(), paramTypes = [];
+
+        expect('<');
+        while (!match('>')) {
+            paramTypes.push(parseVariableIdentifier());
+            if (!match('>')) {
+                expect(',');
+            }
+        }
+        expect('>');
+
+        return markerApply(marker, delegate.createTypeParameterDeclaration(
+            paramTypes
+        ));
+    }
+
+    function parseTypeParameterInstantiation() {
+        var marker = markerCreate(), oldInType = state.inType, paramTypes = [];
+
+        state.inType = true;
+
+        expect('<');
+        while (!match('>')) {
+            paramTypes.push(parseType());
+            if (!match('>')) {
+                expect(',');
+            }
+        }
+        expect('>');
+
+        state.inType = oldInType;
+
+        return markerApply(marker, delegate.createTypeParameterInstantiation(
+            paramTypes
+        ));
+    }
+
     function parseObjectTypeIndexer() {
         var id, key, marker = markerCreate(), value;
 
         expect('[');
         id = parseObjectPropertyKey();
         expect(':');
-        key = parseTypeAnnotation(true);
+        key = parseType();
         expect(']');
         expect(':');
-        value = parseTypeAnnotation(true);
+        value = parseType();
 
         return markerApply(marker, delegate.createObjectTypeIndexer(
             id,
@@ -3913,8 +4041,45 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseObjectTypeAnnotation() {
-        var indexer = null, isMethod, marker, properties = [], property,
+    function parseObjectTypeMethod(marker, key) {
+        var optional = false, params = [], rest = null, returnType,
+            typeParameters = null, value;
+
+        if (match('<')) {
+            typeParameters = parseTypeParameterDeclaration();
+        }
+
+        expect('(');
+        while (lookahead.type === Token.Identifier) {
+            params.push(parseFunctionTypeParam());
+            if (!match(')')) {
+                expect(',');
+            }
+        }
+
+        if (match('...')) {
+            lex();
+            rest = parseFunctionTypeParam();
+        }
+        expect(')');
+        expect(':');
+        returnType = parseType();
+
+        value = markerApply(marker, delegate.createFunctionTypeAnnotation(
+            params,
+            returnType,
+            rest,
+            typeParameters
+        ));
+        return markerApply(marker, delegate.createObjectTypeProperty(
+            key,
+            value,
+            optional
+        ));
+    }
+
+    function parseObjectType() {
+        var indexer = null, marker, optional = false, properties = [], property,
             propertyKey, propertyTypeAnnotation;
 
         expect('{');
@@ -3929,23 +4094,28 @@ parseYieldExpression: true, parseAwaitExpression: true
             } else {
                 marker = markerCreate();
                 propertyKey = parseObjectPropertyKey();
-                isMethod = match('(');
-                propertyTypeAnnotation = parseTypeAnnotation();
-                properties.push(markerApply(marker, delegate.createProperty(
-                    'init',
-                    propertyKey,
-                    propertyTypeAnnotation,
-                    isMethod,
-                    false
-                )));
+                if (match('<') || match('(')) {
+                    // This is a method property
+                    properties.push(parseObjectTypeMethod(marker, propertyKey));
+                } else {
+                    if (match('?')) {
+                        lex();
+                        optional = true;
+                    }
+                    expect(':');
+                    propertyTypeAnnotation = parseType();
+                    properties.push(markerApply(marker, delegate.createObjectTypeProperty(
+                        propertyKey,
+                        propertyTypeAnnotation,
+                        optional
+                    )));
+                }
             }
 
-            if (!match('}')) {
-                if (match(',') || match(';')) {
-                    lex();
-                } else {
-                    throwUnexpected(lookahead);
-                }
+            if (match(';')) {
+                lex();
+            } else if (!match('}')) {
+                throwUnexpected(lookahead);
             }
         }
 
@@ -3957,198 +4127,217 @@ parseYieldExpression: true, parseAwaitExpression: true
         );
     }
 
-    function parseVoidTypeAnnotation() {
+    function parseGenericType() {
+        var marker = markerCreate(), returnType = null,
+            typeParameters = null, typeIdentifier;
+
+        typeIdentifier = parseVariableIdentifier();
+
+        if (match('<')) {
+            typeParameters = parseTypeParameterInstantiation();
+        }
+
+        return markerApply(marker, delegate.createGenericTypeAnnotation(
+            typeIdentifier,
+            typeParameters
+        ));
+    }
+
+    function parseVoidType() {
         var marker = markerCreate();
         expectKeyword('void');
         return markerApply(marker, delegate.createVoidTypeAnnotation());
     }
 
-    function parseTypeofTypeAnnotation() {
+    function parseTypeofType() {
         var argument, marker = markerCreate();
         expectKeyword('typeof');
-        argument = parsePrimaryTypeAnnotation();
+        argument = parsePrefixType();
         return markerApply(marker, delegate.createTypeofTypeAnnotation(
             argument
         ));
     }
 
-    function parseTypeParameters() {
-        var marker = markerCreate(), typeIdentifier, paramTypes = [];
-
-        expect('<');
-        while (!match('>')) {
-            /* TODO Support any type here */
-            paramTypes.push(parseVariableIdentifier());
-            if (!match('>')) {
-                expect(',');
-            }
-        }
-        expect('>');
-
-        return markerApply(marker, delegate.createParametricTypeAnnotation(
-            paramTypes
-        ));
-    }
-
-    function parseGenericTypeAnnotation() {
-        var marker = markerCreate(), oldInType = state.inType,
-            parametricTypeMarker, params = null, paramTypes = [],
-            parametricType, returnType = null, typeIdentifier;
-
-        state.inType = true;
-
-        typeIdentifier = parseVariableIdentifier();
-
-        if (match('<')) {
-            parametricTypeMarker = markerCreate();
-            expect('<');
-            while (!match('>')) {
-                paramTypes.push(parseTypeAnnotation(true));
-                if (!match('>')) {
-                    expect(',');
-                }
-            }
-            expect('>');
-
-            parametricType = markerApply(
-                parametricTypeMarker,
-                delegate.createParametricTypeAnnotation(paramTypes)
-            );
-        }
-
-        state.inType = oldInType;
-
-        return markerApply(marker, delegate.createTypeAnnotation(
-            typeIdentifier,
-            parametricType,
-            params,
-            returnType
-        ));
-    }
-
-    function parsePrimaryTypeAnnotation() {
-        var typeIdentifier = null, params = null, returnType = null,
-            marker = markerCreate(), returnTypeMarker = null,
-            parametricType, annotation, token, type, isGroupedType = false;
-
+    function parseFunctionTypeParam() {
+        var marker = markerCreate(), name, optional = false, typeAnnotation;
+        name = parseVariableIdentifier();
         if (match('?')) {
             lex();
-            return markerApply(marker, delegate.createNullableTypeAnnotation(
-                parsePrimaryTypeAnnotation()
-            ));
+            optional = true;
         }
+        expect(':');
+        typeAnnotation = parseType();
+        return markerApply(marker, delegate.createFunctionTypeParam(
+            name,
+            typeAnnotation,
+            optional
+        ));
+    }
 
-        if (match('{')) {
-            return markerApply(marker, parseObjectTypeAnnotation());
-        }
+    // The parsing of types roughly parallels the parsing of expressions, and
+    // primary types are kind of like primary expressions...they're the
+    // primitives with which other types are constructed.
+    function parsePrimaryType() {
+        var typeIdentifier = null, params = null, returnType = null,
+            marker = markerCreate(), rest = null,
+            typeParameters, token, type, isGroupedType = false;
 
-        if (lookahead.type === Token.Identifier) {
-            return markerApply(marker, parseGenericTypeAnnotation());
-        }
-
-        if (match('(')) {
-            lex();
-            // Check to see if this is actually a grouped type
-            if (!match(')')) {
-                if (lookahead.type === Token.Identifier) {
-                    token = lookahead2();
-                    isGroupedType = token.value !== '?' && token.value !== ':';
-                } else {
-                    isGroupedType = true;
-                }
+        switch (lookahead.type) {
+        case Token.Identifier:
+            switch (lookahead.value) {
+            case 'any':
+                lex();
+                return markerApply(marker, delegate.createAnyTypeAnnotation());
+            case 'bool':  // fallthrough
+            case 'boolean':
+                lex();
+                return markerApply(marker, delegate.createBooleanTypeAnnotation());
+            case 'number':
+                lex();
+                return markerApply(marker, delegate.createNumberTypeAnnotation());
+            case 'string':
+                lex();
+                return markerApply(marker, delegate.createStringTypeAnnotation());
             }
+            return markerApply(marker, parseGenericType());
+        case Token.Punctuator:
+            switch (lookahead.value) {
+            case '{':
+                return markerApply(marker, parseObjectType());
+            case '(':
+                lex();
+                // Check to see if this is actually a grouped type
+                if (!match(')') && !match('...')) {
+                    if (lookahead.type === Token.Identifier) {
+                        token = lookahead2();
+                        isGroupedType = token.value !== '?' && token.value !== ':';
+                    } else {
+                        isGroupedType = true;
+                    }
+                }
 
-            if (isGroupedType) {
-                type = parseTypeAnnotation(true);
+                if (isGroupedType) {
+                    type = parseType();
+                    expect(')');
+
+                    // If we see a => next then someone was probably confused about
+                    // function types, so we can provide a better error message
+                    if (match('=>')) {
+                        throwError({}, Messages.ConfusedAboutFunctionType);
+                    }
+
+                    return type;
+                }
+
+                params = [];
+                while (lookahead.type === Token.Identifier) {
+                    params.push(parseFunctionTypeParam());
+                    if (!match(')')) {
+                        expect(',');
+                    }
+                }
+
+                if (match('...')) {
+                    lex();
+                    rest = parseFunctionTypeParam();
+                }
                 expect(')');
 
-                // If we see a => next then someone was probably confused about
-                // function types, so we can provide a better error message
-                if (match('=>')) {
-                    throwError({}, Messages.ConfusedAboutFunctionType);
-                }
+                expect('=>');
 
-                return type;
-            }
+                returnType = parseType();
 
-            params = [];
-            while (lookahead.type === Token.Identifier) {
-                params.push(parseTypeAnnotatableIdentifier(
-                    true, /* requireTypeAnnotation */
-                    true /* canBeOptionalParam */
+                return markerApply(marker, delegate.createFunctionTypeAnnotation(
+                    params,
+                    returnType,
+                    rest,
+                    null /* typeParameters */
                 ));
-                if (!match(')')) {
-                    expect(',');
-                }
             }
-            expect(')');
-
-            returnTypeMarker = markerCreate();
-            expect('=>');
-
-            returnType = parseTypeAnnotation(true);
-
-            return markerApply(marker, delegate.createTypeAnnotation(
-                typeIdentifier,
-                parametricType,
-                params,
-                returnType
-            ));
-        }
-
-        if (matchKeyword('void')) {
-            return markerApply(marker, parseVoidTypeAnnotation());
-        }
-
-        if (matchKeyword('typeof')) {
-            return markerApply(marker, parseTypeofTypeAnnotation());
+            break;
+        case Token.Keyword:
+            switch (lookahead.value) {
+            case 'void':
+                return markerApply(marker, parseVoidType());
+            case 'typeof':
+                return markerApply(marker, parseTypeofType());
+            }
+            break;
         }
 
         throwUnexpected(lookahead);
     }
 
-    function parseIntersectionTypeAnnotation() {
-        var type, types;
-        type = parsePrimaryTypeAnnotation();
+    function parsePostfixType() {
+        var marker = markerCreate(), t = parsePrimaryType();
+        if (match('[')) {
+            expect('[');
+            expect(']');
+            return markerApply(marker, delegate.createArrayTypeAnnotation(t));
+        }
+        return t;
+    }
+
+    function parsePrefixType() {
+        var marker = markerCreate();
+        if (match('?')) {
+            lex();
+            return markerApply(marker, delegate.createNullableTypeAnnotation(
+                parsePrefixType()
+            ));
+        }
+        return parsePostfixType();
+    }
+
+
+    function parseIntersectionType() {
+        var marker = markerCreate(), type, types;
+        type = parsePrefixType();
         types = [type];
         while (match('&')) {
             lex();
-            types.push(parsePrimaryTypeAnnotation());
+            types.push(parsePrefixType());
         }
 
         return types.length === 1 ?
                 type :
-                delegate.createIntersectionTypeAnnotation(
+                markerApply(marker, delegate.createIntersectionTypeAnnotation(
                     types
-                );
+                ));
     }
 
-    function parseUnionTypeAnnotation() {
-        var type, types;
-        type = parseIntersectionTypeAnnotation();
+    function parseUnionType() {
+        var marker = markerCreate(), type, types;
+        type = parseIntersectionType();
         types = [type];
         while (match('|')) {
             lex();
-            types.push(parseIntersectionTypeAnnotation());
+            types.push(parseIntersectionType());
         }
         return types.length === 1 ?
                 type :
-                delegate.createUnionTypeAnnotation(
+                markerApply(marker, delegate.createUnionTypeAnnotation(
                     types
-                );
+                ));
     }
 
-    function parseTypeAnnotation(dontExpectColon) {
-        var type, marker = markerCreate(), oldInType = state.inType;
+    function parseType() {
+        var oldInType = state.inType, type;
         state.inType = true;
-        if (!dontExpectColon) {
-            expect(':');
-        }
 
-        type = parseUnionTypeAnnotation();
+        type = parseUnionType();
 
         state.inType = oldInType;
-        return markerApply(marker, type);
+        return type;
+    }
+
+    function parseTypeAnnotation() {
+        var marker = markerCreate(), type;
+
+        expect(':');
+        type = parseType();
+
+        return markerApply(marker, delegate.createTypeAnnotation(type));
     }
 
     function parseVariableIdentifier() {
@@ -4173,14 +4362,13 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (requireTypeAnnotation || match(':')) {
-            ident = markerApply(marker, delegate.createTypeAnnotatedIdentifier(
-                ident,
-                parseTypeAnnotation()
-            ));
+            ident.typeAnnotation = parseTypeAnnotation();
+            ident = markerApply(marker, ident);
         }
 
         if (isOptionalParam) {
-            ident = markerApply(marker, delegate.createOptionalParameter(ident));
+            ident.optional = true;
+            ident = markerApply(marker, ident);
         }
 
         return ident;
@@ -4189,18 +4377,21 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseVariableDeclaration(kind) {
         var id,
             marker = markerCreate(),
-            init = null;
+            init = null,
+            typeAnnotationMarker = markerCreate();
         if (match('{')) {
             id = parseObjectInitialiser();
             reinterpretAsAssignmentBindingPattern(id);
             if (match(':')) {
                 id.typeAnnotation = parseTypeAnnotation();
+                markerApply(typeAnnotationMarker, id);
             }
         } else if (match('[')) {
             id = parseArrayInitialiser();
             reinterpretAsAssignmentBindingPattern(id);
             if (match(':')) {
                 id.typeAnnotation = parseTypeAnnotation();
+                markerApply(typeAnnotationMarker, id);
             }
         } else {
             id = state.allowKeyword ? parseNonComputedProperty() : parseTypeAnnotatableIdentifier();
@@ -5186,7 +5377,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseParam(options) {
-        var token, rest, param, def;
+        var marker, token, rest, param, def;
 
         token = lookahead;
         if (token.value === '...') {
@@ -5195,12 +5386,15 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         if (match('[')) {
+            marker = markerCreate();
             param = parseArrayInitialiser();
             reinterpretAsDestructuredParameter(options, param);
             if (match(':')) {
                 param.typeAnnotation = parseTypeAnnotation();
+                markerApply(marker, param);
             }
         } else if (match('{')) {
+            marker = markerCreate();
             if (rest) {
                 throwError({}, Messages.ObjectPatternAsRestParameter);
             }
@@ -5208,6 +5402,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             reinterpretAsDestructuredParameter(options, param);
             if (match(':')) {
                 param.typeAnnotation = parseTypeAnnotation();
+                markerApply(marker, param);
             }
         } else {
             param =
@@ -5285,7 +5480,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseFunctionDeclaration() {
         var id, body, token, tmp, firstRestricted, message, generator, isAsync,
             previousStrict, previousYieldAllowed, previousAwaitAllowed,
-            marker = markerCreate(), parametricType;
+            marker = markerCreate(), typeParameters;
 
         isAsync = false;
         if (matchAsync()) {
@@ -5306,7 +5501,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            typeParameters = parseTypeParameterDeclaration();
         }
 
         if (strict) {
@@ -5359,7 +5554,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 false,
                 isAsync,
                 tmp.returnType,
-                parametricType
+                typeParameters
             )
         );
     }
@@ -5367,7 +5562,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseFunctionExpression() {
         var token, id = null, firstRestricted, message, tmp, body, generator, isAsync,
             previousStrict, previousYieldAllowed, previousAwaitAllowed,
-            marker = markerCreate(), parametricType;
+            marker = markerCreate(), typeParameters;
 
         isAsync = false;
         if (matchAsync()) {
@@ -5405,7 +5600,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             }
 
             if (match('<')) {
-                parametricType = parseTypeParameters();
+                typeParameters = parseTypeParameterDeclaration();
             }
         }
 
@@ -5445,7 +5640,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 false,
                 isAsync,
                 tmp.returnType,
-                parametricType
+                typeParameters
             )
         );
     }
@@ -5475,33 +5670,25 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     // 14 Classes
 
-    function parseMethodDefinition(existingPropNames) {
-        var token, key, param, propType, isValidDuplicateProp = false,
-            isAsync, marker = markerCreate(), token2, parametricType,
-            parametricTypeMarker, annotationMarker;
+    function parseMethodDefinition(existingPropNames, key, isStatic, generator, computed) {
+        var token, param, propType, isValidDuplicateProp = false,
+            isAsync, typeParameters, tokenValue,
+            annotationMarker;
 
-        if (lookahead.value === 'static') {
-            propType = ClassPropertyType.static;
-            lex();
-        } else {
-            propType = ClassPropertyType.prototype;
-        }
+        propType = isStatic ? ClassPropertyType.static : ClassPropertyType.prototype;
 
-        if (match('*')) {
-            lex();
-            return markerApply(marker, delegate.createMethodDefinition(
+        if (generator) {
+            return delegate.createMethodDefinition(
                 propType,
                 '',
-                parseObjectPropertyKey(),
+                key,
                 parsePropertyMethodFunction({ generator: true })
-            ));
+            );
         }
 
-        token = lookahead;
-        //parametricTypeMarker = markerCreate();
-        key = parseObjectPropertyKey();
+        tokenValue = key.type === 'Identifier' && key.name;
 
-        if (token.value === 'get' && !match('(')) {
+        if (tokenValue === 'get' && !match('(')) {
             key = parseObjectPropertyKey();
 
             // It is a syntax error if any other properties have a name
@@ -5524,14 +5711,14 @@ parseYieldExpression: true, parseAwaitExpression: true
 
             expect('(');
             expect(')');
-            return markerApply(marker, delegate.createMethodDefinition(
+            return delegate.createMethodDefinition(
                 propType,
                 'get',
                 key,
                 parsePropertyFunction({ generator: false })
-            ));
+            );
         }
-        if (token.value === 'set' && !match('(')) {
+        if (tokenValue === 'set' && !match('(')) {
             key = parseObjectPropertyKey();
 
             // It is a syntax error if any other properties have a name
@@ -5556,19 +5743,19 @@ parseYieldExpression: true, parseAwaitExpression: true
             token = lookahead;
             param = [ parseTypeAnnotatableIdentifier() ];
             expect(')');
-            return markerApply(marker, delegate.createMethodDefinition(
+            return delegate.createMethodDefinition(
                 propType,
                 'set',
                 key,
                 parsePropertyFunction({ params: param, generator: false, name: token })
-            ));
+            );
         }
 
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            typeParameters = parseTypeParameterDeclaration();
         }
 
-        isAsync = token.value === 'async' && !match('(');
+        isAsync = tokenValue === 'async' && !match('(');
         if (isAsync) {
             key = parseObjectPropertyKey();
         }
@@ -5582,43 +5769,63 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
         existingPropNames[propType][key.name].data = true;
 
-        return markerApply(marker, delegate.createMethodDefinition(
+        return delegate.createMethodDefinition(
             propType,
             '',
             key,
             parsePropertyMethodFunction({
                 generator: false,
                 async: isAsync,
-                parametricType: parametricType
+                typeParameters: typeParameters
             })
-        ));
+        );
     }
 
-    function parseClassProperty(existingPropNames) {
-        var marker = markerCreate(), propertyIdentifier;
+    function parseClassProperty(existingPropNames, key, computed) {
+        var typeAnnotation;
 
-        propertyIdentifier = parseTypeAnnotatableIdentifier();
+        typeAnnotation = parseTypeAnnotation();
         expect(';');
 
-        return markerApply(marker, delegate.createClassProperty(
-            propertyIdentifier
-        ));
+        return delegate.createClassProperty(
+            key,
+            typeAnnotation,
+            computed
+        );
     }
 
     function parseClassElement(existingProps) {
+        var computed, generator = false, key, marker = markerCreate(),
+            isStatic = false;
         if (match(';')) {
             lex();
             return;
         }
 
-        var doubleLookahead = lookahead2();
-        if (doubleLookahead.type === Token.Punctuator) {
-            if (doubleLookahead.value === ':') {
-                return parseClassProperty(existingProps);
-            }
+        if (lookahead.value === 'static') {
+            lex();
+            isStatic = true;
         }
 
-        return parseMethodDefinition(existingProps);
+        if (match('*')) {
+            lex();
+            generator = true;
+        }
+
+        computed = (lookahead.value === '[');
+        key = parseObjectPropertyKey();
+
+        if (!isStatic && !generator && lookahead.value === ':') {
+            return markerApply(marker, parseClassProperty(existingProps, key, computed));
+        }
+
+        return markerApply(marker, parseMethodDefinition(
+            existingProps,
+            key,
+            isStatic,
+            generator,
+            computed
+        ));
     }
 
     function parseClassBody() {
@@ -5645,52 +5852,103 @@ parseYieldExpression: true, parseAwaitExpression: true
         return markerApply(marker, delegate.createClassBody(classElements));
     }
 
+    function parseClassImplements() {
+        var id, implemented = [], marker, typeParameters;
+        expectContextualKeyword('implements');
+        while (index < length) {
+            marker = markerCreate();
+            id = parseVariableIdentifier();
+            if (match('<')) {
+                typeParameters = parseTypeParameterInstantiation();
+            } else {
+                typeParameters = null;
+            }
+            implemented.push(markerApply(marker, delegate.createClassImplements(
+                id,
+                typeParameters
+            )));
+            if (!match(',')) {
+                break;
+            }
+            expect(',');
+        }
+        return implemented;
+    }
+
     function parseClassExpression() {
-        var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
-            parametricType;
+        var id, implemented, previousYieldAllowed, superClass = null,
+            superTypeParameters, marker = markerCreate(), typeParameters;
 
         expectKeyword('class');
 
-        if (!matchKeyword('extends') && !match('{')) {
+        if (!matchKeyword('extends') && !matchContextualKeyword('implements') && !match('{')) {
             id = parseVariableIdentifier();
         }
 
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            typeParameters = parseTypeParameterDeclaration();
         }
 
         if (matchKeyword('extends')) {
             expectKeyword('extends');
             previousYieldAllowed = state.yieldAllowed;
             state.yieldAllowed = false;
-            superClass = parseAssignmentExpression();
+            superClass = parseLeftHandSideExpressionAllowCall();
+            if (match('<')) {
+                superTypeParameters = parseTypeParameterInstantiation();
+            }
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        return markerApply(marker, delegate.createClassExpression(id, superClass, parseClassBody(), parametricType));
+        if (matchContextualKeyword('implements')) {
+            implemented = parseClassImplements();
+        }
+
+        return markerApply(marker, delegate.createClassExpression(
+            id,
+            superClass,
+            parseClassBody(),
+            typeParameters,
+            superTypeParameters,
+            implemented
+        ));
     }
 
     function parseClassDeclaration() {
-        var id, previousYieldAllowed, superClass = null, marker = markerCreate(),
-            parametricType, superParametricType;
+        var id, implemented, previousYieldAllowed, superClass = null,
+            superTypeParameters, marker = markerCreate(), typeParameters;
 
         expectKeyword('class');
 
         id = parseVariableIdentifier();
 
         if (match('<')) {
-            parametricType = parseTypeParameters();
+            typeParameters = parseTypeParameterDeclaration();
         }
 
         if (matchKeyword('extends')) {
             expectKeyword('extends');
             previousYieldAllowed = state.yieldAllowed;
             state.yieldAllowed = false;
-            superClass = parseAssignmentExpression();
+            superClass = parseLeftHandSideExpressionAllowCall();
+            if (match('<')) {
+                superTypeParameters = parseTypeParameterInstantiation();
+            }
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        return markerApply(marker, delegate.createClassDeclaration(id, superClass, parseClassBody(), parametricType, superParametricType));
+        if (matchContextualKeyword('implements')) {
+            implemented = parseClassImplements();
+        }
+
+        return markerApply(marker, delegate.createClassDeclaration(
+            id,
+            superClass,
+            parseClassBody(),
+            typeParameters,
+            superTypeParameters,
+            implemented
+        ));
     }
 
     // 15 Program
@@ -6605,26 +6863,47 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseTypeAlias() {
-        var left, marker = markerCreate(), right;
+        var id, marker = markerCreate(), typeParameters = null, right;
         expectContextualKeyword('type');
-        left = parseGenericTypeAnnotation();
+        id = parseVariableIdentifier();
+        if (match('<')) {
+            typeParameters = parseTypeParameterDeclaration();
+        }
         expect('=');
-        right = parseTypeAnnotation(true);
+        right = parseType();
         consumeSemicolon();
-        return markerApply(marker, delegate.createTypeAlias(left, right));
+        return markerApply(marker, delegate.createTypeAlias(id, typeParameters, right));
+    }
+
+    function parseInterfaceExtends() {
+        var marker = markerCreate(), id, typeParameters = null;
+
+        id = parseVariableIdentifier();
+        if (match('<')) {
+            typeParameters = parseTypeParameterInstantiation();
+        }
+
+        return markerApply(marker, delegate.createInterfaceExtends(
+            id,
+            typeParameters
+        ));
     }
 
     function parseInterface() {
-        var body, bodyMarker, extended = [], id, marker = markerCreate();
+        var body, bodyMarker, extended = [], id, marker = markerCreate(),
+            typeParameters = null;
 
         expectContextualKeyword('interface');
-        id = parseGenericTypeAnnotation();
+        id = parseVariableIdentifier();
+        if (match('<')) {
+            typeParameters = parseTypeParameterDeclaration();
+        }
 
         if (matchKeyword('extends')) {
             expectKeyword('extends');
 
             while (index < length) {
-                extended.push(parseGenericTypeAnnotation());
+                extended.push(parseInterfaceExtends());
                 if (!match(',')) {
                     break;
                 }
@@ -6633,10 +6912,11 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         bodyMarker = markerCreate();
-        body = markerApply(bodyMarker, parseObjectTypeAnnotation());
+        body = markerApply(bodyMarker, parseObjectType());
 
         return markerApply(marker, delegate.createInterface(
             id,
+            typeParameters,
             body,
             extended
         ));
