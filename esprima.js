@@ -296,7 +296,6 @@ parseYieldExpression: true, parseAwaitExpression: true
         InvalidXJSAttributeValue: 'XJS value should be either an expression or a quoted XJS text',
         ExpectedXJSClosingTag: 'Expected corresponding XJS closing tag for %0',
         AdjacentXJSElements: 'Adjacent XJS elements must be wrapped in an enclosing tag',
-        DuplicateIndexer: 'An interface or object type can only have a single indexer property.',
         ConfusedAboutFunctionType: 'Unexpected token =>. It looks like ' +
             'you are trying to write a function type, but you ended up ' +
             'writing a grouped type followed by an =>, which is a syntax ' +
@@ -2015,11 +2014,12 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createObjectTypeAnnotation: function (properties, indexer) {
+        createObjectTypeAnnotation: function (properties, indexers, callProperties) {
             return {
                 type: Syntax.ObjectTypeAnnotation,
                 properties: properties,
-                indexer: indexer
+                indexers: indexers,
+                callProperties: callProperties
             };
         },
 
@@ -4049,10 +4049,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseObjectTypeMethod(marker, key) {
-        var optional = false, params = [], rest = null, returnType,
-            typeParameters = null, value;
-
+    function parseObjectTypeMethodish(marker) {
+        var params = [], rest = null, returnType, typeParameters = null;
         if (match('<')) {
             typeParameters = parseTypeParameterDeclaration();
         }
@@ -4073,12 +4071,18 @@ parseYieldExpression: true, parseAwaitExpression: true
         expect(':');
         returnType = parseType();
 
-        value = markerApply(marker, delegate.createFunctionTypeAnnotation(
+        return markerApply(marker, delegate.createFunctionTypeAnnotation(
             params,
             returnType,
             rest,
             typeParameters
         ));
+    }
+
+    function parseObjectTypeMethod(marker, key) {
+        var optional = false, value;
+        value = parseObjectTypeMethodish(marker);
+
         return markerApply(marker, delegate.createObjectTypeProperty(
             key,
             value,
@@ -4086,19 +4090,23 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
+    function parseObjectTypeCallProperty(marker) {
+        return parseObjectTypeMethodish(marker);
+    }
+
     function parseObjectType() {
-        var indexer = null, marker, optional = false, properties = [], property,
-            propertyKey, propertyTypeAnnotation;
+        var callProperties = [], indexers = [], marker, optional = false,
+            properties = [], property, propertyKey, propertyTypeAnnotation;
 
         expect('{');
 
         while (!match('}')) {
 
             if (match('[')) {
-                if (indexer) {
-                    throwError({}, Messages.DuplicateIndexer);
-                }
-                indexer = parseObjectTypeIndexer();
+                indexers.push(parseObjectTypeIndexer());
+            } else if (match('(') || match('<')) {
+                marker = markerCreate();
+                callProperties.push(parseObjectTypeCallProperty(marker));
             } else {
                 marker = markerCreate();
                 propertyKey = parseObjectPropertyKey();
@@ -4131,7 +4139,8 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         return delegate.createObjectTypeAnnotation(
             properties,
-            indexer
+            indexers,
+            callProperties
         );
     }
 
