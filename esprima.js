@@ -48,7 +48,7 @@ parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseX
 parseFunctionTypeParam: true,
 parsePrefixType: true,
 parseTypeAlias: true,
-parseType: true, parseTypeAnnotatableIdentifier: true,
+parseType: true, parseTypeAnnotatableIdentifier: true, parseTypeAnnotation: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -2934,7 +2934,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseObjectProperty() {
         var token, key, id, value, param, expr, computed,
-            marker = markerCreate();
+            marker = markerCreate(), returnType;
 
         token = lookahead;
         computed = (token.value === '[');
@@ -2983,6 +2983,9 @@ parseYieldExpression: true, parseAwaitExpression: true
 
                 expect('(');
                 expect(')');
+                if (match(':')) {
+                    returnType = parseTypeAnnotation();
+                }
 
                 return markerApply(
                     marker,
@@ -2991,7 +2994,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                         key,
                         parsePropertyFunction({
                             generator: false,
-                            async: false
+                            async: false,
+                            returnType: returnType
                         }),
                         false,
                         false,
@@ -3008,6 +3012,9 @@ parseYieldExpression: true, parseAwaitExpression: true
                 token = lookahead;
                 param = [ parseTypeAnnotatableIdentifier() ];
                 expect(')');
+                if (match(':')) {
+                    returnType = parseTypeAnnotation();
+                }
 
                 return markerApply(
                     marker,
@@ -3018,7 +3025,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                             params: param,
                             generator: false,
                             async: false,
-                            name: token
+                            name: token,
+                            returnType: returnType
                         }),
                         false,
                         false,
@@ -5672,7 +5680,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseMethodDefinition(existingPropNames, key, isStatic, generator, computed) {
         var token, param, propType, isValidDuplicateProp = false,
-            isAsync, typeParameters, tokenValue,
+            isAsync, typeParameters, tokenValue, returnType,
             annotationMarker;
 
         propType = isStatic ? ClassPropertyType.static : ClassPropertyType.prototype;
@@ -5711,11 +5719,14 @@ parseYieldExpression: true, parseAwaitExpression: true
 
             expect('(');
             expect(')');
+            if (match(':')) {
+                returnType = parseTypeAnnotation();
+            }
             return delegate.createMethodDefinition(
                 propType,
                 'get',
                 key,
-                parsePropertyFunction({ generator: false })
+                parsePropertyFunction({ generator: false, returnType: returnType })
             );
         }
         if (tokenValue === 'set' && !match('(')) {
@@ -5743,11 +5754,19 @@ parseYieldExpression: true, parseAwaitExpression: true
             token = lookahead;
             param = [ parseTypeAnnotatableIdentifier() ];
             expect(')');
+            if (match(':')) {
+                returnType = parseTypeAnnotation();
+            }
             return delegate.createMethodDefinition(
                 propType,
                 'set',
                 key,
-                parsePropertyFunction({ params: param, generator: false, name: token })
+                parsePropertyFunction({
+                    params: param,
+                    generator: false,
+                    name: token,
+                    returnType: returnType
+                })
             );
         }
 

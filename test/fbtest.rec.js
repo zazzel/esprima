@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 137
+var numTests = 141
 var testFixture;
 
 var fbTestFixture = {
@@ -3557,6 +3557,218 @@ var fbTestFixture = {
                 end: { line: 1, column: 31 }
             }
         },
+        'a={set fooProp(value:number):void{}}': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'AssignmentExpression',
+                operator: '=',
+                left: {
+                    type: 'Identifier',
+                    name: 'a',
+                    range: [0, 1],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 1 }
+                    }
+                },
+                right: {
+                    type: 'ObjectExpression',
+                    properties: [{
+                        type: 'Property',
+                        key: {
+                            type: 'Identifier',
+                            name: 'fooProp',
+                            range: [7, 14],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 14 }
+                            }
+                        },
+                        value: {
+                            type: 'FunctionExpression',
+                            id: null,
+                            params: [{
+                                type: 'Identifier',
+                                name: 'value',
+                                typeAnnotation: {
+                                    type: 'TypeAnnotation',
+                                    typeAnnotation: {
+                                        type: 'NumberTypeAnnotation',
+                                        range: [21, 27],
+                                        loc: {
+                                            start: { line: 1, column: 21 },
+                                            end: { line: 1, column: 27 }
+                                        }
+                                    },
+                                    range: [20, 27],
+                                    loc: {
+                                        start: { line: 1, column: 20 },
+                                        end: { line: 1, column: 27 }
+                                    }
+                                },
+                                range: [15, 27],
+                                loc: {
+                                    start: { line: 1, column: 15 },
+                                    end: { line: 1, column: 27 }
+                                }
+                            }],
+                            defaults: [],
+                            body: {
+                                type: 'BlockStatement',
+                                body: [],
+                                range: [33, 35],
+                                loc: {
+                                    start: { line: 1, column: 33 },
+                                    end: { line: 1, column: 35 }
+                                }
+                            },
+                            rest: null,
+                            generator: false,
+                            expression: false,
+                            returnType: {
+                                type: 'TypeAnnotation',
+                                typeAnnotation: {
+                                    type: 'VoidTypeAnnotation',
+                                    range: [29, 33],
+                                    loc: {
+                                        start: { line: 1, column: 29 },
+                                        end: { line: 1, column: 33 }
+                                    }
+                                },
+                                range: [28, 33],
+                                loc: {
+                                    start: { line: 1, column: 28 },
+                                    end: { line: 1, column: 33 }
+                                }
+                            },
+                            range: [33, 35],
+                            loc: {
+                                start: { line: 1, column: 33 },
+                                end: { line: 1, column: 35 }
+                            }
+                        },
+                        kind: 'set',
+                        method: false,
+                        shorthand: false,
+                        computed: false,
+                        range: [3, 35],
+                        loc: {
+                            start: { line: 1, column: 3 },
+                            end: { line: 1, column: 35 }
+                        }
+                    }],
+                    range: [2, 36],
+                    loc: {
+                        start: { line: 1, column: 2 },
+                        end: { line: 1, column: 36 }
+                    }
+                },
+                range: [0, 36],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 36 }
+                }
+            },
+            range: [0, 36],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 36 }
+            }
+        },
+        'a={get fooProp():number{}}': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'AssignmentExpression',
+                operator: '=',
+                left: {
+                    type: 'Identifier',
+                    name: 'a',
+                    range: [0, 1],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 1 }
+                    }
+                },
+                right: {
+                    type: 'ObjectExpression',
+                    properties: [{
+                        type: 'Property',
+                        key: {
+                            type: 'Identifier',
+                            name: 'fooProp',
+                            range: [7, 14],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 14 }
+                            }
+                        },
+                        value: {
+                            type: 'FunctionExpression',
+                            id: null,
+                            params: [],
+                            defaults: [],
+                            body: {
+                                type: 'BlockStatement',
+                                body: [],
+                                range: [23, 25],
+                                loc: {
+                                    start: { line: 1, column: 23 },
+                                    end: { line: 1, column: 25 }
+                                }
+                            },
+                            rest: null,
+                            generator: false,
+                            expression: false,
+                            returnType: {
+                                type: 'TypeAnnotation',
+                                typeAnnotation: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [17, 23],
+                                    loc: {
+                                        start: { line: 1, column: 17 },
+                                        end: { line: 1, column: 23 }
+                                    }
+                                },
+                                range: [16, 23],
+                                loc: {
+                                    start: { line: 1, column: 16 },
+                                    end: { line: 1, column: 23 }
+                                }
+                            },
+                            range: [23, 25],
+                            loc: {
+                                start: { line: 1, column: 23 },
+                                end: { line: 1, column: 25 }
+                            }
+                        },
+                        kind: 'get',
+                        method: false,
+                        shorthand: false,
+                        computed: false,
+                        range: [3, 25],
+                        loc: {
+                            start: { line: 1, column: 3 },
+                            end: { line: 1, column: 25 }
+                        }
+                    }],
+                    range: [2, 26],
+                    loc: {
+                        start: { line: 1, column: 2 },
+                        end: { line: 1, column: 26 }
+                    }
+                },
+                range: [0, 26],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 26 }
+                }
+            },
+            range: [0, 26],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 26 }
+            }
+        },
         'class Foo {set fooProp(value:number){}}': {
             type: 'ClassDeclaration',
             id: {
@@ -3647,6 +3859,198 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 39 }
+            }
+        },
+        'class Foo {set fooProp(value:number):void{}}': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: null,
+            body: {
+                type: 'ClassBody',
+                body: [{
+                    type: 'MethodDefinition',
+                    key: {
+                        type: 'Identifier',
+                        name: 'fooProp',
+                        range: [15, 22],
+                        loc: {
+                            start: { line: 1, column: 15 },
+                            end: { line: 1, column: 22 }
+                        }
+                    },
+                    value: {
+                        type: 'FunctionExpression',
+                        id: null,
+                        params: [{
+                            type: 'Identifier',
+                            name: 'value',
+                            typeAnnotation: {
+                                type: 'TypeAnnotation',
+                                typeAnnotation: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [29, 35],
+                                    loc: {
+                                        start: { line: 1, column: 29 },
+                                        end: { line: 1, column: 35 }
+                                    }
+                                },
+                                range: [28, 35],
+                                loc: {
+                                    start: { line: 1, column: 28 },
+                                    end: { line: 1, column: 35 }
+                                }
+                            },
+                            range: [23, 35],
+                            loc: {
+                                start: { line: 1, column: 23 },
+                                end: { line: 1, column: 35 }
+                            }
+                        }],
+                        defaults: [],
+                        body: {
+                            type: 'BlockStatement',
+                            body: [],
+                            range: [41, 43],
+                            loc: {
+                                start: { line: 1, column: 41 },
+                                end: { line: 1, column: 43 }
+                            }
+                        },
+                        rest: null,
+                        generator: false,
+                        expression: false,
+                        returnType: {
+                            type: 'TypeAnnotation',
+                            typeAnnotation: {
+                                type: 'VoidTypeAnnotation',
+                                range: [37, 41],
+                                loc: {
+                                    start: { line: 1, column: 37 },
+                                    end: { line: 1, column: 41 }
+                                }
+                            },
+                            range: [36, 41],
+                            loc: {
+                                start: { line: 1, column: 36 },
+                                end: { line: 1, column: 41 }
+                            }
+                        },
+                        range: [41, 43],
+                        loc: {
+                            start: { line: 1, column: 41 },
+                            end: { line: 1, column: 43 }
+                        }
+                    },
+                    kind: 'set',
+                    'static': false,
+                    range: [11, 43],
+                    loc: {
+                        start: { line: 1, column: 11 },
+                        end: { line: 1, column: 43 }
+                    }
+                }],
+                range: [10, 44],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 44 }
+                }
+            },
+            range: [0, 44],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 44 }
+            }
+        },
+        'class Foo {get fooProp():number{}}': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: null,
+            body: {
+                type: 'ClassBody',
+                body: [{
+                    type: 'MethodDefinition',
+                    key: {
+                        type: 'Identifier',
+                        name: 'fooProp',
+                        range: [15, 22],
+                        loc: {
+                            start: { line: 1, column: 15 },
+                            end: { line: 1, column: 22 }
+                        }
+                    },
+                    value: {
+                        type: 'FunctionExpression',
+                        id: null,
+                        params: [],
+                        defaults: [],
+                        body: {
+                            type: 'BlockStatement',
+                            body: [],
+                            range: [31, 33],
+                            loc: {
+                                start: { line: 1, column: 31 },
+                                end: { line: 1, column: 33 }
+                            }
+                        },
+                        rest: null,
+                        generator: false,
+                        expression: false,
+                        returnType: {
+                            type: 'TypeAnnotation',
+                            typeAnnotation: {
+                                type: 'NumberTypeAnnotation',
+                                range: [25, 31],
+                                loc: {
+                                    start: { line: 1, column: 25 },
+                                    end: { line: 1, column: 31 }
+                                }
+                            },
+                            range: [24, 31],
+                            loc: {
+                                start: { line: 1, column: 24 },
+                                end: { line: 1, column: 31 }
+                            }
+                        },
+                        range: [31, 33],
+                        loc: {
+                            start: { line: 1, column: 31 },
+                            end: { line: 1, column: 33 }
+                        }
+                    },
+                    kind: 'get',
+                    'static': false,
+                    range: [11, 33],
+                    loc: {
+                        start: { line: 1, column: 11 },
+                        end: { line: 1, column: 33 }
+                    }
+                }],
+                range: [10, 34],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 34 }
+                }
+            },
+            range: [0, 34],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 34 }
             }
         },
         'var numVal:number;': {
