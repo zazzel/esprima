@@ -201,6 +201,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         TemplateLiteral: 'TemplateLiteral',
         ThisExpression: 'ThisExpression',
         ThrowStatement: 'ThrowStatement',
+        TupleTypeAnnotation: 'TupleTypeAnnotation',
         TryStatement: 'TryStatement',
         TypeAlias: 'TypeAlias',
         TypeAnnotation: 'TypeAnnotation',
@@ -2011,6 +2012,13 @@ parseYieldExpression: true, parseAwaitExpression: true
             return {
                 type: Syntax.TypeofTypeAnnotation,
                 argument: argument
+            };
+        },
+
+        createTupleTypeAnnotation: function (types) {
+            return {
+                type: Syntax.TupleTypeAnnotation,
+                types: types
             };
         },
 
@@ -4175,6 +4183,23 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
+    function parseTupleType() {
+        var marker = markerCreate(), types = [];
+        expect('[');
+        // We allow trailing commas
+        while (index < length && !match(']')) {
+            types.push(parseType());
+            if (match(']')) {
+                break;
+            }
+            expect(',');
+        }
+        expect(']');
+        return markerApply(marker, delegate.createTupleTypeAnnotation(
+            types
+        ));
+    }
+
     function parseFunctionTypeParam() {
         var marker = markerCreate(), name, optional = false, typeAnnotation;
         name = parseVariableIdentifier();
@@ -4221,6 +4246,8 @@ parseYieldExpression: true, parseAwaitExpression: true
             switch (lookahead.value) {
             case '{':
                 return markerApply(marker, parseObjectType());
+            case '[':
+                return parseTupleType();
             case '<':
                 typeParameters = parseTypeParameterDeclaration();
                 expect('(');

@@ -20062,6 +20062,7 @@ var testFixture = {
                 TemplateLiteral: 'TemplateLiteral',
                 ThisExpression: 'ThisExpression',
                 ThrowStatement: 'ThrowStatement',
+                TupleTypeAnnotation: 'TupleTypeAnnotation',
                 TryStatement: 'TryStatement',
                 TypeAlias: 'TypeAlias',
                 TypeAnnotation: 'TypeAnnotation',

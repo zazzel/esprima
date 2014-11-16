@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 148
+var numTests = 152
 var testFixture;
 
 var fbTestFixture = {
@@ -8274,6 +8274,314 @@ var fbTestFixture = {
             message: 'Error: Line 1: Unexpected token ,',
             description: 'Unexpected token ,'
 
+        },
+    },
+    'Tuples': {
+        'var a : [] = [];': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'TupleTypeAnnotation',
+                            types: [],
+                            range: [8, 10],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 10 }
+                            }
+                        },
+                        range: [6, 10],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 10 }
+                        }
+                    },
+                    range: [4, 10],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 10 }
+                    }
+                },
+                init: {
+                    type: 'ArrayExpression',
+                    elements: [],
+                    range: [13, 15],
+                    loc: {
+                        start: { line: 1, column: 13 },
+                        end: { line: 1, column: 15 }
+                    }
+                },
+                range: [4, 15],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 15 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 16],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 16 }
+            }
+        },
+        'var a : [Foo<T>] = [foo];': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'TupleTypeAnnotation',
+                            types: [{
+                                type: 'GenericTypeAnnotation',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'Foo',
+                                    range: [9, 12],
+                                    loc: {
+                                        start: { line: 1, column: 9 },
+                                        end: { line: 1, column: 12 }
+                                    }
+                                },
+                                typeParameters: {
+                                    type: 'TypeParameterInstantiation',
+                                    params: [{
+                                        type: 'GenericTypeAnnotation',
+                                        id: {
+                                            type: 'Identifier',
+                                            name: 'T',
+                                            range: [13, 14],
+                                            loc: {
+                                                start: { line: 1, column: 13 },
+                                                end: { line: 1, column: 14 }
+                                            }
+                                        },
+                                        typeParameters: null,
+                                        range: [13, 14],
+                                        loc: {
+                                            start: { line: 1, column: 13 },
+                                            end: { line: 1, column: 14 }
+                                        }
+                                    }],
+                                    range: [12, 15],
+                                    loc: {
+                                        start: { line: 1, column: 12 },
+                                        end: { line: 1, column: 15 }
+                                    }
+                                },
+                                range: [9, 15],
+                                loc: {
+                                    start: { line: 1, column: 9 },
+                                    end: { line: 1, column: 15 }
+                                }
+                            }],
+                            range: [8, 16],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 16 }
+                            }
+                        },
+                        range: [6, 16],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 16 }
+                        }
+                    },
+                    range: [4, 16],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 16 }
+                    }
+                },
+                init: {
+                    type: 'ArrayExpression',
+                    elements: [{
+                        type: 'Identifier',
+                        name: 'foo',
+                        range: [20, 23],
+                        loc: {
+                            start: { line: 1, column: 20 },
+                            end: { line: 1, column: 23 }
+                        }
+                    }],
+                    range: [19, 24],
+                    loc: {
+                        start: { line: 1, column: 19 },
+                        end: { line: 1, column: 24 }
+                    }
+                },
+                range: [4, 24],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 24 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 25],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 25 }
+            }
+        },
+        'var a : [number,] = [123,];': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'TupleTypeAnnotation',
+                            types: [{
+                                type: 'NumberTypeAnnotation',
+                                range: [9, 15],
+                                loc: {
+                                    start: { line: 1, column: 9 },
+                                    end: { line: 1, column: 15 }
+                                }
+                            }],
+                            range: [8, 17],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 17 }
+                            }
+                        },
+                        range: [6, 17],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 17 }
+                        }
+                    },
+                    range: [4, 17],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 17 }
+                    }
+                },
+                init: {
+                    type: 'ArrayExpression',
+                    elements: [{
+                        type: 'Literal',
+                        value: 123,
+                        raw: '123',
+                        range: [21, 24],
+                        loc: {
+                            start: { line: 1, column: 21 },
+                            end: { line: 1, column: 24 }
+                        }
+                    }],
+                    range: [20, 26],
+                    loc: {
+                        start: { line: 1, column: 20 },
+                        end: { line: 1, column: 26 }
+                    }
+                },
+                range: [4, 26],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 26 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 27],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 27 }
+            }
+        },
+        'var a : [number, string] = [123, "duck"];': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'TupleTypeAnnotation',
+                            types: [{
+                                type: 'NumberTypeAnnotation',
+                                range: [9, 15],
+                                loc: {
+                                    start: { line: 1, column: 9 },
+                                    end: { line: 1, column: 15 }
+                                }
+                            }, {
+                                type: 'StringTypeAnnotation',
+                                range: [17, 23],
+                                loc: {
+                                    start: { line: 1, column: 17 },
+                                    end: { line: 1, column: 23 }
+                                }
+                            }],
+                            range: [8, 24],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 24 }
+                            }
+                        },
+                        range: [6, 24],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 24 }
+                        }
+                    },
+                    range: [4, 24],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 24 }
+                    }
+                },
+                init: {
+                    type: 'ArrayExpression',
+                    elements: [{
+                        type: 'Literal',
+                        value: 123,
+                        raw: '123',
+                        range: [28, 31],
+                        loc: {
+                            start: { line: 1, column: 28 },
+                            end: { line: 1, column: 31 }
+                        }
+                    }, {
+                        type: 'Literal',
+                        value: 'duck',
+                        raw: '"duck"',
+                        range: [33, 39],
+                        loc: {
+                            start: { line: 1, column: 33 },
+                            end: { line: 1, column: 39 }
+                        }
+                    }],
+                    range: [27, 40],
+                    loc: {
+                        start: { line: 1, column: 27 },
+                        end: { line: 1, column: 40 }
+                    }
+                },
+                range: [4, 40],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 40 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 41],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 41 }
+            }
         },
     },
     'Type Alias': {
