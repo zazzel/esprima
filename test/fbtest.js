@@ -141,7 +141,9 @@ module.exports = {
         'var a: number[]',
         'var a: ?string[]',
         'var a: Promise<bool>[]',
-        'var a:(...rest:Array<number>) => number'
+        'var a:(...rest:Array<number>) => number',
+        'var identity: <T>(x: T) => T',
+        'var identity: <T>(x: T, ...y:T[]) => T'
     ],
     'Invalid Type Annotations': [
         'function foo(callback:) {}',

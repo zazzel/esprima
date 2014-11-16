@@ -4221,6 +4221,33 @@ parseYieldExpression: true, parseAwaitExpression: true
             switch (lookahead.value) {
             case '{':
                 return markerApply(marker, parseObjectType());
+            case '<':
+                typeParameters = parseTypeParameterDeclaration();
+                expect('(');
+                params = [];
+                while (lookahead.type === Token.Identifier) {
+                    params.push(parseFunctionTypeParam());
+                    if (!match(')')) {
+                        expect(',');
+                    }
+                }
+
+                if (match('...')) {
+                    lex();
+                    rest = parseFunctionTypeParam();
+                }
+                expect(')');
+
+                expect('=>');
+
+                returnType = parseType();
+
+                return markerApply(marker, delegate.createFunctionTypeAnnotation(
+                    params,
+                    returnType,
+                    rest,
+                    typeParameters
+                ));
             case '(':
                 lex();
                 // Check to see if this is actually a grouped type
