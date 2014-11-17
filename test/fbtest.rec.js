@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 152
+var numTests = 158
 var testFixture;
 
 var fbTestFixture = {
@@ -8274,6 +8274,370 @@ var fbTestFixture = {
             message: 'Error: Line 1: Unexpected token ,',
             description: 'Unexpected token ,'
 
+        },
+    },
+    'Array Types': {
+        'var a: number[]': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ArrayTypeAnnotation',
+                            elementType: {
+                                type: 'NumberTypeAnnotation',
+                                range: [7, 13],
+                                loc: {
+                                    start: { line: 1, column: 7 },
+                                    end: { line: 1, column: 13 }
+                                }
+                            },
+                            range: [7, 15],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 15 }
+                            }
+                        },
+                        range: [5, 15],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 15 }
+                        }
+                    },
+                    range: [4, 15],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 15 }
+                    }
+                },
+                init: null,
+                range: [4, 15],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 15 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 15],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 15 }
+            }
+        },
+        'var a: ?number[]': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'NullableTypeAnnotation',
+                            typeAnnotation: {
+                                type: 'ArrayTypeAnnotation',
+                                elementType: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [8, 14],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 14 }
+                                    }
+                                },
+                                range: [8, 16],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 16 }
+                                }
+                            },
+                            range: [7, 16],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 16 }
+                            }
+                        },
+                        range: [5, 16],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 16 }
+                        }
+                    },
+                    range: [4, 16],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 16 }
+                    }
+                },
+                init: null,
+                range: [4, 16],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 16 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 16],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 16 }
+            }
+        },
+        'var a: (?number)[]': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ArrayTypeAnnotation',
+                            elementType: {
+                                type: 'NullableTypeAnnotation',
+                                typeAnnotation: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [9, 15],
+                                    loc: {
+                                        start: { line: 1, column: 9 },
+                                        end: { line: 1, column: 15 }
+                                    }
+                                },
+                                range: [8, 15],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 15 }
+                                }
+                            },
+                            range: [7, 18],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 18 }
+                            }
+                        },
+                        range: [5, 18],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 18 }
+                        }
+                    },
+                    range: [4, 18],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 18 }
+                    }
+                },
+                init: null,
+                range: [4, 18],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 18 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 18],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 18 }
+            }
+        },
+        'var a: () => number[]': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'FunctionTypeAnnotation',
+                            params: [],
+                            returnType: {
+                                type: 'ArrayTypeAnnotation',
+                                elementType: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [13, 19],
+                                    loc: {
+                                        start: { line: 1, column: 13 },
+                                        end: { line: 1, column: 19 }
+                                    }
+                                },
+                                range: [13, 21],
+                                loc: {
+                                    start: { line: 1, column: 13 },
+                                    end: { line: 1, column: 21 }
+                                }
+                            },
+                            rest: null,
+                            typeParameters: null,
+                            range: [7, 21],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 21 }
+                            }
+                        },
+                        range: [5, 21],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 21 }
+                        }
+                    },
+                    range: [4, 21],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 21 }
+                    }
+                },
+                init: null,
+                range: [4, 21],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 21 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 21],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 21 }
+            }
+        },
+        'var a: (() => number)[]': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ArrayTypeAnnotation',
+                            elementType: {
+                                type: 'FunctionTypeAnnotation',
+                                params: [],
+                                returnType: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [14, 20],
+                                    loc: {
+                                        start: { line: 1, column: 14 },
+                                        end: { line: 1, column: 20 }
+                                    }
+                                },
+                                rest: null,
+                                typeParameters: null,
+                                range: [8, 20],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 20 }
+                                }
+                            },
+                            range: [7, 23],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 23 }
+                            }
+                        },
+                        range: [5, 23],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 23 }
+                        }
+                    },
+                    range: [4, 23],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 23 }
+                    }
+                },
+                init: null,
+                range: [4, 23],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 23 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 23],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 23 }
+            }
+        },
+        'var a: typeof A[]': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ArrayTypeAnnotation',
+                            elementType: {
+                                type: 'TypeofTypeAnnotation',
+                                argument: {
+                                    type: 'GenericTypeAnnotation',
+                                    id: {
+                                        type: 'Identifier',
+                                        name: 'A',
+                                        range: [14, 15],
+                                        loc: {
+                                            start: { line: 1, column: 14 },
+                                            end: { line: 1, column: 15 }
+                                        }
+                                    },
+                                    typeParameters: null,
+                                    range: [14, 15],
+                                    loc: {
+                                        start: { line: 1, column: 14 },
+                                        end: { line: 1, column: 15 }
+                                    }
+                                },
+                                range: [7, 15],
+                                loc: {
+                                    start: { line: 1, column: 7 },
+                                    end: { line: 1, column: 15 }
+                                }
+                            },
+                            range: [7, 17],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 17 }
+                            }
+                        },
+                        range: [5, 17],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 17 }
+                        }
+                    },
+                    range: [4, 17],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 17 }
+                    }
+                },
+                init: null,
+                range: [4, 17],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 17 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 17],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 17 }
+            }
         },
     },
     'Tuples': {

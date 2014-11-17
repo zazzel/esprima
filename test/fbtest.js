@@ -158,6 +158,14 @@ module.exports = {
         'var y: return',
         'var a: { x: number, y: string }',
     ],
+    'Array Types': [
+      'var a: number[]',
+      'var a: ?number[]',
+      'var a: (?number)[]',
+      'var a: () => number[]',
+      'var a: (() => number)[]',
+      'var a: typeof A[]',
+    ],
     'Tuples': [
       'var a : [] = [];',
       'var a : [Foo<T>] = [foo];',

@@ -46,7 +46,7 @@ advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
 parseFunctionTypeParam: true,
-parsePrefixType: true,
+parsePrimaryType: true,
 parseTypeAlias: true,
 parseType: true, parseTypeAnnotatableIdentifier: true, parseTypeAnnotation: true,
 parseYieldExpression: true, parseAwaitExpression: true
@@ -4177,7 +4177,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseTypeofType() {
         var argument, marker = markerCreate();
         expectKeyword('typeof');
-        argument = parsePrefixType();
+        argument = parsePrimaryType();
         return markerApply(marker, delegate.createTypeofTypeAnnotation(
             argument
         ));
