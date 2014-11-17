@@ -20050,6 +20050,7 @@ var testFixture = {
                 ObjectTypeProperty: 'ObjectTypeProperty',
                 Program: 'Program',
                 Property: 'Property',
+                QualifiedTypeIdentifier: 'QualifiedTypeIdentifier',
                 ReturnStatement: 'ReturnStatement',
                 SequenceExpression: 'SequenceExpression',
                 SpreadElement: 'SpreadElement',

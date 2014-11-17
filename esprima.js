@@ -189,6 +189,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ObjectTypeProperty: 'ObjectTypeProperty',
         Program: 'Program',
         Property: 'Property',
+        QualifiedTypeIdentifier: 'QualifiedTypeIdentifier',
         ReturnStatement: 'ReturnStatement',
         SequenceExpression: 'SequenceExpression',
         SpreadElement: 'SpreadElement',
@@ -1962,6 +1963,14 @@ parseYieldExpression: true, parseAwaitExpression: true
                 type: Syntax.GenericTypeAnnotation,
                 id: id,
                 typeParameters: typeParameters
+            };
+        },
+
+        createQualifiedTypeIdentifier: function (qualification, id) {
+            return {
+                type: Syntax.QualifiedTypeIdentifier,
+                qualification: qualification,
+                id: id
             };
         },
 
@@ -4163,9 +4172,18 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseGenericType() {
         var marker = markerCreate(), returnType = null,
-            typeParameters = null, typeIdentifier;
+            typeParameters = null, typeIdentifier,
+            typeIdentifierMarker = markerCreate;
 
         typeIdentifier = parseVariableIdentifier();
+
+        while (match('.')) {
+            expect('.');
+            typeIdentifier = markerApply(marker, delegate.createQualifiedTypeIdentifier(
+                typeIdentifier,
+                parseVariableIdentifier()
+            ));
+        }
 
         if (match('<')) {
             typeParameters = parseTypeParameterInstantiation();

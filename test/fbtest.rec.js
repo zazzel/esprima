@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 161
+var numTests = 165
 var testFixture;
 
 var fbTestFixture = {
@@ -10517,6 +10517,363 @@ var fbTestFixture = {
             message: 'Error: Line 1: Octal literals are not allowed in strict mode.',
             description: 'Octal literals are not allowed in strict mode.'
 
+        },
+    },
+    'Qualified Generic Type': {
+        'var a : A.B': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'GenericTypeAnnotation',
+                            id: {
+                                type: 'QualifiedTypeIdentifier',
+                                qualification: {
+                                    type: 'Identifier',
+                                    name: 'A',
+                                    range: [8, 9],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 9 }
+                                    }
+                                },
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'B',
+                                    range: [10, 11],
+                                    loc: {
+                                        start: { line: 1, column: 10 },
+                                        end: { line: 1, column: 11 }
+                                    }
+                                },
+                                range: [8, 11],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 11 }
+                                }
+                            },
+                            typeParameters: null,
+                            range: [8, 11],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 11 }
+                            }
+                        },
+                        range: [6, 11],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 11 }
+                        }
+                    },
+                    range: [4, 11],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 11 }
+                    }
+                },
+                init: null,
+                range: [4, 11],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 11 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 11],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 11 }
+            }
+        },
+        'var a : A.B.C': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'GenericTypeAnnotation',
+                            id: {
+                                type: 'QualifiedTypeIdentifier',
+                                qualification: {
+                                    type: 'QualifiedTypeIdentifier',
+                                    qualification: {
+                                        type: 'Identifier',
+                                        name: 'A',
+                                        range: [8, 9],
+                                        loc: {
+                                            start: { line: 1, column: 8 },
+                                            end: { line: 1, column: 9 }
+                                        }
+                                    },
+                                    id: {
+                                        type: 'Identifier',
+                                        name: 'B',
+                                        range: [10, 11],
+                                        loc: {
+                                            start: { line: 1, column: 10 },
+                                            end: { line: 1, column: 11 }
+                                        }
+                                    },
+                                    range: [8, 11],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 11 }
+                                    }
+                                },
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'C',
+                                    range: [12, 13],
+                                    loc: {
+                                        start: { line: 1, column: 12 },
+                                        end: { line: 1, column: 13 }
+                                    }
+                                },
+                                range: [8, 13],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 13 }
+                                }
+                            },
+                            typeParameters: null,
+                            range: [8, 13],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 13 }
+                            }
+                        },
+                        range: [6, 13],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 13 }
+                        }
+                    },
+                    range: [4, 13],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 13 }
+                    }
+                },
+                init: null,
+                range: [4, 13],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 13 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 13],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 13 }
+            }
+        },
+        'var a : A.B<T>': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'GenericTypeAnnotation',
+                            id: {
+                                type: 'QualifiedTypeIdentifier',
+                                qualification: {
+                                    type: 'Identifier',
+                                    name: 'A',
+                                    range: [8, 9],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 9 }
+                                    }
+                                },
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'B',
+                                    range: [10, 11],
+                                    loc: {
+                                        start: { line: 1, column: 10 },
+                                        end: { line: 1, column: 11 }
+                                    }
+                                },
+                                range: [8, 11],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 11 }
+                                }
+                            },
+                            typeParameters: {
+                                type: 'TypeParameterInstantiation',
+                                params: [{
+                                    type: 'GenericTypeAnnotation',
+                                    id: {
+                                        type: 'Identifier',
+                                        name: 'T',
+                                        range: [12, 13],
+                                        loc: {
+                                            start: { line: 1, column: 12 },
+                                            end: { line: 1, column: 13 }
+                                        }
+                                    },
+                                    typeParameters: null,
+                                    range: [12, 13],
+                                    loc: {
+                                        start: { line: 1, column: 12 },
+                                        end: { line: 1, column: 13 }
+                                    }
+                                }],
+                                range: [11, 14],
+                                loc: {
+                                    start: { line: 1, column: 11 },
+                                    end: { line: 1, column: 14 }
+                                }
+                            },
+                            range: [8, 14],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 14 }
+                            }
+                        },
+                        range: [6, 14],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 14 }
+                        }
+                    },
+                    range: [4, 14],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 14 }
+                    }
+                },
+                init: null,
+                range: [4, 14],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 14 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 14],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 14 }
+            }
+        },
+        'var a : typeof A.B<T>': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'TypeofTypeAnnotation',
+                            argument: {
+                                type: 'GenericTypeAnnotation',
+                                id: {
+                                    type: 'QualifiedTypeIdentifier',
+                                    qualification: {
+                                        type: 'Identifier',
+                                        name: 'A',
+                                        range: [15, 16],
+                                        loc: {
+                                            start: { line: 1, column: 15 },
+                                            end: { line: 1, column: 16 }
+                                        }
+                                    },
+                                    id: {
+                                        type: 'Identifier',
+                                        name: 'B',
+                                        range: [17, 18],
+                                        loc: {
+                                            start: { line: 1, column: 17 },
+                                            end: { line: 1, column: 18 }
+                                        }
+                                    },
+                                    range: [15, 18],
+                                    loc: {
+                                        start: { line: 1, column: 15 },
+                                        end: { line: 1, column: 18 }
+                                    }
+                                },
+                                typeParameters: {
+                                    type: 'TypeParameterInstantiation',
+                                    params: [{
+                                        type: 'GenericTypeAnnotation',
+                                        id: {
+                                            type: 'Identifier',
+                                            name: 'T',
+                                            range: [19, 20],
+                                            loc: {
+                                                start: { line: 1, column: 19 },
+                                                end: { line: 1, column: 20 }
+                                            }
+                                        },
+                                        typeParameters: null,
+                                        range: [19, 20],
+                                        loc: {
+                                            start: { line: 1, column: 19 },
+                                            end: { line: 1, column: 20 }
+                                        }
+                                    }],
+                                    range: [18, 21],
+                                    loc: {
+                                        start: { line: 1, column: 18 },
+                                        end: { line: 1, column: 21 }
+                                    }
+                                },
+                                range: [15, 21],
+                                loc: {
+                                    start: { line: 1, column: 15 },
+                                    end: { line: 1, column: 21 }
+                                }
+                            },
+                            range: [8, 21],
+                            loc: {
+                                start: { line: 1, column: 8 },
+                                end: { line: 1, column: 21 }
+                            }
+                        },
+                        range: [6, 21],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 21 }
+                        }
+                    },
+                    range: [4, 21],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 21 }
+                    }
+                },
+                init: null,
+                range: [4, 21],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 21 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 21],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 21 }
+            }
         },
     },
 };
