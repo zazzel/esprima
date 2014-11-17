@@ -20054,6 +20054,7 @@ var testFixture = {
                 SequenceExpression: 'SequenceExpression',
                 SpreadElement: 'SpreadElement',
                 SpreadProperty: 'SpreadProperty',
+                StringLiteralTypeAnnotation: 'StringLiteralTypeAnnotation',
                 StringTypeAnnotation: 'StringTypeAnnotation',
                 SwitchCase: 'SwitchCase',
                 SwitchStatement: 'SwitchStatement',

@@ -207,4 +207,11 @@ module.exports = {
         'var a : { <T>(x: T): number; }',
         'interface A { (): number; }',
     ],
+    'String Literal Types': [
+        'var a: "duck"',
+        'var a: \'duck\'',
+    ],
+    'Invalid String Literal Types': [
+        'var a: "\\01"',
+    ],
 };

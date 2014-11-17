@@ -193,6 +193,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         SequenceExpression: 'SequenceExpression',
         SpreadElement: 'SpreadElement',
         SpreadProperty: 'SpreadProperty',
+        StringLiteralTypeAnnotation: 'StringLiteralTypeAnnotation',
         StringTypeAnnotation: 'StringTypeAnnotation',
         SwitchCase: 'SwitchCase',
         SwitchStatement: 'SwitchStatement',
@@ -1999,6 +2000,14 @@ parseYieldExpression: true, parseAwaitExpression: true
         createStringTypeAnnotation: function () {
             return {
                 type: Syntax.StringTypeAnnotation
+            };
+        },
+
+        createStringLiteralTypeAnnotation: function (token) {
+            return {
+                type: Syntax.StringLiteralTypeAnnotation,
+                value: token.value,
+                raw: source.slice(token.range[0], token.range[1])
             };
         },
 
@@ -4334,6 +4343,14 @@ parseYieldExpression: true, parseAwaitExpression: true
                 return markerApply(marker, parseTypeofType());
             }
             break;
+        case Token.StringLiteral:
+            token = lex();
+            if (token.octal) {
+                throwError(token, Messages.StrictOctalLiteral);
+            }
+            return markerApply(marker, delegate.createStringLiteralTypeAnnotation(
+                token
+            ));
         }
 
         throwUnexpected(lookahead);

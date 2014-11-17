@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 158
+var numTests = 161
 var testFixture;
 
 var fbTestFixture = {
@@ -10415,6 +10415,108 @@ var fbTestFixture = {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 27 }
             }
+        },
+    },
+    'String Literal Types': {
+        'var a: "duck"': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'StringLiteralTypeAnnotation',
+                            value: 'duck',
+                            raw: '"duck"',
+                            range: [7, 13],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 13 }
+                            }
+                        },
+                        range: [5, 13],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 13 }
+                        }
+                    },
+                    range: [4, 13],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 13 }
+                    }
+                },
+                init: null,
+                range: [4, 13],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 13 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 13],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 13 }
+            }
+        },
+        'var a: \'duck\'': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'StringLiteralTypeAnnotation',
+                            value: 'duck',
+                            raw: '\'duck\'',
+                            range: [7, 13],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 13 }
+                            }
+                        },
+                        range: [5, 13],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 13 }
+                        }
+                    },
+                    range: [4, 13],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 13 }
+                    }
+                },
+                init: null,
+                range: [4, 13],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 13 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 13],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 13 }
+            }
+        },
+    },
+    'Invalid String Literal Types': {
+        'var a: "\\01"': {
+            index: 7,
+            lineNumber: 1,
+            column: 8,
+            message: 'Error: Line 1: Octal literals are not allowed in strict mode.',
+            description: 'Octal literals are not allowed in strict mode.'
+
         },
     },
 };
