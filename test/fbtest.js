@@ -95,7 +95,11 @@ module.exports = {
         'function foo<T,S>() {}',
         'a=function<T,S>() {}',
         'a={set fooProp(value:number){}}',
+        'a={set fooProp(value:number):void{}}',
+        'a={get fooProp():number{}}',
         'class Foo {set fooProp(value:number){}}',
+        'class Foo {set fooProp(value:number):void{}}',
+        'class Foo {get fooProp():number{}}',
         'var numVal:number;',
         'var numVal:number = otherNumVal;',
         'var a: {numVal: number};',
@@ -137,7 +141,9 @@ module.exports = {
         'var a: number[]',
         'var a: ?string[]',
         'var a: Promise<bool>[]',
-        'var a:(...rest:Array<number>) => number'
+        'var a:(...rest:Array<number>) => number',
+        'var identity: <T>(x: T) => T',
+        'var identity: <T>(x: T, ...y:T[]) => T'
     ],
     'Invalid Type Annotations': [
         'function foo(callback:) {}',
@@ -151,6 +157,20 @@ module.exports = {
         'var x: (number) => string',
         'var y: return',
         'var a: { x: number, y: string }',
+    ],
+    'Array Types': [
+      'var a: number[]',
+      'var a: ?number[]',
+      'var a: (?number)[]',
+      'var a: () => number[]',
+      'var a: (() => number)[]',
+      'var a: typeof A[]',
+    ],
+    'Tuples': [
+      'var a : [] = [];',
+      'var a : [Foo<T>] = [foo];',
+      'var a : [number,] = [123,];',
+      'var a : [number, string] = [123, "duck"];'
     ],
     'Type Alias': [
         'type FBID = number;',
@@ -179,5 +199,25 @@ module.exports = {
     'Invalid Interfaces': [
         'interface {}',
         'interface A extends {}',
+    ],
+    'Call Properties': [
+        'var a : { (): number }',
+        'var a : { (): number; }',
+        'var a : { (): number; y: string; (x: string): string }',
+        'var a : { <T>(x: T): number; }',
+        'interface A { (): number; }',
+    ],
+    'String Literal Types': [
+        'function createElement(tagName: "div"): HTMLDivElement {}',
+        'function createElement(tagName: \'div\'): HTMLDivElement {}',
+    ],
+    'Invalid String Literal Types': [
+        'var a: "\\01"',
+    ],
+    'Qualified Generic Type': [
+        'var a : A.B',
+        'var a : A.B.C',
+        'var a : A.B<T>',
+        'var a : typeof A.B<T>',
     ],
 };

@@ -46,9 +46,9 @@ advanceXJSChild: true, isXJSIdentifierStart: true, isXJSIdentifierPart: true,
 scanXJSStringLiteral: true, scanXJSIdentifier: true,
 parseXJSAttributeValue: true, parseXJSChild: true, parseXJSElement: true, parseXJSExpressionContainer: true, parseXJSEmptyExpression: true,
 parseFunctionTypeParam: true,
-parsePrefixType: true,
+parsePrimaryType: true,
 parseTypeAlias: true,
-parseType: true, parseTypeAnnotatableIdentifier: true,
+parseType: true, parseTypeAnnotatableIdentifier: true, parseTypeAnnotation: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -189,10 +189,12 @@ parseYieldExpression: true, parseAwaitExpression: true
         ObjectTypeProperty: 'ObjectTypeProperty',
         Program: 'Program',
         Property: 'Property',
+        QualifiedTypeIdentifier: 'QualifiedTypeIdentifier',
         ReturnStatement: 'ReturnStatement',
         SequenceExpression: 'SequenceExpression',
         SpreadElement: 'SpreadElement',
         SpreadProperty: 'SpreadProperty',
+        StringLiteralTypeAnnotation: 'StringLiteralTypeAnnotation',
         StringTypeAnnotation: 'StringTypeAnnotation',
         SwitchCase: 'SwitchCase',
         SwitchStatement: 'SwitchStatement',
@@ -201,6 +203,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         TemplateLiteral: 'TemplateLiteral',
         ThisExpression: 'ThisExpression',
         ThrowStatement: 'ThrowStatement',
+        TupleTypeAnnotation: 'TupleTypeAnnotation',
         TryStatement: 'TryStatement',
         TypeAlias: 'TypeAlias',
         TypeAnnotation: 'TypeAnnotation',
@@ -296,7 +299,6 @@ parseYieldExpression: true, parseAwaitExpression: true
         InvalidXJSAttributeValue: 'XJS value should be either an expression or a quoted XJS text',
         ExpectedXJSClosingTag: 'Expected corresponding XJS closing tag for %0',
         AdjacentXJSElements: 'Adjacent XJS elements must be wrapped in an enclosing tag',
-        DuplicateIndexer: 'An interface or object type can only have a single indexer property.',
         ConfusedAboutFunctionType: 'Unexpected token =>. It looks like ' +
             'you are trying to write a function type, but you ended up ' +
             'writing a grouped type followed by an =>, which is a syntax ' +
@@ -1964,6 +1966,14 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
+        createQualifiedTypeIdentifier: function (qualification, id) {
+            return {
+                type: Syntax.QualifiedTypeIdentifier,
+                qualification: qualification,
+                id: id
+            };
+        },
+
         createTypeParameterDeclaration: function (params) {
             return {
                 type: Syntax.TypeParameterDeclaration,
@@ -2002,6 +2012,14 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
+        createStringLiteralTypeAnnotation: function (token) {
+            return {
+                type: Syntax.StringLiteralTypeAnnotation,
+                value: token.value,
+                raw: source.slice(token.range[0], token.range[1])
+            };
+        },
+
         createVoidTypeAnnotation: function () {
             return {
                 type: Syntax.VoidTypeAnnotation
@@ -2015,11 +2033,19 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createObjectTypeAnnotation: function (properties, indexer) {
+        createTupleTypeAnnotation: function (types) {
+            return {
+                type: Syntax.TupleTypeAnnotation,
+                types: types
+            };
+        },
+
+        createObjectTypeAnnotation: function (properties, indexers, callProperties) {
             return {
                 type: Syntax.ObjectTypeAnnotation,
                 properties: properties,
-                indexer: indexer
+                indexers: indexers,
+                callProperties: callProperties
             };
         },
 
@@ -2934,7 +2960,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseObjectProperty() {
         var token, key, id, value, param, expr, computed,
-            marker = markerCreate();
+            marker = markerCreate(), returnType;
 
         token = lookahead;
         computed = (token.value === '[');
@@ -2983,6 +3009,9 @@ parseYieldExpression: true, parseAwaitExpression: true
 
                 expect('(');
                 expect(')');
+                if (match(':')) {
+                    returnType = parseTypeAnnotation();
+                }
 
                 return markerApply(
                     marker,
@@ -2991,7 +3020,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                         key,
                         parsePropertyFunction({
                             generator: false,
-                            async: false
+                            async: false,
+                            returnType: returnType
                         }),
                         false,
                         false,
@@ -3008,6 +3038,9 @@ parseYieldExpression: true, parseAwaitExpression: true
                 token = lookahead;
                 param = [ parseTypeAnnotatableIdentifier() ];
                 expect(')');
+                if (match(':')) {
+                    returnType = parseTypeAnnotation();
+                }
 
                 return markerApply(
                     marker,
@@ -3018,7 +3051,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                             params: param,
                             generator: false,
                             async: false,
-                            name: token
+                            name: token,
+                            returnType: returnType
                         }),
                         false,
                         false,
@@ -4041,10 +4075,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseObjectTypeMethod(marker, key) {
-        var optional = false, params = [], rest = null, returnType,
-            typeParameters = null, value;
-
+    function parseObjectTypeMethodish(marker) {
+        var params = [], rest = null, returnType, typeParameters = null;
         if (match('<')) {
             typeParameters = parseTypeParameterDeclaration();
         }
@@ -4065,12 +4097,18 @@ parseYieldExpression: true, parseAwaitExpression: true
         expect(':');
         returnType = parseType();
 
-        value = markerApply(marker, delegate.createFunctionTypeAnnotation(
+        return markerApply(marker, delegate.createFunctionTypeAnnotation(
             params,
             returnType,
             rest,
             typeParameters
         ));
+    }
+
+    function parseObjectTypeMethod(marker, key) {
+        var optional = false, value;
+        value = parseObjectTypeMethodish(marker);
+
         return markerApply(marker, delegate.createObjectTypeProperty(
             key,
             value,
@@ -4078,19 +4116,23 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
+    function parseObjectTypeCallProperty(marker) {
+        return parseObjectTypeMethodish(marker);
+    }
+
     function parseObjectType() {
-        var indexer = null, marker, optional = false, properties = [], property,
-            propertyKey, propertyTypeAnnotation;
+        var callProperties = [], indexers = [], marker, optional = false,
+            properties = [], property, propertyKey, propertyTypeAnnotation;
 
         expect('{');
 
         while (!match('}')) {
 
             if (match('[')) {
-                if (indexer) {
-                    throwError({}, Messages.DuplicateIndexer);
-                }
-                indexer = parseObjectTypeIndexer();
+                indexers.push(parseObjectTypeIndexer());
+            } else if (match('(') || match('<')) {
+                marker = markerCreate();
+                callProperties.push(parseObjectTypeCallProperty(marker));
             } else {
                 marker = markerCreate();
                 propertyKey = parseObjectPropertyKey();
@@ -4123,15 +4165,25 @@ parseYieldExpression: true, parseAwaitExpression: true
 
         return delegate.createObjectTypeAnnotation(
             properties,
-            indexer
+            indexers,
+            callProperties
         );
     }
 
     function parseGenericType() {
         var marker = markerCreate(), returnType = null,
-            typeParameters = null, typeIdentifier;
+            typeParameters = null, typeIdentifier,
+            typeIdentifierMarker = markerCreate;
 
         typeIdentifier = parseVariableIdentifier();
+
+        while (match('.')) {
+            expect('.');
+            typeIdentifier = markerApply(marker, delegate.createQualifiedTypeIdentifier(
+                typeIdentifier,
+                parseVariableIdentifier()
+            ));
+        }
 
         if (match('<')) {
             typeParameters = parseTypeParameterInstantiation();
@@ -4152,9 +4204,26 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseTypeofType() {
         var argument, marker = markerCreate();
         expectKeyword('typeof');
-        argument = parsePrefixType();
+        argument = parsePrimaryType();
         return markerApply(marker, delegate.createTypeofTypeAnnotation(
             argument
+        ));
+    }
+
+    function parseTupleType() {
+        var marker = markerCreate(), types = [];
+        expect('[');
+        // We allow trailing commas
+        while (index < length && !match(']')) {
+            types.push(parseType());
+            if (match(']')) {
+                break;
+            }
+            expect(',');
+        }
+        expect(']');
+        return markerApply(marker, delegate.createTupleTypeAnnotation(
+            types
         ));
     }
 
@@ -4204,6 +4273,35 @@ parseYieldExpression: true, parseAwaitExpression: true
             switch (lookahead.value) {
             case '{':
                 return markerApply(marker, parseObjectType());
+            case '[':
+                return parseTupleType();
+            case '<':
+                typeParameters = parseTypeParameterDeclaration();
+                expect('(');
+                params = [];
+                while (lookahead.type === Token.Identifier) {
+                    params.push(parseFunctionTypeParam());
+                    if (!match(')')) {
+                        expect(',');
+                    }
+                }
+
+                if (match('...')) {
+                    lex();
+                    rest = parseFunctionTypeParam();
+                }
+                expect(')');
+
+                expect('=>');
+
+                returnType = parseType();
+
+                return markerApply(marker, delegate.createFunctionTypeAnnotation(
+                    params,
+                    returnType,
+                    rest,
+                    typeParameters
+                ));
             case '(':
                 lex();
                 // Check to see if this is actually a grouped type
@@ -4263,6 +4361,14 @@ parseYieldExpression: true, parseAwaitExpression: true
                 return markerApply(marker, parseTypeofType());
             }
             break;
+        case Token.StringLiteral:
+            token = lex();
+            if (token.octal) {
+                throwError(token, Messages.StrictOctalLiteral);
+            }
+            return markerApply(marker, delegate.createStringLiteralTypeAnnotation(
+                token
+            ));
         }
 
         throwUnexpected(lookahead);
@@ -5672,7 +5778,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseMethodDefinition(existingPropNames, key, isStatic, generator, computed) {
         var token, param, propType, isValidDuplicateProp = false,
-            isAsync, typeParameters, tokenValue,
+            isAsync, typeParameters, tokenValue, returnType,
             annotationMarker;
 
         propType = isStatic ? ClassPropertyType.static : ClassPropertyType.prototype;
@@ -5711,11 +5817,14 @@ parseYieldExpression: true, parseAwaitExpression: true
 
             expect('(');
             expect(')');
+            if (match(':')) {
+                returnType = parseTypeAnnotation();
+            }
             return delegate.createMethodDefinition(
                 propType,
                 'get',
                 key,
-                parsePropertyFunction({ generator: false })
+                parsePropertyFunction({ generator: false, returnType: returnType })
             );
         }
         if (tokenValue === 'set' && !match('(')) {
@@ -5743,11 +5852,19 @@ parseYieldExpression: true, parseAwaitExpression: true
             token = lookahead;
             param = [ parseTypeAnnotatableIdentifier() ];
             expect(')');
+            if (match(':')) {
+                returnType = parseTypeAnnotation();
+            }
             return delegate.createMethodDefinition(
                 propType,
                 'set',
                 key,
-                parsePropertyFunction({ params: param, generator: false, name: token })
+                parsePropertyFunction({
+                    params: param,
+                    generator: false,
+                    name: token,
+                    returnType: returnType
+                })
             );
         }
 
