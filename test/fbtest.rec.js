@@ -10418,94 +10418,170 @@ var fbTestFixture = {
         },
     },
     'String Literal Types': {
-        'var a: "duck"': {
-            type: 'VariableDeclaration',
-            declarations: [{
-                type: 'VariableDeclarator',
-                id: {
-                    type: 'Identifier',
-                    name: 'a',
+        'function createElement(tagName: "div"): HTMLDivElement {}': {
+            type: 'FunctionDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'createElement',
+                range: [9, 22],
+                loc: {
+                    start: { line: 1, column: 9 },
+                    end: { line: 1, column: 22 }
+                }
+            },
+            params: [{
+                type: 'Identifier',
+                name: 'tagName',
+                typeAnnotation: {
+                    type: 'TypeAnnotation',
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
-                        typeAnnotation: {
-                            type: 'StringLiteralTypeAnnotation',
-                            value: 'duck',
-                            raw: '"duck"',
-                            range: [7, 13],
-                            loc: {
-                                start: { line: 1, column: 7 },
-                                end: { line: 1, column: 13 }
-                            }
-                        },
-                        range: [5, 13],
+                        type: 'StringLiteralTypeAnnotation',
+                        value: 'div',
+                        raw: '"div"',
+                        range: [32, 37],
                         loc: {
-                            start: { line: 1, column: 5 },
-                            end: { line: 1, column: 13 }
+                            start: { line: 1, column: 32 },
+                            end: { line: 1, column: 37 }
                         }
                     },
-                    range: [4, 13],
+                    range: [30, 37],
                     loc: {
-                        start: { line: 1, column: 4 },
-                        end: { line: 1, column: 13 }
+                        start: { line: 1, column: 30 },
+                        end: { line: 1, column: 37 }
                     }
                 },
-                init: null,
-                range: [4, 13],
+                range: [23, 37],
                 loc: {
-                    start: { line: 1, column: 4 },
-                    end: { line: 1, column: 13 }
+                    start: { line: 1, column: 23 },
+                    end: { line: 1, column: 37 }
                 }
             }],
-            kind: 'var',
-            range: [0, 13],
+            defaults: [],
+            body: {
+                type: 'BlockStatement',
+                body: [],
+                range: [55, 57],
+                loc: {
+                    start: { line: 1, column: 55 },
+                    end: { line: 1, column: 57 }
+                }
+            },
+            rest: null,
+            generator: false,
+            expression: false,
+            returnType: {
+                type: 'TypeAnnotation',
+                typeAnnotation: {
+                    type: 'GenericTypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'HTMLDivElement',
+                        range: [40, 54],
+                        loc: {
+                            start: { line: 1, column: 40 },
+                            end: { line: 1, column: 54 }
+                        }
+                    },
+                    typeParameters: null,
+                    range: [40, 54],
+                    loc: {
+                        start: { line: 1, column: 40 },
+                        end: { line: 1, column: 54 }
+                    }
+                },
+                range: [38, 54],
+                loc: {
+                    start: { line: 1, column: 38 },
+                    end: { line: 1, column: 54 }
+                }
+            },
+            range: [0, 57],
             loc: {
                 start: { line: 1, column: 0 },
-                end: { line: 1, column: 13 }
+                end: { line: 1, column: 57 }
             }
         },
-        'var a: \'duck\'': {
-            type: 'VariableDeclaration',
-            declarations: [{
-                type: 'VariableDeclarator',
-                id: {
-                    type: 'Identifier',
-                    name: 'a',
+        'function createElement(tagName: \'div\'): HTMLDivElement {}': {
+            type: 'FunctionDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'createElement',
+                range: [9, 22],
+                loc: {
+                    start: { line: 1, column: 9 },
+                    end: { line: 1, column: 22 }
+                }
+            },
+            params: [{
+                type: 'Identifier',
+                name: 'tagName',
+                typeAnnotation: {
+                    type: 'TypeAnnotation',
                     typeAnnotation: {
-                        type: 'TypeAnnotation',
-                        typeAnnotation: {
-                            type: 'StringLiteralTypeAnnotation',
-                            value: 'duck',
-                            raw: '\'duck\'',
-                            range: [7, 13],
-                            loc: {
-                                start: { line: 1, column: 7 },
-                                end: { line: 1, column: 13 }
-                            }
-                        },
-                        range: [5, 13],
+                        type: 'StringLiteralTypeAnnotation',
+                        value: 'div',
+                        raw: '\'div\'',
+                        range: [32, 37],
                         loc: {
-                            start: { line: 1, column: 5 },
-                            end: { line: 1, column: 13 }
+                            start: { line: 1, column: 32 },
+                            end: { line: 1, column: 37 }
                         }
                     },
-                    range: [4, 13],
+                    range: [30, 37],
                     loc: {
-                        start: { line: 1, column: 4 },
-                        end: { line: 1, column: 13 }
+                        start: { line: 1, column: 30 },
+                        end: { line: 1, column: 37 }
                     }
                 },
-                init: null,
-                range: [4, 13],
+                range: [23, 37],
                 loc: {
-                    start: { line: 1, column: 4 },
-                    end: { line: 1, column: 13 }
+                    start: { line: 1, column: 23 },
+                    end: { line: 1, column: 37 }
                 }
             }],
-            kind: 'var',
-            range: [0, 13],
+            defaults: [],
+            body: {
+                type: 'BlockStatement',
+                body: [],
+                range: [55, 57],
+                loc: {
+                    start: { line: 1, column: 55 },
+                    end: { line: 1, column: 57 }
+                }
+            },
+            rest: null,
+            generator: false,
+            expression: false,
+            returnType: {
+                type: 'TypeAnnotation',
+                typeAnnotation: {
+                    type: 'GenericTypeAnnotation',
+                    id: {
+                        type: 'Identifier',
+                        name: 'HTMLDivElement',
+                        range: [40, 54],
+                        loc: {
+                            start: { line: 1, column: 40 },
+                            end: { line: 1, column: 54 }
+                        }
+                    },
+                    typeParameters: null,
+                    range: [40, 54],
+                    loc: {
+                        start: { line: 1, column: 40 },
+                        end: { line: 1, column: 54 }
+                    }
+                },
+                range: [38, 54],
+                loc: {
+                    start: { line: 1, column: 38 },
+                    end: { line: 1, column: 54 }
+                }
+            },
+            range: [0, 57],
             loc: {
                 start: { line: 1, column: 0 },
-                end: { line: 1, column: 13 }
+                end: { line: 1, column: 57 }
             }
         },
     },

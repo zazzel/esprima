@@ -208,8 +208,8 @@ module.exports = {
         'interface A { (): number; }',
     ],
     'String Literal Types': [
-        'var a: "duck"',
-        'var a: \'duck\'',
+        'function createElement(tagName: "div"): HTMLDivElement {}',
+        'function createElement(tagName: \'div\'): HTMLDivElement {}',
     ],
     'Invalid String Literal Types': [
         'var a: "\\01"',
