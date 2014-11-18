@@ -242,13 +242,17 @@ module.exports = {
     ],
     'Declare Module': [
         'declare module A {}',
-        'declare module A { declare module B {} }',
-        'declare module A { export default 1 +1; }',
         'declare module "./a/b.js" {}',
+        'declare module A { declare var x: number; }',
+        'declare module A { declare function foo(): number; }',
+        'declare module A { declare class B { foo(): number; } }',
     ],
     'Invalid Declare Module': [
         'declare Module A {}',
         'declare module {}',
+        'declare module A { declare module B {} }',
+        'declare module A { export default 1 +1; }',
+        'declare module A { function foo() {} }',
         '"use strict"; declare module "\\01" {}',
     ],
 };

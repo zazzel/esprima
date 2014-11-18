@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 188
+var numTests = 192
 var testFixture;
 
 var fbTestFixture = {
@@ -11793,122 +11793,6 @@ var fbTestFixture = {
                 end: { line: 1, column: 19 }
             }
         },
-        'declare module A { declare module B {} }': {
-            type: 'DeclareModule',
-            id: {
-                type: 'Identifier',
-                name: 'A',
-                range: [15, 16],
-                loc: {
-                    start: { line: 1, column: 15 },
-                    end: { line: 1, column: 16 }
-                }
-            },
-            body: {
-                type: 'BlockStatement',
-                body: [{
-                    type: 'DeclareModule',
-                    id: {
-                        type: 'Identifier',
-                        name: 'B',
-                        range: [34, 35],
-                        loc: {
-                            start: { line: 1, column: 34 },
-                            end: { line: 1, column: 35 }
-                        }
-                    },
-                    body: {
-                        type: 'BlockStatement',
-                        body: [],
-                        range: [36, 38],
-                        loc: {
-                            start: { line: 1, column: 36 },
-                            end: { line: 1, column: 38 }
-                        }
-                    },
-                    range: [19, 38],
-                    loc: {
-                        start: { line: 1, column: 19 },
-                        end: { line: 1, column: 38 }
-                    }
-                }],
-                range: [17, 40],
-                loc: {
-                    start: { line: 1, column: 17 },
-                    end: { line: 1, column: 40 }
-                }
-            },
-            range: [0, 40],
-            loc: {
-                start: { line: 1, column: 0 },
-                end: { line: 1, column: 40 }
-            }
-        },
-        'declare module A { export default 1 +1; }': {
-            type: 'DeclareModule',
-            id: {
-                type: 'Identifier',
-                name: 'A',
-                range: [15, 16],
-                loc: {
-                    start: { line: 1, column: 15 },
-                    end: { line: 1, column: 16 }
-                }
-            },
-            body: {
-                type: 'BlockStatement',
-                body: [{
-                    type: 'ExportDeclaration',
-                    'default': true,
-                    declaration: {
-                        type: 'BinaryExpression',
-                        operator: '+',
-                        left: {
-                            type: 'Literal',
-                            value: 1,
-                            raw: '1',
-                            range: [34, 35],
-                            loc: {
-                                start: { line: 1, column: 34 },
-                                end: { line: 1, column: 35 }
-                            }
-                        },
-                        right: {
-                            type: 'Literal',
-                            value: 1,
-                            raw: '1',
-                            range: [37, 38],
-                            loc: {
-                                start: { line: 1, column: 37 },
-                                end: { line: 1, column: 38 }
-                            }
-                        },
-                        range: [34, 38],
-                        loc: {
-                            start: { line: 1, column: 34 },
-                            end: { line: 1, column: 38 }
-                        }
-                    },
-                    specifiers: [],
-                    source: null,
-                    range: [19, 39],
-                    loc: {
-                        start: { line: 1, column: 19 },
-                        end: { line: 1, column: 39 }
-                    }
-                }],
-                range: [17, 41],
-                loc: {
-                    start: { line: 1, column: 17 },
-                    end: { line: 1, column: 41 }
-                }
-            },
-            range: [0, 41],
-            loc: {
-                start: { line: 1, column: 0 },
-                end: { line: 1, column: 41 }
-            }
-        },
         'declare module "./a/b.js" {}': {
             type: 'DeclareModule',
             id: {
@@ -11936,6 +11820,224 @@ var fbTestFixture = {
                 end: { line: 1, column: 28 }
             }
         },
+        'declare module A { declare var x: number; }': {
+            type: 'DeclareModule',
+            id: {
+                type: 'Identifier',
+                name: 'A',
+                range: [15, 16],
+                loc: {
+                    start: { line: 1, column: 15 },
+                    end: { line: 1, column: 16 }
+                }
+            },
+            body: {
+                type: 'BlockStatement',
+                body: [{
+                    type: 'DeclareVariable',
+                    id: {
+                        type: 'Identifier',
+                        name: 'x',
+                        typeAnnotation: {
+                            type: 'TypeAnnotation',
+                            typeAnnotation: {
+                                type: 'NumberTypeAnnotation',
+                                range: [34, 40],
+                                loc: {
+                                    start: { line: 1, column: 34 },
+                                    end: { line: 1, column: 40 }
+                                }
+                            },
+                            range: [32, 40],
+                            loc: {
+                                start: { line: 1, column: 32 },
+                                end: { line: 1, column: 40 }
+                            }
+                        },
+                        range: [31, 40],
+                        loc: {
+                            start: { line: 1, column: 31 },
+                            end: { line: 1, column: 40 }
+                        }
+                    },
+                    range: [19, 41],
+                    loc: {
+                        start: { line: 1, column: 19 },
+                        end: { line: 1, column: 41 }
+                    }
+                }],
+                range: [17, 43],
+                loc: {
+                    start: { line: 1, column: 17 },
+                    end: { line: 1, column: 43 }
+                }
+            },
+            range: [0, 43],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 43 }
+            }
+        },
+        'declare module A { declare function foo(): number; }': {
+            type: 'DeclareModule',
+            id: {
+                type: 'Identifier',
+                name: 'A',
+                range: [15, 16],
+                loc: {
+                    start: { line: 1, column: 15 },
+                    end: { line: 1, column: 16 }
+                }
+            },
+            body: {
+                type: 'BlockStatement',
+                body: [{
+                    type: 'DeclareFunction',
+                    id: {
+                        type: 'Identifier',
+                        name: 'foo',
+                        typeAnnotation: {
+                            type: 'TypeAnnotation',
+                            typeAnnotation: {
+                                type: 'FunctionTypeAnnotation',
+                                params: [],
+                                returnType: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [43, 49],
+                                    loc: {
+                                        start: { line: 1, column: 43 },
+                                        end: { line: 1, column: 49 }
+                                    }
+                                },
+                                rest: null,
+                                typeParameters: null,
+                                range: [39, 49],
+                                loc: {
+                                    start: { line: 1, column: 39 },
+                                    end: { line: 1, column: 49 }
+                                }
+                            },
+                            range: [39, 49],
+                            loc: {
+                                start: { line: 1, column: 39 },
+                                end: { line: 1, column: 49 }
+                            }
+                        },
+                        range: [36, 49],
+                        loc: {
+                            start: { line: 1, column: 36 },
+                            end: { line: 1, column: 49 }
+                        }
+                    },
+                    range: [19, 50],
+                    loc: {
+                        start: { line: 1, column: 19 },
+                        end: { line: 1, column: 50 }
+                    }
+                }],
+                range: [17, 52],
+                loc: {
+                    start: { line: 1, column: 17 },
+                    end: { line: 1, column: 52 }
+                }
+            },
+            range: [0, 52],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 52 }
+            }
+        },
+        'declare module A { declare class B { foo(): number; } }': {
+            type: 'DeclareModule',
+            id: {
+                type: 'Identifier',
+                name: 'A',
+                range: [15, 16],
+                loc: {
+                    start: { line: 1, column: 15 },
+                    end: { line: 1, column: 16 }
+                }
+            },
+            body: {
+                type: 'BlockStatement',
+                body: [{
+                    type: 'DeclareClass',
+                    id: {
+                        type: 'Identifier',
+                        name: 'B',
+                        range: [33, 34],
+                        loc: {
+                            start: { line: 1, column: 33 },
+                            end: { line: 1, column: 34 }
+                        }
+                    },
+                    typeParameters: null,
+                    body: {
+                        type: 'ObjectTypeAnnotation',
+                        properties: [{
+                            type: 'ObjectTypeProperty',
+                            key: {
+                                type: 'Identifier',
+                                name: 'foo',
+                                range: [37, 40],
+                                loc: {
+                                    start: { line: 1, column: 37 },
+                                    end: { line: 1, column: 40 }
+                                }
+                            },
+                            value: {
+                                type: 'FunctionTypeAnnotation',
+                                params: [],
+                                returnType: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [44, 50],
+                                    loc: {
+                                        start: { line: 1, column: 44 },
+                                        end: { line: 1, column: 50 }
+                                    }
+                                },
+                                rest: null,
+                                typeParameters: null,
+                                range: [37, 50],
+                                loc: {
+                                    start: { line: 1, column: 37 },
+                                    end: { line: 1, column: 50 }
+                                }
+                            },
+                            optional: false,
+                            range: [37, 50],
+                            loc: {
+                                start: { line: 1, column: 37 },
+                                end: { line: 1, column: 50 }
+                            }
+                        }],
+                        indexers: [],
+                        callProperties: [],
+                        range: [35, 53],
+                        loc: {
+                            start: { line: 1, column: 35 },
+                            end: { line: 1, column: 53 }
+                        }
+                    },
+                    'extends': [],
+                    range: [19, 53],
+                    loc: {
+                        start: { line: 1, column: 19 },
+                        end: { line: 1, column: 53 }
+                    }
+                }],
+                range: [17, 55],
+                loc: {
+                    start: { line: 1, column: 17 },
+                    end: { line: 1, column: 55 }
+                }
+            },
+            range: [0, 55],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 55 }
+            }
+        },
     },
     'Invalid Declare Module': {
         'declare Module A {}': {
@@ -11952,6 +12054,30 @@ var fbTestFixture = {
             column: 16,
             message: 'Error: Line 1: Unexpected token {',
             description: 'Unexpected token {'
+
+        },
+        'declare module A { declare module B {} }': {
+            index: 19,
+            lineNumber: 1,
+            column: 20,
+            message: 'Error: Line 1: Unexpected identifier',
+            description: 'Unexpected identifier'
+
+        },
+        'declare module A { export default 1 +1; }': {
+            index: 19,
+            lineNumber: 1,
+            column: 20,
+            message: 'Error: Line 1: Unexpected reserved word',
+            description: 'Unexpected reserved word'
+
+        },
+        'declare module A { function foo() {} }': {
+            index: 19,
+            lineNumber: 1,
+            column: 20,
+            message: 'Error: Line 1: Unexpected token function',
+            description: 'Unexpected token function'
 
         },
         '"use strict"; declare module "\\01" {}': {

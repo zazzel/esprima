@@ -7186,7 +7186,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseDeclareModule() {
-        var body = [], bodyMarker, id, idMarker, marker = markerCreate();
+        var body = [], bodyMarker, id, idMarker, marker = markerCreate(), token;
         expectContextualKeyword('declare');
         expectContextualKeyword('module');
 
@@ -7203,7 +7203,20 @@ parseYieldExpression: true, parseAwaitExpression: true
         bodyMarker = markerCreate();
         expect('{');
         while (index < length && !match('}')) {
-            body.push(parseProgramElement());
+            token = lookahead2();
+            switch (token.value) {
+            case 'class':
+                body.push(parseDeclareClass());
+                break;
+            case 'function':
+                body.push(parseDeclareFunction());
+                break;
+            case 'var':
+                body.push(parseDeclareVariable());
+                break;
+            default:
+                throwUnexpected(lookahead);
+            }
         }
         expect('}');
 
