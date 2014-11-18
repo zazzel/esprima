@@ -35,6 +35,8 @@
 throwError: true, generateStatement: true, peek: true,
 parseAssignmentExpression: true, parseBlock: true,
 parseClassExpression: true, parseClassDeclaration: true, parseExpression: true,
+parseDeclareClass: true, parseDeclareFunction: true,
+parseDeclareModule: true, parseDeclareVariable: true,
 parseForStatement: true,
 parseFunctionDeclaration: true, parseFunctionExpression: true,
 parseFunctionSourceElements: true, parseVariableIdentifier: true,
@@ -150,6 +152,10 @@ parseYieldExpression: true, parseAwaitExpression: true
         ConditionalExpression: 'ConditionalExpression',
         ContinueStatement: 'ContinueStatement',
         DebuggerStatement: 'DebuggerStatement',
+        DeclareClass: 'DeclareClass',
+        DeclareFunction: 'DeclareFunction',
+        DeclareModule: 'DeclareModule',
+        DeclareVariable: 'DeclareVariable',
         DoWhileStatement: 'DoWhileStatement',
         EmptyStatement: 'EmptyStatement',
         ExportDeclaration: 'ExportDeclaration',
@@ -185,6 +191,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         ObjectExpression: 'ObjectExpression',
         ObjectPattern: 'ObjectPattern',
         ObjectTypeAnnotation: 'ObjectTypeAnnotation',
+        ObjectTypeCallProperty: 'ObjectTypeCallProperty',
         ObjectTypeIndexer: 'ObjectTypeIndexer',
         ObjectTypeProperty: 'ObjectTypeProperty',
         Program: 'Program',
@@ -2049,21 +2056,31 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createObjectTypeIndexer: function (id, key, value) {
+        createObjectTypeIndexer: function (id, key, value, isStatic) {
             return {
                 type: Syntax.ObjectTypeIndexer,
                 id: id,
                 key: key,
-                value: value
+                value: value,
+                static: isStatic
             };
         },
 
-        createObjectTypeProperty: function (key, value, optional) {
+        createObjectTypeCallProperty: function (value, isStatic) {
+            return {
+                type: Syntax.ObjectTypeCallProperty,
+                value: value,
+                static: isStatic
+            };
+        },
+
+        createObjectTypeProperty: function (key, value, optional, isStatic) {
             return {
                 type: Syntax.ObjectTypeProperty,
                 key: key,
                 value: value,
-                optional: optional
+                optional: optional,
+                static: isStatic
             };
         },
 
@@ -2105,6 +2122,28 @@ parseYieldExpression: true, parseAwaitExpression: true
                 type: Syntax.InterfaceExtends,
                 id: id,
                 typeParameters: typeParameters
+            };
+        },
+
+        createDeclareFunction: function (id) {
+            return {
+                type: Syntax.DeclareFunction,
+                id: id
+            };
+        },
+
+        createDeclareVariable: function (id) {
+            return {
+                type: Syntax.DeclareVariable,
+                id: id
+            };
+        },
+
+        createDeclareModule: function (id, body) {
+            return {
+                type: Syntax.DeclareModule,
+                id: id,
+                body: body
             };
         },
 
@@ -2434,12 +2473,13 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createClassProperty: function (key, typeAnnotation, computed) {
+        createClassProperty: function (key, typeAnnotation, computed, isStatic) {
             return {
                 type: Syntax.ClassProperty,
                 key: key,
                 typeAnnotation: typeAnnotation,
-                computed: computed
+                computed: computed,
+                static: isStatic
             };
         },
 
@@ -4057,8 +4097,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseObjectTypeIndexer() {
-        var id, key, marker = markerCreate(), value;
+    function parseObjectTypeIndexer(marker, isStatic) {
+        var id, key, value;
 
         expect('[');
         id = parseObjectPropertyKey();
@@ -4071,7 +4111,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         return markerApply(marker, delegate.createObjectTypeIndexer(
             id,
             key,
-            value
+            value,
+            isStatic
         ));
     }
 
@@ -4105,40 +4146,54 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseObjectTypeMethod(marker, key) {
+    function parseObjectTypeMethod(marker, isStatic, key) {
         var optional = false, value;
         value = parseObjectTypeMethodish(marker);
 
         return markerApply(marker, delegate.createObjectTypeProperty(
             key,
             value,
-            optional
+            optional,
+            isStatic
         ));
     }
 
-    function parseObjectTypeCallProperty(marker) {
-        return parseObjectTypeMethodish(marker);
+    function parseObjectTypeCallProperty(marker, isStatic) {
+        var valueMarker = markerCreate();
+        return markerApply(marker, delegate.createObjectTypeCallProperty(
+            parseObjectTypeMethodish(valueMarker),
+            isStatic
+        ));
     }
 
-    function parseObjectType() {
+    function parseObjectType(allowStatic) {
         var callProperties = [], indexers = [], marker, optional = false,
-            properties = [], property, propertyKey, propertyTypeAnnotation;
+            properties = [], property, propertyKey, propertyTypeAnnotation,
+            token, isStatic;
 
         expect('{');
 
         while (!match('}')) {
+            marker = markerCreate();
+            if (allowStatic && matchContextualKeyword('static')) {
+                token = lex();
+                isStatic = true;
+            }
 
             if (match('[')) {
-                indexers.push(parseObjectTypeIndexer());
+                indexers.push(parseObjectTypeIndexer(marker, isStatic));
             } else if (match('(') || match('<')) {
-                marker = markerCreate();
-                callProperties.push(parseObjectTypeCallProperty(marker));
+                callProperties.push(parseObjectTypeCallProperty(marker, allowStatic));
             } else {
-                marker = markerCreate();
-                propertyKey = parseObjectPropertyKey();
+                if (isStatic && match(':')) {
+                    propertyKey = markerApply(marker, delegate.createIdentifier(token));
+                    throwErrorTolerant(token, Messages.StrictReservedWord);
+                } else {
+                    propertyKey = parseObjectPropertyKey();
+                }
                 if (match('<') || match('(')) {
                     // This is a method property
-                    properties.push(parseObjectTypeMethod(marker, propertyKey));
+                    properties.push(parseObjectTypeMethod(marker, isStatic, propertyKey));
                 } else {
                     if (match('?')) {
                         lex();
@@ -4149,7 +4204,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                     properties.push(markerApply(marker, delegate.createObjectTypeProperty(
                         propertyKey,
                         propertyTypeAnnotation,
-                        optional
+                        optional,
+                        isStatic
                     )));
                 }
             }
@@ -4243,12 +4299,28 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
+    function parseFunctionTypeParams() {
+        var ret = { params: [], rest: null };
+        while (lookahead.type === Token.Identifier) {
+            ret.params.push(parseFunctionTypeParam());
+            if (!match(')')) {
+                expect(',');
+            }
+        }
+
+        if (match('...')) {
+            lex();
+            ret.rest = parseFunctionTypeParam();
+        }
+        return ret;
+    }
+
     // The parsing of types roughly parallels the parsing of expressions, and
     // primary types are kind of like primary expressions...they're the
     // primitives with which other types are constructed.
     function parsePrimaryType() {
         var typeIdentifier = null, params = null, returnType = null,
-            marker = markerCreate(), rest = null,
+            marker = markerCreate(), rest = null, tmp,
             typeParameters, token, type, isGroupedType = false;
 
         switch (lookahead.type) {
@@ -4278,18 +4350,9 @@ parseYieldExpression: true, parseAwaitExpression: true
             case '<':
                 typeParameters = parseTypeParameterDeclaration();
                 expect('(');
-                params = [];
-                while (lookahead.type === Token.Identifier) {
-                    params.push(parseFunctionTypeParam());
-                    if (!match(')')) {
-                        expect(',');
-                    }
-                }
-
-                if (match('...')) {
-                    lex();
-                    rest = parseFunctionTypeParam();
-                }
+                tmp = parseFunctionTypeParams();
+                params = tmp.params;
+                rest = tmp.rest;
                 expect(')');
 
                 expect('=>');
@@ -4327,18 +4390,10 @@ parseYieldExpression: true, parseAwaitExpression: true
                     return type;
                 }
 
-                params = [];
-                while (lookahead.type === Token.Identifier) {
-                    params.push(parseFunctionTypeParam());
-                    if (!match(')')) {
-                        expect(',');
-                    }
-                }
+                tmp = parseFunctionTypeParams();
+                params = tmp.params;
+                rest = tmp.rest;
 
-                if (match('...')) {
-                    lex();
-                    rest = parseFunctionTypeParam();
-                }
                 expect(')');
 
                 expect('=>');
@@ -5898,7 +5953,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         );
     }
 
-    function parseClassProperty(existingPropNames, key, computed) {
+    function parseClassProperty(existingPropNames, key, computed, isStatic) {
         var typeAnnotation;
 
         typeAnnotation = parseTypeAnnotation();
@@ -5907,7 +5962,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         return delegate.createClassProperty(
             key,
             typeAnnotation,
-            computed
+            computed,
+            isStatic
         );
     }
 
@@ -5932,8 +5988,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         computed = (lookahead.value === '[');
         key = parseObjectPropertyKey();
 
-        if (!isStatic && !generator && lookahead.value === ':') {
-            return markerApply(marker, parseClassProperty(existingProps, key, computed));
+        if (!generator && lookahead.value === ':') {
+            return markerApply(marker, parseClassProperty(existingProps, key, computed, isStatic));
         }
 
         return markerApply(marker, parseMethodDefinition(
@@ -6071,6 +6127,7 @@ parseYieldExpression: true, parseAwaitExpression: true
     // 15 Program
 
     function parseSourceElement() {
+        var token;
         if (lookahead.type === Token.Keyword) {
             switch (lookahead.value) {
             case 'const':
@@ -6091,6 +6148,23 @@ parseYieldExpression: true, parseAwaitExpression: true
         if (matchContextualKeyword('interface')
                 && lookahead2().type === Token.Identifier) {
             return parseInterface();
+        }
+
+        if (matchContextualKeyword('declare')) {
+            token = lookahead2();
+            if (token.type === Token.Keyword) {
+                switch (token.value) {
+                case 'class':
+                    return parseDeclareClass();
+                case 'function':
+                    return parseDeclareFunction();
+                case 'var':
+                    return parseDeclareVariable();
+                }
+            } else if (token.type === Token.Identifier
+                    && token.value === 'module') {
+                return parseDeclareModule();
+            }
         }
 
         if (lookahead.type !== Token.EOF) {
@@ -7006,11 +7080,10 @@ parseYieldExpression: true, parseAwaitExpression: true
         ));
     }
 
-    function parseInterface() {
-        var body, bodyMarker, extended = [], id, marker = markerCreate(),
+    function parseInterfaceish(marker, allowStatic) {
+        var body, bodyMarker, extended = [], id,
             typeParameters = null;
 
-        expectContextualKeyword('interface');
         id = parseVariableIdentifier();
         if (match('<')) {
             typeParameters = parseTypeParameterDeclaration();
@@ -7029,13 +7102,127 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         bodyMarker = markerCreate();
-        body = markerApply(bodyMarker, parseObjectType());
+        body = markerApply(bodyMarker, parseObjectType(allowStatic));
 
         return markerApply(marker, delegate.createInterface(
             id,
             typeParameters,
             body,
             extended
+        ));
+    }
+
+    function parseInterface() {
+        var body, bodyMarker, extended = [], id, marker = markerCreate(),
+            typeParameters = null;
+
+        expectContextualKeyword('interface');
+        return parseInterfaceish(marker, /* allowStatic */false);
+    }
+
+    function parseDeclareClass() {
+        var marker = markerCreate(), ret;
+        expectContextualKeyword('declare');
+        expectKeyword('class');
+
+        ret = parseInterfaceish(marker, /* allowStatic */true);
+        ret.type = Syntax.DeclareClass;
+        return ret;
+    }
+
+    function parseDeclareFunction() {
+        var id, idMarker,
+            marker = markerCreate(), params, returnType, rest, tmp,
+            typeParameters = null, value, valueMarker;
+
+        expectContextualKeyword('declare');
+        expectKeyword('function');
+        idMarker = markerCreate();
+        id = parseVariableIdentifier();
+
+        valueMarker = markerCreate();
+        if (match('<')) {
+            typeParameters = parseTypeParameterDeclaration();
+        }
+        expect('(');
+        tmp = parseFunctionTypeParams();
+        params = tmp.params;
+        rest = tmp.rest;
+        expect(')');
+
+        expect(':');
+        returnType = parseType();
+
+        value = markerApply(valueMarker, delegate.createFunctionTypeAnnotation(
+            params,
+            returnType,
+            rest,
+            typeParameters
+        ));
+
+        id.typeAnnotation = markerApply(valueMarker, delegate.createTypeAnnotation(
+            value
+        ));
+        markerApply(idMarker, id);
+
+        consumeSemicolon();
+
+        return markerApply(marker, delegate.createDeclareFunction(
+            id
+        ));
+    }
+
+    function parseDeclareVariable() {
+        var id, marker = markerCreate();
+        expectContextualKeyword('declare');
+        expectKeyword('var');
+        id = parseTypeAnnotatableIdentifier();
+
+        consumeSemicolon();
+
+        return markerApply(marker, delegate.createDeclareVariable(
+            id
+        ));
+    }
+
+    function parseDeclareModule() {
+        var body = [], bodyMarker, id, idMarker, marker = markerCreate(), token;
+        expectContextualKeyword('declare');
+        expectContextualKeyword('module');
+
+        if (lookahead.type === Token.StringLiteral) {
+            if (strict && lookahead.octal) {
+                throwErrorTolerant(lookahead, Messages.StrictOctalLiteral);
+            }
+            idMarker = markerCreate();
+            id = markerApply(idMarker, delegate.createLiteral(lex()));
+        } else {
+            id = parseVariableIdentifier();
+        }
+
+        bodyMarker = markerCreate();
+        expect('{');
+        while (index < length && !match('}')) {
+            token = lookahead2();
+            switch (token.value) {
+            case 'class':
+                body.push(parseDeclareClass());
+                break;
+            case 'function':
+                body.push(parseDeclareFunction());
+                break;
+            case 'var':
+                body.push(parseDeclareVariable());
+                break;
+            default:
+                throwUnexpected(lookahead);
+            }
+        }
+        expect('}');
+
+        return markerApply(marker, delegate.createDeclareModule(
+            id,
+            markerApply(bodyMarker, delegate.createBlockStatement(body))
         ));
     }
 
