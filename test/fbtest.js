@@ -123,6 +123,7 @@ module.exports = {
         'class Foo { "bar"<T>() { } }',
         'function foo(requiredParam, optParam?) {}',
         'class Foo { prop1:string; prop2:number; }',
+        'class Foo { static prop1:string; prop2:number; }',
         'var x : number | string = 4;',
         'class Array { concat(items:number | string) {}; }',
         'var x : () => number | () => string = fn;',

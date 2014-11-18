@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 187
+var numTests = 188
 var testFixture;
 
 var fbTestFixture = {
@@ -6045,6 +6045,7 @@ var fbTestFixture = {
                         }
                     },
                     computed: false,
+                    'static': false,
                     range: [12, 25],
                     loc: {
                         start: { line: 1, column: 12 },
@@ -6078,6 +6079,7 @@ var fbTestFixture = {
                         }
                     },
                     computed: false,
+                    'static': false,
                     range: [26, 39],
                     loc: {
                         start: { line: 1, column: 26 },
@@ -6094,6 +6096,101 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 41 }
+            }
+        },
+        'class Foo { static prop1:string; prop2:number; }': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: null,
+            body: {
+                type: 'ClassBody',
+                body: [{
+                    type: 'ClassProperty',
+                    key: {
+                        type: 'Identifier',
+                        name: 'prop1',
+                        range: [19, 24],
+                        loc: {
+                            start: { line: 1, column: 19 },
+                            end: { line: 1, column: 24 }
+                        }
+                    },
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'StringTypeAnnotation',
+                            range: [25, 31],
+                            loc: {
+                                start: { line: 1, column: 25 },
+                                end: { line: 1, column: 31 }
+                            }
+                        },
+                        range: [24, 31],
+                        loc: {
+                            start: { line: 1, column: 24 },
+                            end: { line: 1, column: 31 }
+                        }
+                    },
+                    computed: false,
+                    'static': true,
+                    range: [12, 32],
+                    loc: {
+                        start: { line: 1, column: 12 },
+                        end: { line: 1, column: 32 }
+                    }
+                }, {
+                    type: 'ClassProperty',
+                    key: {
+                        type: 'Identifier',
+                        name: 'prop2',
+                        range: [33, 38],
+                        loc: {
+                            start: { line: 1, column: 33 },
+                            end: { line: 1, column: 38 }
+                        }
+                    },
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'NumberTypeAnnotation',
+                            range: [39, 45],
+                            loc: {
+                                start: { line: 1, column: 39 },
+                                end: { line: 1, column: 45 }
+                            }
+                        },
+                        range: [38, 45],
+                        loc: {
+                            start: { line: 1, column: 38 },
+                            end: { line: 1, column: 45 }
+                        }
+                    },
+                    computed: false,
+                    'static': false,
+                    range: [33, 46],
+                    loc: {
+                        start: { line: 1, column: 33 },
+                        end: { line: 1, column: 46 }
+                    }
+                }],
+                range: [10, 48],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 48 }
+                }
+            },
+            range: [0, 48],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 48 }
             }
         },
         'var x : number | string = 4;': {

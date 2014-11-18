@@ -2473,12 +2473,13 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createClassProperty: function (key, typeAnnotation, computed) {
+        createClassProperty: function (key, typeAnnotation, computed, isStatic) {
             return {
                 type: Syntax.ClassProperty,
                 key: key,
                 typeAnnotation: typeAnnotation,
-                computed: computed
+                computed: computed,
+                static: isStatic
             };
         },
 
@@ -5952,7 +5953,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         );
     }
 
-    function parseClassProperty(existingPropNames, key, computed) {
+    function parseClassProperty(existingPropNames, key, computed, isStatic) {
         var typeAnnotation;
 
         typeAnnotation = parseTypeAnnotation();
@@ -5961,7 +5962,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         return delegate.createClassProperty(
             key,
             typeAnnotation,
-            computed
+            computed,
+            isStatic
         );
     }
 
@@ -5986,8 +5988,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         computed = (lookahead.value === '[');
         key = parseObjectPropertyKey();
 
-        if (!isStatic && !generator && lookahead.value === ':') {
-            return markerApply(marker, parseClassProperty(existingProps, key, computed));
+        if (!generator && lookahead.value === ':') {
+            return markerApply(marker, parseClassProperty(existingProps, key, computed, isStatic));
         }
 
         return markerApply(marker, parseMethodDefinition(
