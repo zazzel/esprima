@@ -51,6 +51,7 @@ parseFunctionTypeParam: true,
 parsePrimaryType: true,
 parseTypeAlias: true,
 parseType: true, parseTypeAnnotatableIdentifier: true, parseTypeAnnotation: true,
+parseTypeParameterDeclaration: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -3229,7 +3230,7 @@ parseYieldExpression: true, parseAwaitExpression: true
                 'init',
                 key,
                 parsePropertyMethodFunction({
-                    generator: false ,
+                    generator: false,
                     typeParameters: typeParameters
                 }),
                 true,
