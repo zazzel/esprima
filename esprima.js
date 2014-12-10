@@ -5948,7 +5948,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                 propType,
                 '',
                 key,
-                parsePropertyMethodFunction({ generator: true })
+                parsePropertyMethodFunction({ generator: true }),
+                computed
             );
         }
 

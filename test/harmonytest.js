@@ -7650,6 +7650,7 @@ var harmonyTestFixture = {
                         },
                         kind: "",
                         'static': false,
+                        computed: false,
                         range: [9, 29],
                         loc: {
                             start: { line: 1, column: 9 },
@@ -7753,6 +7754,7 @@ var harmonyTestFixture = {
                     },
                     kind: '',
                     'static': true,
+                    computed: false,
                     range: [10, 37],
                     loc: {
                         start: { line: 1, column: 10 },
@@ -9508,6 +9510,7 @@ var harmonyTestFixture = {
                     },
                     kind: '',
                     'static': false,
+                    computed: true,
                     range: [71, 91],
                     loc: {
                         start: { line: 1, column: 71 },
