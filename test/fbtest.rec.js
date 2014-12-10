@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 192
+var numTests = 194
 var testFixture;
 
 var fbTestFixture = {
@@ -561,6 +561,69 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 83 }
+            }
+        },
+        '<a b="&notanentity;" />': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'XJSElement',
+                openingElement: {
+                    type: 'XJSOpeningElement',
+                    name: {
+                        type: 'XJSIdentifier',
+                        name: 'a',
+                        range: [1, 2],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 2 }
+                        }
+                    },
+                    selfClosing: true,
+                    attributes: [{
+                        type: 'XJSAttribute',
+                        name: {
+                            type: 'XJSIdentifier',
+                            name: 'b',
+                            range: [3, 4],
+                            loc: {
+                                start: { line: 1, column: 3 },
+                                end: { line: 1, column: 4 }
+                            }
+                        },
+                        value: {
+                            type: 'Literal',
+                            value: '&notanentity;',
+                            raw: '"&notanentity;"',
+                            range: [5, 20],
+                            loc: {
+                                start: { line: 1, column: 5 },
+                                end: { line: 1, column: 20 }
+                            }
+                        },
+                        range: [3, 20],
+                        loc: {
+                            start: { line: 1, column: 3 },
+                            end: { line: 1, column: 20 }
+                        }
+                    }],
+                    range: [0, 23],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 23 }
+                    }
+                },
+                closingElement: null,
+                children: [],
+                range: [0, 23],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 1, column: 23 }
+                }
+            },
+            range: [0, 23],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 23 }
             }
         },
         '<a\n/>': {
@@ -1894,6 +1957,14 @@ var fbTestFixture = {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 11 }
             }
+        },
+        '<a .../*hai*/asdf/>': {
+            index: 3,
+            lineNumber: 1,
+            column: 4,
+            message: 'Error: Line 1: Unexpected token ...',
+            description: 'Unexpected token ...'
+
         },
     },
     'Invalid XJS Syntax': {
@@ -3844,6 +3915,7 @@ var fbTestFixture = {
                     },
                     kind: 'set',
                     'static': false,
+                    computed: false,
                     range: [11, 38],
                     loc: {
                         start: { line: 1, column: 11 },
@@ -3952,6 +4024,7 @@ var fbTestFixture = {
                     },
                     kind: 'set',
                     'static': false,
+                    computed: false,
                     range: [11, 43],
                     loc: {
                         start: { line: 1, column: 11 },
@@ -4036,6 +4109,7 @@ var fbTestFixture = {
                     },
                     kind: 'get',
                     'static': false,
+                    computed: false,
                     range: [11, 33],
                     loc: {
                         start: { line: 1, column: 11 },
@@ -5834,6 +5908,7 @@ var fbTestFixture = {
                     },
                     kind: '',
                     'static': false,
+                    computed: false,
                     range: [15, 45],
                     loc: {
                         start: { line: 1, column: 15 },
@@ -5937,6 +6012,7 @@ var fbTestFixture = {
                     },
                     kind: '',
                     'static': false,
+                    computed: false,
                     range: [12, 26],
                     loc: {
                         start: { line: 1, column: 12 },
@@ -6349,6 +6425,7 @@ var fbTestFixture = {
                     },
                     kind: '',
                     'static': false,
+                    computed: false,
                     range: [14, 46],
                     loc: {
                         start: { line: 1, column: 14 },
