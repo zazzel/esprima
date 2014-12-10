@@ -34,9 +34,17 @@
         stringify = require('./stringify.js'),
         root = path.join(path.dirname(fs.realpathSync(__filename)), '..'),
         esprima = require(path.join(root, 'esprima')),
-        code = process.argv.splice(2),
+        code,
         content,
         options;
+
+    var cliArgs = require('commander')
+      .option('-m, --module', 'Parse source as a module (rather than as a script)')
+      .parse(process.argv);
+
+    code = cliArgs.args[0];
+
+    console.log('code', code);
 
     if (code.length === 0) {
         console.log('Usage:');
@@ -45,7 +53,7 @@
     }
 
 
-    content = code[0];
+    content = code;
 
     options = {
         comment: false,
@@ -53,7 +61,8 @@
         loc: true,
         tokens: false,
         raw: true,
-        tolerant: false
+        tolerant: false,
+        sourceType: cliArgs.module ? 'module' : 'script'
     };
 
     console.log(stringify(esprima.parse(content, options)));
