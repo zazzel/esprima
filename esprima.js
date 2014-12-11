@@ -51,6 +51,7 @@ parseFunctionTypeParam: true,
 parsePrimaryType: true,
 parseTypeAlias: true,
 parseType: true, parseTypeAnnotatableIdentifier: true, parseTypeAnnotation: true,
+parseTypeParameterDeclaration: true,
 parseYieldExpression: true, parseAwaitExpression: true
 */
 
@@ -3045,7 +3046,7 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseObjectProperty() {
         var token, key, id, value, param, expr, computed,
-            marker = markerCreate(), returnType;
+            marker = markerCreate(), returnType, typeParameters;
 
         token = lookahead;
         computed = (token.value === '[' && token.type === Token.Punctuator);
@@ -3069,7 +3070,10 @@ parseYieldExpression: true, parseAwaitExpression: true
                 );
             }
 
-            if (match('(')) {
+            if (match('(') || match('<')) {
+                if (match('<')) {
+                    typeParameters = parseTypeParameterDeclaration();
+                }
                 return markerApply(
                     marker,
                     delegate.createProperty(
@@ -3077,7 +3081,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                         id,
                         parsePropertyMethodFunction({
                             generator: false,
-                            async: false
+                            async: false,
+                            typeParameters: typeParameters
                         }),
                         true,
                         false,
@@ -3150,6 +3155,10 @@ parseYieldExpression: true, parseAwaitExpression: true
                 computed = (lookahead.value === '[');
                 key = parseObjectPropertyKey();
 
+                if (match('<')) {
+                    typeParameters = parseTypeParameterDeclaration();
+                }
+
                 return markerApply(
                     marker,
                     delegate.createProperty(
@@ -3157,7 +3166,8 @@ parseYieldExpression: true, parseAwaitExpression: true
                         key,
                         parsePropertyMethodFunction({
                             generator: false,
-                            async: true
+                            async: true,
+                            typeParameters: typeParameters
                         }),
                         true,
                         false,
@@ -3187,19 +3197,46 @@ parseYieldExpression: true, parseAwaitExpression: true
 
             id = parseObjectPropertyKey();
 
+            if (match('<')) {
+                typeParameters = parseTypeParameterDeclaration();
+            }
+
             if (!match('(')) {
                 throwUnexpected(lex());
             }
 
-            return markerApply(marker, delegate.createProperty('init', id, parsePropertyMethodFunction({ generator: true }), true, false, computed));
+            return markerApply(marker, delegate.createProperty(
+                'init',
+                id,
+                parsePropertyMethodFunction({
+                    generator: true,
+                    typeParameters: typeParameters
+                }),
+                true,
+                false,
+                computed
+            ));
         }
         key = parseObjectPropertyKey();
         if (match(':')) {
             lex();
             return markerApply(marker, delegate.createProperty('init', key, parseAssignmentExpression(), false, false, false));
         }
-        if (match('(')) {
-            return markerApply(marker, delegate.createProperty('init', key, parsePropertyMethodFunction({ generator: false }), true, false, false));
+        if (match('(') || match('<')) {
+            if (match('<')) {
+                typeParameters = parseTypeParameterDeclaration();
+            }
+            return markerApply(marker, delegate.createProperty(
+                'init',
+                key,
+                parsePropertyMethodFunction({
+                    generator: false,
+                    typeParameters: typeParameters
+                }),
+                true,
+                false,
+                false
+            ));
         }
         throwUnexpected(lex());
     }
