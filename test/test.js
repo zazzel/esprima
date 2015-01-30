@@ -3866,14 +3866,14 @@ var testFixture = {
                     raw: '42',
                     range: [8, 10],
                     loc: {
-                        start: { line: 1, column: 8 },
-                        end: { line: 1, column: 10 }
+                        start: { line: 2, column: 4 },
+                        end: { line: 2, column: 6 }
                     }
                 },
                 range: [8, 10],
                 loc: {
-                    start: { line: 1, column: 8 },
-                    end: { line: 1, column: 10 }
+                    start: { line: 2, column: 4 },
+                    end: { line: 2, column: 6 }
                 },
                 leadingComments: [{
                     type: 'Block',
@@ -3881,14 +3881,14 @@ var testFixture = {
                     range: [0, 7],
                     loc: {
                         start: { line: 1, column: 0 },
-                        end: { line: 1, column: 7 }
+                        end: { line: 2, column: 3 }
                     }
                 }]
             }],
             range: [8, 10],
             loc: {
-                start: { line: 1, column: 8 },
-                end: { line: 1, column: 10 }
+                start: { line: 2, column: 4 },
+                end: { line: 2, column: 6 }
             },
             comments: [{
                 type: 'Block',
@@ -3896,7 +3896,7 @@ var testFixture = {
                 range: [0, 7],
                 loc: {
                     start: { line: 1, column: 0 },
-                    end: { line: 1, column: 7 }
+                    end: { line: 2, column: 3 }
                 }
             }]
         },
@@ -18043,16 +18043,16 @@ var testFixture = {
 
         '/*\n\r*/]': {
             index: 6,
-            lineNumber: 2,
-            column: 4,
-            message: 'Error: Line 2: Unexpected token ]'
+            lineNumber: 3,
+            column: 3,
+            message: 'Error: Line 3: Unexpected token ]'
         },
 
         '/*\r \n*/]': {
             index: 7,
-            lineNumber: 2,
+            lineNumber: 3,
             column: 3,
-            message: 'Error: Line 2: Unexpected token ]'
+            message: 'Error: Line 3: Unexpected token ]'
         },
 
         '\\\\': {
@@ -23173,5 +23173,5 @@ var testFixture = {
         }
 
 
-    },
+    }
 };
