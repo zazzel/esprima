@@ -724,6 +724,23 @@ parseYieldExpression: true, parseAwaitExpression: true
             ch3,
             ch4;
 
+        if (state.inXJSTag || state.inXJSChild) {
+            // Don't need to check for '{' and '}' as it's already handled
+            // correctly by default.
+            switch (code) {
+            case 60:  // <
+            case 62:  // >
+                ++index;
+                return {
+                    type: Token.Punctuator,
+                    value: String.fromCharCode(code),
+                    lineNumber: lineNumber,
+                    lineStart: lineStart,
+                    range: [start, index]
+                };
+            }
+        }
+
         switch (code) {
         // Check for most common single-character punctuators.
         case 40:   // ( open bracket

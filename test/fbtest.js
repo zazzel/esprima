@@ -48,6 +48,7 @@ module.exports = {
         '<div pre="leading" pre2="attribute" {...props}></div>',
         '<a>    </a>',
         '<a .../*hai*/asdf/>',
+        '<a>= == =</a>',
     ],
     'Invalid XJS Syntax': [
         '</>',
