@@ -38,14 +38,25 @@ function escape_content(content) {
     .replace(/[']/g, "\\'");
 }
 
+function logUnexpectedResult(section, test, expectedError) {
+  var expected = expectedError ? 'error' : 'AST';
+  var result = expectedError ? 'AST' : 'error';
+  console.error(
+    '[' + section + '] Expected "' + test + '" ' +
+    'to result in an ' + expected + ' but got an ' + result + ' instead.'
+  );
+}
+
 out += "var testFixture;\n\n";
 out += "var fbTestFixture = {\n";
 var ast, result;
 for (section in tests) {
   out += "    '"+section+"': {\n";
+  var expectError = /^Invalid/.test(section);
   for (test in tests[section]) {
     test = tests[section][test];
     out += "        '"+escape_content(test)+"': {\n";
+    var gotError = false;
     try {
       ast = esprima.parse(test, options);
       result = stringify(ast.body[0]);
@@ -55,6 +66,8 @@ for (section in tests) {
           .map(function(x) { return "        "+x; });
       out += result.join("\n");
     } catch (e) {
+      gotError = true;
+
       out += "            index: "+e.index+",\n";
       out += "            lineNumber: "+e.lineNumber+",\n";
       out += "            column: "+e.column+",\n";
@@ -63,6 +76,10 @@ for (section in tests) {
     }
     out += "\n";
     out += "        },\n";
+
+    if (expectError !== gotError) {
+      logUnexpectedResult(section, escape_content(test), expectError);
+    }
   }
   out += "    },\n";
 }
