@@ -47,7 +47,6 @@ module.exports = {
         '<div {...props} post="attribute" />',
         '<div pre="leading" pre2="attribute" {...props}></div>',
         '<a>    </a>',
-        '<a .../*hai*/asdf/>',
         '<a>= == =</a>',
     ],
     'Invalid XJS Syntax': [
@@ -81,6 +80,7 @@ module.exports = {
         '<a b=}>',
         '<a b=<}>',
         '<a>}</a>',
+        '<a .../*hai*/asdf/>',
     ],
     'Type Annotations': [
         'function foo(numVal: any){}',
@@ -123,6 +123,7 @@ module.exports = {
         'var a: {subObj: ?{strVal: string}}',
         'var a: {param1: number; param2: string}',
         'var a: {param1: number; param2?: string}',
+        'var a: { [a: number]: string; [b: number]: string; };',
         'var a: {add(x:number, ...y:Array<string>): void}',
         'var a: { id<T>(x: T): T; }',
         'var a:Array<number> = [1, 2, 3]',
@@ -156,7 +157,10 @@ module.exports = {
         'var a: Promise<bool>[]',
         'var a:(...rest:Array<number>) => number',
         'var identity: <T>(x: T) => T',
-        'var identity: <T>(x: T, ...y:T[]) => T'
+        'var identity: <T>(x: T, ...y:T[]) => T',
+        'import type foo from "bar";',
+        'import type {foo, bar} from "baz";',
+        'import type {foo as bar} from "baz";'
     ],
     'Invalid Type Annotations': [
         'function foo(callback:) {}',
@@ -166,7 +170,6 @@ module.exports = {
         'a = {foo(): { return 42; }}',
         'class Foo { get bar<T>() { } }',
         'var a:{a:number b:string}',
-        'var a: { [a: number]: string; [b: number]: string; };',
         'var x: (number) => string',
         'var y: return',
         'var a: { x: number, y: string }',
@@ -188,8 +191,9 @@ module.exports = {
     'Type Alias': [
         'type FBID = number;',
         'type Foo<T> = Bar<T>',
+        'export type Foo = number;',
     ],
-    'Interfaces': [
+    'Interfaces (module and script)': [
         'interface A {}',
         'interface A extends B {}',
         'interface A<T> extends B<T>, C<T> {}',
