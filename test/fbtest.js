@@ -160,7 +160,9 @@ module.exports = {
         'var identity: <T>(x: T, ...y:T[]) => T',
         'import type foo from "bar";',
         'import type {foo, bar} from "baz";',
-        'import type {foo as bar} from "baz";'
+        'import type {foo as bar} from "baz";',
+        'import type from "foo";',
+        'import type, {foo} from "bar";',
     ],
     'Invalid Type Annotations': [
         'function foo(callback:) {}',
