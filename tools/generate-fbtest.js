@@ -22,6 +22,7 @@ var options = {
     comment: false,
     range: true,
     loc: true,
+    sourceType: 'module',
     tokens: false,
     raw: true,
     tolerant: false
@@ -103,6 +104,11 @@ out += "};\n\n\
                 throw new Error('FB test should not replace existing test for ' + i);\n\
             }\n\
             testFixture[i] = fixtures;\n\
+            testFixtureOptions[i] = {sourceType: 'module'};\n\
+\n\
+            if (/( \\(module and script\\)$)/.test(i)) {\n\
+              testFixture[i + ' (non-module)'] = fixtures;\n\
+            }\n\
         }\n\
     }\n\
     \n\

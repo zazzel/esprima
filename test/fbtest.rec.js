@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 204
+var numTests = 207
 var testFixture;
 
 var fbTestFixture = {
@@ -1958,14 +1958,6 @@ var fbTestFixture = {
                 end: { line: 1, column: 11 }
             }
         },
-        '<a .../*hai*/asdf/>': {
-            index: 3,
-            lineNumber: 1,
-            column: 4,
-            message: 'Error: Line 1: Unexpected token ...',
-            description: 'Unexpected token ...'
-
-        },
         '<a>= == =</a>': {
             type: 'ExpressionStatement',
             expression: {
@@ -2268,6 +2260,14 @@ var fbTestFixture = {
             column: 4,
             message: 'Error: Line 1: Unexpected token }',
             description: 'Unexpected token }'
+
+        },
+        '<a .../*hai*/asdf/>': {
+            index: 3,
+            lineNumber: 1,
+            column: 4,
+            message: 'Error: Line 1: Unexpected token ...',
+            description: 'Unexpected token ...'
 
         },
     },
@@ -5764,6 +5764,116 @@ var fbTestFixture = {
                 end: { line: 1, column: 40 }
             }
         },
+        'var a: { [a: number]: string; [b: number]: string; };': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ObjectTypeAnnotation',
+                            properties: [],
+                            indexers: [{
+                                type: 'ObjectTypeIndexer',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'a',
+                                    range: [10, 11],
+                                    loc: {
+                                        start: { line: 1, column: 10 },
+                                        end: { line: 1, column: 11 }
+                                    }
+                                },
+                                key: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [13, 19],
+                                    loc: {
+                                        start: { line: 1, column: 13 },
+                                        end: { line: 1, column: 19 }
+                                    }
+                                },
+                                value: {
+                                    type: 'StringTypeAnnotation',
+                                    range: [22, 28],
+                                    loc: {
+                                        start: { line: 1, column: 22 },
+                                        end: { line: 1, column: 28 }
+                                    }
+                                },
+                                range: [9, 28],
+                                loc: {
+                                    start: { line: 1, column: 9 },
+                                    end: { line: 1, column: 28 }
+                                }
+                            }, {
+                                type: 'ObjectTypeIndexer',
+                                id: {
+                                    type: 'Identifier',
+                                    name: 'b',
+                                    range: [31, 32],
+                                    loc: {
+                                        start: { line: 1, column: 31 },
+                                        end: { line: 1, column: 32 }
+                                    }
+                                },
+                                key: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [34, 40],
+                                    loc: {
+                                        start: { line: 1, column: 34 },
+                                        end: { line: 1, column: 40 }
+                                    }
+                                },
+                                value: {
+                                    type: 'StringTypeAnnotation',
+                                    range: [43, 49],
+                                    loc: {
+                                        start: { line: 1, column: 43 },
+                                        end: { line: 1, column: 49 }
+                                    }
+                                },
+                                range: [30, 49],
+                                loc: {
+                                    start: { line: 1, column: 30 },
+                                    end: { line: 1, column: 49 }
+                                }
+                            }],
+                            callProperties: [],
+                            range: [7, 52],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 52 }
+                            }
+                        },
+                        range: [5, 52],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 52 }
+                        }
+                    },
+                    range: [4, 52],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 52 }
+                    }
+                },
+                init: null,
+                range: [4, 52],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 52 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 53],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 53 }
+            }
+        },
         'var a: {add(x:number, ...y:Array<string>): void}': {
             type: 'VariableDeclaration',
             declarations: [{
@@ -8981,6 +9091,141 @@ var fbTestFixture = {
                 end: { line: 1, column: 38 }
             }
         },
+        'import type foo from "bar";': {
+            type: 'ImportDeclaration',
+            specifiers: [{
+                type: 'ImportDefaultSpecifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'foo',
+                    range: [12, 15],
+                    loc: {
+                        start: { line: 1, column: 12 },
+                        end: { line: 1, column: 15 }
+                    }
+                },
+                range: [12, 15],
+                loc: {
+                    start: { line: 1, column: 12 },
+                    end: { line: 1, column: 15 }
+                }
+            }],
+            source: {
+                type: 'ModuleSpecifier',
+                value: 'bar',
+                raw: '"bar"',
+                range: [21, 26],
+                loc: {
+                    start: { line: 1, column: 21 },
+                    end: { line: 1, column: 26 }
+                }
+            },
+            isType: true,
+            range: [0, 27],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 27 }
+            }
+        },
+        'import type {foo, bar} from "baz";': {
+            type: 'ImportDeclaration',
+            specifiers: [{
+                type: 'ImportSpecifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'foo',
+                    range: [13, 16],
+                    loc: {
+                        start: { line: 1, column: 13 },
+                        end: { line: 1, column: 16 }
+                    }
+                },
+                name: null,
+                range: [13, 16],
+                loc: {
+                    start: { line: 1, column: 13 },
+                    end: { line: 1, column: 16 }
+                }
+            }, {
+                type: 'ImportSpecifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'bar',
+                    range: [18, 21],
+                    loc: {
+                        start: { line: 1, column: 18 },
+                        end: { line: 1, column: 21 }
+                    }
+                },
+                name: null,
+                range: [18, 21],
+                loc: {
+                    start: { line: 1, column: 18 },
+                    end: { line: 1, column: 21 }
+                }
+            }],
+            source: {
+                type: 'ModuleSpecifier',
+                value: 'baz',
+                raw: '"baz"',
+                range: [28, 33],
+                loc: {
+                    start: { line: 1, column: 28 },
+                    end: { line: 1, column: 33 }
+                }
+            },
+            isType: true,
+            range: [0, 34],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 34 }
+            }
+        },
+        'import type {foo as bar} from "baz";': {
+            type: 'ImportDeclaration',
+            specifiers: [{
+                type: 'ImportSpecifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'foo',
+                    range: [13, 16],
+                    loc: {
+                        start: { line: 1, column: 13 },
+                        end: { line: 1, column: 16 }
+                    }
+                },
+                name: {
+                    type: 'Identifier',
+                    name: 'bar',
+                    range: [20, 23],
+                    loc: {
+                        start: { line: 1, column: 20 },
+                        end: { line: 1, column: 23 }
+                    }
+                },
+                range: [13, 23],
+                loc: {
+                    start: { line: 1, column: 13 },
+                    end: { line: 1, column: 23 }
+                }
+            }],
+            source: {
+                type: 'ModuleSpecifier',
+                value: 'baz',
+                raw: '"baz"',
+                range: [30, 35],
+                loc: {
+                    start: { line: 1, column: 30 },
+                    end: { line: 1, column: 35 }
+                }
+            },
+            isType: true,
+            range: [0, 36],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 36 }
+            }
+        },
     },
     'Invalid Type Annotations': {
         'function foo(callback:) {}': {
@@ -9038,116 +9283,6 @@ var fbTestFixture = {
             message: 'Error: Line 1: Unexpected identifier',
             description: 'Unexpected identifier'
 
-        },
-        'var a: { [a: number]: string; [b: number]: string; };': {
-            type: 'VariableDeclaration',
-            declarations: [{
-                type: 'VariableDeclarator',
-                id: {
-                    type: 'Identifier',
-                    name: 'a',
-                    typeAnnotation: {
-                        type: 'TypeAnnotation',
-                        typeAnnotation: {
-                            type: 'ObjectTypeAnnotation',
-                            properties: [],
-                            indexers: [{
-                                type: 'ObjectTypeIndexer',
-                                id: {
-                                    type: 'Identifier',
-                                    name: 'a',
-                                    range: [10, 11],
-                                    loc: {
-                                        start: { line: 1, column: 10 },
-                                        end: { line: 1, column: 11 }
-                                    }
-                                },
-                                key: {
-                                    type: 'NumberTypeAnnotation',
-                                    range: [13, 19],
-                                    loc: {
-                                        start: { line: 1, column: 13 },
-                                        end: { line: 1, column: 19 }
-                                    }
-                                },
-                                value: {
-                                    type: 'StringTypeAnnotation',
-                                    range: [22, 28],
-                                    loc: {
-                                        start: { line: 1, column: 22 },
-                                        end: { line: 1, column: 28 }
-                                    }
-                                },
-                                range: [9, 28],
-                                loc: {
-                                    start: { line: 1, column: 9 },
-                                    end: { line: 1, column: 28 }
-                                }
-                            }, {
-                                type: 'ObjectTypeIndexer',
-                                id: {
-                                    type: 'Identifier',
-                                    name: 'b',
-                                    range: [31, 32],
-                                    loc: {
-                                        start: { line: 1, column: 31 },
-                                        end: { line: 1, column: 32 }
-                                    }
-                                },
-                                key: {
-                                    type: 'NumberTypeAnnotation',
-                                    range: [34, 40],
-                                    loc: {
-                                        start: { line: 1, column: 34 },
-                                        end: { line: 1, column: 40 }
-                                    }
-                                },
-                                value: {
-                                    type: 'StringTypeAnnotation',
-                                    range: [43, 49],
-                                    loc: {
-                                        start: { line: 1, column: 43 },
-                                        end: { line: 1, column: 49 }
-                                    }
-                                },
-                                range: [30, 49],
-                                loc: {
-                                    start: { line: 1, column: 30 },
-                                    end: { line: 1, column: 49 }
-                                }
-                            }],
-                            callProperties: [],
-                            range: [7, 52],
-                            loc: {
-                                start: { line: 1, column: 7 },
-                                end: { line: 1, column: 52 }
-                            }
-                        },
-                        range: [5, 52],
-                        loc: {
-                            start: { line: 1, column: 5 },
-                            end: { line: 1, column: 52 }
-                        }
-                    },
-                    range: [4, 52],
-                    loc: {
-                        start: { line: 1, column: 4 },
-                        end: { line: 1, column: 52 }
-                    }
-                },
-                init: null,
-                range: [4, 52],
-                loc: {
-                    start: { line: 1, column: 4 },
-                    end: { line: 1, column: 52 }
-                }
-            }],
-            kind: 'var',
-            range: [0, 53],
-            loc: {
-                start: { line: 1, column: 0 },
-                end: { line: 1, column: 53 }
-            }
         },
         'var x: (number) => string': {
             index: 15,
@@ -9951,7 +10086,7 @@ var fbTestFixture = {
             }
         },
     },
-    'Interfaces': {
+    'Interfaces (module and script)': {
         'interface A {}': {
             type: 'InterfaceDeclaration',
             id: {
@@ -10874,11 +11009,11 @@ var fbTestFixture = {
     },
     'Invalid Interfaces': {
         'interface {}': {
-            index: 10,
+            index: 0,
             lineNumber: 1,
-            column: 11,
-            message: 'Error: Line 1: Unexpected token {',
-            description: 'Unexpected token {'
+            column: 1,
+            message: 'Error: Line 1: Use of future reserved word in strict mode',
+            description: 'Use of future reserved word in strict mode'
 
         },
         'interface A extends {}': {
@@ -12910,6 +13045,11 @@ var fbTestFixture = {
                 throw new Error('FB test should not replace existing test for ' + i);
             }
             testFixture[i] = fixtures;
+            testFixtureOptions[i] = {sourceType: 'module'};
+
+            if (/( \(module and script\)$)/.test(i)) {
+              testFixture[i + ' (non-module)'] = fixtures;
+            }
         }
     }
     

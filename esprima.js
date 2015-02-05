@@ -2641,11 +2641,12 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
-        createImportDeclaration: function (specifiers, source) {
+        createImportDeclaration: function (specifiers, source, isType) {
             return {
                 type: Syntax.ImportDeclaration,
                 specifiers: specifiers,
-                source: source
+                source: source,
+                isType: isType
             };
         },
 
@@ -4289,13 +4290,18 @@ parseYieldExpression: true, parseAwaitExpression: true
     function parseObjectType(allowStatic) {
         var callProperties = [], indexers = [], marker, optional = false,
             properties = [], property, propertyKey, propertyTypeAnnotation,
-            token, isStatic;
+            token, isStatic, matchStatic;
 
         expect('{');
 
         while (!match('}')) {
             marker = markerCreate();
-            if (allowStatic && matchContextualKeyword('static')) {
+            matchStatic =
+                   strict
+                   ? matchKeyword('static')
+                   : matchContextualKeyword('static');
+
+            if (allowStatic && matchStatic) {
                 token = lex();
                 isStatic = true;
             }
@@ -4939,9 +4945,15 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseImportDeclaration() {
-        var specifiers, src, marker = markerCreate();
+        var specifiers, src, marker = markerCreate(), isType = false;
 
         expectKeyword('import');
+
+        if (matchContextualKeyword('type')) {
+            isType = true;
+            lex();
+        }
+
         specifiers = [];
 
         if (lookahead.type === Token.StringLiteral) {
@@ -4949,7 +4961,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             // import "foo";
             src = parseModuleSpecifier();
             consumeSemicolon();
-            return markerApply(marker, delegate.createImportDeclaration(specifiers, src));
+            return markerApply(marker, delegate.createImportDeclaration(specifiers, src, isType));
         }
 
         if (!matchKeyword('default') && isIdentifierName(lookahead)) {
@@ -4981,7 +4993,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         src = parseModuleSpecifier();
         consumeSemicolon();
 
-        return markerApply(marker, delegate.createImportDeclaration(specifiers, src));
+        return markerApply(marker, delegate.createImportDeclaration(specifiers, src, isType));
     }
 
     // 12.3 Empty Statement
@@ -6173,7 +6185,11 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseClassImplements() {
         var id, implemented = [], marker, typeParameters;
-        expectContextualKeyword('implements');
+        if (strict) {
+            expectKeyword('implements');
+        } else {
+            expectContextualKeyword('implements');
+        }
         while (index < length) {
             marker = markerCreate();
             id = parseVariableIdentifier();
@@ -6196,11 +6212,17 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseClassExpression() {
         var id, implemented, previousYieldAllowed, superClass = null,
-            superTypeParameters, marker = markerCreate(), typeParameters;
+            superTypeParameters, marker = markerCreate(), typeParameters,
+            matchImplements;
 
         expectKeyword('class');
 
-        if (!matchKeyword('extends') && !matchContextualKeyword('implements') && !match('{')) {
+        matchImplements =
+                strict
+                ? matchKeyword('implements')
+                : matchContextualKeyword('implements');
+
+        if (!matchKeyword('extends') && !matchImplements && !match('{')) {
             id = parseVariableIdentifier();
         }
 
@@ -6219,7 +6241,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        if (matchContextualKeyword('implements')) {
+        if (strict ? matchKeyword('implements') : matchContextualKeyword('implements')) {
             implemented = parseClassImplements();
         }
 
@@ -6256,7 +6278,7 @@ parseYieldExpression: true, parseAwaitExpression: true
             state.yieldAllowed = previousYieldAllowed;
         }
 
-        if (matchContextualKeyword('implements')) {
+        if (strict ? matchKeyword('implements') : matchContextualKeyword('implements')) {
             implemented = parseClassImplements();
         }
 
@@ -6287,6 +6309,11 @@ parseYieldExpression: true, parseAwaitExpression: true
             case 'import':
                 throwErrorTolerant({}, Messages.IllegalImportDeclaration);
                 return parseImportDeclaration();
+            case 'interface':
+                if (lookahead2().type === Token.Identifier) {
+                    return parseInterface();
+                }
+                return parseStatement();
             default:
                 return parseStatement();
             }
@@ -7272,9 +7299,14 @@ parseYieldExpression: true, parseAwaitExpression: true
 
     function parseInterface() {
         var body, bodyMarker, extended = [], id, marker = markerCreate(),
-            typeParameters = null;
+            typeParameters = null, previousStrict;
 
-        expectContextualKeyword('interface');
+        if (strict) {
+            expectKeyword('interface');
+        } else {
+            expectContextualKeyword('interface');
+        }
+
         return parseInterfaceish(marker, /* allowStatic */false);
     }
 
