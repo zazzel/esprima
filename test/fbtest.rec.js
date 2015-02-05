@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 208
+var numTests = 210
 var testFixture;
 
 var fbTestFixture = {
@@ -9224,6 +9224,95 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 36 }
+            }
+        },
+        'import type from "foo";': {
+            type: 'ImportDeclaration',
+            specifiers: [{
+                type: 'ImportDefaultSpecifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'type',
+                    range: [7, 11],
+                    loc: {
+                        start: { line: 1, column: 7 },
+                        end: { line: 1, column: 11 }
+                    }
+                },
+                range: [7, 11],
+                loc: {
+                    start: { line: 1, column: 7 },
+                    end: { line: 1, column: 11 }
+                }
+            }],
+            source: {
+                type: 'ModuleSpecifier',
+                value: 'foo',
+                raw: '"foo"',
+                range: [17, 22],
+                loc: {
+                    start: { line: 1, column: 17 },
+                    end: { line: 1, column: 22 }
+                }
+            },
+            isType: false,
+            range: [0, 23],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 23 }
+            }
+        },
+        'import type, {foo} from "bar";': {
+            type: 'ImportDeclaration',
+            specifiers: [{
+                type: 'ImportDefaultSpecifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'type',
+                    range: [7, 11],
+                    loc: {
+                        start: { line: 1, column: 7 },
+                        end: { line: 1, column: 11 }
+                    }
+                },
+                range: [7, 11],
+                loc: {
+                    start: { line: 1, column: 7 },
+                    end: { line: 1, column: 11 }
+                }
+            }, {
+                type: 'ImportSpecifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'foo',
+                    range: [14, 17],
+                    loc: {
+                        start: { line: 1, column: 14 },
+                        end: { line: 1, column: 17 }
+                    }
+                },
+                name: null,
+                range: [14, 17],
+                loc: {
+                    start: { line: 1, column: 14 },
+                    end: { line: 1, column: 17 }
+                }
+            }],
+            source: {
+                type: 'ModuleSpecifier',
+                value: 'bar',
+                raw: '"bar"',
+                range: [24, 29],
+                loc: {
+                    start: { line: 1, column: 24 },
+                    end: { line: 1, column: 29 }
+                }
+            },
+            isType: false,
+            range: [0, 30],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 30 }
             }
         },
     },

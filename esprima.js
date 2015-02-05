@@ -4946,13 +4946,17 @@ parseYieldExpression: true, parseAwaitExpression: true
     }
 
     function parseImportDeclaration() {
-        var specifiers, src, marker = markerCreate(), isType = false;
+        var specifiers, src, marker = markerCreate(), isType = false, token2;
 
         expectKeyword('import');
 
         if (matchContextualKeyword('type')) {
-            isType = true;
-            lex();
+            token2 = lookahead2();
+            if ((token2.type === Token.Identifier && token2.value !== 'from') ||
+                    (token2.type === Token.Punctuator && token2.value === '{')) {
+                isType = true;
+                lex();
+            }
         }
 
         specifiers = [];
