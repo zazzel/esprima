@@ -191,6 +191,7 @@ module.exports = {
     'Type Alias': [
         'type FBID = number;',
         'type Foo<T> = Bar<T>',
+        'export type Foo = number;',
     ],
     'Interfaces (module and script)': [
         'interface A {}',

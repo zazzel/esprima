@@ -4836,10 +4836,11 @@ parseYieldExpression: true, parseAwaitExpression: true
         }
 
         // non-default export
-        if (lookahead.type === Token.Keyword) {
+        if (lookahead.type === Token.Keyword || matchContextualKeyword('type')) {
             // covers:
             // export var f = 1;
             switch (lookahead.value) {
+            case 'type':
             case 'let':
             case 'const':
             case 'var':

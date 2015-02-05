@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 207
+var numTests = 208
 var testFixture;
 
 var fbTestFixture = {
@@ -10083,6 +10083,43 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 20 }
+            }
+        },
+        'export type Foo = number;': {
+            type: 'ExportDeclaration',
+            'default': false,
+            declaration: {
+                type: 'TypeAlias',
+                id: {
+                    type: 'Identifier',
+                    name: 'Foo',
+                    range: [12, 15],
+                    loc: {
+                        start: { line: 1, column: 12 },
+                        end: { line: 1, column: 15 }
+                    }
+                },
+                typeParameters: null,
+                right: {
+                    type: 'NumberTypeAnnotation',
+                    range: [18, 24],
+                    loc: {
+                        start: { line: 1, column: 18 },
+                        end: { line: 1, column: 24 }
+                    }
+                },
+                range: [7, 25],
+                loc: {
+                    start: { line: 1, column: 7 },
+                    end: { line: 1, column: 25 }
+                }
+            },
+            specifiers: [],
+            source: null,
+            range: [0, 25],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 25 }
             }
         },
     },
