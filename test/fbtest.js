@@ -163,6 +163,7 @@ module.exports = {
         'import type {foo as bar} from "baz";',
         'import type from "foo";',
         'import type, {foo} from "bar";',
+        'import type * as namespace from "bar";',
     ],
     'Invalid Type Annotations': [
         'function foo(callback:) {}',

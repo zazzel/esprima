@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 210
+var numTests = 211
 var testFixture;
 
 var fbTestFixture = {
@@ -9313,6 +9313,42 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 30 }
+            }
+        },
+        'import type * as namespace from "bar";': {
+            type: 'ImportDeclaration',
+            specifiers: [{
+                type: 'ImportNamespaceSpecifier',
+                id: {
+                    type: 'Identifier',
+                    name: 'namespace',
+                    range: [17, 26],
+                    loc: {
+                        start: { line: 1, column: 17 },
+                        end: { line: 1, column: 26 }
+                    }
+                },
+                range: [12, 26],
+                loc: {
+                    start: { line: 1, column: 12 },
+                    end: { line: 1, column: 26 }
+                }
+            }],
+            source: {
+                type: 'ModuleSpecifier',
+                value: 'bar',
+                raw: '"bar"',
+                range: [32, 37],
+                loc: {
+                    start: { line: 1, column: 32 },
+                    end: { line: 1, column: 37 }
+                }
+            },
+            isType: true,
+            range: [0, 38],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 38 }
             }
         },
     },

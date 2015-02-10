@@ -4953,7 +4953,8 @@ parseYieldExpression: true, parseAwaitExpression: true
         if (matchContextualKeyword('type')) {
             token2 = lookahead2();
             if ((token2.type === Token.Identifier && token2.value !== 'from') ||
-                    (token2.type === Token.Punctuator && token2.value === '{')) {
+                    (token2.type === Token.Punctuator &&
+                        (token2.value === '{' || token2.value === '*'))) {
                 isType = true;
                 lex();
             }
