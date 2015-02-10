@@ -274,4 +274,18 @@ module.exports = {
         'declare module A { function foo() {} }',
         '"use strict"; declare module "\\01" {}',
     ],
+    'Typecasts': [
+      '(xxx: number)',
+      '({xxx: 0, yyy: "hey"}: {xxx: number; yyy: string})',
+      // distinguish between function type params and typecasts
+      '((xxx) => xxx + 1: (xxx: number) => number)',
+      // parens disambiguate groups from casts
+      '((xxx: number), (yyy: string))',
+    ],
+    'Invalid Typecasts': [
+      // Must be parenthesized
+      'var x: number = 0: number;',
+      // ...even within groups
+      '(xxx: number, yyy: string)'
+    ],
 };

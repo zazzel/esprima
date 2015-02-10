@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 211
+var numTests = 217
 var testFixture;
 
 var fbTestFixture = {
@@ -13184,6 +13184,420 @@ var fbTestFixture = {
             column: 30,
             message: 'Error: Line 1: Octal literals are not allowed in strict mode.',
             description: 'Octal literals are not allowed in strict mode.'
+
+        },
+    },
+    'Typecasts': {
+        '(xxx: number)': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'TypeCastExpression',
+                expression: {
+                    type: 'Identifier',
+                    name: 'xxx',
+                    range: [1, 4],
+                    loc: {
+                        start: { line: 1, column: 1 },
+                        end: { line: 1, column: 4 }
+                    }
+                },
+                typeAnnotation: {
+                    type: 'TypeAnnotation',
+                    typeAnnotation: {
+                        type: 'NumberTypeAnnotation',
+                        range: [6, 12],
+                        loc: {
+                            start: { line: 1, column: 6 },
+                            end: { line: 1, column: 12 }
+                        }
+                    },
+                    range: [4, 12],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 12 }
+                    }
+                },
+                range: [1, 12],
+                loc: {
+                    start: { line: 1, column: 1 },
+                    end: { line: 1, column: 12 }
+                }
+            },
+            range: [0, 13],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 13 }
+            }
+        },
+        '({xxx: 0, yyy: "hey"}: {xxx: number; yyy: string})': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'TypeCastExpression',
+                expression: {
+                    type: 'ObjectExpression',
+                    properties: [{
+                        type: 'Property',
+                        key: {
+                            type: 'Identifier',
+                            name: 'xxx',
+                            range: [2, 5],
+                            loc: {
+                                start: { line: 1, column: 2 },
+                                end: { line: 1, column: 5 }
+                            }
+                        },
+                        value: {
+                            type: 'Literal',
+                            value: 0,
+                            raw: '0',
+                            range: [7, 8],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 8 }
+                            }
+                        },
+                        kind: 'init',
+                        method: false,
+                        shorthand: false,
+                        computed: false,
+                        range: [2, 8],
+                        loc: {
+                            start: { line: 1, column: 2 },
+                            end: { line: 1, column: 8 }
+                        }
+                    }, {
+                        type: 'Property',
+                        key: {
+                            type: 'Identifier',
+                            name: 'yyy',
+                            range: [10, 13],
+                            loc: {
+                                start: { line: 1, column: 10 },
+                                end: { line: 1, column: 13 }
+                            }
+                        },
+                        value: {
+                            type: 'Literal',
+                            value: 'hey',
+                            raw: '"hey"',
+                            range: [15, 20],
+                            loc: {
+                                start: { line: 1, column: 15 },
+                                end: { line: 1, column: 20 }
+                            }
+                        },
+                        kind: 'init',
+                        method: false,
+                        shorthand: false,
+                        computed: false,
+                        range: [10, 20],
+                        loc: {
+                            start: { line: 1, column: 10 },
+                            end: { line: 1, column: 20 }
+                        }
+                    }],
+                    range: [1, 21],
+                    loc: {
+                        start: { line: 1, column: 1 },
+                        end: { line: 1, column: 21 }
+                    }
+                },
+                typeAnnotation: {
+                    type: 'TypeAnnotation',
+                    typeAnnotation: {
+                        type: 'ObjectTypeAnnotation',
+                        properties: [{
+                            type: 'ObjectTypeProperty',
+                            key: {
+                                type: 'Identifier',
+                                name: 'xxx',
+                                range: [24, 27],
+                                loc: {
+                                    start: { line: 1, column: 24 },
+                                    end: { line: 1, column: 27 }
+                                }
+                            },
+                            value: {
+                                type: 'NumberTypeAnnotation',
+                                range: [29, 35],
+                                loc: {
+                                    start: { line: 1, column: 29 },
+                                    end: { line: 1, column: 35 }
+                                }
+                            },
+                            optional: false,
+                            range: [24, 35],
+                            loc: {
+                                start: { line: 1, column: 24 },
+                                end: { line: 1, column: 35 }
+                            }
+                        }, {
+                            type: 'ObjectTypeProperty',
+                            key: {
+                                type: 'Identifier',
+                                name: 'yyy',
+                                range: [37, 40],
+                                loc: {
+                                    start: { line: 1, column: 37 },
+                                    end: { line: 1, column: 40 }
+                                }
+                            },
+                            value: {
+                                type: 'StringTypeAnnotation',
+                                range: [42, 48],
+                                loc: {
+                                    start: { line: 1, column: 42 },
+                                    end: { line: 1, column: 48 }
+                                }
+                            },
+                            optional: false,
+                            range: [37, 48],
+                            loc: {
+                                start: { line: 1, column: 37 },
+                                end: { line: 1, column: 48 }
+                            }
+                        }],
+                        indexers: [],
+                        callProperties: [],
+                        range: [23, 49],
+                        loc: {
+                            start: { line: 1, column: 23 },
+                            end: { line: 1, column: 49 }
+                        }
+                    },
+                    range: [21, 49],
+                    loc: {
+                        start: { line: 1, column: 21 },
+                        end: { line: 1, column: 49 }
+                    }
+                },
+                range: [1, 49],
+                loc: {
+                    start: { line: 1, column: 1 },
+                    end: { line: 1, column: 49 }
+                }
+            },
+            range: [0, 50],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 50 }
+            }
+        },
+        '((xxx) => xxx + 1: (xxx: number) => number)': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'TypeCastExpression',
+                expression: {
+                    type: 'ArrowFunctionExpression',
+                    id: null,
+                    params: [{
+                        type: 'Identifier',
+                        name: 'xxx',
+                        range: [2, 5],
+                        loc: {
+                            start: { line: 1, column: 2 },
+                            end: { line: 1, column: 5 }
+                        }
+                    }],
+                    defaults: [],
+                    body: {
+                        type: 'BinaryExpression',
+                        operator: '+',
+                        left: {
+                            type: 'Identifier',
+                            name: 'xxx',
+                            range: [10, 13],
+                            loc: {
+                                start: { line: 1, column: 10 },
+                                end: { line: 1, column: 13 }
+                            }
+                        },
+                        right: {
+                            type: 'Literal',
+                            value: 1,
+                            raw: '1',
+                            range: [16, 17],
+                            loc: {
+                                start: { line: 1, column: 16 },
+                                end: { line: 1, column: 17 }
+                            }
+                        },
+                        range: [10, 17],
+                        loc: {
+                            start: { line: 1, column: 10 },
+                            end: { line: 1, column: 17 }
+                        }
+                    },
+                    rest: null,
+                    generator: false,
+                    expression: true,
+                    range: [1, 17],
+                    loc: {
+                        start: { line: 1, column: 1 },
+                        end: { line: 1, column: 17 }
+                    }
+                },
+                typeAnnotation: {
+                    type: 'TypeAnnotation',
+                    typeAnnotation: {
+                        type: 'FunctionTypeAnnotation',
+                        params: [{
+                            type: 'FunctionTypeParam',
+                            name: {
+                                type: 'Identifier',
+                                name: 'xxx',
+                                range: [20, 23],
+                                loc: {
+                                    start: { line: 1, column: 20 },
+                                    end: { line: 1, column: 23 }
+                                }
+                            },
+                            typeAnnotation: {
+                                type: 'NumberTypeAnnotation',
+                                range: [25, 31],
+                                loc: {
+                                    start: { line: 1, column: 25 },
+                                    end: { line: 1, column: 31 }
+                                }
+                            },
+                            optional: false,
+                            range: [20, 31],
+                            loc: {
+                                start: { line: 1, column: 20 },
+                                end: { line: 1, column: 31 }
+                            }
+                        }],
+                        returnType: {
+                            type: 'NumberTypeAnnotation',
+                            range: [36, 42],
+                            loc: {
+                                start: { line: 1, column: 36 },
+                                end: { line: 1, column: 42 }
+                            }
+                        },
+                        rest: null,
+                        typeParameters: null,
+                        range: [19, 42],
+                        loc: {
+                            start: { line: 1, column: 19 },
+                            end: { line: 1, column: 42 }
+                        }
+                    },
+                    range: [17, 42],
+                    loc: {
+                        start: { line: 1, column: 17 },
+                        end: { line: 1, column: 42 }
+                    }
+                },
+                range: [1, 42],
+                loc: {
+                    start: { line: 1, column: 1 },
+                    end: { line: 1, column: 42 }
+                }
+            },
+            range: [0, 43],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 43 }
+            }
+        },
+        '((xxx: number), (yyy: string))': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'SequenceExpression',
+                expressions: [{
+                    type: 'TypeCastExpression',
+                    expression: {
+                        type: 'Identifier',
+                        name: 'xxx',
+                        range: [2, 5],
+                        loc: {
+                            start: { line: 1, column: 2 },
+                            end: { line: 1, column: 5 }
+                        }
+                    },
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'NumberTypeAnnotation',
+                            range: [7, 13],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 13 }
+                            }
+                        },
+                        range: [5, 13],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 13 }
+                        }
+                    },
+                    range: [2, 13],
+                    loc: {
+                        start: { line: 1, column: 2 },
+                        end: { line: 1, column: 13 }
+                    }
+                }, {
+                    type: 'TypeCastExpression',
+                    expression: {
+                        type: 'Identifier',
+                        name: 'yyy',
+                        range: [17, 20],
+                        loc: {
+                            start: { line: 1, column: 17 },
+                            end: { line: 1, column: 20 }
+                        }
+                    },
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'StringTypeAnnotation',
+                            range: [22, 28],
+                            loc: {
+                                start: { line: 1, column: 22 },
+                                end: { line: 1, column: 28 }
+                            }
+                        },
+                        range: [20, 28],
+                        loc: {
+                            start: { line: 1, column: 20 },
+                            end: { line: 1, column: 28 }
+                        }
+                    },
+                    range: [17, 28],
+                    loc: {
+                        start: { line: 1, column: 17 },
+                        end: { line: 1, column: 28 }
+                    }
+                }],
+                range: [1, 29],
+                loc: {
+                    start: { line: 1, column: 1 },
+                    end: { line: 1, column: 29 }
+                }
+            },
+            range: [0, 30],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 30 }
+            }
+        },
+    },
+    'Invalid Typecasts': {
+        'var x: number = 0: number;': {
+            index: 17,
+            lineNumber: 1,
+            column: 18,
+            message: 'Error: Line 1: Unexpected token :',
+            description: 'Unexpected token :'
+
+        },
+        '(xxx: number, yyy: string)': {
+            index: 12,
+            lineNumber: 1,
+            column: 13,
+            message: 'Error: Line 1: Unexpected token ,',
+            description: 'Unexpected token ,'
 
         },
     },
