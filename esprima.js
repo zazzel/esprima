@@ -218,6 +218,7 @@ parseYieldExpression: true, parseAwaitExpression: true
         TryStatement: 'TryStatement',
         TypeAlias: 'TypeAlias',
         TypeAnnotation: 'TypeAnnotation',
+        TypeCastExpression: 'TypeCastExpression',
         TypeofTypeAnnotation: 'TypeofTypeAnnotation',
         TypeParameterDeclaration: 'TypeParameterDeclaration',
         TypeParameterInstantiation: 'TypeParameterInstantiation',
@@ -1996,6 +1997,14 @@ parseYieldExpression: true, parseAwaitExpression: true
             };
         },
 
+        createTypeCast: function (expression, typeAnnotation) {
+            return {
+                type: Syntax.TypeCastExpression,
+                expression: expression,
+                typeAnnotation: typeAnnotation
+            };
+        },
+
         createFunctionTypeAnnotation: function (params, returnType, rest, typeParameters) {
             return {
                 type: Syntax.FunctionTypeAnnotation,
@@ -3355,13 +3364,23 @@ parseYieldExpression: true, parseAwaitExpression: true
     // 11.1.6 The Grouping Operator
 
     function parseGroupExpression() {
-        var expr;
+        var expr, marker, typeAnnotation;
 
         expect('(');
 
         ++state.parenthesizedCount;
 
+        marker = markerCreate();
+
         expr = parseExpression();
+
+        if (match(':')) {
+            typeAnnotation = parseTypeAnnotation();
+            expr = markerApply(marker, delegate.createTypeCast(
+                expr,
+                typeAnnotation
+            ));
+        }
 
         expect(')');
 
