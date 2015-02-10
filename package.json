@@ -7,7 +7,7 @@
         "esparse": "./bin/esparse.js",
         "esvalidate": "./bin/esvalidate.js"
     },
-    "version": "10001.1.0-dev-harmony-fb",
+    "version": "11001.1.0-dev-harmony-fb",
     "files": [
         "bin",
         "test/run.js",
