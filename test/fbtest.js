@@ -24,6 +24,8 @@
  *     2) Run tools/generate-fbtest.js
  */
 
+/* jscs:disable disallowTrailingComma */
+
 module.exports = {
     'XJS': [
         '<a />',
