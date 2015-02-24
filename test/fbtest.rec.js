@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 217
+var numTests = 218
 var testFixture;
 
 var fbTestFixture = {
@@ -9432,6 +9432,121 @@ var fbTestFixture = {
             message: 'Error: Line 1: Unexpected token ,',
             description: 'Unexpected token ,'
 
+        },
+    },
+    'Hacky Type Annotations': {
+        'class Foo { constructor: Function; constructor(){} }': {
+            type: 'ClassDeclaration',
+            id: {
+                type: 'Identifier',
+                name: 'Foo',
+                range: [6, 9],
+                loc: {
+                    start: { line: 1, column: 6 },
+                    end: { line: 1, column: 9 }
+                }
+            },
+            superClass: null,
+            body: {
+                type: 'ClassBody',
+                body: [{
+                    type: 'ClassProperty',
+                    key: {
+                        type: 'Identifier',
+                        name: 'constructor',
+                        range: [12, 23],
+                        loc: {
+                            start: { line: 1, column: 12 },
+                            end: { line: 1, column: 23 }
+                        }
+                    },
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'GenericTypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'Function',
+                                range: [25, 33],
+                                loc: {
+                                    start: { line: 1, column: 25 },
+                                    end: { line: 1, column: 33 }
+                                }
+                            },
+                            typeParameters: null,
+                            range: [25, 33],
+                            loc: {
+                                start: { line: 1, column: 25 },
+                                end: { line: 1, column: 33 }
+                            }
+                        },
+                        range: [23, 33],
+                        loc: {
+                            start: { line: 1, column: 23 },
+                            end: { line: 1, column: 33 }
+                        }
+                    },
+                    computed: false,
+                    'static': false,
+                    range: [12, 34],
+                    loc: {
+                        start: { line: 1, column: 12 },
+                        end: { line: 1, column: 34 }
+                    }
+                }, {
+                    type: 'MethodDefinition',
+                    key: {
+                        type: 'Identifier',
+                        name: 'constructor',
+                        range: [35, 46],
+                        loc: {
+                            start: { line: 1, column: 35 },
+                            end: { line: 1, column: 46 }
+                        }
+                    },
+                    value: {
+                        type: 'FunctionExpression',
+                        id: null,
+                        params: [],
+                        defaults: [],
+                        body: {
+                            type: 'BlockStatement',
+                            body: [],
+                            range: [48, 50],
+                            loc: {
+                                start: { line: 1, column: 48 },
+                                end: { line: 1, column: 50 }
+                            }
+                        },
+                        rest: null,
+                        generator: false,
+                        expression: false,
+                        range: [48, 50],
+                        loc: {
+                            start: { line: 1, column: 48 },
+                            end: { line: 1, column: 50 }
+                        }
+                    },
+                    kind: '',
+                    'static': false,
+                    computed: false,
+                    range: [35, 50],
+                    loc: {
+                        start: { line: 1, column: 35 },
+                        end: { line: 1, column: 50 }
+                    }
+                }],
+                range: [10, 52],
+                loc: {
+                    start: { line: 1, column: 10 },
+                    end: { line: 1, column: 52 }
+                }
+            },
+            range: [0, 52],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 52 }
+            }
         },
     },
     'Array Types': {
