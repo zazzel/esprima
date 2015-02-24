@@ -28,8 +28,6 @@
   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-var testFixture;
-
 var harmonyTestFixture = {
 
     'ES6 Unicode Code Point Escape Sequence': {
@@ -12057,7 +12055,8 @@ var harmonyTestFixture = {
             column: 31,
             message: 'Error: Line 1: Illegal constructor property in class definition',
             description: 'Illegal constructor property in class definition"'
-        },
+        }
+
     },
 
     'ES6: Computed Properties': {
