@@ -6243,15 +6243,17 @@
                                 ClassPropertyType.static :
                                 ClassPropertyType.prototype;
 
-                    if (propName === 'constructor' && !classElement.static) {
-                        if (specialMethod(classElement)) {
-                            throwError(classElement, Messages.IllegalClassConstructorProperty);
+                    if (classElement.type === Syntax.MethodDefinition) {
+                        if (propName === 'constructor' && !classElement.static) {
+                            if (specialMethod(classElement)) {
+                                throwError(classElement, Messages.IllegalClassConstructorProperty);
+                            }
+                            if (existingProps[ClassPropertyType.prototype].has('constructor')) {
+                                throwError(classElement.key, Messages.IllegalDuplicateClassProperty);
+                            }
                         }
-                        if (existingProps[ClassPropertyType.prototype].has('constructor')) {
-                            throwError(classElement.key, Messages.IllegalDuplicateClassProperty);
-                        }
+                        existingProps[propType].set(propName, true);
                     }
-                    existingProps[propType].set(propName, true);
                 }
             }
         }

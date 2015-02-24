@@ -179,6 +179,9 @@ module.exports = {
         'var y: return',
         'var a: { x: number, y: string }',
     ],
+    'Hacky Type Annotations': [
+        'class Foo { constructor: Function; constructor(){} }',
+    ],
     'Array Types': [
       'var a: number[]',
       'var a: ?number[]',
