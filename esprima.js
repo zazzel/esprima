@@ -4395,7 +4395,7 @@
 
     function parseObjectType(allowStatic) {
         var callProperties = [], indexers = [], marker, optional = false,
-            properties = [], property, propertyKey, propertyTypeAnnotation,
+            properties = [], propertyKey, propertyTypeAnnotation,
             token, isStatic, matchStatic;
 
         expect('{');
@@ -4459,9 +4459,8 @@
     }
 
     function parseGenericType() {
-        var marker = markerCreate(), returnType = null,
-            typeParameters = null, typeIdentifier,
-            typeIdentifierMarker = markerCreate;
+        var marker = markerCreate(),
+            typeParameters = null, typeIdentifier;
 
         typeIdentifier = parseVariableIdentifier();
 
@@ -4551,7 +4550,7 @@
     // primary types are kind of like primary expressions...they're the
     // primitives with which other types are constructed.
     function parsePrimaryType() {
-        var typeIdentifier = null, params = null, returnType = null,
+        var params = null, returnType = null,
             marker = markerCreate(), rest = null, tmp,
             typeParameters, token, type, isGroupedType = false;
 
@@ -6085,9 +6084,8 @@
     }
 
     function parseMethodDefinition(key, isStatic, generator, computed) {
-        var token, param, propType, isValidDuplicateProp = false,
-            isAsync, typeParameters, tokenValue, returnType,
-            annotationMarker, propMap;
+        var token, param, propType,
+            isAsync, typeParameters, tokenValue, returnType;
 
         propType = isStatic ? ClassPropertyType.static : ClassPropertyType.prototype;
 
@@ -6184,7 +6182,7 @@
             isStatic = false, possiblyOpenBracketToken;
         if (match(';')) {
             lex();
-            return;
+            return undefined;
         }
 
         if (lookahead.value === 'static') {
@@ -7089,7 +7087,7 @@
     }
 
     function parseXJSOpeningElement() {
-        var name, attribute, attributes = [], selfClosing = false, origInXJSChild, origInXJSTag, marker = markerCreate();
+        var name, attributes = [], selfClosing = false, origInXJSChild, origInXJSTag, marker = markerCreate();
 
         origInXJSChild = state.inXJSChild;
         origInXJSTag = state.inXJSTag;
@@ -7223,8 +7221,7 @@
     }
 
     function parseInterface() {
-        var body, bodyMarker, extended = [], id, marker = markerCreate(),
-            typeParameters = null, previousStrict;
+        var marker = markerCreate();
 
         if (strict) {
             expectKeyword('interface');
