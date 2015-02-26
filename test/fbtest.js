@@ -27,7 +27,7 @@
 /* jscs:disable disallowTrailingComma */
 
 module.exports = {
-    'XJS': [
+    'JSX': [
         '<a />',
         '<n:a n:v />',
         '<a n:foo="bar"> {value} <b><c /></b></a>',
@@ -51,7 +51,7 @@ module.exports = {
         '<a>    </a>',
         '<a>= == =</a>',
     ],
-    'Invalid XJS Syntax': [
+    'Invalid JSX Syntax': [
         '</>',
         '<a: />',
         '<:a />',
