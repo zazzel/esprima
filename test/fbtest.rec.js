@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 218
+var numTests = 219
 var testFixture;
 
 var fbTestFixture = {
@@ -8526,6 +8526,138 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 33 }
+            }
+        },
+        'var a: Map<string, Map<string, Array<string>>>': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'GenericTypeAnnotation',
+                            id: {
+                                type: 'Identifier',
+                                name: 'Map',
+                                range: [7, 10],
+                                loc: {
+                                    start: { line: 1, column: 7 },
+                                    end: { line: 1, column: 10 }
+                                }
+                            },
+                            typeParameters: {
+                                type: 'TypeParameterInstantiation',
+                                params: [{
+                                    type: 'StringTypeAnnotation',
+                                    range: [11, 17],
+                                    loc: {
+                                        start: { line: 1, column: 11 },
+                                        end: { line: 1, column: 17 }
+                                    }
+                                }, {
+                                    type: 'GenericTypeAnnotation',
+                                    id: {
+                                        type: 'Identifier',
+                                        name: 'Map',
+                                        range: [19, 22],
+                                        loc: {
+                                            start: { line: 1, column: 19 },
+                                            end: { line: 1, column: 22 }
+                                        }
+                                    },
+                                    typeParameters: {
+                                        type: 'TypeParameterInstantiation',
+                                        params: [{
+                                            type: 'StringTypeAnnotation',
+                                            range: [23, 29],
+                                            loc: {
+                                                start: { line: 1, column: 23 },
+                                                end: { line: 1, column: 29 }
+                                            }
+                                        }, {
+                                            type: 'GenericTypeAnnotation',
+                                            id: {
+                                                type: 'Identifier',
+                                                name: 'Array',
+                                                range: [31, 36],
+                                                loc: {
+                                                    start: { line: 1, column: 31 },
+                                                    end: { line: 1, column: 36 }
+                                                }
+                                            },
+                                            typeParameters: {
+                                                type: 'TypeParameterInstantiation',
+                                                params: [{
+                                                    type: 'StringTypeAnnotation',
+                                                    range: [37, 43],
+                                                    loc: {
+                                                        start: { line: 1, column: 37 },
+                                                        end: { line: 1, column: 43 }
+                                                    }
+                                                }],
+                                                range: [36, 44],
+                                                loc: {
+                                                    start: { line: 1, column: 36 },
+                                                    end: { line: 1, column: 44 }
+                                                }
+                                            },
+                                            range: [31, 44],
+                                            loc: {
+                                                start: { line: 1, column: 31 },
+                                                end: { line: 1, column: 44 }
+                                            }
+                                        }],
+                                        range: [22, 45],
+                                        loc: {
+                                            start: { line: 1, column: 22 },
+                                            end: { line: 1, column: 45 }
+                                        }
+                                    },
+                                    range: [19, 45],
+                                    loc: {
+                                        start: { line: 1, column: 19 },
+                                        end: { line: 1, column: 45 }
+                                    }
+                                }],
+                                range: [10, 46],
+                                loc: {
+                                    start: { line: 1, column: 10 },
+                                    end: { line: 1, column: 46 }
+                                }
+                            },
+                            range: [7, 46],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 46 }
+                            }
+                        },
+                        range: [5, 46],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 46 }
+                        }
+                    },
+                    range: [4, 46],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 46 }
+                    }
+                },
+                init: null,
+                range: [4, 46],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 46 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 46],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 46 }
             }
         },
         'var a: number[]': {

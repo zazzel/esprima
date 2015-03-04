@@ -894,7 +894,7 @@
 
         // 3-character punctuators: === !== >>> <<= >>=
 
-        if (ch1 === '>' && ch2 === '>' && ch3 === '>') {
+        if (ch1 === '>' && ch2 === '>' && ch3 === '>' && !state.inType) {
             index += 3;
             return {
                 type: Token.Punctuator,

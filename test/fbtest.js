@@ -154,6 +154,7 @@ module.exports = {
         '((...rest: Array<number>) => rest)',
         'var a: Map<string, Array<string> >',
         'var a: Map<string, Array<string>>',
+        'var a: Map<string, Map<string, Array<string>>>',
         'var a: number[]',
         'var a: ?string[]',
         'var a: Promise<bool>[]',
