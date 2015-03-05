@@ -4291,7 +4291,7 @@
 
         expect('<');
         while (!match('>')) {
-            paramTypes.push(parseVariableIdentifier());
+            paramTypes.push(parseTypeAnnotatableIdentifier());
             if (!match('>')) {
                 expect(',');
             }

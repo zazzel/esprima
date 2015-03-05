@@ -294,4 +294,8 @@ module.exports = {
       // ...even within groups
       '(xxx: number, yyy: string)'
     ],
+    'Bounded Polymorphism': [
+      'class A<T: Foo> {}',
+      'function bar<T: ?number>() {}',
+    ],
 };
