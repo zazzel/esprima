@@ -3587,13 +3587,22 @@
                 arg = parseSpreadOrAssignmentExpression();
                 args.push(arg);
 
-                if (match(')')) {
-                    break;
-                } else if (arg.type === Syntax.SpreadElement) {
-                    throwError({}, Messages.ElementAfterSpreadElement);
+                if (arg.type === Syntax.SpreadElement) {
+                    if (match(')')) {
+                        break;
+                    } else {
+                        throwError({}, Messages.ElementAfterSpreadElement);
+                    }
                 }
 
-                expect(',');
+                if (match(')')) {
+                    break;
+                } else {
+                    expect(',');
+                    if (match(')')) {
+                        break;
+                    }
+                }
             }
         }
 
@@ -4217,7 +4226,7 @@
     // 11.14 Comma Operator
 
     function parseExpression() {
-        var marker, expr, expressions, sequence, spreadFound;
+        var marker, expr, expressions, sequence, spreadFound, possibleArrow;
 
         marker = markerCreate();
         expr = parseAssignmentExpression();
@@ -4230,6 +4239,17 @@
                 }
 
                 lex();
+
+                if (match(')')) {
+                    possibleArrow = lookahead2();
+                    if (
+                        possibleArrow.type === Token.Punctuator &&
+                        possibleArrow.value === '=>'
+                    ) {
+                        break;
+                    }
+                }
+
                 expr = parseSpreadOrAssignmentExpression();
                 expressions.push(expr);
 
@@ -4242,7 +4262,9 @@
                 }
             }
 
-            sequence = markerApply(marker, delegate.createSequenceExpression(expressions));
+            if (expressions.length > 1) {
+                sequence = markerApply(marker, delegate.createSequenceExpression(expressions));
+            }
         }
 
         if (spreadFound && lookahead2().value !== '=>') {
@@ -5863,6 +5885,9 @@
                     break;
                 }
                 expect(',');
+                if (!options.rest && match(')')) {
+                    break;
+                }
             }
         }
 
