@@ -121,6 +121,7 @@ module.exports = {
         'var a: {numVal: number; [indexer: string]: number};',
         'var a: ?{numVal: number};',
         'var a: {numVal: number; strVal: string}',
+        'var a: {numVal: number, strVal: string}',
         'var a: {subObj: {strVal: string}}',
         'var a: {subObj: ?{strVal: string}}',
         'var a: {param1: number; param2: string}',
@@ -178,7 +179,6 @@ module.exports = {
         'var a:{a:number b:string}',
         'var x: (number) => string',
         'var y: return',
-        'var a: { x: number, y: string }',
     ],
     'Hacky Type Annotations': [
         'class Foo { constructor: Function; constructor(){} }',
