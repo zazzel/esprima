@@ -4,7 +4,7 @@
 * tests/fbtest.js and run tools/generate-fbtest.js
 */
 
-var numTests = 221
+var numTests = 223
 var testFixture;
 
 var fbTestFixture = {
@@ -1008,6 +1008,74 @@ var fbTestFixture = {
                 end: { line: 1, column: 9 }
             }
         },
+        '<a>{\r\n}</a>': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'JSXElement',
+                openingElement: {
+                    type: 'JSXOpeningElement',
+                    name: {
+                        type: 'JSXIdentifier',
+                        name: 'a',
+                        range: [1, 2],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 2 }
+                        }
+                    },
+                    selfClosing: false,
+                    attributes: [],
+                    range: [0, 3],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 3 }
+                    }
+                },
+                closingElement: {
+                    type: 'JSXClosingElement',
+                    name: {
+                        type: 'JSXIdentifier',
+                        name: 'a',
+                        range: [9, 10],
+                        loc: {
+                            start: { line: 2, column: 3 },
+                            end: { line: 2, column: 4 }
+                        }
+                    },
+                    range: [7, 11],
+                    loc: {
+                        start: { line: 2, column: 1 },
+                        end: { line: 2, column: 5 }
+                    }
+                },
+                children: [{
+                    type: 'JSXExpressionContainer',
+                    expression: {
+                        type: 'JSXEmptyExpression',
+                        range: [4, 6],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 2, column: 1 }
+                        }
+                    },
+                    range: [3, 7],
+                    loc: {
+                        start: { line: 1, column: 3 },
+                        end: { line: 2, column: 1 }
+                    }
+                }],
+                range: [0, 11],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 2, column: 5 }
+                }
+            },
+            range: [0, 11],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 2, column: 5 }
+            }
+        },
         '<a>{/* this is a comment */}</a>': {
             type: 'ExpressionStatement',
             expression: {
@@ -1074,6 +1142,74 @@ var fbTestFixture = {
             loc: {
                 start: { line: 1, column: 0 },
                 end: { line: 1, column: 32 }
+            }
+        },
+        '<a>{/* this\nis\na\nmulti-line\ncomment */}</a>': {
+            type: 'ExpressionStatement',
+            expression: {
+                type: 'JSXElement',
+                openingElement: {
+                    type: 'JSXOpeningElement',
+                    name: {
+                        type: 'JSXIdentifier',
+                        name: 'a',
+                        range: [1, 2],
+                        loc: {
+                            start: { line: 1, column: 1 },
+                            end: { line: 1, column: 2 }
+                        }
+                    },
+                    selfClosing: false,
+                    attributes: [],
+                    range: [0, 3],
+                    loc: {
+                        start: { line: 1, column: 0 },
+                        end: { line: 1, column: 3 }
+                    }
+                },
+                closingElement: {
+                    type: 'JSXClosingElement',
+                    name: {
+                        type: 'JSXIdentifier',
+                        name: 'a',
+                        range: [41, 42],
+                        loc: {
+                            start: { line: 5, column: 13 },
+                            end: { line: 5, column: 14 }
+                        }
+                    },
+                    range: [39, 43],
+                    loc: {
+                        start: { line: 5, column: 11 },
+                        end: { line: 5, column: 15 }
+                    }
+                },
+                children: [{
+                    type: 'JSXExpressionContainer',
+                    expression: {
+                        type: 'JSXEmptyExpression',
+                        range: [4, 38],
+                        loc: {
+                            start: { line: 1, column: 4 },
+                            end: { line: 5, column: 11 }
+                        }
+                    },
+                    range: [3, 39],
+                    loc: {
+                        start: { line: 1, column: 3 },
+                        end: { line: 5, column: 11 }
+                    }
+                }],
+                range: [0, 43],
+                loc: {
+                    start: { line: 1, column: 0 },
+                    end: { line: 5, column: 15 }
+                }
+            },
+            range: [0, 43],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 5, column: 15 }
             }
         },
         '<div>@test content</div>': {
