@@ -7024,9 +7024,19 @@
     }
 
     function parseJSXEmptyExpression() {
-        var marker = markerCreatePreserveWhitespace();
-        while (source.charAt(index) !== '}') {
-            index++;
+        var ch, marker = markerCreatePreserveWhitespace();
+        while (index < length) {
+            ch = source.charCodeAt(index);
+            if (ch === 125) {
+                break;
+            } else if (isLineTerminator(ch)) {
+                if (ch === 13 && source.charCodeAt(index + 1) === 10) {
+                    ++index;
+                }
+                ++lineNumber;
+                lineStart = index;
+            }
+            ++index;
         }
         return markerApply(marker, delegate.createJSXEmptyExpression());
     }
