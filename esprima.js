@@ -4481,7 +4481,7 @@
                 }
             }
 
-            if (match(';')) {
+            if (match(';') || match(',')) {
                 lex();
             } else if (!match('}')) {
                 throwUnexpected(lookahead);

@@ -5366,6 +5366,102 @@ var fbTestFixture = {
                 end: { line: 1, column: 39 }
             }
         },
+        'var a: {numVal: number, strVal: string}': {
+            type: 'VariableDeclaration',
+            declarations: [{
+                type: 'VariableDeclarator',
+                id: {
+                    type: 'Identifier',
+                    name: 'a',
+                    typeAnnotation: {
+                        type: 'TypeAnnotation',
+                        typeAnnotation: {
+                            type: 'ObjectTypeAnnotation',
+                            properties: [{
+                                type: 'ObjectTypeProperty',
+                                key: {
+                                    type: 'Identifier',
+                                    name: 'numVal',
+                                    range: [8, 14],
+                                    loc: {
+                                        start: { line: 1, column: 8 },
+                                        end: { line: 1, column: 14 }
+                                    }
+                                },
+                                value: {
+                                    type: 'NumberTypeAnnotation',
+                                    range: [16, 22],
+                                    loc: {
+                                        start: { line: 1, column: 16 },
+                                        end: { line: 1, column: 22 }
+                                    }
+                                },
+                                optional: false,
+                                range: [8, 22],
+                                loc: {
+                                    start: { line: 1, column: 8 },
+                                    end: { line: 1, column: 22 }
+                                }
+                            }, {
+                                type: 'ObjectTypeProperty',
+                                key: {
+                                    type: 'Identifier',
+                                    name: 'strVal',
+                                    range: [24, 30],
+                                    loc: {
+                                        start: { line: 1, column: 24 },
+                                        end: { line: 1, column: 30 }
+                                    }
+                                },
+                                value: {
+                                    type: 'StringTypeAnnotation',
+                                    range: [32, 38],
+                                    loc: {
+                                        start: { line: 1, column: 32 },
+                                        end: { line: 1, column: 38 }
+                                    }
+                                },
+                                optional: false,
+                                range: [24, 38],
+                                loc: {
+                                    start: { line: 1, column: 24 },
+                                    end: { line: 1, column: 38 }
+                                }
+                            }],
+                            indexers: [],
+                            callProperties: [],
+                            range: [7, 39],
+                            loc: {
+                                start: { line: 1, column: 7 },
+                                end: { line: 1, column: 39 }
+                            }
+                        },
+                        range: [5, 39],
+                        loc: {
+                            start: { line: 1, column: 5 },
+                            end: { line: 1, column: 39 }
+                        }
+                    },
+                    range: [4, 39],
+                    loc: {
+                        start: { line: 1, column: 4 },
+                        end: { line: 1, column: 39 }
+                    }
+                },
+                init: null,
+                range: [4, 39],
+                loc: {
+                    start: { line: 1, column: 4 },
+                    end: { line: 1, column: 39 }
+                }
+            }],
+            kind: 'var',
+            range: [0, 39],
+            loc: {
+                start: { line: 1, column: 0 },
+                end: { line: 1, column: 39 }
+            }
+        },
         'var a: {subObj: {strVal: string}}': {
             type: 'VariableDeclaration',
             declarations: [{
@@ -9555,14 +9651,6 @@ var fbTestFixture = {
             column: 8,
             message: 'Error: Line 1: Unexpected token return',
             description: 'Unexpected token return'
-
-        },
-        'var a: { x: number, y: string }': {
-            index: 18,
-            lineNumber: 1,
-            column: 19,
-            message: 'Error: Line 1: Unexpected token ,',
-            description: 'Unexpected token ,'
 
         },
     },
