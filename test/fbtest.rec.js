@@ -9475,7 +9475,7 @@ var fbTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'bar',
                 raw: '"bar"',
                 range: [21, 26],
@@ -9529,7 +9529,7 @@ var fbTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'baz',
                 raw: '"baz"',
                 range: [28, 33],
@@ -9574,7 +9574,7 @@ var fbTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'baz',
                 raw: '"baz"',
                 range: [30, 35],
@@ -9610,7 +9610,7 @@ var fbTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [17, 22],
@@ -9663,7 +9663,7 @@ var fbTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'bar',
                 raw: '"bar"',
                 range: [24, 29],
@@ -9699,7 +9699,7 @@ var fbTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'bar',
                 raw: '"bar"',
                 range: [32, 37],

@@ -1176,7 +1176,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [14, 19],
@@ -1214,7 +1214,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [18, 23],
@@ -1269,7 +1269,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [23, 28],
@@ -1315,7 +1315,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [25, 30],
@@ -1361,7 +1361,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [29, 34],
@@ -1424,7 +1424,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [34, 39],
@@ -1462,7 +1462,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [22, 27],
@@ -1499,7 +1499,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [16, 21],
@@ -1544,7 +1544,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [29, 34],
@@ -1583,7 +1583,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [18, 23],
@@ -1637,7 +1637,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [23, 28],
@@ -1682,7 +1682,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [25, 30],
@@ -1744,7 +1744,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [30, 35],
@@ -1782,7 +1782,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [21, 26],
@@ -1804,7 +1804,7 @@ var modulesTestFixture = {
             type: 'ImportDeclaration',
             specifiers: [],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [7, 12],
@@ -1859,7 +1859,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [23, 28],
@@ -1913,7 +1913,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [26, 31],
@@ -2245,7 +2245,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'crypto',
                 raw: '"crypto"',
                 range: [14, 22],
@@ -2435,7 +2435,7 @@ var modulesTestFixture = {
             type: 'ImportDeclaration',
             specifiers: [],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'jquery',
                 raw: '"jquery"',
                 range: [7, 15],
@@ -2472,7 +2472,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'jquery',
                 raw: '"jquery"',
                 range: [14, 22],
@@ -2527,7 +2527,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'crypto',
                 raw: '"crypto"',
                 range: [33, 41],
@@ -2573,7 +2573,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'crypto',
                 raw: '"crypto"',
                 range: [31, 39],
@@ -2636,7 +2636,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'crypto',
                 raw: '"crypto"',
                 range: [40, 48],
@@ -2682,7 +2682,7 @@ var modulesTestFixture = {
                 }
             }],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'bar',
                 raw: '"bar"',
                 range: [28, 33],
@@ -2850,7 +2850,7 @@ var modulesTestFixture = {
             type: 'ImportDeclaration',
             specifiers: [],
             source: {
-                type: 'ModuleSpecifier',
+                type: 'Literal',
                 value: 'foo',
                 raw: '"foo"',
                 range: [15, 20],
@@ -2987,7 +2987,7 @@ var modulesTestFixture = {
                         type: 'ImportDeclaration',
                         specifiers: [],
                         source: {
-                            type: 'ModuleSpecifier',
+                            type: 'Literal',
                             value: 'h',
                             raw: '"h"',
                             range: [21, 24],
