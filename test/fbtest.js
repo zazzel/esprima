@@ -170,6 +170,11 @@ module.exports = {
         'import type from "foo";',
         'import type, {foo} from "bar";',
         'import type * as namespace from "bar";',
+
+        'import typeof foo from "bar";',
+        'import typeof {foo, bar} from "baz";',
+        'import typeof {foo as bar} from "baz";',
+        'import typeof * as namespace from "bar";',
     ],
     'Invalid Type Annotations': [
         'function foo(callback:) {}',

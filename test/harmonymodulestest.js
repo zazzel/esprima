@@ -1508,7 +1508,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 21 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 22],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1553,7 +1553,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 34 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 35],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1592,7 +1592,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 23 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 24],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1646,7 +1646,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 28 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 29],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1691,7 +1691,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 30 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 31],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1753,7 +1753,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 35 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 36],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1791,7 +1791,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 26 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 27],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1813,7 +1813,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 12 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 13],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1868,7 +1868,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 28 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 29],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1922,7 +1922,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 31 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 32],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2444,7 +2444,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 15 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 15],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2481,7 +2481,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 22 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 22],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2536,7 +2536,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 41 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 41],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2582,7 +2582,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 39 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 39],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2645,7 +2645,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 48 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 48],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2691,7 +2691,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 33 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 33],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2859,7 +2859,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 20 }
                 }
             },
-            isType: false,
+            importKind: "value",
             range: [0, 21],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2996,7 +2996,7 @@ var modulesTestFixture = {
                                 end: { line: 1, column: 24 }
                             }
                         },
-                        isType: false,
+                        importKind: "value",
                         range: [14, 25],
                         loc: {
                             start: { line: 1, column: 14 },
