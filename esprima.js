@@ -4985,10 +4985,11 @@
             // export var f = 1;
             switch (lookahead.value) {
             case 'type':
+                exportKind = 'type';
+
                 token2 = lookahead2();
                 if (token2.type === Token.Punctuator && token2.value === '{') {
                     lex();
-                    exportKind = 'type';
                     break;
                 }
                 // falls through

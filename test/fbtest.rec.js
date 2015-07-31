@@ -10883,7 +10883,7 @@ var fbTestFixture = {
             },
             specifiers: [],
             source: null,
-            exportKind: 'value',
+            exportKind: 'type',
             range: [0, 25],
             loc: {
                 start: { line: 1, column: 0 },
