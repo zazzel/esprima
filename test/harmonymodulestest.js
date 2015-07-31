@@ -50,6 +50,7 @@ var modulesTestFixture = {
                 },
                 specifiers: [],
                 source: null,
+                exportKind: 'value',
                 range: [0, 18],
                 loc: {
                     start: { line: 1, column: 0 },
@@ -125,6 +126,7 @@ var modulesTestFixture = {
                 },
                 specifiers: [],
                 source: null,
+                exportKind: 'value',
                 range: [0, 29],
                 loc: {
                     start: { line: 1, column: 0 },
@@ -240,6 +242,7 @@ var modulesTestFixture = {
                     }
                 }],
                 source: null,
+                exportKind: 'value',
                 range: [0, 32],
                 loc: {
                     start: { line: 1, column: 0 },
@@ -342,6 +345,7 @@ var modulesTestFixture = {
                 },
                 specifiers: [],
                 source: null,
+                exportKind: 'value',
                 range: [0, 23],
                 loc: {
                     start: { line: 1, column: 0 },
@@ -411,6 +415,7 @@ var modulesTestFixture = {
                 },
                 specifiers: [],
                 source: null,
+                exportKind: 'value',
                 range: [0, 18],
                 loc: {
                     start: { line: 1, column: 0 },
@@ -480,6 +485,7 @@ var modulesTestFixture = {
                 },
                 specifiers: [],
                 source: null,
+                exportKind: 'value',
                 range: [0, 18],
                 loc: {
                     start: { line: 1, column: 0 },
@@ -549,6 +555,7 @@ var modulesTestFixture = {
                 },
                 specifiers: [],
                 source: null,
+                exportKind: 'value',
                 range: [0, 19],
                 loc: {
                     start: { line: 1, column: 0 },
@@ -637,6 +644,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 19],
             loc: {
                 start: { line: 1, column: 0 },
@@ -697,6 +705,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 32],
             loc: {
                 start: { line: 1, column: 0 },
@@ -737,6 +746,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 15],
             loc: {
                 start: { line: 1, column: 0 },
@@ -784,6 +794,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 19],
             loc: {
                 start: { line: 1, column: 0 },
@@ -823,6 +834,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 15],
             loc: {
                 start: { line: 1, column: 0 },
@@ -870,6 +882,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 21],
             loc: {
                 start: { line: 1, column: 0 },
@@ -912,6 +925,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 25],
             loc: {
                 start: { line: 1, column: 0 },
@@ -950,6 +964,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 19],
             loc: {
                 start: { line: 1, column: 0 },
@@ -981,6 +996,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 13],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1027,6 +1043,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 18],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1064,6 +1081,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 20],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1101,6 +1119,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 24],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1155,6 +1174,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 29],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1185,6 +1205,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 19 }
                 }
             },
+            exportKind: 'value',
             range: [0, 20],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1223,6 +1244,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 23 }
                 }
             },
+            exportKind: 'value',
             range: [0, 24],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1278,6 +1300,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 28 }
                 }
             },
+            exportKind: 'value',
             range: [0, 29],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1324,6 +1347,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 30 }
                 }
             },
+            exportKind: 'value',
             range: [0, 31],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1370,6 +1394,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 34 }
                 }
             },
+            exportKind: 'value',
             range: [0, 35],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1433,6 +1458,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 39 }
                 }
             },
+            exportKind: 'value',
             range: [0, 40],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1471,6 +1497,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 27 }
                 }
             },
+            exportKind: 'value',
             range: [0, 28],
             loc: {
                 start: { line: 1, column: 0 },
@@ -1963,6 +1990,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [ 0, 19 ],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2010,6 +2038,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [ 0, 25 ],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2049,6 +2078,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [ 0, 19 ],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2096,6 +2126,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [ 0, 25 ],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2143,6 +2174,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [ 0, 27 ],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2186,6 +2218,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [ 0, 27 ],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2225,6 +2258,7 @@ var modulesTestFixture = {
             },
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [ 0, 21 ],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2254,6 +2288,7 @@ var modulesTestFixture = {
                     end: { line: 1, column: 22 }
                 }
             },
+            exportKind: 'value',
             range: [0, 22],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2284,6 +2319,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 18],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2331,6 +2367,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 27],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2369,6 +2406,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 29],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2424,6 +2462,7 @@ var modulesTestFixture = {
                 }
             }],
             source: null,
+            exportKind: 'value',
             range: [0, 34],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2873,6 +2912,7 @@ var modulesTestFixture = {
             declaration: null,
             specifiers: [],
             source: null,
+            exportKind: 'value',
             range: [0, 10],
             loc: {
                 start: { line: 1, column: 0 },
@@ -2932,6 +2972,7 @@ var modulesTestFixture = {
                         },
                         specifiers: [],
                         source: null,
+                        exportKind: 'value',
                         range: [14, 27],
                         loc: {
                             start: { line: 1, column: 14 },
